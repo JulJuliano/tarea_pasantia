@@ -162,13 +162,29 @@ def compilar_informe_estudiante(est):
     respaldo_content = os.path.join(BASE_DIR, ".contenido_respaldo_temp.py")
     tiene_respaldo = False
     
+    raiz_imagenes = os.path.join(BASE_DIR, "imagenes")
+    respaldo_imagenes = os.path.join(BASE_DIR, ".imagenes_respaldo_temp")
+    est_imagenes = os.path.join(est["dir"], "imagenes")
+    copio_imagenes = False
+    tiene_respaldo_imagenes = False
+    
     if os.path.exists(raiz_content):
         shutil.copy2(raiz_content, respaldo_content)
         tiene_respaldo = True
 
+    # Respaldar carpeta imagenes de la raíz si existe
+    if os.path.exists(raiz_imagenes):
+        shutil.move(raiz_imagenes, respaldo_imagenes)
+        tiene_respaldo_imagenes = True
+
     try:
         # Copiar contenido.py a la raíz
         shutil.copy2(est["source_content"], raiz_content)
+        
+        # Copiar carpeta imagenes del estudiante a la raíz si existe
+        if os.path.exists(est_imagenes):
+            shutil.copytree(est_imagenes, raiz_imagenes)
+            copio_imagenes = True
         
         # Ejecutar generador_informe.py
         print(f"{GRAY}Ejecutando generador_informe.py...{RESET}")
@@ -207,11 +223,19 @@ def compilar_informe_estudiante(est):
         return True
         
     finally:
-        # Restaurar respaldo
+        # Restaurar respaldo de contenido.py
         if tiene_respaldo:
             shutil.move(respaldo_content, raiz_content)
         elif os.path.exists(raiz_content):
             os.remove(raiz_content)
+            
+        # Limpiar carpeta imagenes copiada a la raíz
+        if copio_imagenes and os.path.exists(raiz_imagenes):
+            shutil.rmtree(raiz_imagenes)
+            
+        # Restaurar la carpeta imagenes original si existía
+        if tiene_respaldo_imagenes:
+            shutil.move(respaldo_imagenes, raiz_imagenes)
 
 def compilar_cronogramas_estudiante(est):
     """Ejecuta el script de cronograma de un estudiante y organiza los archivos resultantes."""
