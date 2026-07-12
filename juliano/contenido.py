@@ -9,7 +9,7 @@ GRAFICOS = [
 
 # Textos introductorios del Capítulo II
 PLANIFICACION_INTRO_TEXTO = "La planificación establece la relación entre cada objetivo y las actividades técnicas a ejecutar para el desarrollo del proyecto factible:"
-CRONOGRAMA_INTRO_TEXTO = "El cronograma estructura temporalmente las fases de diseño y desarrollo del sistema automatizado, distribuidas a lo largo de las ocho (8) semanas de duración de la pasantía:"
+CRONOGRAMA_INTRO_TEXTO = "El cronograma estructura temporalmente las fases de diseño y desarrollo del sistema automatizado, distribuidas a lo largo de las nueve (9) semanas de duración de la pasantía:"
 
 # Título del Cuadro 2 (Cronograma)
 CUADRO_CRONOGRAMA_TITULO = "Cuadro 2. Cronograma de actividades del proyecto factible."
@@ -17,7 +17,7 @@ CUADRO_CRONOGRAMA_TITULO = "Cuadro 2. Cronograma de actividades del proyecto fac
 # Lista de Cuadros (índice preliminar): (número, descripción, página)
 CUADROS_INDICE = [
     ("1", "Planificación integral de objetivos específicos", "5"),
-    ("2", "Cronograma de actividades del proyecto factible", "6"),
+    ("2", "Cronograma de actividades del proyecto factible (9 semanas)", "6"),
 ]
 
 # 2. Datos de Portada y Datos Personales
@@ -38,7 +38,8 @@ AUTOR_DATOS = [
     "Tutor Industrial: Ing. Yasmin Sabaneta",
     "C.I.: 14.187.924",
     "",
-    "Tutor Académico: Lic. Carlos Mendoza"
+    "Tutor Académico: Lic. Carlos Mendoza",
+    "C.I.: 4.273.815"
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"
@@ -147,14 +148,17 @@ PLANIFICACION_DATOS = [
 
 # Matriz booleana ajustada a 8 SEMANAS exactas de pasantía
 CRONOGRAMA_DATOS = [
-    ("Diagnóstico del flujo documental y debilidades del Excel.",   [True,  False, False, False, False, False, False, False]),
-    ("Diseño del modelo relacional y diccionario de datos.",        [False, True,  False, False, False, False, False, False]),
-    ("Despliegue de la DB en SQLite y maquetado lógico.",           [False, False, True,  False, False, False, False, False]),
-    ("Programación de interfaces gráficas mediante código HTML.",   [False, False, False, True,  False, False, False, False]),
-    ("Empaquetado de la aplicación de escritorio usando Wails.",    [False, False, False, False, True,  False, False, False]),
-    ("Integración con la base de datos y desarrollo de consultas.", [False, False, False, False, False, True,  False, False]),
-    ("Pruebas funcionales de trazabilidad y generación de reportes.", [False, False, False, False, False, False, True,  False]),
-    ("Consolidación técnica y redacción del informe final.",        [False, False, False, False, False, False, False, True])
+    # ── ACTIVIDADES DEL PROYECTO (5) ──────────────────────────────────────────────────────────
+    ("Diagnóstico del flujo documental y levantamiento de requerimientos.",    [True,  False, False, False, False, False, False, False, False]),
+    ("Diseño del modelo relacional, normalización y diccionario de datos.",    [False, True,  False, False, False, False, False, False, False]),
+    ("Implementación de la base de datos relacional en SQLite.",               [False, False, True,  False, False, False, False, False, False]),
+    ("Desarrollo de la interfaz gráfica y empaquetado con Wails.",             [False, False, False, True,  True,  False, False, False, False]),
+    ("Integración, pruebas funcionales y consolidación del sistema.",          [False, False, False, False, False, False, True,  True,  True ]),
+    # ── ACTIVIDADES DE OFICINA (4) ────────────────────────────────────────────────────────────
+    ("Inducción institucional y capacitación en seguridad (SIAHO).",           [True,  False, False, True,  False, False, False, False, False]),
+    ("Registro y actualización de expedientes en hoja de cálculo.",            [False, True,  True,  False, False, False, False, False, False]),
+    ("Revisión y canalización de correspondencia presidencial.",               [False, False, False, False, True,  True,  False, False, False]),
+    ("Apoyo en generación de reportes y cierre administrativo.",               [False, False, False, False, False, False, False, True,  True ]),
 ]
 
 # CAPÍTULO III - Marco Teórico
@@ -229,49 +233,54 @@ BASES_TEORICAS = [
 ]
 
 # 7. CAPÍTULO IV - Actividades Realizadas
-ACTIVIDADES_DESCRIPCION = "Durante las ocho (8) semanas de práctica profesional, se ejecutaron fases sucesivas de análisis, diseño y desarrollo de software, integrando la operativa departamental con la investigación técnica:"
+ACTIVIDADES_DESCRIPCION = "Durante las nueve (9) semanas de práctica profesional, se ejecutaron fases sucesivas de análisis, diseño y desarrollo de software, integrando la operativa departamental con la investigación técnica:"
 
 # Estructura actualizada para separar Operativa e Investigación por semana
 ACTIVIDADES_LISTA = [
     {
         "semana": 1,
-        "operativa": "Inducción al Departamento de Presidencia, reconocimiento del flujo procedimental de recepción, revisión y despacho de expedientes, y familiarización con el personal administrativo y las herramientas de registro en uso.",
-        "investigacion": "Inicio del diagnóstico situacional mediante observación directa del proceso documental, identificación de las debilidades del sistema de registro manual y formulación preliminar de la situación problemática."
+        "operativa": "Inducción institucional por la Gerencia de Recursos Humanos, recorrido por las instalaciones del área administrativa, presentación del equipo de trabajo y revisión de protocolos de seguridad, confidencialidad y manejo de información.",
+        "investigacion": "Observación directa y mapeo del ciclo de vida de los documentos en Presidencia, detección de fallas procedimentales en el registro manual y levantamiento de los campos y atributos requeridos para la base de datos de trazabilidad."
     },
     {
         "semana": 2,
-        "operativa": "Apoyo en las labores de recepción y registro de expedientes del departamento, aplicando los procedimientos establecidos bajo supervisión de la tutora industrial.",
-        "investigacion": "Redacción del diagnóstico situacional en sus tres niveles (macro, meso y micro) y definición de los objetivos general y específicos del proyecto factible."
+        "operativa": "Transmisión, clasificación y registro manual de expedientes físicos en la hoja de cálculo institucional preexistente, y actualización continua de datos de nuevos documentos recibidos durante el período.",
+        "investigacion": "Validación de requerimientos con el tutor industrial, construcción del diagrama Entidad-Relación, aplicación de las formas normales sobre el esquema propuesto y elaboración formal del diccionario de datos."
     },
     {
         "semana": 3,
-        "operativa": "Colaboración en las tareas de revisión ortográfica y de formato de correspondencia presidencial, y apoyo en el registro de salida de expedientes firmados.",
-        "investigacion": "Diseño del modelo relacional de la base de datos, aplicación de reglas de normalización y elaboración del diccionario de datos con los campos requeridos por el departamento."
+        "operativa": "Procesamiento y actualización del estatus de expedientes en el archivo Excel de la oficina, con apoyo administrativo en el control de documentos recibidos durante la semana.",
+        "investigacion": "Ejecución de la secuencia de comandos estructurales en SQLite, migración de registros históricos validados, construcción de formularios de captura y programación de consultas de trazabilidad con detección de limitaciones técnicas del entorno inicial."
     },
     {
         "semana": 4,
-        "operativa": "Participación en la organización y archivo físico de expedientes del período, apoyando al personal en la gestión del volumen documental concurrente.",
-        "investigacion": "Despliegue del esquema de la base de datos en el motor SQLite y verificación del correcto almacenamiento de registros de prueba según el modelo diseñado."
+        "operativa": "Asistencia a la charla técnica sobre Identificación y Notificación de Peligros y Riesgos en Instalaciones y Puestos de Trabajo dictada por el departamento de SIAHO, y carga de expedientes recibidos en la hoja de cálculo.",
+        "investigacion": "Programación del entorno visual de escritorio mediante tecnologías de marcado y estilos, sincronización del código fuente en plataforma de control de versiones y planificación estructural de los esquemas remanentes."
     },
     {
         "semana": 5,
-        "operativa": "Apoyo en la elaboración de resúmenes de estatus de expedientes solicitados por la directiva, aplicando los registros existentes en las hojas de cálculo del departamento.",
-        "investigacion": "Diseño y estructuración de la interfaz gráfica de usuario mediante código HTML, definiendo los módulos de ingreso, consulta y reporte de movimientos documentales."
+        "operativa": "Revisión ortográfica y de formato de correspondencia presidencial, y apoyo en la canalización de expedientes hacia su departamento de destino tras la firma presidencial.",
+        "investigacion": "Completación de los módulos visuales de consulta e historial de movimientos, integrando la lógica de visualización dinámica de expedientes por proceso administrativo."
     },
     {
         "semana": 6,
-        "operativa": "Colaboración en la revisión y canalización de correspondencia presidencial, manteniendo el flujo operativo regular del departamento durante el desarrollo del proyecto.",
-        "investigacion": "Empaquetado del entorno visual web como aplicación de escritorio autónoma mediante el framework Wails e integración con la base de datos SQLite local."
+        "operativa": "Colaboración en la revisión y despacho de correspondencia presidencial y apoyo en el registro de salida de expedientes firmados durante el período.",
+        "investigacion": "Empaquetado de la aplicación de escritorio mediante el framework Wails con integración de WebView2 portable, logrando un ejecutable autónomo sin dependencias de instalación en el equipo corporativo."
     },
     {
         "semana": 7,
-        "operativa": "Apoyo en la generación manual de reportes de expedientes para la alta dirección, documentando simultáneamente los requerimientos de reporte que guiarán la validación del sistema.",
-        "investigacion": "Ejecución de pruebas de validación funcional del sistema, depuración de errores y verificación del correcto funcionamiento de los módulos de trazabilidad y generación de reportes."
+        "operativa": "Apoyo en la elaboración manual de resúmenes de estatus de expedientes solicitados por la alta dirección, aplicando los registros de la hoja de cálculo del departamento.",
+        "investigacion": "Ejecución de pruebas de validación funcional del sistema, depuración de errores y verificación del correcto funcionamiento de los módulos de registro, trazabilidad y generación de reportes sobre datos reales."
     },
     {
         "semana": 8,
-        "operativa": "Participación en las actividades regulares del departamento y presentación del prototipo funcional ante la tutora industrial para su evaluación y retroalimentación.",
-        "investigacion": "Elaboración de los manuales técnicos del sistema, estructuración final del código fuente y consolidación del informe académico de pasantías."
+        "operativa": "Participación en las actividades regulares del departamento y apoyo en el cierre administrativo del período, asistiendo en la organización final de expedientes del ciclo.",
+        "investigacion": "Redacción del informe técnico de pasantías, elaboración de los manuales de usuario y estructuración definitiva del código fuente para entrega."
+    },
+    {
+        "semana": 9,
+        "operativa": "Presentación del prototipo funcional ante la tutora industrial para su evaluación, retroalimentación final y firma de la carta de aprobación del tutor industrial.",
+        "investigacion": "Consolidación y revisión final del informe académico, incorporación de observaciones del tutor industrial y preparación de los anexos definitivos para la entrega institucional."
     }
 ]
 
