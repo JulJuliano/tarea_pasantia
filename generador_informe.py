@@ -133,7 +133,7 @@ def agregar_item_lista(doc, numero, texto, negrita_inicio=""):
     run_text.font.size = Pt(TAMANO_BASE)
     return p
 
-def agregar_titulo_nivel2(doc, texto):
+def agregar_titulo_nivel2(doc, texto, bookmark_id=None):
     """Nivel 2: Alineado a la izquierda, Negrita (Art. 9 - IUTECP)"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -145,9 +145,11 @@ def agregar_titulo_nivel2(doc, texto):
     run.font.name = FUENTE
     run.font.size = Pt(TAMANO_BASE)
     run.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p, bookmark_id)
     return p
 
-def agregar_titulo_nivel3(doc, texto):
+def agregar_titulo_nivel3(doc, texto, bookmark_id=None):
     """Nivel 3: Alineado a la izquierda, Negrita y Cursiva (Art. 9 - IUTECP)"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -161,6 +163,8 @@ def agregar_titulo_nivel3(doc, texto):
     run.font.size = Pt(TAMANO_BASE)
     run.font.bold = True
     run.font.italic = True
+    if bookmark_id:
+        _agregar_bookmark(p, bookmark_id)
     return p
 
 def agregar_titulo_nivel4(doc, texto, texto_parrafo=''):
@@ -232,7 +236,7 @@ def _config_seccion(sec, sup=None):
     sec.right_margin = MARGEN_DER
     sec.different_first_page_header_footer = True
 
-def iniciar_capitulo(doc, numero_romano, titulo):
+def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     """
     Crea un nuevo capítulo con margen superior de 5cm en la primera página (Art. 6),
     centrado, negrita, mayúsculas (Art. 9) y sección continua para volver a 3cm.
@@ -257,12 +261,14 @@ def iniciar_capitulo(doc, numero_romano, titulo):
     r2.font.name = FUENTE
     r2.font.size = Pt(TAMANO_BASE)
     r2.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p2, bookmark_id)
 
     # Salto continuo para restaurar margen superior a 3cm en el resto de la página
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
     _config_seccion(sec2)
 
-def iniciar_seccion_preliminar(doc, titulo):
+def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None):
     """Para secciones preliminares que inician en página nueva (Art. 9, 12)"""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
     _config_seccion(sec, sup=MARGEN_SUP_CAP)
@@ -274,6 +280,8 @@ def iniciar_seccion_preliminar(doc, titulo):
     r.font.name = FUENTE
     r.font.size = Pt(TAMANO_BASE)
     r.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p, bookmark_id)
 
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
     _config_seccion(sec2)
@@ -412,7 +420,7 @@ def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(TAMANO_TABLA),
         int(color_texto[0:2], 16), int(color_texto[2:4], 16), int(color_texto[4:6], 16)
     )
 
-def agregar_titulo_cuadro(doc, texto):
+def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
     """
     Inserta el título de un cuadro ANTES de la tabla (Art. 6, 8, 13 IUTECP).
     - Título arriba del cuadro.
@@ -445,11 +453,13 @@ def agregar_titulo_cuadro(doc, texto):
         run.font.name = FUENTE
         run.font.size = Pt(TAMANO_BASE)
         run.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p, bookmark_id)
 
-def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None):
+def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None):
     """Genera la tabla de planificación de objetivos con anchos y estilos fijos"""
     if titulo_cuadro:
-        agregar_titulo_cuadro(doc, titulo_cuadro)
+        agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
 
     ENCABEZADOS = ['Objetivo Específico', 'Actividades', 'Recursos', 'Indicadores de Logro']
     ANCHOS_CM   = [4.5, 4.5, 3.0, 3.5]
@@ -471,10 +481,10 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None):
             set_cell_shading(cell, fondo)
             _celda(cell, texto, tamaño=Pt(TAMANO_TABLA))
 
-def agregar_gantt(doc, semanas, titulo_cuadro=None):
+def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
     """Genera la tabla Gantt de actividades con cálculo dinámico del ancho útil"""
     if titulo_cuadro:
-        agregar_titulo_cuadro(doc, titulo_cuadro)
+        agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
 
     num_sem = max(len(s[1]) for s in semanas)
 
@@ -598,7 +608,7 @@ def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
     print(f"⚠ No se encontró imagen con número {numero} en {carpeta}")
     return None
 
-def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None):
+def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark_id=None):
     """
     Agrega una imagen (gráfico) y su título descriptivo DEBAJO (Art. 13 IUTECP).
     - Espacio doble antes y después de gráficos titulados (Art. 8).
@@ -654,6 +664,8 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None):
         run_titulo.font.name = 'Times New Roman'
         run_titulo.font.size = Pt(12)
         run_titulo.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p_titulo, bookmark_id)
 
     # Línea de Fuente opcional (Art. 13)
     if fuente:
@@ -804,8 +816,13 @@ def agregar_tabulacion_derecha(parrafo, pos_tab_pag_emu):
         alignment=WD_TAB_ALIGNMENT.RIGHT
     )
 
-def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrita=False):
-    """Agrega una línea del índice general usando tabulaciones nativas de Word para alinear al extremo derecho de forma absoluta."""
+def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrita=False, bookmark_id=None):
+    """Agrega una línea del índice general usando tabulaciones nativas de Word para alinear al extremo derecho de forma absoluta.
+
+    Si se pasa `bookmark_id`, en lugar del número `pagina` se inserta un campo
+    PAGEREF que Word/LibreOffice rellena automáticamente con la página real
+    del título marcado por ese bookmark.
+    """
     p = doc.add_paragraph()
     p.paragraph_format.line_spacing = 1.5
     p.paragraph_format.space_before = Pt(0)
@@ -822,30 +839,91 @@ def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrit
     run_desc.font.size = Pt(12)
     run_desc.font.bold = negrita
     
-    run_pag = p.add_run(pagina)
-    run_pag.font.name = 'Times New Roman'
-    run_pag.font.size = Pt(12)
-    run_pag.font.bold = negrita
+    if bookmark_id:
+        _agregar_campo_pageref(p, bookmark_id, negrita=negrita)
+    else:
+        run_pag = p.add_run(pagina)
+        run_pag.font.name = 'Times New Roman'
+        run_pag.font.size = Pt(12)
+        run_pag.font.bold = negrita
     return p
 
-def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text):
-    """Agrega una entrada a una lista descriptiva (cuadro/gráfico/anexo) con sangría colgante y tabulación nativa absoluta."""
+def _agregar_bookmark(parrafo, bookmark_id):
+    """Inserta un marcador (bookmark) XML oculto en el párrafo indicado.
+
+    El bookmark rodea el contenido del párrafo, permitiendo que un campo
+    PAGEREF del índice apunte a la página real donde cae este párrafo.
+    """
+    p_elem = parrafo._element
+    start = OxmlElement('w:bookmarkStart')
+    start.set(qn('w:id'), bookmark_id)
+    start.set(qn('w:name'), bookmark_id)
+    end = OxmlElement('w:bookmarkEnd')
+    end.set(qn('w:id'), bookmark_id)
+    # Insertar al inicio y al final del párrafo para rodear todo su contenido
+    p_elem.insert(0, start)
+    p_elem.append(end)
+
+def _agregar_campo_pageref(parrafo, bookmark_id, negrita=False):
+    """Inserta un campo PAGEREF en el párrafo que Word/LibreOffice evalúa
+    al actualizar campos, mostrando la página real del bookmark indicado."""
+    run = parrafo.add_run()
+    run.font.name = 'Times New Roman'
+    run.font.size = Pt(12)
+    run.font.bold = negrita
+
+    fldChar_begin = OxmlElement('w:fldChar')
+    fldChar_begin.set(qn('w:fldCharType'), 'begin')
+
+    instrText = OxmlElement('w:instrText')
+    instrText.set(qn('xml:space'), 'preserve')
+    instrText.text = f' PAGEREF {bookmark_id} \\h '
+
+    fldChar_sep = OxmlElement('w:fldChar')
+    fldChar_sep.set(qn('w:fldCharType'), 'separate')
+
+    # Texto de respaldo que se muestra si los campos no se actualizan
+    t = OxmlElement('w:t')
+    t.text = '?'
+
+    fldChar_end = OxmlElement('w:fldChar')
+    fldChar_end.set(qn('w:fldCharType'), 'end')
+
+    run._element.append(fldChar_begin)
+    run._element.append(instrText)
+    run._element.append(fldChar_sep)
+    run._element.append(t)
+    run._element.append(fldChar_end)
+
+def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, bookmark_id=None):
+    """Agrega una entrada a una lista descriptiva (cuadro/gráfico/anexo) con sangría colgante y tabulación nativa absoluta.
+
+    Si se pasa `bookmark_id`, la tercera columna (página) se reemplaza por un
+    campo PAGEREF que Word/LibreOffice actualiza automáticamente.
+    """
     p = doc.add_paragraph()
     p.paragraph_format.line_spacing = 1.5
     p.paragraph_format.space_before = Pt(0)
     p.paragraph_format.space_after = Pt(4)
     p.paragraph_format.left_indent = Cm(1.8)
     p.paragraph_format.first_line_indent = Cm(-1.8)
-    
+
     section = doc.sections[-1]
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
     # La posición del tabulador en Word es absoluta respecto a los márgenes, por lo que usamos directamente ancho_util_emu
     agregar_tabulaciones_lista(p, Cm(1.8).emu, ancho_util_emu)
-    
-    # Escribir con formato
-    run = p.add_run(f"{col1_text}\t{col2_text}\t{col3_text}")
+
+    # Escribir número y descripción con formato
+    run = p.add_run(f"{col1_text}\t{col2_text}\t")
     run.font.name = 'Times New Roman'
     run.font.size = Pt(12)
+
+    if bookmark_id:
+        _agregar_campo_pageref(p, bookmark_id, negrita=False)
+    else:
+        run_pag = p.add_run(col3_text)
+        run_pag.font.name = 'Times New Roman'
+        run_pag.font.size = Pt(12)
     return p
 
 # ================================================================
@@ -866,7 +944,8 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         titulo = g.get("titulo", f"Gráfico {numero}.")
         ancho = g.get("ancho_cm", 12)
         ruta = buscar_imagen_por_numero(carpeta_imagenes, numero)
-        agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho))
+        bookmark_id = f"bm_grafico{numero}" if numero else None
+        agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), bookmark_id=bookmark_id)
 
 def construir_cuerpo_documento(doc):
     """Escribe secuencialmente todas las secciones del informe de pasantía"""
@@ -907,15 +986,15 @@ def construir_cuerpo_documento(doc):
 
     # --- PÁGINAS PRELIMINARES ---
     if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
-        iniciar_seccion_preliminar(doc, "DEDICATORIA")
+        iniciar_seccion_preliminar(doc, "DEDICATORIA", bookmark_id="bm_dedicatoria")
         agregar_parrafo_normado(doc, c.DEDICATORIA)
 
     if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
-        iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS")
+        iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
         agregar_parrafo_normado(doc, c.AGRADECIMIENTOS)
 
     if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-        iniciar_seccion_preliminar(doc, "RESUMEN")
+        iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
         agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
         doc.add_paragraph()
         p_kw = doc.add_paragraph()
@@ -935,64 +1014,64 @@ def construir_cuerpo_documento(doc):
     run_h_ind.font.bold = True
     
     if pag_dedicatoria:
-        agregar_fila_indice_general_nativa(doc, "DEDICATORIA", pag_dedicatoria)
+        agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
     if pag_agradecimientos:
-        agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", pag_agradecimientos)
+        agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
     if pag_resumen:
-        agregar_fila_indice_general_nativa(doc, "RESUMEN", pag_resumen)
-        
-    agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", pag_lista_cuadros)
-    agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", pag_lista_graficos)
+        agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
+
+    agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
+    agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
     if pag_lista_anexos:
-        agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", pag_lista_anexos)
-        
-    agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "1")
-    
+        agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
+
+    agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
+
     # Capítulos
     p_cap_lbl = doc.add_paragraph()
     p_cap_lbl.paragraph_format.space_before = Pt(12)
     p_cap_lbl.paragraph_format.space_after = Pt(6)
     p_cap_lbl.add_run("CAPÍTULOS").font.bold = True
-    
+
     # Capítulo I
-    agregar_fila_indice_general_nativa(doc, "I REALIDAD ORGANIZACIONAL", "2", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "Identificación de la empresa", "2", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Reseña histórica", "2", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Misión", "2", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Visión", "3", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Valores", "3", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "3", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "3", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "3", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "4", sangria_cm=0.5)
-    
+    agregar_fila_indice_general_nativa(doc, "I REALIDAD ORGANIZACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap1")
+    agregar_fila_indice_general_nativa(doc, "Identificación de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_ident")
+    agregar_fila_indice_general_nativa(doc, "Reseña histórica", "", sangria_cm=0.5, bookmark_id="bm_cap1_resena")
+    agregar_fila_indice_general_nativa(doc, "Misión", "", sangria_cm=0.5, bookmark_id="bm_cap1_mision")
+    agregar_fila_indice_general_nativa(doc, "Visión", "", sangria_cm=0.5, bookmark_id="bm_cap1_vision")
+    agregar_fila_indice_general_nativa(doc, "Valores", "", sangria_cm=0.5, bookmark_id="bm_cap1_valores")
+    agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "", sangria_cm=0.5, bookmark_id="bm_cap1_obj")
+    agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
+    agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
+    agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
+
     # Capítulo II
-    agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "5", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "5", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Objetivo General", "5", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "5", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "5", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "6", sangria_cm=0.5)
-    
+    agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
+    agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
+    agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
+    agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
+    agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
+    agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
+
     # Capítulo III
-    agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "7", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "7", sangria_cm=0.5)
-    
+    agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
+    agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
+
     # Capítulo IV
-    agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "8", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "8", sangria_cm=0.5)
-    
+    agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
+    agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
+
     # Capítulo V
-    agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "10", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "Conclusiones", "10", sangria_cm=0.5)
-    agregar_fila_indice_general_nativa(doc, "Recomendaciones", "10", sangria_cm=0.5)
-    
+    agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
+    agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
+    agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
+
     # Referencias y Anexos
-    agregar_fila_indice_general_nativa(doc, "REFERENCIAS", "11", sangria_cm=0, negrita=True)
-    agregar_fila_indice_general_nativa(doc, "ANEXOS", "12", sangria_cm=0, negrita=True)
+    agregar_fila_indice_general_nativa(doc, "REFERENCIAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_referencias")
+    agregar_fila_indice_general_nativa(doc, "ANEXOS", "", sangria_cm=0, negrita=True, bookmark_id="bm_anexos")
 
     # --- LISTA DE CUADROS ---
-    iniciar_seccion_preliminar(doc, "LISTA DE CUADROS")
+    iniciar_seccion_preliminar(doc, "LISTA DE CUADROS", bookmark_id="bm_lista_cuadros")
     p_header_c = doc.add_paragraph()
     p_header_c.paragraph_format.space_before = Pt(12)
     p_header_c.paragraph_format.space_after = Pt(12)
@@ -1020,10 +1099,11 @@ def construir_cuerpo_documento(doc):
     ]
     cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
     for num, desc, pag in cuadros_indice:
-        agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
+        bookmark_id = f"bm_cuadro{num}" if num else None
+        agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
 
     # --- LISTA DE GRÁFICOS ---
-    iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS")
+    iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
     p_header_g = doc.add_paragraph()
     p_header_g.paragraph_format.space_before = Pt(12)
     p_header_g.paragraph_format.space_after = Pt(12)
@@ -1055,14 +1135,16 @@ def construir_cuerpo_documento(doc):
             num = str(g.get("numero", ""))
             desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
             pag = str(g.get("pagina", ""))
-            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
+            bookmark_id = f"bm_grafico{num}" if num else None
+            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
     else:
         for num, desc, pag in graficos_def:
-            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
+            bookmark_id = f"bm_grafico{num}" if num else None
+            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
 
     # --- LISTA DE ANEXOS ---
     if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
-        iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS")
+        iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS", bookmark_id="bm_lista_anexos")
         p_header_a = doc.add_paragraph()
         p_header_a.paragraph_format.space_before = Pt(12)
         p_header_a.paragraph_format.space_after = Pt(12)
@@ -1087,18 +1169,19 @@ def construir_cuerpo_documento(doc):
         for idx, (cod, desc) in enumerate(anexos_lista):
             letra = cod.split(" ")[-1]
             pag_est = str(13 + idx)
-            agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est)
+            bookmark_id = f"bm_anexo{letra.upper()}" if letra else None
+            agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est, bookmark_id=bookmark_id)
 
     # --- REGISTRO DEL INICIO DEL CUERPO ---
-    iniciar_seccion_preliminar(doc, "INTRODUCCIÓN")
+    iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
     agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
     
     # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
     idx_cap1 = len(doc.sections)
 
-    # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
-    iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL")
-    agregar_titulo_nivel2(doc, "IDENTIFICACIÓN DE LA EMPRESA")
+# --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
+    iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL", bookmark_id="bm_cap1")
+    agregar_titulo_nivel2(doc, "IDENTIFICACIÓN DE LA EMPRESA", bookmark_id="bm_cap1_ident")
     identificacion_empresa = getattr(c, 'IDENTIFICACION_EMPRESA', '')
     if identificacion_empresa:
         agregar_parrafo_normado(doc, identificacion_empresa)
@@ -1106,7 +1189,7 @@ def construir_cuerpo_documento(doc):
     agregar_titulo_nivel3(doc, "1.1.1 Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
 
-    agregar_titulo_nivel3(doc, "1.1.2 Reseña histórica")
+    agregar_titulo_nivel3(doc, "1.1.2 Reseña histórica", bookmark_id="bm_cap1_resena")
     resena_data = getattr(c, 'RESENA_HISTORICA', [])
     if isinstance(resena_data, str):
         agregar_parrafo_normado(doc, resena_data)
@@ -1114,31 +1197,31 @@ def construir_cuerpo_documento(doc):
         for parrafo in resena_data:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel3(doc, "1.1.3 Misión")
+    agregar_titulo_nivel3(doc, "1.1.3 Misión", bookmark_id="bm_cap1_mision")
     agregar_parrafo_normado(doc, getattr(c, 'MISION', 'Misión no proporcionada.'), cursiva=True)
 
-    agregar_titulo_nivel3(doc, "1.1.4 Visión")
+    agregar_titulo_nivel3(doc, "1.1.4 Visión", bookmark_id="bm_cap1_vision")
     agregar_parrafo_normado(doc, getattr(c, 'VISION', 'Visión no proporcionada.'), cursiva=True)
 
-    agregar_titulo_nivel3(doc, "1.1.5 Valores")
+    agregar_titulo_nivel3(doc, "1.1.5 Valores", bookmark_id="bm_cap1_valores")
     agregar_parrafo_normado(doc, "Los valores que orientan las actividades de la organización destacan:")
     valores_data = getattr(c, 'VALORES', [])
     for i, (valor, descripcion) in enumerate(valores_data, 1):
         agregar_item_lista(doc, i, descripcion, valor)
 
-    agregar_titulo_nivel3(doc, "1.1.6 Objetivos Organizacionales")
+    agregar_titulo_nivel3(doc, "1.1.6 Objetivos Organizacionales", bookmark_id="bm_cap1_obj")
     agregar_parrafo_normado(doc, "Entre sus objetivos organizacionales se encuentran:")
     objs_org = getattr(c, 'OBJETIVOS_ORG', [])
     for i, objetivo in enumerate(objs_org, 1):
         agregar_item_lista(doc, i, objetivo)
 
-    agregar_titulo_nivel3(doc, "1.1.7 Ubicación geográfica")
+    agregar_titulo_nivel3(doc, "1.1.7 Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
 
     carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "ubicacion")
 
-    agregar_titulo_nivel3(doc, "1.1.8 Población de los trabajadores de la empresa")
+    agregar_titulo_nivel3(doc, "1.1.8 Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
     poblacion_data = getattr(c, 'POBLACION', '')
     if isinstance(poblacion_data, str):
         agregar_parrafo_normado(doc, poblacion_data)
@@ -1146,14 +1229,14 @@ def construir_cuerpo_documento(doc):
         for parrafo in poblacion_data:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel3(doc, "1.1.9 Estructura Organizativa")
+    agregar_titulo_nivel3(doc, "1.1.9 Estructura Organizativa", bookmark_id="bm_cap1_estruct")
     agregar_parrafo_normado(doc, getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.'))
 
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
 
     # --- CAPÍTULO II: DIAGNÓSTICO SITUACIONAL ---
-    iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL")
-    agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática")
+    iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL", bookmark_id="bm_cap2")
+    agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática", bookmark_id="bm_cap2_sit")
     situacion_problematica = getattr(c, 'SITUACION_PROBLEMATICA', [])
     if isinstance(situacion_problematica, str):
         agregar_parrafo_normado(doc, situacion_problematica)
@@ -1161,64 +1244,85 @@ def construir_cuerpo_documento(doc):
         for parrafo in situacion_problematica:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel2(doc, "Objetivo General")
+    agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
     agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
 
-    agregar_titulo_nivel2(doc, "Objetivos Específicos")
+    agregar_titulo_nivel2(doc, "Objetivos Específicos", bookmark_id="bm_cap2_obje")
     objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
     for i, obj in enumerate(objs_especificos, 1):
         agregar_item_lista(doc, i, obj)
 
-    agregar_titulo_nivel2(doc, "Planificación integral de objetivos")
+    agregar_titulo_nivel2(doc, "Planificación integral de objetivos", bookmark_id="bm_cap2_planif")
     intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
         "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
     agregar_parrafo_normado(doc, intro_planif)
     titulo_planif = getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF)
-    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif)
+    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif, bookmark_id="bm_cuadro1")
     doc.add_paragraph()
 
-    agregar_titulo_nivel2(doc, "Cronograma de actividades")
+    agregar_titulo_nivel2(doc, "Cronograma de actividades", bookmark_id="bm_cap2_crono")
     intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
         "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
     agregar_parrafo_normado(doc, intro_crono)
     titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
-    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono)
+    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
     doc.add_paragraph()
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
-    iniciar_capitulo(doc, "III", "MARCO TEÓRICO")
-    agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales")
-    bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
-    for parrafo in bases_teoricas:
-        agregar_parrafo_normado(doc, parrafo)
-
-    if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
-        agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
-        post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
-        agregar_parrafo_normado(doc, post_cita, sangria=True)
+    iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
+    if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
+        primer_sub = True
+        for sub in c.BASES_TEORICAS:
+            bm = "bm_cap3_bases" if primer_sub else None
+            agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
+            primer_sub = False
+            for p in sub.get('parrafos', []):
+                agregar_parrafo_normado(doc, p)
+            cita = sub.get('cita_larga')
+            if cita and cita.get('texto'):
+                agregar_cita_larga(doc, cita['texto'], cita.get('autor', ''))
+                post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
+                if post_cita:
+                    agregar_parrafo_normado(doc, post_cita, sangria=True)
+    else:
+        agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales", bookmark_id="bm_cap3_bases")
+        bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
+        for parrafo in bases_teoricas:
+            agregar_parrafo_normado(doc, parrafo)
+        if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
+            agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
+            post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
+            agregar_parrafo_normado(doc, post_cita, sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
-    iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS")
-    agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana")
+    iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS", bookmark_id="bm_cap4")
+    agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana", bookmark_id="bm_cap4_desc")
     agregar_parrafo_normado(doc, getattr(c, 'ACTIVIDADES_DESCRIPCION', 'Descripción de actividades ejecutadas.'))
     actividades_lista = getattr(c, 'ACTIVIDADES_LISTA', [])
     for i, actividad in enumerate(actividades_lista, 1):
-        agregar_item_lista(doc, i, actividad)
+        if isinstance(actividad, dict):
+            agregar_titulo_nivel2(doc, f"Semana {actividad.get('semana', i)}")
+            if actividad.get('operativa'):
+                agregar_item_lista(doc, 1, actividad['operativa'], negrita_inicio="Actividad operativa")
+            if actividad.get('investigacion'):
+                agregar_item_lista(doc, 2, actividad['investigacion'], negrita_inicio="Actividad de investigación")
+        else:
+            agregar_item_lista(doc, i, actividad)
 
     # --- CAPÍTULO V: CONCLUSIONES Y RECOMENDACIONES ---
-    iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES")
-    agregar_titulo_nivel2(doc, "Conclusiones")
+    iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES", bookmark_id="bm_cap5")
+    agregar_titulo_nivel2(doc, "Conclusiones", bookmark_id="bm_cap5_concl")
     conclusiones = getattr(c, 'CONCLUSIONES', [])
     for i, conclusion in enumerate(conclusiones, 1):
         agregar_item_lista(doc, i, conclusion)
 
-    agregar_titulo_nivel2(doc, "Recomendaciones")
+    agregar_titulo_nivel2(doc, "Recomendaciones", bookmark_id="bm_cap5_recom")
     recomendaciones = getattr(c, 'RECOMENDACIONES', [])
     for i, recomendacion in enumerate(recomendaciones, 1):
         agregar_item_lista(doc, i, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
-    iniciar_seccion_preliminar(doc, "REFERENCIAS")
+    iniciar_seccion_preliminar(doc, "REFERENCIAS", bookmark_id="bm_referencias")
     p_sep = doc.add_paragraph()
     p_sep.paragraph_format.space_before = Pt(24)
     p_sep.paragraph_format.space_after = Pt(0)
@@ -1238,18 +1342,21 @@ def construir_cuerpo_documento(doc):
         p.paragraph_format.space_before = ESP_PORTADILLA_ANEXOS
         run_anexos_tit = p.add_run("ANEXOS")
         run_anexos_tit.font.name = FUENTE
+        _agregar_bookmark(p, "bm_anexos")
         run_anexos_tit.font.size = Pt(TAMANO_PORTADILLA_ANEXOS)
         run_anexos_tit.font.bold = True
 
-        # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
+    # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
         for cod, desc in c.ANEXOS_LISTA:
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo, sup=MARGEN_SUP_CAP)
-            
+
             p_anexo = doc.add_paragraph()
             p_anexo.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p_anexo.paragraph_format.space_before = Pt(0)
             p_anexo.paragraph_format.space_after = ESP_DOBLE
+            letra_anexo = cod.split(" ")[-1].upper()
+            _agregar_bookmark(p_anexo, f"bm_anexo{letra_anexo}")
             
             # Nombre del Anexo (ej: ANEXO A)
             run_cod = p_anexo.add_run(cod.upper())

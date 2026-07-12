@@ -1,7 +1,3 @@
-================================================================
-MÓDULO DE CONTENIDO ACADÉMICO PARA EL INFORME DE PASANTÍAS
-================================================================
-
 # 1. Rutas y Carpetas
 CARPETA_IMAGENES = "imagenes"
 # Gráficos del informe: cada uno indica tras qué sección va (anclas: "ubicacion" | "estructura")
@@ -107,10 +103,6 @@ ORGANIGRAMA_TEXTO = (
     "La arquitectura organizativa de Venangocupet, S.A. se fundamenta en un modelo jerárquico-funcional. La empresa está encabezada por la Junta Directiva y la Presidencia. A continuación, se presenta el organigrama general destacando el Área de Presidencia, contexto en el cual se aplicó el desarrollo tecnológico."
 )
 
-================================================================
-CAPÍTULO II - DIAGNÓSTICO SITUACIONAL
-================================================================
-
 SITUACION_PROBLEMATICA = [
     "El proceso administrativo en el Departamento de Presidencia funciona estrictamente como un nodo de tránsito y validación. El flujo procedimental consiste en recibir expedientes externos, someterlos a revisión ortográfica y de formato, y registrarlos para su entrega al Presidente de la empresa. Una vez firmados, se registra su salida y se despachan de forma inmediata hacia su departamento de destino, sin retener documentos propios de forma permanente.",
     "Actualmente, el control de este ciclo se ejecuta mediante hojas de cálculo convencionales. El flujo de expedientes es azaroso, alternando entre volúmenes mínimos y escenarios de ingresos masivos concurrentes. En dichos picos de alta demanda, el registro basado en el copiado y pegado manual de datos repetitivos ralentiza severamente el procesamiento y propicia errores humanos, tales como la duplicación de datos o la omisión de movimientos críticos.",
@@ -126,35 +118,30 @@ OBJETIVOS_ESPECIFICOS = [
     "Desarrollar un prototipo funcional del sistema empleando bases de datos y tecnologías de empaquetado para su validación operativa."
 ]
 
-# PLANIFICACIÓN INTEGRAL (5 columnas: Objetivo | Variable | Actividades | Técnica | Instrumento)
 PLANIFICACION_DATOS = [
     (
         "Diagnosticar el flujo procedimental actual de los movimientos documentales.",
-        "Flujo documental / registro manual en Excel",
         "Observación directa del ciclo de expedientes y análisis de las fallas en las hojas de cálculo existentes.",
-        "Observación directa",
-        "Cuaderno de notas, registros de Excel"
+        "Cuaderno de notas, registros de Excel",
+        "Diagnóstico con identificación de debilidades en el flujo documental y la trazabilidad."
     ),
     (
         "Determinar los requerimientos técnicos y funcionales del sistema.",
-        "Requerimientos del sistema",
-        "Levantamiento de metadatos requeridos (fechas, remitente, estatus) y definición de reglas de validación.",
-        "Entrevista no estructurada",
-        "Formatos de requerimientos, diccionario de datos"
+        "Levantamiento de metadatos requeridos (fechas, remitente, estatus) y definición de reglas de validación mediante entrevista no estructurada.",
+        "Formatos de requerimientos, diccionario de datos",
+        "Documento de especificación de requerimientos funcionales y técnicos."
     ),
     (
         "Diseñar la arquitectura lógica y la interfaz gráfica de usuario.",
-        "Arquitectura del sistema / interfaz",
-        "Modelado del diagrama Entidad-Relación y diseño de los módulos visuales en código HTML.",
-        "Análisis documental",
-        "Herramientas de modelado, editores de código"
+        "Modelado del diagrama Entidad-Relación y diseño de los módulos visuales mediante análisis documental.",
+        "Herramientas de modelado, editores de código",
+        "Diagrama Entidad-Relación y maquetado de la interfaz gráfica aprobados."
     ),
     (
         "Desarrollar un prototipo funcional del sistema para su validación.",
-        "Prototipo funcional",
         "Implementación en SQLite, integración de la interfaz con Wails y ejecución de pruebas de escritorio.",
-        "Prueba funcional",
-        "Framework Wails, motor SQLite, equipo informático"
+        "Framework Wails, motor SQLite, equipo informático",
+        "Prototipo funcional validado con pruebas de escritorio exitosas."
     )
 ]
 
@@ -170,14 +157,11 @@ CRONOGRAMA_DATOS = [
     ("Consolidación técnica y redacción del informe final.",        [False, False, False, False, False, False, False, True])
 ]
 
-================================================================
-CAPÍTULO III - Marco Teórico
-================================================================
+# CAPÍTULO III - Marco Teórico
 # Estructura: lista de subsecciones, cada una con título, párrafos
 # y opcionalmente una cita larga (>40 palabras, bloque aparte).
 # El generador debe iterar sobre BASES_TEORICAS para renderizar
 # cada subsección como un encabezado de Nivel 2 + párrafos.
-================================================================
 
 BASES_TEORICAS = [
     {

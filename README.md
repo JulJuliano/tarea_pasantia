@@ -2,6 +2,13 @@
 
 Este proyecto implementa una solución automatizada para la generación de informes y cronogramas de pasantía conformes a la **Normativa de Transcripción de Trabajos e Informes Escritos del IUTECP**. Permite compilar y organizar de manera inteligente los documentos de múltiples estudiantes (**Juliano, Keidy y Amaal**) de forma individual y modular.
 
+> **🤖 Instrucción para asistentes IA:** Antes de modificar `generador_informe.py` o cualquier `contenido.py`, lee obligatoriamente los archivos de normativa en `compartido/normativa/`:
+> - `Reglas_1.md` — reglas generales de presentación y transcripción.
+> - `Reglas_2_resumido.md` — resumen de reglas de formato, márgenes, sangrías y citas.
+> - `Reglas_3.md` — reglas de referencias, anexos y tabla de contenido.
+>
+> Estos documentos definen las restricciones de formato (fuente, márgenes, interlineado, sangrías, citas, índices) que el generador implementa. Cualquier cambio al generador o a los contenidos debe respetar lo allí establecido.
+
 ---
 
 ## 📁 Estructura del Proyecto
@@ -20,6 +27,7 @@ tarea_pasantia/
 │       ├── Reglas_1.md
 │       ├── reglas_1.docx
 │       ├── Reglas_2.md
+│       ├── Reglas_2_resumido.md
 │       └── Reglas_3.md
 │
 ├── juliano/                 # Proyecto de Juliano (TSU en Informática)
@@ -148,6 +156,26 @@ GRAFICOS = [
 | `"estructura"`| Sección 1.1.9 Estructura Organizativa          |
 
 Los archivos gráficos se colocan en `<estudiante>/imagenes/` con nombres numéricos (`1.png`, `2.png`, `3.png`, ...). El selector los copia temporalmente a la raíz antes de compilar.
+
+---
+
+## 📚 Formatos de Contenido Soportados (refactor del generador)
+
+El generador (`generador_informe.py`) soporta dos formatos alternativos para ciertos bloques de contenido, detectándolos dinámicamente:
+
+### Marco Teórico (Cap. III)
+
+Se reconoce automáticamente si el estudiante usa el formato enriquecido o el formato plano:
+
+- **Enriquecido (`BASES_TEORICAS`)**: lista de dicts, cada uno con `titulo`, `parrafos` (lista de strings) y `cita_larga` opcional (dict con `texto` y `autor`). El generador renderiza cada subsección con un encabezado Nivel 2, sus párrafos normados y, si existe la cita larga, la inserta con post-cita sangrada.
+- **Plano (`BASES_TEORICAS_PARRAFOS`)**: lista simple de strings. Se renderiza bajo un único encabezado "Bases Teóricas Referenciales", con una cita larga global opcional (`CITA_LARGA_TEXTO` + `CITA_LARGA_AUTOR`).
+
+### Actividades Realizadas (Cap. IV)
+
+`ACTIVIDADES_LISTA` admite dos formatos:
+
+- **Strings**: cada elemento es un texto enumerado (formato Amaal/Keidy).
+- **Dicts por semana**: cada elemento es un dict con `semana` (int), `operativa` e `investigacion` (strings). El generador produce un subtítulo "Semana N" por cada entrada y dos ítems numerados con etiquetas en negrita "Actividad operativa" e "Actividad de investigación".
 
 ---
 
