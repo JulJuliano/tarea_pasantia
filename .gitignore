@@ -1,0 +1,8 @@
+# Entornos virtuales y configuraciones
+venv/
+.venv/
+env/
+.env/
+keidy/venv/
+*.pyc
+__pycache__/
