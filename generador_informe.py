@@ -691,7 +691,7 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
 # ================================================================
 # CONSTRUCCIÓN DEL DOCUMENTO (PORTADA COMPATIBLE LIBREOFFICE)
 # ================================================================
-def construir_portada(doc):
+def construir_portada(doc, solo_autor=False):
     """
     Construye la portada distribuyendo los 4 bloques de forma proporcional
     al área útil de la página, sin valores fijos de puntos.
@@ -700,6 +700,9 @@ def construir_portada(doc):
       POS_TITULO: dónde empieza el título (defecto 42% = ligeramente sobre el centro)
       POS_AUTOR : dónde empiezan los datos del autor (defecto 67% = tercio inferior)
       POS_FECHA : dónde empieza la fecha (defecto 90% = cerca del margen inferior)
+
+    solo_autor: si es True, solo muestra el nombre y CI del autor (sin tutores),
+                usado en la primera página (portada). La contraportada muestra todo.
     """
     # ------------------------------------------------------------------
     # 1. Leer dimensiones reales de la página (en puntos, 1 pt = 1/72 in)
@@ -718,7 +721,16 @@ def construir_portada(doc):
 
     membrete_lines = len(c.MEMBRETE)
 
-    lineas_autor = c.AUTOR_DATOS if isinstance(c.AUTOR_DATOS, list) else [c.AUTOR_DATOS]
+    lineas_autor_completo = c.AUTOR_DATOS if isinstance(c.AUTOR_DATOS, list) else [c.AUTOR_DATOS]
+    if solo_autor:
+        # Portada: solo nombre y CI (todo antes del primer string vacío)
+        lineas_autor = []
+        for linea in lineas_autor_completo:
+            if not linea.strip():
+                break
+            lineas_autor.append(linea)
+    else:
+        lineas_autor = lineas_autor_completo
     autor_lines  = len(lineas_autor)
 
     # Times New Roman 12pt: ancho promedio ~6pt por carácter
@@ -1400,8 +1412,8 @@ def generar_reporte_completo():
     print("» Inicializando documento...")
     doc = setup_iutecp_document()
     
-    # 1. Portada (Sección 0)
-    construir_portada(doc)
+    # 1. Portada (Sección 0) — solo autor, sin tutores
+    construir_portada(doc, solo_autor=True)
     
     # 2. Contraportada (Sección 1)
     sec_contra = doc.add_section(WD_SECTION_START.NEW_PAGE)
