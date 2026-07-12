@@ -4,5 +4,12 @@ venv/
 env/
 .env/
 keidy/venv/
+juliano/venv/
 *.pyc
 __pycache__/
+
+# Archivos de bloqueo y temporales de LibreOffice / MS Office
+.~lock.*
+~$*
+*.tmp
+
