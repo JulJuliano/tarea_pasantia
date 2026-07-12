@@ -488,12 +488,19 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
 
     num_sem = max(len(s[1]) for s in semanas)
 
-    COL_ACT_CM = 9.5
     section = doc.sections[-1]
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
     ancho_util_cm = Emu(ancho_util_emu).cm
-    espacio_restante = max(ancho_util_cm - COL_ACT_CM, 1.0)
-    COL_SEM_CM = espacio_restante / num_sem if num_sem > 0 else 1.0
+
+    # Detectar la etiqueta S más ancha (ej: S10 > S9) y calcular ancho de columna necesario
+    etiquetas_sem = [f'S{s+1}' for s in range(num_sem)]
+    max_chars_s = max(len(e) for e in etiquetas_sem) if etiquetas_sem else 2
+    # Times New Roman ~0.55 * pt por carácter + 0.4cm de relleno por celda
+    COL_SEM_CM = Pt(max_chars_s * TAMANO_TABLA_CHICO * 0.55).cm + 0.4
+    min_act_cm = 3.0
+    max_s_por_col = (ancho_util_cm - min_act_cm) / num_sem if num_sem > 0 else ancho_util_cm
+    COL_SEM_CM = min(COL_SEM_CM, max_s_por_col)
+    COL_ACT_CM = ancho_util_cm - num_sem * COL_SEM_CM
 
     tabla = doc.add_table(rows=1 + len(semanas), cols=1 + num_sem)
     tabla.style = 'Table Grid'
