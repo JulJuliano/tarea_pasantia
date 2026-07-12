@@ -221,7 +221,7 @@ def generar_documento_semana(datos):
     run_s.font.bold = True
 
     # Salvar y Compilar
-    fn_word = f"Cronograma_Semana{datos['num_semana']}_IUTECP.docx"
+    fn_word = f"Cronograma_Informatica_Semana{datos['num_semana']}_IUTECP.docx"
     fn_pdf = fn_word.replace(".docx", ".pdf")
     doc.save(fn_word)
     print(f"✔ Generado Word: {fn_word}")

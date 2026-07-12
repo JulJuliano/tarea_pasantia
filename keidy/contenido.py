@@ -5,6 +5,12 @@
 # ================================================================
 CARPETA_IMAGENES = "imagenes"
 
+# Gráficos del informe: cada uno indica tras qué sección va (anclas: "ubicacion" | "estructura")
+GRAFICOS = [
+    {"numero": 1, "tras": "ubicacion", "titulo": "Gráfico 1. Representación cartográfica y ubicación espacial de la empresa.", "ancho_cm": 5, "lista": "Representación cartográfica y ubicación espacial de la empresa", "pagina": "3"},
+    {"numero": 2, "tras": "estructura", "titulo": "Gráfico 2. Organigrama estructural y niveles jerárquicos de la organización.", "ancho_cm": 12},
+]
+
 # ================================================================
 #  DATOS DE LA PORTADA
 # ================================================================

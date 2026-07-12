@@ -3,8 +3,7 @@ venv/
 .venv/
 env/
 .env/
-keidy/venv/
-juliano/venv/
+*/venv/
 *.pyc
 __pycache__/
 

@@ -13,6 +13,64 @@ from docx.oxml.ns import qn
 import contenido as c
 
 # ================================================================
+#  CONSTANTES DE FORMATO (NORMATIVA IUTECP)
+# ================================================================
+
+# Fuente y tamaño (Art. 5)
+FUENTE = 'Times New Roman'
+TAMANO_BASE = 12           # Pt
+TAMANO_TABLA = 10          # Pt (cuerpo de tablas)
+TAMANO_TABLA_CHICO = 9     # Pt (encabezados compactos Gantt)
+
+# Página (Art. 6)
+PAG_ANCHO = Cm(21.59)     # Carta
+PAG_ALTO  = Cm(27.94)     # Carta
+MARGEN_IZQ = Cm(4)        # Encuadernación
+MARGEN_DER = Cm(3)
+MARGEN_SUP = Cm(3)
+MARGEN_INF = Cm(3)
+MARGEN_SUP_CAP = Cm(5)    # Primera página de capítulo/parte
+
+# Tipografía
+INTERLINEADO = 1.5
+SANGRIA_LINEA = Cm(1.25)          # Sangría de primera línea (Art. 7)
+SANGRIA_CITA = Cm(1.25)           # Citas largas (Art. 22)
+SANGRIA_NIVEL45 = Cm(1.27)        # Niveles 4 y 5 (Art. 9)
+SANGRIA_REF = Cm(0.75)            # Sangría francesa referencias (Art. 25)
+
+# Espaciados (Art. 8)
+ESP_DOBLE = Pt(24)
+ESP_SENCILLO = Pt(12)
+ESP_TRIPLE = Pt(36)
+ESP_CITA_ANTES = Pt(36)           # 3 espacios antes de cita larga
+ESP_CITA_DESPUES = Pt(12)
+
+# Colores de tablas
+COLOR_ENCABEZADO = '4472C4'       # Azul corporativo
+COLOR_FILA_PAR = 'D9E1F2'         # Gris azulado
+COLOR_GANTT_VERDE = '70AD47'      # Barras activas Gantt
+COLOR_TEXTO_CLARO = 'FFFFFF'
+COLOR_TEXTO_OSCURO = '000000'
+
+# Producto: nombres de archivo de salida
+DOCX_SALIDA = "Informe_Pasantia_IUTECP.docx"
+PDF_SALIDA  = "Informe_Pasantia_IUTECP.pdf"
+
+# Espaciado de la portadilla de ANEXOS (Art. 26)
+ESP_PORTADILLA_ANEXOS = Pt(180)
+TAMANO_PORTADILLA_ANEXOS = 16  # Pt, un poco más grande para portadilla
+
+# Títulos por defecto de Cuadros y Gráficos (configurables desde contenido.py)
+CUADRO_PLANIFICACION_TITULO_DEF = "Cuadro 1. Planificación integral de objetivos específicos."
+CUADRO_CRONOGRAMA_TITULO_DEF = "Cuadro 2. Cronograma de actividades administrativas."
+
+# Parágrafo posterior a la cita (configurable desde contenido.py)
+POST_CITA_TEXTO_DEF = (
+    "De acuerdo a la cita previa, se comprende la relevancia del control sistemático "
+    "y la inmutabilidad de los registros en los departamentos estratégicos de la empresa."
+)
+
+# ================================================================
 #  FUNCIONES AUXILIARES DE FORMATO (NORMATIVA IUTECP 2025)
 # ================================================================
 
@@ -21,17 +79,17 @@ def setup_iutecp_document():
     doc = Document()
 
     section = doc.sections[0]
-    section.page_width = Cm(21.59)
-    section.page_height = Cm(27.94)
-    section.top_margin = Cm(3)
-    section.bottom_margin = Cm(3)
-    section.left_margin = Cm(4)      # Encuadernación
-    section.right_margin = Cm(3)
+    section.page_width = PAG_ANCHO
+    section.page_height = PAG_ALTO
+    section.top_margin = MARGEN_SUP
+    section.bottom_margin = MARGEN_INF
+    section.left_margin = MARGEN_IZQ      # Encuadernación
+    section.right_margin = MARGEN_DER
 
     style = doc.styles['Normal']
-    style.font.name = 'Times New Roman'
-    style.font.size = Pt(12)
-    style.paragraph_format.line_spacing = 1.5
+    style.font.name = FUENTE
+    style.font.size = Pt(TAMANO_BASE)
+    style.paragraph_format.line_spacing = INTERLINEADO
     style.paragraph_format.space_after = Pt(0)
 
     return doc
@@ -41,14 +99,14 @@ def agregar_parrafo_normado(doc, texto, cursiva=False, sangria=True):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     p_format = p.paragraph_format
-    p_format.line_spacing = 1.5
-    p_format.first_line_indent = Cm(1.25) if sangria else Cm(0)
+    p_format.line_spacing = INTERLINEADO
+    p_format.first_line_indent = SANGRIA_LINEA if sangria else Cm(0)
     p_format.space_after = Pt(0)
     p_format.space_before = Pt(0)
 
     run = p.add_run(texto)
-    run.font.name = 'Times New Roman'
-    run.font.size = Pt(12)
+    run.font.name = FUENTE
+    run.font.size = Pt(TAMANO_BASE)
     run.font.italic = cursiva
     return p
 
@@ -57,35 +115,35 @@ def agregar_item_lista(doc, numero, texto, negrita_inicio=""):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     p_format = p.paragraph_format
-    p_format.line_spacing = 1.5
-    p_format.first_line_indent = Cm(1.25)
+    p_format.line_spacing = INTERLINEADO
+    p_format.first_line_indent = SANGRIA_LINEA
 
     run_num = p.add_run(f"{numero}. ")
-    run_num.font.name = 'Times New Roman'
-    run_num.font.size = Pt(12)
+    run_num.font.name = FUENTE
+    run_num.font.size = Pt(TAMANO_BASE)
 
     if negrita_inicio:
         run_bold = p.add_run(f"{negrita_inicio}: ")
-        run_bold.font.name = 'Times New Roman'
-        run_bold.font.size = Pt(12)
+        run_bold.font.name = FUENTE
+        run_bold.font.size = Pt(TAMANO_BASE)
         run_bold.font.bold = True
 
     run_text = p.add_run(texto)
-    run_text.font.name = 'Times New Roman'
-    run_text.font.size = Pt(12)
+    run_text.font.name = FUENTE
+    run_text.font.size = Pt(TAMANO_BASE)
     return p
 
 def agregar_titulo_nivel2(doc, texto):
     """Nivel 2: Alineado a la izquierda, Negrita (Art. 9 - IUTECP)"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.space_before = Pt(24)
-    p.paragraph_format.space_after = Pt(24)
-    p.paragraph_format.line_spacing = 1.5
+    p.paragraph_format.space_before = ESP_DOBLE
+    p.paragraph_format.space_after = ESP_DOBLE
+    p.paragraph_format.line_spacing = INTERLINEADO
 
     run = p.add_run(texto)
-    run.font.name = 'Times New Roman'
-    run.font.size = Pt(12)
+    run.font.name = FUENTE
+    run.font.size = Pt(TAMANO_BASE)
     run.font.bold = True
     return p
 
@@ -93,14 +151,14 @@ def agregar_titulo_nivel3(doc, texto):
     """Nivel 3: Alineado a la izquierda, Negrita y Cursiva (Art. 9 - IUTECP)"""
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.space_before = Pt(12)
-    p.paragraph_format.space_after = Pt(12)
-    p.paragraph_format.line_spacing = 1.5
-    p.paragraph_format.first_line_indent = Cm(1.25)
+    p.paragraph_format.space_before = ESP_SENCILLO
+    p.paragraph_format.space_after = ESP_SENCILLO
+    p.paragraph_format.line_spacing = INTERLINEADO
+    p.paragraph_format.first_line_indent = SANGRIA_LINEA
 
     run = p.add_run(texto)
-    run.font.name = 'Times New Roman'
-    run.font.size = Pt(12)
+    run.font.name = FUENTE
+    run.font.size = Pt(TAMANO_BASE)
     run.font.bold = True
     run.font.italic = True
     return p
@@ -116,23 +174,23 @@ def agregar_titulo_nivel4(doc, texto, texto_parrafo=''):
     """
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.space_before = Pt(12)
-    p.paragraph_format.space_after = Pt(12)
-    p.paragraph_format.line_spacing = 1.5
-    p.paragraph_format.left_indent = Cm(1.27)
+    p.paragraph_format.space_before = ESP_SENCILLO
+    p.paragraph_format.space_after = ESP_SENCILLO
+    p.paragraph_format.line_spacing = INTERLINEADO
+    p.paragraph_format.left_indent = SANGRIA_NIVEL45
     p.paragraph_format.first_line_indent = Pt(0)
 
     # Encabezado en negrita con punto final
     run_header = p.add_run(texto.rstrip('.') + '. ')
-    run_header.font.name = 'Times New Roman'
-    run_header.font.size = Pt(12)
+    run_header.font.name = FUENTE
+    run_header.font.size = Pt(TAMANO_BASE)
     run_header.font.bold = True
 
     # Texto del párrafo en la misma línea (formato normal)
     if texto_parrafo:
         run_body = p.add_run(texto_parrafo)
-        run_body.font.name = 'Times New Roman'
-        run_body.font.size = Pt(12)
+        run_body.font.name = FUENTE
+        run_body.font.size = Pt(TAMANO_BASE)
     return p
 
 def agregar_titulo_nivel5(doc, texto, texto_parrafo=''):
@@ -166,65 +224,59 @@ def agregar_titulo_nivel5(doc, texto, texto_parrafo=''):
         run_body.font.size = Pt(12)
     return p
 
+def _config_seccion(sec, sup=None):
+    """Aplica los márgenes IUTECP a una sección (Art. 6). `sup` override del margen superior."""
+    sec.top_margin = sup if sup is not None else MARGEN_SUP
+    sec.bottom_margin = MARGEN_INF
+    sec.left_margin = MARGEN_IZQ
+    sec.right_margin = MARGEN_DER
+    sec.different_first_page_header_footer = True
+
 def iniciar_capitulo(doc, numero_romano, titulo):
     """
     Crea un nuevo capítulo con margen superior de 5cm en la primera página (Art. 6),
     centrado, negrita, mayúsculas (Art. 9) y sección continua para volver a 3cm.
     """
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    sec.top_margin = Cm(5)
-    sec.bottom_margin = Cm(3)
-    sec.left_margin = Cm(4)
-    sec.right_margin = Cm(3)
-    sec.different_first_page_header_footer = True
+    _config_seccion(sec, sup=MARGEN_SUP_CAP)
 
     # Título CAPÍTULO X
     p1 = doc.add_paragraph()
     p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p1.paragraph_format.space_after = Pt(24)
+    p1.paragraph_format.space_after = ESP_DOBLE
     r1 = p1.add_run(f"CAPÍTULO {numero_romano}")
-    r1.font.name = 'Times New Roman'
-    r1.font.size = Pt(12)
+    r1.font.name = FUENTE
+    r1.font.size = Pt(TAMANO_BASE)
     r1.font.bold = True
 
     # Título del Capítulo
     p2 = doc.add_paragraph()
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p2.paragraph_format.space_before = Pt(24)
+    p2.paragraph_format.space_before = ESP_DOBLE
     r2 = p2.add_run(titulo.upper())
-    r2.font.name = 'Times New Roman'
-    r2.font.size = Pt(12)
+    r2.font.name = FUENTE
+    r2.font.size = Pt(TAMANO_BASE)
     r2.font.bold = True
 
     # Salto continuo para restaurar margen superior a 3cm en el resto de la página
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    sec2.top_margin = Cm(3)
-    sec2.bottom_margin = Cm(3)
-    sec2.left_margin = Cm(4)
-    sec2.right_margin = Cm(3)
+    _config_seccion(sec2)
 
 def iniciar_seccion_preliminar(doc, titulo):
     """Para secciones preliminares que inician en página nueva (Art. 9, 12)"""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    sec.top_margin = Cm(5)
-    sec.bottom_margin = Cm(3)
-    sec.left_margin = Cm(4)
-    sec.right_margin = Cm(3)
-    sec.different_first_page_header_footer = True
+    _config_seccion(sec, sup=MARGEN_SUP_CAP)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.space_after = Pt(24)
+    p.paragraph_format.space_after = ESP_DOBLE
     r = p.add_run(titulo.upper())
-    r.font.name = 'Times New Roman'
-    r.font.size = Pt(12)
+    r.font.name = FUENTE
+    r.font.size = Pt(TAMANO_BASE)
     r.font.bold = True
 
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    sec2.top_margin = Cm(3)
-    sec2.bottom_margin = Cm(3)
-    sec2.left_margin = Cm(4)
-    sec2.right_margin = Cm(3)
+    _config_seccion(sec2)
 
 def agregar_cita_larga(doc, texto, cita):
     """
@@ -234,19 +286,19 @@ def agregar_cita_larga(doc, texto, cita):
     """
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    p.paragraph_format.left_indent = Cm(1.25)
-    p.paragraph_format.right_indent = Cm(1.25)
+    p.paragraph_format.left_indent = SANGRIA_CITA
+    p.paragraph_format.right_indent = SANGRIA_CITA
     p.paragraph_format.line_spacing = 1.0
-    p.paragraph_format.space_before = Pt(36)
-    p.paragraph_format.space_after = Pt(12)
+    p.paragraph_format.space_before = ESP_CITA_ANTES
+    p.paragraph_format.space_after = ESP_CITA_DESPUES
 
     run_t = p.add_run(texto)
-    run_t.font.name = 'Times New Roman'
-    run_t.font.size = Pt(12)
+    run_t.font.name = FUENTE
+    run_t.font.size = Pt(TAMANO_BASE)
 
     run_c = p.add_run(f" {cita}")
-    run_c.font.name = 'Times New Roman'
-    run_c.font.size = Pt(12)
+    run_c.font.name = FUENTE
+    run_c.font.size = Pt(TAMANO_BASE)
 
 def agregar_referencia(doc, texto):
     """
@@ -257,16 +309,16 @@ def agregar_referencia(doc, texto):
     """
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    p.paragraph_format.left_indent = Cm(0.75)
+    p.paragraph_format.left_indent = SANGRIA_REF
     p.paragraph_format.first_line_indent = Cm(-0.75)
     p.paragraph_format.line_spacing = 1.0
     # 2 espacios sencillos de separación entre referencias (Art. 25)
-    p.paragraph_format.space_after = Pt(24)
+    p.paragraph_format.space_after = ESP_DOBLE
     p.paragraph_format.space_before = Pt(0)
 
     run = p.add_run(texto)
-    run.font.name = 'Times New Roman'
-    run.font.size = Pt(12)
+    run.font.name = FUENTE
+    run.font.size = Pt(TAMANO_BASE)
 
 def set_cell_border(cell, **kwargs):
     """Permite definir bordes de celda personalizados mediante XML"""
@@ -342,7 +394,7 @@ def aplicar_formato_tabla_xml(tabla, lista_anchos_cm):
         for col_idx, ancho in enumerate(lista_anchos_cm):
             set_cell_width(fila.cells[col_idx], ancho)
 
-def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(10), color_texto='000000'):
+def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_OSCURO):
     """Inserta texto formateado en una celda de tabla limpiando párrafos vacíos"""
     for p in cell.paragraphs:
         p._element.getparent().remove(p._element)
@@ -353,7 +405,7 @@ def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(10), color_tex
     p.paragraph_format.line_spacing = 1.0
 
     run = p.add_run(texto)
-    run.font.name  = 'Times New Roman'
+    run.font.name  = FUENTE
     run.font.size  = tamaño
     run.font.bold  = negrita
     run.font.color.rgb = RGBColor(
@@ -371,27 +423,27 @@ def agregar_titulo_cuadro(doc, texto):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     # Espacio doble antes y después de cuadros titulados (Art. 8)
-    p.paragraph_format.space_before = Pt(24)
-    p.paragraph_format.space_after = Pt(12)
-    p.paragraph_format.line_spacing = 1.5
+    p.paragraph_format.space_before = ESP_DOBLE
+    p.paragraph_format.space_after = ESP_SENCILLO
+    p.paragraph_format.line_spacing = INTERLINEADO
 
     # Separar 'Cuadro X' de la descripción para aplicar formatos distintos
     partes = texto.split('. ', 1)
     if len(partes) == 2:
         # "Cuadro X" en negrita
         run_num = p.add_run(partes[0] + '. ')
-        run_num.font.name = 'Times New Roman'
-        run_num.font.size = Pt(12)
+        run_num.font.name = FUENTE
+        run_num.font.size = Pt(TAMANO_BASE)
         run_num.font.bold = True
         # Descripción en cursiva (Art. 6)
         run_desc = p.add_run(partes[1])
-        run_desc.font.name = 'Times New Roman'
-        run_desc.font.size = Pt(12)
+        run_desc.font.name = FUENTE
+        run_desc.font.size = Pt(TAMANO_BASE)
         run_desc.font.italic = True
     else:
         run = p.add_run(texto)
-        run.font.name = 'Times New Roman'
-        run.font.size = Pt(12)
+        run.font.name = FUENTE
+        run.font.size = Pt(TAMANO_BASE)
         run.font.bold = True
 
 def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None):
@@ -401,7 +453,6 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None):
 
     ENCABEZADOS = ['Objetivo Específico', 'Actividades', 'Recursos', 'Indicadores de Logro']
     ANCHOS_CM   = [4.5, 4.5, 3.0, 3.5]
-    AZUL, GRIS  = '4472C4', 'D9E1F2'
 
     tabla = doc.add_table(rows=1 + len(datos), cols=4)
     tabla.style = 'Table Grid'
@@ -409,16 +460,16 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None):
 
     for col, enc in enumerate(ENCABEZADOS):
         cell = tabla.cell(0, col)
-        set_cell_shading(cell, AZUL)
-        _celda(cell, enc, negrita=True, centrado=True, tamaño=Pt(10), color_texto='FFFFFF')
+        set_cell_shading(cell, COLOR_ENCABEZADO)
+        _celda(cell, enc, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
 
     for fila, (obj, act, rec, ind) in enumerate(datos, start=1):
         contenidos = [obj, act, rec, ind]
-        fondo = GRIS if fila % 2 == 0 else 'FFFFFF'
+        fondo = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         for col, texto in enumerate(contenidos):
             cell = tabla.cell(fila, col)
             set_cell_shading(cell, fondo)
-            _celda(cell, texto, tamaño=Pt(10))
+            _celda(cell, texto, tamaño=Pt(TAMANO_TABLA))
 
 def agregar_gantt(doc, semanas, titulo_cuadro=None):
     """Genera la tabla Gantt de actividades con cálculo dinámico del ancho útil"""
@@ -426,7 +477,6 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None):
         agregar_titulo_cuadro(doc, titulo_cuadro)
 
     num_sem = max(len(s[1]) for s in semanas)
-    AZUL, VERDE, GRIS = '4472C4', '70AD47', 'D9E1F2'
 
     COL_ACT_CM = 9.5
     section = doc.sections[-1]
@@ -442,25 +492,25 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None):
     aplicar_formato_tabla_xml(tabla, anchos_gantt)
 
     cell_h = tabla.cell(0, 0)
-    set_cell_shading(cell_h, AZUL)
-    _celda(cell_h, 'Actividades Administrativas', negrita=True, centrado=True, tamaño=Pt(10), color_texto='FFFFFF')
+    set_cell_shading(cell_h, COLOR_ENCABEZADO)
+    _celda(cell_h, 'Actividades Administrativas', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
 
     for s in range(num_sem):
         cell_s = tabla.cell(0, s + 1)
-        set_cell_shading(cell_s, AZUL)
-        _celda(cell_s, f'S{s+1}', negrita=True, centrado=True, tamaño=Pt(9), color_texto='FFFFFF')
+        set_cell_shading(cell_s, COLOR_ENCABEZADO)
+        _celda(cell_s, f'S{s+1}', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO)
 
     for fila, (desc, activas) in enumerate(semanas, start=1):
-        fondo_fila = GRIS if fila % 2 == 0 else 'FFFFFF'
+        fondo_fila = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         cell_a = tabla.cell(fila, 0)
         set_cell_shading(cell_a, fondo_fila)
-        _celda(cell_a, desc, tamaño=Pt(10))
+        _celda(cell_a, desc, tamaño=Pt(TAMANO_TABLA))
 
         for s in range(num_sem):
             cell_s = tabla.cell(fila, s + 1)
             activa = activas[s] if s < len(activas) else False
-            set_cell_shading(cell_s, VERDE if activa else fondo_fila)
-            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(9), color_texto='FFFFFF' if activa else '000000')
+            set_cell_shading(cell_s, COLOR_GANTT_VERDE if activa else fondo_fila)
+            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO)
 
 def _insertar_campo_pagina(run, formato_pagina='PAGE'):
     """Inserta un campo de número de página con el formato especificado en un run."""
@@ -798,6 +848,26 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text):
     run.font.size = Pt(12)
     return p
 
+# ================================================================
+#  INSERCIÓN DE GRÁFICOS DATA-DRIVEN
+# ================================================================
+# Anclas válidas donde pueden insertarse gráficos:
+#   "ubicacion"  -> tras la sección 1.1.7 Ubicación geográfica
+#   "estructura" -> tras la sección 1.1.9 Estructura Organizativa
+ANCLAS_VALIDAS = {"ubicacion", "estructura"}
+
+def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
+    """Inserta todos los gráficos de contenido.py marcados con `tras = ancla`."""
+    graficos = getattr(c, 'GRAFICOS', [])
+    for g in graficos:
+        if g.get("tras") != ancla:
+            continue
+        numero = g.get("numero")
+        titulo = g.get("titulo", f"Gráfico {numero}.")
+        ancho = g.get("ancho_cm", 12)
+        ruta = buscar_imagen_por_numero(carpeta_imagenes, numero)
+        agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho))
+
 def construir_cuerpo_documento(doc):
     """Escribe secuencialmente todas las secciones del informe de pasantía"""
 
@@ -939,12 +1009,18 @@ def construir_cuerpo_documento(doc):
     p_header_c.add_run("\t")  # Salto de tabulador explícito para OXML
     
     run_pp_c = p_header_c.add_run("pp.")
-    run_pp_c.font.name = 'Times New Roman'
-    run_pp_c.font.size = Pt(12)
+    run_pp_c.font.name = FUENTE
+    run_pp_c.font.size = Pt(TAMANO_BASE)
     run_pp_c.font.bold = True
     
-    agregar_fila_lista_preliminar_nativa(doc, "1", "Planificación integral de objetivos específicos", "5")
-    agregar_fila_lista_preliminar_nativa(doc, "2", "Cronograma de actividades administrativas", "6")
+    # Lista de Cuadros: data-driven desde contenido.py (CUADROS_INDICE) o defaults
+    cuadros_indice_def = [
+        ("1", "Planificación integral de objetivos específicos", "5"),
+        ("2", "Cronograma de actividades administrativas", "6"),
+    ]
+    cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
+    for num, desc, pag in cuadros_indice:
+        agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
 
     # --- LISTA DE GRÁFICOS ---
     iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS")
@@ -957,19 +1033,32 @@ def construir_cuerpo_documento(doc):
     agregar_tabulacion_derecha(p_header_g, ancho_g_emu)
     
     run_g_lbl = p_header_g.add_run("GRÁFICO")
-    run_g_lbl.font.name = 'Times New Roman'
-    run_g_lbl.font.size = Pt(12)
+    run_g_lbl.font.name = FUENTE
+    run_g_lbl.font.size = Pt(TAMANO_BASE)
     run_g_lbl.font.bold = True
     
     p_header_g.add_run("\t")  # Salto de tabulador explícito para OXML
     
     run_pp_g = p_header_g.add_run("pp.")
-    run_pp_g.font.name = 'Times New Roman'
-    run_pp_g.font.size = Pt(12)
+    run_pp_g.font.name = FUENTE
+    run_pp_g.font.size = Pt(TAMANO_BASE)
     run_pp_g.font.bold = True
     
-    agregar_fila_lista_preliminar_nativa(doc, "1", "Representación cartográfica y ubicación espacial de la empresa", "3")
-    agregar_fila_lista_preliminar_nativa(doc, "2", "Organigrama estructural y niveles jerárquicos de la organización", "4")
+    # Lista de Gráficos: data-driven desde contenido.py (GRAFICOS con campos "lista" y "pagina")
+    graficos_def = [
+        ("1", "Representación cartográfica y ubicación espacial de la empresa", "3"),
+        ("2", "Organigrama estructural y niveles jerárquicos de la organización", "4"),
+    ]
+    graficos_cfg = getattr(c, 'GRAFICOS', [])
+    if graficos_cfg:
+        for g in graficos_cfg:
+            num = str(g.get("numero", ""))
+            desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
+            pag = str(g.get("pagina", ""))
+            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
+    else:
+        for num, desc, pag in graficos_def:
+            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag)
 
     # --- LISTA DE ANEXOS ---
     if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
@@ -1047,8 +1136,7 @@ def construir_cuerpo_documento(doc):
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
 
     carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
-    ruta_imagen_1 = buscar_imagen_por_numero(carpeta_imagenes, 1)
-    agregar_imagen(doc, ruta_imagen_1, "Gráfico 1. Representación cartográfica y ubicación espacial de la empresa.", ancho=Cm(5))
+    _insertar_graficos_por_ancla(doc, carpeta_imagenes, "ubicacion")
 
     agregar_titulo_nivel3(doc, "1.1.8 Población de los trabajadores de la empresa")
     poblacion_data = getattr(c, 'POBLACION', '')
@@ -1061,8 +1149,7 @@ def construir_cuerpo_documento(doc):
     agregar_titulo_nivel3(doc, "1.1.9 Estructura Organizativa")
     agregar_parrafo_normado(doc, getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.'))
 
-    ruta_imagen_2 = buscar_imagen_por_numero(carpeta_imagenes, 2)
-    agregar_imagen(doc, ruta_imagen_2, "Gráfico 2. Organigrama estructural y niveles jerárquicos de la organización.", ancho=Cm(12))
+    _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
 
     # --- CAPÍTULO II: DIAGNÓSTICO SITUACIONAL ---
     iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL")
@@ -1083,13 +1170,19 @@ def construir_cuerpo_documento(doc):
         agregar_item_lista(doc, i, obj)
 
     agregar_titulo_nivel2(doc, "Planificación integral de objetivos")
-    agregar_parrafo_normado(doc, "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
-    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro="Cuadro 1. Planificación integral de objetivos específicos.")
+    intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
+        "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
+    agregar_parrafo_normado(doc, intro_planif)
+    titulo_planif = getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF)
+    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif)
     doc.add_paragraph()
 
     agregar_titulo_nivel2(doc, "Cronograma de actividades")
-    agregar_parrafo_normado(doc, "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
-    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro="Cuadro 2. Cronograma de actividades administrativas.")
+    intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
+        "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
+    agregar_parrafo_normado(doc, intro_crono)
+    titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
+    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono)
     doc.add_paragraph()
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
@@ -1101,7 +1194,8 @@ def construir_cuerpo_documento(doc):
 
     if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
         agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
-        agregar_parrafo_normado(doc, "De acuerdo a la cita previa, se comprende la relevancia del control sistemático y la inmutabilidad de los registros en los departamentos estratégicos de la empresa.", sangria=True)
+        post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
+        agregar_parrafo_normado(doc, post_cita, sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
     iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS")
@@ -1136,58 +1230,50 @@ def construir_cuerpo_documento(doc):
     if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
         # Portadilla de ANEXOS (Art. 26: una hoja sola con la palabra ANEXOS centrada y en negrita)
         sec_portadilla = doc.add_section(WD_SECTION_START.NEW_PAGE)
-        sec_portadilla.top_margin = Cm(5) # Centrado verticalmente aproximado usando margen
-        sec_portadilla.bottom_margin = Cm(3)
-        sec_portadilla.left_margin = Cm(4)
-        sec_portadilla.right_margin = Cm(3)
-        sec_portadilla.different_first_page_header_footer = True
+        _config_seccion(sec_portadilla, sup=MARGEN_SUP_CAP)
         
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         # Empujar hacia el centro vertical aproximado de la página
-        p.paragraph_format.space_before = Pt(180)
+        p.paragraph_format.space_before = ESP_PORTADILLA_ANEXOS
         run_anexos_tit = p.add_run("ANEXOS")
-        run_anexos_tit.font.name = 'Times New Roman'
-        run_anexos_tit.font.size = Pt(16) # Un poco más grande para portadilla
+        run_anexos_tit.font.name = FUENTE
+        run_anexos_tit.font.size = Pt(TAMANO_PORTADILLA_ANEXOS)
         run_anexos_tit.font.bold = True
 
         # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
         for cod, desc in c.ANEXOS_LISTA:
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
-            sec_anexo.top_margin = Cm(5) # Margen de 5cm para inicio de parte/capítulo/sección nueva
-            sec_anexo.bottom_margin = Cm(3)
-            sec_anexo.left_margin = Cm(4)
-            sec_anexo.right_margin = Cm(3)
-            sec_anexo.different_first_page_header_footer = True
+            _config_seccion(sec_anexo, sup=MARGEN_SUP_CAP)
             
             p_anexo = doc.add_paragraph()
             p_anexo.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p_anexo.paragraph_format.space_before = Pt(0)
-            p_anexo.paragraph_format.space_after = Pt(24)
+            p_anexo.paragraph_format.space_after = ESP_DOBLE
             
             # Nombre del Anexo (ej: ANEXO A)
             run_cod = p_anexo.add_run(cod.upper())
-            run_cod.font.name = 'Times New Roman'
-            run_cod.font.size = Pt(12)
+            run_cod.font.name = FUENTE
+            run_cod.font.size = Pt(TAMANO_BASE)
             run_cod.font.bold = True
             
             # Subtítulo del contenido centrado entre corchetes [ ]
             p_sub = doc.add_paragraph()
             p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            p_sub.paragraph_format.space_before = Pt(12)
-            p_sub.paragraph_format.space_after = Pt(24)
+            p_sub.paragraph_format.space_before = ESP_SENCILLO
+            p_sub.paragraph_format.space_after = ESP_DOBLE
             
             run_desc = p_sub.add_run(f"[{desc}]")
-            run_desc.font.name = 'Times New Roman'
-            run_desc.font.size = Pt(12)
+            run_desc.font.name = FUENTE
+            run_desc.font.size = Pt(TAMANO_BASE)
             run_desc.font.bold = True
             
             # Párrafo de demostración vacío para cumplir la estructura visual
             p_demo = doc.add_paragraph()
             p_demo.alignment = WD_ALIGN_PARAGRAPH.CENTER
             run_demo = p_demo.add_run("(Contenido elaborado por el estudiante)")
-            run_demo.font.name = 'Times New Roman'
-            run_demo.font.size = Pt(10)
+            run_demo.font.name = FUENTE
+            run_demo.font.size = Pt(TAMANO_TABLA)
             run_demo.font.italic = True
 
     return idx_cap1

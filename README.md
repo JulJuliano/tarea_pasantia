@@ -6,40 +6,77 @@ Este proyecto implementa una solución automatizada para la generación de infor
 
 ## 📁 Estructura del Proyecto
 
-El repositorio está organizado con una arquitectura modular y simétrica. Cada estudiante posee su propio directorio aislado, con sus respectivos contenidos, configuraciones e insumos gráficos:
+El repositorio está organizado con una arquitectura modular y **simétrica**: cada estudiante posee exactamente la misma estructura interna de archivos y carpetas, de forma aislada y consistente.
 
 ```text
 tarea_pasantia/
 │
 ├── generador_informe.py     # Script principal (motor de generación de plantillas DOCX y conversión PDF)
-├── selector.py              # Panel de control intercativo y automatizado por CLI
+├── selector.py              # Panel de control interactivo y automatizado por CLI
 ├── .gitignore               # Exclusiones de Git (entornos virtuales, temporales y bloqueos de oficina)
 │
-├── juliano/                 # Directorio del Proyecto de Juliano (TSU Informática)
+├── compartido/              # Recursos transversales a todos los estudiantes
+│   └── normativa/           # Normativa oficial de transcripción del IUTECP
+│       ├── Reglas_1.md
+│       ├── reglas_1.docx
+│       ├── Reglas_2.md
+│       └── Reglas_3.md
+│
+├── juliano/                 # Proyecto de Juliano (TSU en Informática)
 │   ├── contenido.py         # Textos, tablas, objetivos y variables de Juliano
-│   ├── contexto.md          # Diagnóstico situacional, flujo de correspondencias de Presidencia y metas
+│   ├── contexto.md          # Diagnóstico situacional, flujo de correspondencias y metas
 │   ├── cronograma.py        # Generador de cronogramas semanales de Juliano
-│   ├── reportes/            # Salida del Informe de Pasantías (Generado)
-│   │   ├── Informe_Pasantia_IUTECP.docx
-│   │   └── Informe_Pasantia_IUTECP.pdf
-│   ├── cronogramas/         # Salida de Cronogramas Semanales (Generados)
-│   │   ├── Cronograma_Semana1_IUTECP.pdf
-│   │   └── ...
-│   └── imagenes/            # Insumos gráficos (1.png = Mapa, 2.png = Organigrama)
+│   ├── reportes/            # Salida del Informe de Pasantías (DOCX + PDF)
+│   ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Informatica_SemanaN_IUTECP.*)
+│   ├── imagenes/            # Insumos gráficos (1.png = Organigrama general, 2.png = Organigrama del depa)
+│   └── varios/              # Documentos de referencia del pasante (JulianoCardona.docx)
 │
-├── keidy/                   # Directorio del Proyecto de Keidy (TSU Informática)
+├── keidy/                   # Proyecto de Keidy (TSU en Administración)
 │   ├── contenido.py         # Textos, tablas y variables de Keidy
+│   ├── contexto.md          # Diagnóstico situacional de Keidy
 │   ├── cronograma.py        # Generador de cronogramas semanales de Keidy
-│   ├── reportes/            # Salida del Informe de Pasantías (Generado)
-│   ├── cronogramas/         # Salida de Cronogramas Semanales (Generados)
-│   └── imagenes/            # Insumos gráficos (1.png = Mapa, 2.png = Organigrama)
+│   ├── reportes/            # Salida del Informe de Pasantías (DOCX + PDF)
+│   ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Procura_SemanaN_IUTECP.*)
+│   ├── imagenes/            # Insumos gráficos (1.png = Mapa, 2.png = Organigrama)
+│   └── varios/              # Documentos de referencia del pasante
 │
-└── amaal/                   # Directorio del Proyecto de Amaal (TSU Administración)
+└── amaal/                   # Proyecto de Amaal (TSU en Administración)
+    ├── contenido.py         # Capítulos I y II completados con datos reales de IDETEL
+    ├── contexto.md          # Diagnóstico situacional de Amaal
     ├── cronograma.py        # Generador de cronogramas semanales de Amaal
-    ├── reportes/            # Salida del Informe de Pasantías (Vacío hasta definir contenido.py)
-    ├── cronogramas/         # Salida de Cronogramas Semanales (Generados)
-    └── imagenes/            # Insumos gráficos del reporte
+    ├── reportes/            # Salida del Informe de Pasantías (vacío, en desarrollo)
+    ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Administracion_SemanaN_IUTECP.*)
+    ├── imagenes/            # Insumos gráficos (1.png = Ubicación, 2.png = Organigrama general, 3.png = Organigrama del depa)
+    └── varios/              # Documentos de referencia del pasante
 ```
+
+### Convenciones internas (idénticas en cada carpeta de estudiante)
+
+Cada subcarpeta de estudiante contiene **exactamente** los mismos 7 elementos, garantizando consistencia:
+
+| Elemento         | Descripción                                                                       |
+| ---------------- | --------------------------------------------------------------------------------- |
+| `contenido.py`   | Variables académicas del informe (portada, capítulos I-V, referencias, anexos).  |
+| `contexto.md`    | Diagnóstico situacional, flujo del proceso, enfoque metodológico y datos académicos. |
+| `cronograma.py`  | Generador local de cronogramas semanales (DOCX + PDF).                            |
+| `reportes/`      | Salida del Informe de Pasantías compilado por `generador_informe.py`.              |
+| `cronogramas/`   | Salida de los cronogramas semanales compilados por `cronograma.py`.               |
+| `imagenes/`      | Insumos gráficos numerados (`1.png`, `2.png`, ...) definidos en `GRAFICOS`.    |
+| `varios/`        | Documentos de referencia del pasante (puede estar vacío).                         |
+
+### Patrón de nombres de cronogramas
+
+Todos los cronogramas siguen el patrón uniforme:
+
+```
+Cronograma_<Area>_Semana<N>_IUTECP.{docx,pdf}
+```
+
+| Estudiante | `<Area>`         |
+| ---------- | ---------------- |
+| Juliano    | `Informatica`    |
+| Keidy      | `Procura`        |
+| Amaal      | `Administracion`|
 
 ---
 
@@ -93,9 +130,24 @@ El selector realiza un proceso de "montaje y desmontaje" dinámico en la raíz d
 ---
 
 ## 🎨 Insumos y Gráficos por Estudiante
-Para garantizar que las imágenes del informe pertenezcan al estudiante que estás compilando, coloca los archivos gráficos en su respectiva carpeta `imagenes/` utilizando los siguientes nombres estándar:
-* **`1.png`:** Representación cartográfica / ubicación espacial de la empresa.
-* **`2.png`:** Organigrama estructural y niveles jerárquicos de la empresa.
+
+Los gráficos del informe se configuran **data-driven** desde cada `contenido.py` mediante una lista `GRAFICOS`. Cada entrada define el número de imagen, la sección tras la cual se inserta (`tras`), el título y el ancho:
+
+```python
+GRAFICOS = [
+    {"numero": 1, "tras": "ubicacion",  "titulo": "Gráfico 1. Mapa de ubicación...",  "ancho_cm": 5},
+    {"numero": 2, "tras": "estructura", "titulo": "Gráfico 2. Organigrama general...", "ancho_cm": 12},
+    {"numero": 3, "tras": "estructura", "titulo": "Gráfico 3. Organigrama del depa...", "ancho_cm": 12},
+]
+```
+
+**Anclas válidas para `tras`:**
+| Ancla         | Se inserta después de                          |
+| ------------- | ---------------------------------------------- |
+| `"ubicacion"` | Sección 1.1.7 Ubicación geográfica             |
+| `"estructura"`| Sección 1.1.9 Estructura Organizativa          |
+
+Los archivos gráficos se colocan en `<estudiante>/imagenes/` con nombres numéricos (`1.png`, `2.png`, `3.png`, ...). El selector los copia temporalmente a la raíz antes de compilar.
 
 ---
 

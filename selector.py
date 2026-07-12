@@ -19,44 +19,50 @@ except ImportError:
 # Configuración de carpetas y archivos
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 GENERATOR_SCRIPT = os.path.join(BASE_DIR, "generador_informe.py")
+ARCHIVO_CONTENIDO = "contenido.py"
+ARCHIVO_CRONOGRAMA = "cronograma.py"
+CARPETA_REPORTES = "reportes"
+CARPETA_IMAGENES = "imagenes"
+CARPETA_CRONOGRAMAS = "cronogramas"
+PATRON_CRONOGRAMAS = "Cronograma_*.*"
+NOMBRE_DOCX_SALIDA = "Informe_Pasantia_IUTECP.docx"
+NOMBRE_PDF_SALIDA = "Informe_Pasantia_IUTECP.pdf"
+
+# Excluir del escaneo de estudiantes: carpetas especiales del repositorio
+CARPETAS_EXCLUIDAS = {"venv", "compartido", "__pycache__", ".git", ".venv", "env"}
+
 # Buscar el ejecutable de Python del venv de forma prioritaria para evitar ModuleNotFoundError
 PYTHON_EXEC = sys.executable
 for vp in [
     os.path.join(BASE_DIR, "venv", "bin", "python"),
-    os.path.join(BASE_DIR, "keidy", "venv", "bin", "python"),
-    os.path.join(BASE_DIR, "juliano", "venv", "bin", "python")
+    *[os.path.join(BASE_DIR, d, "venv", "bin", "python") for d in os.listdir(BASE_DIR)
+      if os.path.isdir(os.path.join(BASE_DIR, d))],
 ]:
     if os.path.exists(vp):
         PYTHON_EXEC = vp
         break
 
-# Estudiantes
-ESTUDIANTES = [
-    {
-        "id": "juliano",
-        "nombre": "Juliano",
-        "desc": "Informe de Pasantía en Venangocupet (SQLite/TUI)",
-        "dir": os.path.join(BASE_DIR, "juliano"),
-        "source_content": os.path.join(BASE_DIR, "juliano", "contenido.py"),
-        "cronograma_script": os.path.join(BASE_DIR, "juliano", "cronograma.py")
-    },
-    {
-        "id": "amaal",
-        "nombre": "Amaal",
-        "desc": "Informe de Pasantía en Administración",
-        "dir": os.path.join(BASE_DIR, "amaal"),
-        "source_content": os.path.join(BASE_DIR, "amaal", "contenido.py"),
-        "cronograma_script": os.path.join(BASE_DIR, "amaal", "cronograma.py")
-    },
-    {
-        "id": "keidy",
-        "nombre": "Keidy",
-        "desc": "Informe de Pasantía sobre Manuales Administrativos",
-        "dir": os.path.join(BASE_DIR, "keidy"),
-        "source_content": os.path.join(BASE_DIR, "keidy", "contenido.py"),
-        "cronograma_script": os.path.join(BASE_DIR, "keidy", "cronograma.py")
-    }
-]
+# Estudiantes: se detectan dinámicamente como toda subcarpeta con contenido.py o cronograma.py
+def _detectar_estudiantes():
+    """Escanea BASE_DIR y devuelve la lista de estudiantes con contenido.py o cronograma.py."""
+    estudiantes = []
+    for nombre in sorted(os.listdir(BASE_DIR)):
+        ruta = os.path.join(BASE_DIR, nombre)
+        if not os.path.isdir(ruta) or nombre in CARPETAS_EXCLUIDAS or nombre.startswith('.'):
+            continue
+        contenido = os.path.join(ruta, ARCHIVO_CONTENIDO)
+        cronograma = os.path.join(ruta, ARCHIVO_CRONOGRAMA)
+        if os.path.exists(contenido) or os.path.exists(cronograma):
+            estudiantes.append({
+                "id": nombre.lower(),
+                "nombre": nombre.capitalize(),
+                "dir": ruta,
+                "source_content": contenido,
+                "cronograma_script": cronograma,
+            })
+    return estudiantes
+
+ESTUDIANTES = _detectar_estudiantes()
 
 # Acciones globales
 ACCIONES = [
@@ -125,25 +131,26 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
 
     # RENDERIZADO DE ESTUDIANTES
     print(f"{BOLD}{YELLOW}2. Seleccione los estudiantes a procesar:{RESET}")
+    # Mapa id_accion -> índice en sel_acciones para evitar hardcodeo de [0]/[1]
+    idx_accion = {ACCIONES[i]["id"]: i for i in range(len(ACCIONES))}
     for i, est in enumerate(ESTUDIANTES):
         global_idx = total_acciones + i
         is_cursor = global_idx == indice_cursor
         cursor = f"{BLUE}➔{RESET} " if is_cursor else "  "
         check = f"[{GREEN}✔{RESET}]" if sel_estudiantes[i] else "[ ]"
         
-        # Estado de archivos
+        # Estado de archivos: muestra advertencia si la acción activa no encuentra el archivo
         has_content = os.path.exists(est["source_content"])
         has_crono = os.path.exists(est["cronograma_script"])
         
         status_lbl = ""
-        if not has_content and sel_acciones[0]: # Si quiere informe pero no hay contenido.py
+        if not has_content and sel_acciones[idx_accion.get("informe", -1)]:
             status_lbl += f" {RED}(Sin contenido.py){RESET}"
-        if not has_crono and sel_acciones[1]: # Si quiere cronos pero no hay script
+        if not has_crono and sel_acciones[idx_accion.get("cronogramas", -1)]:
             status_lbl += f" {RED}(Sin cronograma.py){RESET}"
 
         nombre_color = f"{BOLD}{GREEN if sel_estudiantes[i] else RESET}{est['nombre']}{RESET}"
         print(f"{cursor}{check} {nombre_color}{status_lbl}")
-        print(f"    {GRAY}{est['desc']}{RESET}")
         print()
 
     print(f"{BOLD}{BLUE}================================================================{RESET}")
@@ -158,13 +165,13 @@ def compilar_informe_estudiante(est):
         print(f"  {est['source_content']}")
         return False
 
-    raiz_content = os.path.join(BASE_DIR, "contenido.py")
+    raiz_content = os.path.join(BASE_DIR, ARCHIVO_CONTENIDO)
     respaldo_content = os.path.join(BASE_DIR, ".contenido_respaldo_temp.py")
     tiene_respaldo = False
     
-    raiz_imagenes = os.path.join(BASE_DIR, "imagenes")
+    raiz_imagenes = os.path.join(BASE_DIR, CARPETA_IMAGENES)
     respaldo_imagenes = os.path.join(BASE_DIR, ".imagenes_respaldo_temp")
-    est_imagenes = os.path.join(est["dir"], "imagenes")
+    est_imagenes = os.path.join(est["dir"], CARPETA_IMAGENES)
     copio_imagenes = False
     tiene_respaldo_imagenes = False
     
@@ -203,15 +210,15 @@ def compilar_informe_estudiante(est):
             return False
 
         # Asegurar directorio de destino
-        dest_reportes = os.path.join(est["dir"], "reportes")
+        dest_reportes = os.path.join(est["dir"], CARPETA_REPORTES)
         os.makedirs(dest_reportes, exist_ok=True)
 
         # Mover archivos generados
-        docx_src = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.docx")
-        pdf_src = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.pdf")
+        docx_src = os.path.join(BASE_DIR, NOMBRE_DOCX_SALIDA)
+        pdf_src = os.path.join(BASE_DIR, NOMBRE_PDF_SALIDA)
         
-        docx_dest = os.path.join(dest_reportes, "Informe_Pasantia_IUTECP.docx")
-        pdf_dest = os.path.join(dest_reportes, "Informe_Pasantia_IUTECP.pdf")
+        docx_dest = os.path.join(dest_reportes, NOMBRE_DOCX_SALIDA)
+        pdf_dest = os.path.join(dest_reportes, NOMBRE_PDF_SALIDA)
         
         if os.path.exists(docx_src):
             shutil.move(docx_src, docx_dest)
@@ -267,11 +274,11 @@ def compilar_cronogramas_estudiante(est):
             return False
 
         # Asegurar directorio de destino para cronogramas
-        dest_cronos = os.path.join(crono_dir, "cronogramas")
+        dest_cronos = os.path.join(crono_dir, CARPETA_CRONOGRAMAS)
         os.makedirs(dest_cronos, exist_ok=True)
 
         # Buscar todos los archivos generados en cualquier subcarpeta de forma recursiva
-        archivos_generados = glob.glob(os.path.join(crono_dir, "**/Cronograma_*.*"), recursive=True)
+        archivos_generados = glob.glob(os.path.join(crono_dir, "**", PATRON_CRONOGRAMAS), recursive=True)
         
         movidos = 0
         for src in archivos_generados:
@@ -280,7 +287,7 @@ def compilar_cronogramas_estudiante(est):
             
             # Evitar procesar archivos que ya están en la carpeta de destino final
             rel_path = src.replace(crono_dir + "/", "")
-            if rel_path.startswith("cronogramas/"):
+            if rel_path.startswith(CARPETA_CRONOGRAMAS + "/"):
                 continue
                 
             shutil.move(src, dest)
@@ -342,10 +349,10 @@ def main():
         if args.acciones:
             acts = args.acciones.lower().split(",")
             if "all" in acts:
-                sel_acciones = [True, True]
+                sel_acciones = [True] * len(ACCIONES)
             else:
-                sel_acciones[0] = "informe" in acts
-                sel_acciones[1] = "cronogramas" in acts
+                for idx, acc in enumerate(ACCIONES):
+                    sel_acciones[idx] = acc["id"] in acts
         
         if args.estudiantes:
             ests = args.estudiantes.lower().split(",")
@@ -354,7 +361,7 @@ def main():
             else:
                 for idx, est_cfg in enumerate(ESTUDIANTES):
                     sel_estudiantes[idx] = est_cfg["id"] in ests
-        # Si no es interactiva y no se pasan argumentos, compila Juliano (ambas cosas) por defecto
+        # Si no es interactiva y no se pasan argumentos, compila el primer estudiante por defecto
 
     # Resolver listas finales
     acciones_a_ejecutar = [ACCIONES[i]["id"] for i, sel in enumerate(sel_acciones) if sel]

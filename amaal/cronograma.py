@@ -10,8 +10,8 @@ from docx.oxml.ns import qn
 # ================================================================
 #  DATOS DEL PASANTE (MODIFIQUE ESTOS VALORES CON SUS DATOS)
 # ================================================================
-PASANTE_NOMBRE = "Amaal [Apellido]"
-PASANTE_CI = "[Cédula]"
+PASANTE_NOMBRE = "Alrifaaie Amaal"
+PASANTE_CI = "31.985.792"
 
 # ================================================================
 #  FUNCIONES DE CONFIGURACIÓN Y FORMATO (ESTÁTICAS - NORMA IUTECP)
