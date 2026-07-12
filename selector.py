@@ -4,37 +4,64 @@
 import os
 import sys
 import shutil
+import glob
 import subprocess
-import termios
-import tty
+import argparse
+
+# Intentamos importar módulos de terminal interactiva (solo Linux/Unix)
+try:
+    import termios
+    import tty
+    SOPORTE_TTY = True
+except ImportError:
+    SOPORTE_TTY = False
 
 # Configuración de carpetas y archivos
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 GENERATOR_SCRIPT = os.path.join(BASE_DIR, "generador_informe.py")
-PYTHON_EXEC = sys.executable  # Usa el intérprete actual (incluyendo venv si está activo)
+# Buscar el ejecutable de Python del venv de forma prioritaria para evitar ModuleNotFoundError
+PYTHON_EXEC = sys.executable
+for vp in [
+    os.path.join(BASE_DIR, "venv", "bin", "python"),
+    os.path.join(BASE_DIR, "keidy", "venv", "bin", "python"),
+    os.path.join(BASE_DIR, "juliano", "venv", "bin", "python")
+]:
+    if os.path.exists(vp):
+        PYTHON_EXEC = vp
+        break
 
-OPCIONES = [
+# Estudiantes
+ESTUDIANTES = [
     {
         "id": "juliano",
         "nombre": "Juliano",
         "desc": "Informe de Pasantía en Venangocupet (SQLite/TUI)",
+        "dir": os.path.join(BASE_DIR, "juliano"),
         "source_content": os.path.join(BASE_DIR, "juliano", "contenido.py"),
-        "dest_dir": os.path.join(BASE_DIR, "juliano")
+        "cronograma_script": os.path.join(BASE_DIR, "juliano", "cronograma.py")
     },
     {
         "id": "amaal",
         "nombre": "Amaal",
-        "desc": "Informe de Pasantía en Administración (Pendiente contenido.py)",
+        "desc": "Informe de Pasantía en Administración",
+        "dir": os.path.join(BASE_DIR, "amaal"),
         "source_content": os.path.join(BASE_DIR, "amaal", "contenido.py"),
-        "dest_dir": os.path.join(BASE_DIR, "amaal")
+        "cronograma_script": os.path.join(BASE_DIR, "amaal", "cronograma.py")
     },
     {
         "id": "keidy",
         "nombre": "Keidy",
         "desc": "Informe de Pasantía sobre Manuales Administrativos",
+        "dir": os.path.join(BASE_DIR, "keidy"),
         "source_content": os.path.join(BASE_DIR, "keidy", "contenido.py"),
-        "dest_dir": os.path.join(BASE_DIR, "keidy")
+        "cronograma_script": os.path.join(BASE_DIR, "keidy", "cronograma.py")
     }
+]
+
+# Acciones globales
+ACCIONES = [
+    {"id": "informe", "nombre": "Compilar Informe de Pasantía (.docx y .pdf)", "def": True},
+    {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True}
 ]
 
 # Códigos de escape ANSI para colores y formato
@@ -46,12 +73,18 @@ YELLOW = "\033[38;2;241;196;15m"
 RED = "\033[38;2;231;76;60m"
 CYAN = "\033[38;2;26;188;156m"
 GRAY = "\033[38;2;127;140;141m"
-DARK_GRAY = "\033[38;2;44;62;80m"
 
 def obtener_tecla():
     """Lee una tecla del teclado en modo raw para interactividad instantánea."""
+    if not SOPORTE_TTY or not sys.stdin.isatty():
+        return '\n' # Retorno de nueva línea por defecto si no es TTY
+        
     fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
+    try:
+        old_settings = termios.tcgetattr(fd)
+    except Exception:
+        return '\n'
+        
     try:
         tty.setraw(sys.stdin.fileno())
         ch = sys.stdin.read(1)
@@ -65,47 +98,66 @@ def obtener_tecla():
                     return 'DOWN'
         return ch
     finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        try:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        except Exception:
+            pass
 
-def dibujar_interfaz(indice_cursor, seleccionados):
-    """Renderiza el menú interactivo en la terminal con una estética premium."""
+def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
+    """Renderiza el menú interactivo con selección de acciones y estudiantes."""
     os.system("clear")
     print(f"{BOLD}{BLUE}================================================================{RESET}")
-    print(f"{BOLD}{CYAN}             IUTECP - SELECTOR MULTI-COMPILACIÓN                {RESET}")
+    print(f"{BOLD}{CYAN}             IUTECP - PANEL DE CONTROL MULTI-COMPILACIÓN         {RESET}")
     print(f"{BOLD}{BLUE}================================================================{RESET}")
-    print(f"{GRAY}Usa las flechas {BOLD}↑ / ↓{RESET}{GRAY} para moverte, {BOLD}Espacio{RESET}{GRAY} para seleccionar y {BOLD}Enter{RESET}{GRAY} para compilar.{RESET}")
+    print(f"{GRAY}Usa las flechas {BOLD}↑ / ↓{RESET}{GRAY} para moverte, {BOLD}Espacio{RESET}{GRAY} para marcar/desmarcar y {BOLD}Enter{RESET}{GRAY} para iniciar.{RESET}")
     print()
 
-    for i, opc in enumerate(OPCIONES):
-        cursor = f"{BLUE}➔{RESET} " if i == indice_cursor else "  "
-        check = f"[{GREEN}✔{RESET}]" if seleccionados[i] else "[ ]"
+    # RENDERIZADO DE ACCIONES
+    print(f"{BOLD}{YELLOW}1. Seleccione las acciones a realizar:{RESET}")
+    total_acciones = len(ACCIONES)
+    for i, acc in enumerate(ACCIONES):
+        is_cursor = i == indice_cursor
+        cursor = f"{BLUE}➔{RESET} " if is_cursor else "  "
+        check = f"[{GREEN}✔{RESET}]" if sel_acciones[i] else "[ ]"
+        lbl_color = f"{BOLD}{CYAN if sel_acciones[i] else RESET}{acc['nombre']}{RESET}"
+        print(f"{cursor}{check} {lbl_color}")
+    print()
+
+    # RENDERIZADO DE ESTUDIANTES
+    print(f"{BOLD}{YELLOW}2. Seleccione los estudiantes a procesar:{RESET}")
+    for i, est in enumerate(ESTUDIANTES):
+        global_idx = total_acciones + i
+        is_cursor = global_idx == indice_cursor
+        cursor = f"{BLUE}➔{RESET} " if is_cursor else "  "
+        check = f"[{GREEN}✔{RESET}]" if sel_estudiantes[i] else "[ ]"
         
-        # Validación de si existe contenido.py para la opción
-        existe_src = os.path.exists(opc["source_content"])
+        # Estado de archivos
+        has_content = os.path.exists(est["source_content"])
+        has_crono = os.path.exists(est["cronograma_script"])
+        
         status_lbl = ""
-        if not existe_src:
-            status_lbl = f" {RED}(Falta contenido.py){RESET}"
-            
-        nombre_color = f"{BOLD}{GREEN if seleccionados[i] else RESET}{opc['nombre']}{RESET}"
-        
-        print(f"{cursor}{check} {nombre_color} {status_lbl}")
-        print(f"    {GRAY}{opc['desc']}{RESET}")
+        if not has_content and sel_acciones[0]: # Si quiere informe pero no hay contenido.py
+            status_lbl += f" {RED}(Sin contenido.py){RESET}"
+        if not has_crono and sel_acciones[1]: # Si quiere cronos pero no hay script
+            status_lbl += f" {RED}(Sin cronograma.py){RESET}"
+
+        nombre_color = f"{BOLD}{GREEN if sel_estudiantes[i] else RESET}{est['nombre']}{RESET}"
+        print(f"{cursor}{check} {nombre_color}{status_lbl}")
+        print(f"    {GRAY}{est['desc']}{RESET}")
         print()
 
     print(f"{BOLD}{BLUE}================================================================{RESET}")
     print(f"{GRAY}Presiona {BOLD}Q{RESET}{GRAY} para salir.{RESET}")
 
-def compilar_proyecto(opcion):
-    """Copia el contenido, ejecuta la compilación y mueve los archivos generados."""
-    print(f"\n{BOLD}{BLUE}» Iniciando compilación de {opcion['nombre']}...{RESET}")
+def compilar_informe_estudiante(est):
+    """Genera el informe de un estudiante y lo mueve a su carpeta de reportes."""
+    print(f"\n{BOLD}{CYAN}» Generando Informe para {est['nombre']}...{RESET}")
     
-    # 1. Verificar si existe el archivo fuente
-    if not os.path.exists(opcion["source_content"]):
-        print(f"{RED}⚠ Error: No se encontró el archivo de contenido para {opcion['nombre']} en:{RESET}")
-        print(f"  {opcion['source_content']}")
+    if not os.path.exists(est["source_content"]):
+        print(f"{RED}⚠ Omitido: No se encontró contenido.py para {est['nombre']} en:{RESET}")
+        print(f"  {est['source_content']}")
         return False
 
-    # 2. Hacer respaldo del contenido.py raíz si existe
     raiz_content = os.path.join(BASE_DIR, "contenido.py")
     respaldo_content = os.path.join(BASE_DIR, ".contenido_respaldo_temp.py")
     tiene_respaldo = False
@@ -115,10 +167,10 @@ def compilar_proyecto(opcion):
         tiene_respaldo = True
 
     try:
-        # 3. Copiar el contenido del proyecto a la raíz
-        shutil.copy2(opcion["source_content"], raiz_content)
+        # Copiar contenido.py a la raíz
+        shutil.copy2(est["source_content"], raiz_content)
         
-        # 4. Ejecutar el compilador
+        # Ejecutar generador_informe.py
         print(f"{GRAY}Ejecutando generador_informe.py...{RESET}")
         proc = subprocess.Popen(
             [PYTHON_EXEC, GENERATOR_SCRIPT],
@@ -126,89 +178,201 @@ def compilar_proyecto(opcion):
             stderr=subprocess.STDOUT,
             text=True
         )
-        
-        # Mostrar el progreso en vivo de la compilación
         for line in proc.stdout:
             print(f"  {GRAY}{line.strip()}{RESET}")
-            
         proc.wait()
         
         if proc.returncode != 0:
-            print(f"{RED}⚠ Error durante la compilación.{RESET}")
+            print(f"{RED}⚠ Error durante la compilación del informe de {est['nombre']}.{RESET}")
             return False
 
-        # 5. Mover los archivos resultantes a la carpeta destino
-        docx_source = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.docx")
-        pdf_source = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.pdf")
+        # Asegurar directorio de destino
+        dest_reportes = os.path.join(est["dir"], "reportes")
+        os.makedirs(dest_reportes, exist_ok=True)
+
+        # Mover archivos generados
+        docx_src = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.docx")
+        pdf_src = os.path.join(BASE_DIR, "Informe_Pasantia_IUTECP.pdf")
         
-        docx_dest = os.path.join(opcion["dest_dir"], "Informe_Pasantia_IUTECP.docx")
-        pdf_dest = os.path.join(opcion["dest_dir"], "Informe_Pasantia_IUTECP.pdf")
+        docx_dest = os.path.join(dest_reportes, "Informe_Pasantia_IUTECP.docx")
+        pdf_dest = os.path.join(dest_reportes, "Informe_Pasantia_IUTECP.pdf")
         
-        if os.path.exists(docx_source):
-            shutil.move(docx_source, docx_dest)
-            print(f"{GREEN}✔ Archivo Word guardado en: {docx_dest}{RESET}")
-            
-        if os.path.exists(pdf_source):
-            shutil.move(pdf_source, pdf_dest)
-            print(f"{GREEN}✔ Archivo PDF guardado en: {pdf_dest}{RESET}")
+        if os.path.exists(docx_src):
+            shutil.move(docx_src, docx_dest)
+            print(f"{GREEN}✔ Informe Word guardado en: {docx_dest}{RESET}")
+        if os.path.exists(pdf_src):
+            shutil.move(pdf_src, pdf_dest)
+            print(f"{GREEN}✔ Informe PDF guardado en: {pdf_dest}{RESET}")
             
         return True
         
     finally:
-        # 6. Restaurar el contenido.py raíz original
+        # Restaurar respaldo
         if tiene_respaldo:
             shutil.move(respaldo_content, raiz_content)
         elif os.path.exists(raiz_content):
             os.remove(raiz_content)
 
-def main():
-    # Inicializar estado
-    indice_cursor = 0
-    seleccionados = [False] * len(OPCIONES)
+def compilar_cronogramas_estudiante(est):
+    """Ejecuta el script de cronograma de un estudiante y organiza los archivos resultantes."""
+    print(f"\n{BOLD}{CYAN}» Generando Cronogramas para {est['nombre']}...{RESET}")
     
-    # Por defecto, si el usuario está corriendo esto, marcar a Juliano
-    seleccionados[0] = True
+    if not os.path.exists(est["cronograma_script"]):
+        print(f"{RED}⚠ Omitido: No se encontró cronograma.py para {est['nombre']}.{RESET}")
+        return False
 
-    while True:
-        dibujar_interfaz(indice_cursor, seleccionados)
-        tecla = obtener_tecla()
+    crono_dir = est["dir"]
+    script_name = os.path.basename(est["cronograma_script"])
+
+    # Ejecutar en el subdirectorio del estudiante
+    print(f"{GRAY}Ejecutando {script_name} en {crono_dir}...{RESET}")
+    try:
+        proc = subprocess.Popen(
+            [PYTHON_EXEC, script_name],
+            cwd=crono_dir,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        for line in proc.stdout:
+            print(f"  {GRAY}{line.strip()}{RESET}")
+        proc.wait()
+
+        if proc.returncode != 0:
+            print(f"{RED}⚠ Error en la ejecución de {script_name}.{RESET}")
+            return False
+
+        # Asegurar directorio de destino para cronogramas
+        dest_cronos = os.path.join(crono_dir, "cronogramas")
+        os.makedirs(dest_cronos, exist_ok=True)
+
+        # Buscar todos los archivos generados en cualquier subcarpeta de forma recursiva
+        archivos_generados = glob.glob(os.path.join(crono_dir, "**/Cronograma_*.*"), recursive=True)
         
-        if tecla == 'UP':
-            indice_cursor = (indice_cursor - 1) % len(OPCIONES)
-        elif tecla == 'DOWN':
-            indice_cursor = (indice_cursor + 1) % len(OPCIONES)
-        elif tecla == ' ':
-            seleccionados[indice_cursor] = not seleccionados[indice_cursor]
-        elif tecla in ('\r', '\n'):
-            break
-        elif tecla in ('q', 'Q', '\x03'):  # q, Q o Ctrl+C
-            print("\nSaliendo del selector...")
-            sys.exit(0)
+        movidos = 0
+        for src in archivos_generados:
+            basename = os.path.basename(src)
+            dest = os.path.join(dest_cronos, basename)
+            
+            # Evitar procesar archivos que ya están en la carpeta de destino final
+            rel_path = src.replace(crono_dir + "/", "")
+            if rel_path.startswith("cronogramas/"):
+                continue
+                
+            shutil.move(src, dest)
+            movidos += 1
 
-    # Validar que al menos haya uno seleccionado
-    proyectos_a_compilar = [OPCIONES[i] for i, sel in enumerate(seleccionados) if sel]
-    if not proyectos_a_compilar:
-        print(f"\n{YELLOW}No seleccionaste ningún proyecto para compilar.{RESET}")
+        # Limpiar la carpeta temporal 'cronogramas generados' si quedó vacía
+        crono_gen_dir = os.path.join(crono_dir, "cronogramas generados")
+        if os.path.exists(crono_gen_dir) and not os.listdir(crono_gen_dir):
+            os.rmdir(crono_gen_dir)
+
+        print(f"{GREEN}✔ Se procesaron y organizaron {movidos} archivos de cronogramas en: {dest_cronos}{RESET}")
+        return True
+
+    except Exception as e:
+        print(f"{RED}⚠ Error ejecutando cronogramas: {e}{RESET}")
+        return False
+
+def main():
+    # Procesamiento de argumentos
+    parser = argparse.ArgumentParser(description="Selector y compilador de informes IUTECP.")
+    parser.add_argument("--estudiantes", type=str, help="Estudiantes a procesar separados por comas (juliano, keidy, amaal, all)")
+    parser.add_argument("--acciones", type=str, help="Acciones a realizar separadas por comas (informe, cronogramas, all)")
+    args = parser.parse_args()
+
+    # Determinar si usamos modo interactivo o directo
+    usar_interactivo = sys.stdin.isatty() and not (args.estudiantes or args.acciones)
+
+    # Estado de selecciones por defecto
+    sel_acciones = [acc["def"] for acc in ACCIONES]
+    sel_estudiantes = [False] * len(ESTUDIANTES)
+    sel_estudiantes[0] = True # Juliano por defecto
+
+    if usar_interactivo:
+        # Modo interactivo TTY
+        total_opciones = len(ACCIONES) + len(ESTUDIANTES)
+        indice_cursor = 0
+
+        while True:
+            dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes)
+            tecla = obtener_tecla()
+            
+            if tecla == 'UP':
+                indice_cursor = (indice_cursor - 1) % total_opciones
+            elif tecla == 'DOWN':
+                indice_cursor = (indice_cursor + 1) % total_opciones
+            elif tecla == ' ':
+                if indice_cursor < len(ACCIONES):
+                    sel_acciones[indice_cursor] = not sel_acciones[indice_cursor]
+                else:
+                    est_idx = indice_cursor - len(ACCIONES)
+                    sel_estudiantes[est_idx] = not sel_estudiantes[est_idx]
+            elif tecla in ('\r', '\n'):
+                break
+            elif tecla in ('q', 'Q', '\x03'):
+                print("\nSaliendo del selector...")
+                sys.exit(0)
+    else:
+        # Modo automático / Argumentos de consola
+        if args.acciones:
+            acts = args.acciones.lower().split(",")
+            if "all" in acts:
+                sel_acciones = [True, True]
+            else:
+                sel_acciones[0] = "informe" in acts
+                sel_acciones[1] = "cronogramas" in acts
+        
+        if args.estudiantes:
+            ests = args.estudiantes.lower().split(",")
+            if "all" in ests:
+                sel_estudiantes = [True] * len(ESTUDIANTES)
+            else:
+                for idx, est_cfg in enumerate(ESTUDIANTES):
+                    sel_estudiantes[idx] = est_cfg["id"] in ests
+        # Si no es interactiva y no se pasan argumentos, compila Juliano (ambas cosas) por defecto
+
+    # Resolver listas finales
+    acciones_a_ejecutar = [ACCIONES[i]["id"] for i, sel in enumerate(sel_acciones) if sel]
+    estudiantes_a_procesar = [ESTUDIANTES[i] for i, sel in enumerate(sel_estudiantes) if sel]
+
+    if not acciones_a_ejecutar:
+        print(f"\n{YELLOW}No se seleccionó ninguna acción a realizar.{RESET}")
+        sys.exit(0)
+    if not estudiantes_a_procesar:
+        print(f"\n{YELLOW}No se seleccionó ningún estudiante para procesar.{RESET}")
         sys.exit(0)
 
-    # Ejecutar compilaciones
-    completados = 0
-    fallidos = 0
+    # Procesar
+    print(f"\n{BOLD}{BLUE}================================================================{RESET}")
+    print(f"{BOLD}{CYAN}INICIANDO PROCESAMIENTO MULTI-COMPILACIÓN{RESET}")
+    print(f"{BOLD}{BLUE}================================================================{RESET}")
     
-    print(f"\n{BOLD}{CYAN}Comenzando compilación de {len(proyectos_a_compilar)} proyectos...{RESET}")
-    
-    for opc in proyectos_a_compilar:
-        exito = compilar_proyecto(opc)
-        if exito:
-            completados += 1
-        else:
-            fallidos += 1
+    exito_total = 0
+    errores_totales = 0
+
+    for est in estudiantes_a_procesar:
+        print(f"\n{BOLD}{YELLOW}➔ PROCESANDO GRUPO: {est['nombre'].upper()}{RESET}")
+        
+        # 1. Compilar informe si aplica
+        if "informe" in acciones_a_ejecutar:
+            if compilar_informe_estudiante(est):
+                exito_total += 1
+            else:
+                errores_totales += 1
+                
+        # 2. Compilar cronogramas si aplica
+        if "cronogramas" in acciones_a_ejecutar:
+            if compilar_cronogramas_estudiante(est):
+                exito_total += 1
+            else:
+                errores_totales += 1
 
     print(f"\n{BOLD}{BLUE}================================================================{RESET}")
-    print(f"{BOLD}{GREEN}Compilación finalizada:{RESET}")
-    print(f"  Procesados con éxito: {GREEN}{completados}{RESET}")
-    if fallidos > 0:
-        print(f"  Fallidos/Omitidos: {RED}{fallidos}{RESET}")
+    print(f"{BOLD}{GREEN}PROCESO COMPLETADO{RESET}")
+    print(f"  Tareas exitosas: {GREEN}{exito_total}{RESET}")
+    if errores_totales > 0:
+        print(f"  Tareas fallidas: {RED}{errores_totales}{RESET}")
     print(f"{BOLD}{BLUE}================================================================{RESET}")
 
 if __name__ == "__main__":

@@ -994,14 +994,15 @@ def construir_cuerpo_documento(doc):
         run_pp_a.font.size = Pt(12)
         run_pp_a.font.bold = True
         
-        for idx, (cod, desc) in enumerate(c.ANEXOS_LISTA):
+        anexos_lista = getattr(c, 'ANEXOS_LISTA', [])
+        for idx, (cod, desc) in enumerate(anexos_lista):
             letra = cod.split(" ")[-1]
             pag_est = str(13 + idx)
             agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est)
 
     # --- REGISTRO DEL INICIO DEL CUERPO ---
     iniciar_seccion_preliminar(doc, "INTRODUCCIÓN")
-    agregar_parrafo_normado(doc, c.INTRODUCCION_TEXTO)
+    agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
     
     # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
     idx_cap1 = len(doc.sections)
@@ -1009,105 +1010,126 @@ def construir_cuerpo_documento(doc):
     # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
     iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL")
     agregar_titulo_nivel2(doc, "IDENTIFICACIÓN DE LA EMPRESA")
-    if hasattr(c, 'IDENTIFICACION_EMPRESA') and c.IDENTIFICACION_EMPRESA:
-        agregar_parrafo_normado(doc, c.IDENTIFICACION_EMPRESA)
+    identificacion_empresa = getattr(c, 'IDENTIFICACION_EMPRESA', '')
+    if identificacion_empresa:
+        agregar_parrafo_normado(doc, identificacion_empresa)
 
     agregar_titulo_nivel3(doc, "1.1.1 Razón social")
-    agregar_parrafo_normado(doc, c.RAZON_SOCIAL, sangria=False)
+    agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
 
     agregar_titulo_nivel3(doc, "1.1.2 Reseña histórica")
-    for parrafo in c.RESENA_HISTORICA:
-        agregar_parrafo_normado(doc, parrafo)
+    resena_data = getattr(c, 'RESENA_HISTORICA', [])
+    if isinstance(resena_data, str):
+        agregar_parrafo_normado(doc, resena_data)
+    else:
+        for parrafo in resena_data:
+            agregar_parrafo_normado(doc, parrafo)
 
     agregar_titulo_nivel3(doc, "1.1.3 Misión")
-    agregar_parrafo_normado(doc, c.MISION, cursiva=True)
+    agregar_parrafo_normado(doc, getattr(c, 'MISION', 'Misión no proporcionada.'), cursiva=True)
 
     agregar_titulo_nivel3(doc, "1.1.4 Visión")
-    agregar_parrafo_normado(doc, c.VISION, cursiva=True)
+    agregar_parrafo_normado(doc, getattr(c, 'VISION', 'Visión no proporcionada.'), cursiva=True)
 
     agregar_titulo_nivel3(doc, "1.1.5 Valores")
     agregar_parrafo_normado(doc, "Los valores que orientan las actividades de la organización destacan:")
-    for i, (valor, descripcion) in enumerate(c.VALORES, 1):
+    valores_data = getattr(c, 'VALORES', [])
+    for i, (valor, descripcion) in enumerate(valores_data, 1):
         agregar_item_lista(doc, i, descripcion, valor)
 
     agregar_titulo_nivel3(doc, "1.1.6 Objetivos Organizacionales")
     agregar_parrafo_normado(doc, "Entre sus objetivos organizacionales se encuentran:")
-    for i, objetivo in enumerate(c.OBJETIVOS_ORG, 1):
+    objs_org = getattr(c, 'OBJETIVOS_ORG', [])
+    for i, objetivo in enumerate(objs_org, 1):
         agregar_item_lista(doc, i, objetivo)
 
     agregar_titulo_nivel3(doc, "1.1.7 Ubicación geográfica")
-    agregar_parrafo_normado(doc, c.UBICACION, sangria=False)
+    agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
 
-    ruta_imagen_1 = buscar_imagen_por_numero(c.CARPETA_IMAGENES, 1)
+    carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
+    ruta_imagen_1 = buscar_imagen_por_numero(carpeta_imagenes, 1)
     agregar_imagen(doc, ruta_imagen_1, "Gráfico 1. Representación cartográfica y ubicación espacial de la empresa.", ancho=Cm(5))
 
     agregar_titulo_nivel3(doc, "1.1.8 Población de los trabajadores de la empresa")
-    for parrafo in c.POBLACION:
-        agregar_parrafo_normado(doc, parrafo)
+    poblacion_data = getattr(c, 'POBLACION', '')
+    if isinstance(poblacion_data, str):
+        agregar_parrafo_normado(doc, poblacion_data)
+    else:
+        for parrafo in poblacion_data:
+            agregar_parrafo_normado(doc, parrafo)
 
     agregar_titulo_nivel3(doc, "1.1.9 Estructura Organizativa")
-    agregar_parrafo_normado(doc, c.ORGANIGRAMA_TEXTO)
+    agregar_parrafo_normado(doc, getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.'))
 
-    ruta_imagen_2 = buscar_imagen_por_numero(c.CARPETA_IMAGENES, 2)
+    ruta_imagen_2 = buscar_imagen_por_numero(carpeta_imagenes, 2)
     agregar_imagen(doc, ruta_imagen_2, "Gráfico 2. Organigrama estructural y niveles jerárquicos de la organización.", ancho=Cm(12))
 
     # --- CAPÍTULO II: DIAGNÓSTICO SITUACIONAL ---
     iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL")
     agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática")
-    for parrafo in c.SITUACION_PROBLEMATICA:
-        agregar_parrafo_normado(doc, parrafo)
+    situacion_problematica = getattr(c, 'SITUACION_PROBLEMATICA', [])
+    if isinstance(situacion_problematica, str):
+        agregar_parrafo_normado(doc, situacion_problematica)
+    else:
+        for parrafo in situacion_problematica:
+            agregar_parrafo_normado(doc, parrafo)
 
     agregar_titulo_nivel2(doc, "Objetivo General")
-    agregar_parrafo_normado(doc, c.OBJETIVO_GENERAL)
+    agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
 
     agregar_titulo_nivel2(doc, "Objetivos Específicos")
-    for i, obj in enumerate(c.OBJETIVOS_ESPECIFICOS, 1):
+    objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
+    for i, obj in enumerate(objs_especificos, 1):
         agregar_item_lista(doc, i, obj)
 
     agregar_titulo_nivel2(doc, "Planificación integral de objetivos")
     agregar_parrafo_normado(doc, "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
-    agregar_tabla_planificacion(doc, c.PLANIFICACION_DATOS, titulo_cuadro="Cuadro 1. Planificación integral de objetivos específicos.")
+    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro="Cuadro 1. Planificación integral de objetivos específicos.")
     doc.add_paragraph()
 
     agregar_titulo_nivel2(doc, "Cronograma de actividades")
     agregar_parrafo_normado(doc, "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
-    agregar_gantt(doc, c.CRONOGRAMA_DATOS, titulo_cuadro="Cuadro 2. Cronograma de actividades administrativas.")
+    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro="Cuadro 2. Cronograma de actividades administrativas.")
     doc.add_paragraph()
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     iniciar_capitulo(doc, "III", "MARCO TEÓRICO")
     agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales")
-    for parrafo in c.BASES_TEORICAS_PARRAFOS:
+    bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
+    for parrafo in bases_teoricas:
         agregar_parrafo_normado(doc, parrafo)
 
     if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
-        agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, c.CITA_LARGA_AUTOR)
+        agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
         agregar_parrafo_normado(doc, "De acuerdo a la cita previa, se comprende la relevancia del control sistemático y la inmutabilidad de los registros en los departamentos estratégicos de la empresa.", sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
     iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS")
     agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana")
-    agregar_parrafo_normado(doc, c.ACTIVIDADES_DESCRIPCION)
-    for i, actividad in enumerate(c.ACTIVIDADES_LISTA, 1):
+    agregar_parrafo_normado(doc, getattr(c, 'ACTIVIDADES_DESCRIPCION', 'Descripción de actividades ejecutadas.'))
+    actividades_lista = getattr(c, 'ACTIVIDADES_LISTA', [])
+    for i, actividad in enumerate(actividades_lista, 1):
         agregar_item_lista(doc, i, actividad)
 
     # --- CAPÍTULO V: CONCLUSIONES Y RECOMENDACIONES ---
     iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES")
     agregar_titulo_nivel2(doc, "Conclusiones")
-    for i, conclusion in enumerate(c.CONCLUSIONES, 1):
+    conclusiones = getattr(c, 'CONCLUSIONES', [])
+    for i, conclusion in enumerate(conclusiones, 1):
         agregar_item_lista(doc, i, conclusion)
 
     agregar_titulo_nivel2(doc, "Recomendaciones")
-    for i, recomendacion in enumerate(c.RECOMENDACIONES, 1):
+    recomendaciones = getattr(c, 'RECOMENDACIONES', [])
+    for i, recomendacion in enumerate(recomendaciones, 1):
         agregar_item_lista(doc, i, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
     iniciar_seccion_preliminar(doc, "REFERENCIAS")
-    # 3 espacios sencillos de separación bajo el título REFERENCIAS (Formato de Página)
     p_sep = doc.add_paragraph()
     p_sep.paragraph_format.space_before = Pt(24)
     p_sep.paragraph_format.space_after = Pt(0)
-    for ref in c.REFERENCIAS_LISTA:
+    referencias_lista = getattr(c, 'REFERENCIAS_LISTA', [])
+    for ref in referencias_lista:
         agregar_referencia(doc, ref)
 
     # --- ANEXOS ---
