@@ -207,22 +207,20 @@ def generar_documento_semana(datos):
         row.cells[1].width = Cm(7.30)
 
     set_cell_format(sign_table.rows[0].cells[0], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[1].cells[0], "Firma del Pasante:\nKeidy Guzmán |  C.I.: 28.706.352", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\n[Nombre del Tutor] | C.I.: [Cédula]", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nMartina Rondón | C.I.: 12.208.768", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[1].cells[0], "Firma del Pasante:\nKeidy Guzmán |  C.I.: 28.706.352", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nMartina Rondón | C.I.: 12.208.768", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.add_paragraph()
 
     # 8. Bloque Sello Corporativo
-#    p_sello = doc.add_paragraph()
-#    p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
-#    p_sello.paragraph_format.space_before = Pt(12)
-#    run_s = p_sello.add_run("SELLO DE LA EMPRESA")
-#    run_s.font.name = 'Times New Roman'
-#    run_s.font.size = Pt(10)
-#    run_s.font.bold = True
+    p_sello = doc.add_paragraph()
+    p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_sello.paragraph_format.space_before = Pt(12)
+    run_s = p_sello.add_run("SELLO DE LA EMPRESA")
+    run_s.font.name = 'Times New Roman'
+    run_s.font.size = Pt(10)
+    run_s.font.bold = True
 
     output_dir = "cronogramas generados"
     os.makedirs(output_dir, exist_ok=True)
