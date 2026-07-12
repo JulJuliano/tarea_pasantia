@@ -40,11 +40,11 @@ AUTOR_DATOS = [
     "Autor: Keidy Guzmán",
     "C.I.: 28.706.352",
     "",
-    "Tutor Industrial: [Nombre del Tutor Industrial]",
-    "C.I.: [Cédula del Tutor Industrial]",
+    "Tutor Industrial: Martina Rondón",
+    "C.I.: 12.208.768",
     "",
-    "Tutor Académico: [Nombre del Tutor Académico]",
-    "C.I.: [Cédula del Tutor Académico]"
+    "Tutor Académico: Lic. Carlos Mendoza",
+    "C.I.: 4.273.815"
 ]
 FECHA_LUGAR = "El Tigre, julio de 2026"
 
