@@ -45,7 +45,8 @@ AUTOR_DATOS = [
     "Tutor Industrial: [Nombre del Tutor Industrial]",
     "C.I.: [Cédula del Tutor Industrial]",
     "",
-    "Tutor Académico: [Nombre del Tutor Académico]"
+    "Tutor Académico: [Nombre del Tutor Académico]",
+    "C.I.: [Cédula del Tutor Académico]"
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"
