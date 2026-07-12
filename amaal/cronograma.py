@@ -219,13 +219,13 @@ def generar_documento_semana(datos):
     doc.add_paragraph()
 
     # 8. Bloque Sello Corporativo
-#    p_sello = doc.add_paragraph()
-#    p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
-#    p_sello.paragraph_format.space_before = Pt(12)
-#    run_s = p_sello.add_run("SELLO DE LA EMPRESA")
-#    run_s.font.name = 'Times New Roman'
-#    run_s.font.size = Pt(10)
-#    run_s.font.bold = True
+    p_sello = doc.add_paragraph()
+    p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_sello.paragraph_format.space_before = Pt(12)
+    run_s = p_sello.add_run("SELLO DE LA EMPRESA")
+    run_s.font.name = 'Times New Roman'
+    run_s.font.size = Pt(10)
+    run_s.font.bold = True
 
     fn_word = f"Cronograma_Administracion_Semana{datos['num_semana']}_IUTECP.docx"
     doc.save(fn_word)

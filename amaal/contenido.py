@@ -59,20 +59,29 @@ DEDICATORIA = "Aquí va la dedicatoria."
 AGRADECIMIENTOS = "Aquí van los agradecimientos."
 
 RESUMEN_TEXTO = (
-    "Aquí va el resumen del informe. El presente informe describe la evaluación del control administrativo "
-    "aplicado a la gestión de solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de "
-    "Telecomunicaciones, C.A. (IDETEL). La investigación se enmarca en la modalidad de proyecto factible "
-    "apoyado en un diagnóstico de campo. [Completar con el resto del resumen: objetivo general, metodología, "
-    "resultados y conclusiones principales.]"
+    "El presente informe describe la evaluación del control administrativo aplicado a la gestión de solicitudes "
+    "de servicios de telecomunicaciones en la empresa Ingeniería de Telecomunicaciones, C.A. (IDETEL). La "
+    "investigación se enmarca en la modalidad de proyecto factible apoyado en un diagnóstico de campo. Durante "
+    "el estudio se identificó la ausencia de procedimientos formalizados para el seguimiento de solicitudes de "
+    "afiliación e incidencias, la falta de formatos estandarizados de registro y la inexistencia de indicadores "
+    "de gestión que permitan evaluar el desempeño del proceso de atención al suscriptor. La propuesta contempla "
+    "un nuevo flujo de trabajo estandarizado, formatos unificados de control y un conjunto de indicadores de "
+    "gestión orientados a fortalecer el control administrativo y optimizar la calidad del servicio prestado."
 )
 
 PALABRAS_CLAVE = "control administrativo, solicitudes de servicios, telecomunicaciones, proyecto factible, pasantías."
 
 INTRODUCCION_TEXTO = (
-    "Aquí va la introducción. La presente pasantía, desarrollada como requisito para optar al título de Técnico "
-    "Superior Universitario en Administración, tiene como propósito evaluar el control administrativo aplicado "
-    "a la gestión de solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de "
-    "Telecomunicaciones, C.A. [Completar con la estructura del informe: capítulos, enfoque metodológico y alcance.]"
+    "La presente pasantía, desarrollada como requisito para optar al título de Técnico Superior Universitario "
+    "en Administración, tiene como propósito evaluar el control administrativo aplicado a la gestión de "
+    "solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de Telecomunicaciones, C.A. "
+    "(IDETEL), con sede en la ciudad de El Tigre, estado Anzoátegui. El estudio parte del diagnóstico de las "
+    "deficiencias presentes en el proceso de atención al suscriptor para proponer mejoras procedimentales "
+    "que optimicen el control interno del departamento. El informe se organiza en cinco capítulos: el Capítulo "
+    "I presenta la realidad organizacional de IDETEL; el Capítulo II desarrolla el diagnóstico situacional y "
+    "la planificación del proyecto; el Capítulo III sustenta las bases teóricas que orientan la propuesta; "
+    "el Capítulo IV describe las actividades ejecutadas durante las diez semanas de pasantía; y el Capítulo "
+    "V presenta las conclusiones y recomendaciones derivadas del proceso investigativo."
 )
 
 # 4. CAPÍTULO I - Realidad Organizacional
@@ -241,99 +250,140 @@ CRONOGRAMA_DATOS = [
 # 6. CAPÍTULO III - Marco Teórico
 BASES_TEORICAS = [
     {
-        "titulo": "Aquí va el título de la primera base teórica",
+        "titulo": "Control Administrativo",
         "parrafos": [
-            "Aquí va el desarrollo teórico del primer tema. [Completar con la definición y autores que sustentan este concepto.]",
-            "Aquí va un segundo párrafo de desarrollo. [Completar con la aplicación del concepto al proyecto.]"
+            "El control administrativo constituye una de las funciones fundamentales del proceso administrativo y se define como el mecanismo mediante el cual la organización verifica que las actividades ejecutadas se correspondan con lo planificado, detectando desviaciones y aplicando las medidas correctivas necesarias. Robbins y Coulter (2010) señalan que el control eficaz no solo identifica fallas, sino que proporciona información oportuna para la toma de decisiones gerenciales, convirtiéndose en un instrumento de mejora continua y no únicamente de fiscalización.",
+            "En el contexto del Departamento de Administración de Ingeniería de Telecomunicaciones, C.A., el control administrativo se aplica sobre el ciclo de gestión de solicitudes de servicio, abarcando desde la recepción de la solicitud del suscriptor hasta el cierre definitivo del caso. La ausencia de mecanismos formales de control en este ciclo genera inconsistencias entre los departamentos involucrados y dificulta la evaluación del desempeño del proceso de atención."
+        ],
+        "cita_larga": {
+            "texto": "El control es el proceso de monitorear las actividades para asegurarse de que se lleven a cabo según lo planeado y para corregir cualquier desviación significativa. Los gerentes no pueden saber realmente si sus unidades están desempeñándose adecuadamente hasta que evalúan qué actividades se han llevado a cabo y comparan el desempeño real con el estándar deseado.",
+            "autor": "(Robbins y Coulter, 2010, p. 398)"
+        }
+    },
+    {
+        "titulo": "Gestión de Solicitudes de Servicio",
+        "parrafos": [
+            "La gestión de solicitudes de servicio comprende el conjunto de procedimientos administrativos orientados a recepcionar, registrar, procesar y dar seguimiento a los requerimientos presentados por los clientes o suscriptores de una organización. Zeithaml, Parasuraman y Berry (1993) establecen que la calidad del servicio percibida por el cliente está directamente vinculada a la capacidad de la organización para gestionar sus solicitudes de forma ágil, transparente y con comunicación fluida en cada etapa del proceso.",
+            "En empresas de telecomunicaciones como IDETEL, la gestión de solicitudes abarca dos categorías principales: las solicitudes de afiliación de nuevos suscriptores, que implican la coordinación entre las áreas comercial, técnica y administrativa; y las incidencias reportadas por suscriptores activos, que requieren diagnóstico, despacho de cuadrillas y cierre verificado del caso. La ausencia de un sistema unificado de seguimiento para ambas categorías genera retrasos y reprocesos que impactan directamente en la satisfacción del cliente."
         ],
         "cita_larga": None
     },
     {
-        "titulo": "Aquí va el título de la segunda base teórica",
+        "titulo": "Procesos Administrativos y Estandarización de Procedimientos",
         "parrafos": [
-            "Aquí va el desarrollo teórico del segundo tema. [Completar con la definición y autores que sustentan este concepto.]"
+            "El proceso administrativo constituye el marco conceptual que rige el funcionamiento de las organizaciones modernas. Chiavenato (2006) lo describe como el conjunto secuencial e interrelacionado de funciones de planificación, organización, dirección y control, orientadas al logro eficiente de los objetivos organizacionales. La estandarización de los procedimientos dentro de este marco garantiza que las actividades se ejecuten de manera uniforme, reduciendo la variabilidad y los errores derivados de la discrecionalidad individual.",
+            "La formalización de los procedimientos mediante manuales, flujogramas y formatos estandarizados constituye una herramienta esencial para el control administrativo. Según Harrington (1993), un proceso estandarizado es medible, controlable y mejorable, condiciones que permiten a la organización identificar con precisión los puntos de falla y aplicar acciones correctivas focalizadas. En el caso de IDETEL, la ausencia de procedimientos escritos para la gestión de solicitudes es una de las causas raíz de las deficiencias identificadas."
         ],
         "cita_larga": None
     },
+    {
+        "titulo": "Calidad del Servicio en Empresas de Telecomunicaciones",
+        "parrafos": [
+            "La calidad del servicio se define como el grado en que las características del servicio prestado satisfacen o superan las expectativas del cliente. Parasuraman, Zeithaml y Berry (1988) desarrollaron el modelo SERVQUAL, que identifica cinco dimensiones de la calidad del servicio: fiabilidad, capacidad de respuesta, seguridad, empatía y elementos tangibles. En el sector de telecomunicaciones, la fiabilidad y la capacidad de respuesta son las dimensiones con mayor peso en la percepción del cliente.",
+            "Las deficiencias en el control administrativo del proceso de solicitudes de servicio impactan directamente sobre la fiabilidad y la capacidad de respuesta de IDETEL. Cuando una solicitud no es gestionada dentro de los tiempos establecidos o su estatus no puede ser verificado en tiempo real, el cliente percibe una falla en la calidad del servicio que deteriora su confianza en la organización y puede derivar en la cancelación del contrato o en la difusión de experiencias negativas."
+        ],
+        "cita_larga": None
+    },
+    {
+        "titulo": "Sistemas de Información para el Control Administrativo",
+        "parrafos": [
+            "Un sistema de información constituye un conjunto organizado de recursos tecnológicos y procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos con el propósito de apoyar la toma de decisiones. Laudon y Laudon (2016) distinguen los sistemas de procesamiento de transacciones como la categoría que registra y gestiona las operaciones rutinarias de la organización, siendo esta la tipología más pertinente para el control de solicitudes de servicio en una empresa de telecomunicaciones.",
+            "La implementación de un sistema de tickets o plataforma de seguimiento de solicitudes en IDETEL permitiría centralizar el registro de cada caso, asignar responsables, definir tiempos de atención y generar alertas ante incumplimientos. Esta herramienta transformaría el control administrativo de reactivo a proactivo, dotando a la supervisión de información en tiempo real para la toma de decisiones y la evaluación continua del desempeño del proceso."
+        ],
+        "cita_larga": None
+    },
+    {
+        "titulo": "Proyecto Factible como Modalidad de Investigación",
+        "parrafos": [
+            "La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta modalidad exige un diagnóstico de campo que evidencie la situación deficitaria y la comprobación de la viabilidad técnica y operativa de la solución planteada.",
+            "Arias (2012) señala que el proyecto factible avanza hasta proponer y en muchos casos desarrollar la solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en esta modalidad al partir de la evaluación del control administrativo de IDETEL para proponer mejoras procedimentales cuya implementación es viable dentro de la estructura organizativa y los recursos disponibles de la empresa."
+        ],
+        "cita_larga": None
+    }
 ]
 
-POST_CITA_TEXTO = "Aquí va el comentario posterior a la cita (opcional, solo si se usa cita larga)."
+POST_CITA_TEXTO = "El control administrativo, como lo señalan los autores referidos, no se limita a una función de fiscalización, sino que se constituye en un mecanismo de retroalimentación continua que permite a la organización detectar desviaciones a tiempo y ajustar sus procesos para garantizar la calidad del servicio prestado al suscriptor."
 
 # 7. CAPÍTULO IV - Actividades Realizadas
 ACTIVIDADES_DESCRIPCION = "Durante las diez (10) semanas de pasantías, se llevaron a cabo actividades de evaluación y análisis en el Departamento de Administración de Ingeniería de Telecomunicaciones, C.A.:"
 ACTIVIDADES_LISTA = [
     {
         "semana": 1,
-        "operativa": "Aquí va la actividad operativa de la semana 1. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 1. [Completar con la tarea académica realizada.]"
+        "operativa": "Inducción institucional, recorrido por las instalaciones, presentación ante el equipo del Departamento de Administración y familiarización con los sistemas de registro y los procedimientos generales de la empresa.",
+        "investigacion": "Observación directa del flujo de recepción y procesamiento de solicitudes de servicio, identificación preliminar de los actores involucrados en el proceso y formulación inicial de la situación problemática."
     },
     {
         "semana": 2,
-        "operativa": "Aquí va la actividad operativa de la semana 2. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 2. [Completar con la tarea académica realizada.]"
+        "operativa": "Apoyo en la recepción y registro de solicitudes de afiliación de nuevos suscriptores, verificación de documentación requerida y actualización del sistema de control de casos activos.",
+        "investigacion": "Levantamiento detallado del flujo procedimental de solicitudes de instalación e incidencias mediante la revisión de registros históricos y la documentación interna disponible en el departamento."
     },
     {
         "semana": 3,
-        "operativa": "Aquí va la actividad operativa de la semana 3. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 3. [Completar con la tarea académica realizada.]"
+        "operativa": "Colaboración en el seguimiento de solicitudes de servicio activas, actualización del estatus de los casos en el sistema de registro del departamento y apoyo en la coordinación con el área técnica.",
+        "investigacion": "Diseño y aplicación de guía de observación directa sobre el proceso de gestión de solicitudes, registrando los tiempos de respuesta por etapa y los puntos de interrupción del flujo."
     },
     {
         "semana": 4,
-        "operativa": "Aquí va la actividad operativa de la semana 4. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 4. [Completar con la tarea académica realizada.]"
+        "operativa": "Apoyo en la atención al suscriptor vía telefónica y presencial, registro de incidencias reportadas y coordinación con el NOC para el despacho de cuadrillas técnicas de campo.",
+        "investigacion": "Aplicación de entrevistas no estructuradas al personal administrativo, comercial y técnico para identificar las deficiencias percibidas en el sistema de control de solicitudes de servicio."
     },
     {
         "semana": 5,
-        "operativa": "Aquí va la actividad operativa de la semana 5. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 5. [Completar con la tarea académica realizada.]"
+        "operativa": "Colaboración en la actualización del registro de suscriptores activos, verificación del cierre de casos pendientes y apoyo en la elaboración de reportes de incidencias del período.",
+        "investigacion": "Diagnóstico situacional de las deficiencias del control administrativo, elaboración de la matriz de fallas identificadas y análisis de los tiempos promedio de atención por tipo de solicitud."
     },
     {
         "semana": 6,
-        "operativa": "Aquí va la actividad operativa de la semana 6. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 6. [Completar con la tarea académica realizada.]"
+        "operativa": "Apoyo en la tramitación de contratos de nuevos suscriptores, verificación de la documentación requerida y actualización del registro de afiliaciones del período en el sistema del departamento.",
+        "investigacion": "Análisis del impacto de las deficiencias detectadas sobre la calidad del servicio percibida por los suscriptores, mediante correlación entre tiempos de atención y quejas registradas."
     },
     {
         "semana": 7,
-        "operativa": "Aquí va la actividad operativa de la semana 7. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 7. [Completar con la tarea académica realizada.]"
+        "operativa": "Colaboración en la revisión y archivo de expedientes administrativos del ciclo, apoyo en la conciliación de pagos de suscriptores y actualización de la base de datos de clientes.",
+        "investigacion": "Diseño del nuevo flujo de trabajo estandarizado para la gestión de solicitudes, con definición de etapas, responsables, tiempos máximos de respuesta y puntos de control por fase."
     },
     {
         "semana": 8,
-        "operativa": "Aquí va la actividad operativa de la semana 8. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 8. [Completar con la tarea académica realizada.]"
+        "operativa": "Apoyo en la generación de reportes de incidencias y solicitudes del período para la supervisión administrativa, y colaboración en la atención de requerimientos de suscriptores activos.",
+        "investigacion": "Diseño de los formatos estandarizados de registro de solicitudes de afiliación y de incidencias, y elaboración del procedimiento escrito para la gestión unificada de casos en el departamento."
     },
     {
         "semana": 9,
-        "operativa": "Aquí va la actividad operativa de la semana 9. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 9. [Completar con la tarea académica realizada.]"
+        "operativa": "Participación en las actividades regulares del departamento y apoyo en el cierre administrativo del ciclo de atención al suscriptor correspondiente al período de pasantías.",
+        "investigacion": "Redacción y validación de la propuesta de mejora al control administrativo de solicitudes de servicio, incorporando las observaciones del tutor industrial y ajustando los procedimientos al contexto operativo de IDETEL."
     },
     {
         "semana": 10,
-        "operativa": "Aquí va la actividad operativa de la semana 10. [Completar con la tarea realizada en la empresa.]",
-        "investigacion": "Aquí va la actividad de investigación de la semana 10. [Completar con la tarea académica realizada.]"
+        "operativa": "Presentación formal de la propuesta de mejora ante la supervisión del Departamento de Administración y firma de la carta de aprobación del tutor industrial.",
+        "investigacion": "Consolidación y revisión final del informe académico de pasantías, incorporación de los anexos definitivos y preparación del documento para la entrega institucional al IUTECP."
     }
 ]
 
 # 8. CAPÍTULO V - Conclusiones y Recomendaciones
 CONCLUSIONES = [
-    "Aquí va la conclusión correspondiente al primer objetivo específico. [Completar con el logro alcanzado.]",
-    "Aquí va la conclusión correspondiente al segundo objetivo específico. [Completar con el logro alcanzado.]",
-    "Aquí va la conclusión correspondiente al tercer objetivo específico. [Completar con el logro alcanzado.]",
-    "Aquí va la conclusión correspondiente al cuarto objetivo específico. [Completar con el logro alcanzado.]"
+    "Se describió el proceso administrativo actual de gestión de solicitudes de IDETEL, identificando un flujo de cuatro etapas (recepción, asignación, ejecución y cierre) que opera sin procedimientos escritos formales, dependiendo de canales informales de comunicación entre las áreas comercial, administrativa y técnica.",
+    "Se identificaron como principales deficiencias del control administrativo la ausencia de un sistema unificado de seguimiento de casos, la falta de formatos estandarizados de registro, la inexistencia de tiempos de respuesta definidos por etapa y la carencia de indicadores de gestión que permitan evaluar el desempeño del proceso.",
+    "Se determinó que las debilidades detectadas en el control administrativo generan impactos directos sobre la calidad del servicio percibida por los suscriptores, manifestados en tiempos de atención prolongados, falta de trazabilidad en el estatus de los casos y dificultades en la coordinación interdepartamental que derivan en reprocesos y quejas reiteradas.",
+    "Se formuló una propuesta de mejora al control administrativo que contempla un nuevo flujo de trabajo estandarizado con etapas y responsables definidos, formatos unificados de registro de solicitudes e incidencias, y un conjunto de indicadores de gestión para el monitoreo continuo del proceso de atención al suscriptor."
 ]
 
 RECOMENDACIONES = [
-    "Aquí va la primera recomendación. [Completar con la acción sugerida.]",
-    "Aquí va la segunda recomendación. [Completar con la acción sugerida.]",
-    "Aquí va la tercera recomendación. [Completar con la acción sugerida.]",
-    "Aquí va la cuarta recomendación. [Completar con la acción sugerida.]"
+    "Implementar el nuevo flujo de trabajo estandarizado propuesto, comenzando por la formalización del canal de recepción de solicitudes y la adopción de los formatos unificados de registro de afiliaciones e incidencias en todos los departamentos involucrados.",
+    "Socializar el manual de procedimientos de gestión de solicitudes con el personal de las áreas administrativa, comercial y técnica, garantizando que cada actor conozca su rol, sus responsabilidades y los tiempos máximos de respuesta establecidos para cada fase del proceso.",
+    "Establecer indicadores de gestión para el proceso de atención al suscriptor, tales como el tiempo promedio de resolución de incidencias, el porcentaje de solicitudes cerradas dentro del plazo y el índice de reincidencias por caso, con seguimiento mensual por parte de la supervisión.",
+    "Evaluar la incorporación de una plataforma de gestión de tickets de código abierto que centralice el registro y seguimiento de solicitudes en tiempo real, eliminando la dependencia de canales informales de comunicación y dotando a la organización de trazabilidad completa sobre el ciclo de vida de cada caso."
 ]
 
 # 9. Referencias Bibliográficas
 REFERENCIAS_LISTA = [
-    "Aquí va la primera referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]",
-    "Aquí va la segunda referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]",
-    "Aquí va la tercera referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]"
+    "Arias, F. (2012). El proyecto de investigación: Introducción a la metodología científica (6ta ed.). Episteme, Venezuela.",
+    "Chiavenato, I. (2006). Introducción a la teoría general de la administración (7ma ed.). McGraw-Hill, México.",
+    "Harrington, H. J. (1993). Mejoramiento de los procesos de la empresa. McGraw-Hill, Colombia.",
+    "Laudon, K., y Laudon, J. (2016). Sistemas de información gerencial (14va ed.). Pearson Educación, México.",
+    "Parasuraman, A., Zeithaml, V., y Berry, L. (1988). SERVQUAL: A multiple-item scale for measuring consumer perceptions of service quality. Journal of Retailing, 64(1), 12-40.",
+    "Robbins, S., y Coulter, M. (2010). Administración (10ma ed.). Pearson Educación, México.",
+    "Universidad Pedagógica Experimental Libertador. (2016). Manual de trabajos de grado de especialización y maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.",
+    "Zeithaml, V., Parasuraman, A., y Berry, L. (1993). Calidad total en la gestión de servicios. Díaz de Santos, España."
 ]
 
 # 10. Anexos
