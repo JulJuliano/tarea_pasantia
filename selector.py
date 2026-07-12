@@ -67,6 +67,7 @@ ESTUDIANTES = _detectar_estudiantes()
 # Acciones globales
 ACCIONES = [
     {"id": "informe", "nombre": "Compilar Informe de Pasantía (.docx y .pdf)", "def": True},
+    {"id": "borrador", "nombre": "Compilar Borrador (solo Portada + Cap I + Cap II)", "def": False},
     {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True}
 ]
 
@@ -156,9 +157,13 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
     print(f"{BOLD}{BLUE}================================================================{RESET}")
     print(f"{GRAY}Presiona {BOLD}Q{RESET}{GRAY} para salir.{RESET}")
 
-def compilar_informe_estudiante(est):
-    """Genera el informe de un estudiante y lo mueve a su carpeta de reportes."""
-    print(f"\n{BOLD}{CYAN}» Generando Informe para {est['nombre']}...{RESET}")
+def compilar_informe_estudiante(est, modo="completo"):
+    """Genera el informe de un estudiante y lo mueve a su carpeta de reportes.
+    
+    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II)
+    """
+    modo_label = {"completo": "Informe Completo", "borrador": "Borrador (Cap I+II)"}.get(modo, modo)
+    print(f"\n{BOLD}{CYAN}» Generando {modo_label} para {est['nombre']}...{RESET}")
     
     if not os.path.exists(est["source_content"]):
         print(f"{RED}⚠ Omitido: No se encontró contenido.py para {est['nombre']} en:{RESET}")
@@ -195,8 +200,11 @@ def compilar_informe_estudiante(est):
         
         # Ejecutar generador_informe.py
         print(f"{GRAY}Ejecutando generador_informe.py...{RESET}")
+        cmd = [PYTHON_EXEC, GENERATOR_SCRIPT]
+        if modo == "borrador":
+            cmd.extend(["--modo", "borrador"])
         proc = subprocess.Popen(
-            [PYTHON_EXEC, GENERATOR_SCRIPT],
+            cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True
@@ -214,18 +222,22 @@ def compilar_informe_estudiante(est):
         os.makedirs(dest_reportes, exist_ok=True)
 
         # Mover archivos generados
-        docx_src = os.path.join(BASE_DIR, NOMBRE_DOCX_SALIDA)
-        pdf_src = os.path.join(BASE_DIR, NOMBRE_PDF_SALIDA)
+        sufijo = "_BORRADOR" if modo == "borrador" else ""
+        docx_name = f"Informe_Pasantia_IUTECP{sufijo}.docx"
+        pdf_name = f"Informe_Pasantia_IUTECP{sufijo}.pdf"
+        docx_src = os.path.join(BASE_DIR, docx_name)
+        pdf_src = os.path.join(BASE_DIR, pdf_name)
+        modo_label = {"completo": "Informe", "borrador": "Borrador"}.get(modo, "Informe")
         
-        docx_dest = os.path.join(dest_reportes, NOMBRE_DOCX_SALIDA)
-        pdf_dest = os.path.join(dest_reportes, NOMBRE_PDF_SALIDA)
+        docx_dest = os.path.join(dest_reportes, docx_name)
+        pdf_dest = os.path.join(dest_reportes, pdf_name)
         
         if os.path.exists(docx_src):
             shutil.move(docx_src, docx_dest)
-            print(f"{GREEN}✔ Informe Word guardado en: {docx_dest}{RESET}")
+            print(f"{GREEN}✔ {modo_label} Word guardado en: {docx_dest}{RESET}")
         if os.path.exists(pdf_src):
             shutil.move(pdf_src, pdf_dest)
-            print(f"{GREEN}✔ Informe PDF guardado en: {pdf_dest}{RESET}")
+            print(f"{GREEN}✔ {modo_label} PDF guardado en: {pdf_dest}{RESET}")
             
         return True
         
@@ -385,14 +397,21 @@ def main():
     for est in estudiantes_a_procesar:
         print(f"\n{BOLD}{YELLOW}➔ PROCESANDO GRUPO: {est['nombre'].upper()}{RESET}")
         
-        # 1. Compilar informe si aplica
+        # 1. Compilar informe completo si aplica
         if "informe" in acciones_a_ejecutar:
-            if compilar_informe_estudiante(est):
+            if compilar_informe_estudiante(est, modo="completo"):
+                exito_total += 1
+            else:
+                errores_totales += 1
+
+        # 2. Compilar borrador (solo portada + Cap I + Cap II) si aplica
+        if "borrador" in acciones_a_ejecutar:
+            if compilar_informe_estudiante(est, modo="borrador"):
                 exito_total += 1
             else:
                 errores_totales += 1
                 
-        # 2. Compilar cronogramas si aplica
+        # 3. Compilar cronogramas si aplica
         if "cronogramas" in acciones_a_ejecutar:
             if compilar_cronogramas_estudiante(est):
                 exito_total += 1

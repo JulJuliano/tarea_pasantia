@@ -966,8 +966,11 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         bookmark_id = f"bm_grafico{numero}" if numero else None
         agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), bookmark_id=bookmark_id)
 
-def construir_cuerpo_documento(doc):
-    """Escribe secuencialmente todas las secciones del informe de pasantía"""
+def construir_cuerpo_documento(doc, modo="completo"):
+    """Escribe secuencialmente todas las secciones del informe de pasantía.
+    
+    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II)
+    """
 
     # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
     pag_actual_romana = 3  # Dedicatoria empieza en iii (portada=i, contraportada=ii)
@@ -1287,6 +1290,9 @@ def construir_cuerpo_documento(doc):
     agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
     doc.add_paragraph()
 
+    if modo == "borrador":
+        return idx_cap1
+
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
     if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
@@ -1408,7 +1414,7 @@ def construir_cuerpo_documento(doc):
 #  EJECUCIÓN PRINCIPAL
 # ================================================================
 
-def generar_reporte_completo():
+def generar_reporte_completo(modo="completo"):
     print("» Inicializando documento...")
     doc = setup_iutecp_document()
     
@@ -1425,16 +1431,18 @@ def generar_reporte_completo():
     construir_portada(doc)
     
     # 3. Cuerpo (Sección 2 en adelante)
-    idx_cap1 = construir_cuerpo_documento(doc)
+    idx_cap1 = construir_cuerpo_documento(doc, modo=modo)
     
     # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
     agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1)
 
-    docx_output = "Informe_Pasantia_IUTECP.docx"
+    sufijo = "_BORRADOR" if modo == "borrador" else ""
+    docx_output = f"Informe_Pasantia_IUTECP{sufijo}.docx"
     doc.save(docx_output)
     print(f"✔ Archivo Word generado: {docx_output}")
 
     print("» Renderizando PDF usando LibreOffice...")
+    pdf_output = f"Informe_Pasantia_IUTECP{sufijo}.pdf"
     soffice_cmd = 'libreoffice'
     if platform.system() == 'Windows':
         possible_paths = [
@@ -1455,4 +1463,10 @@ def generar_reporte_completo():
         print(f"❌ Error en la conversión a PDF: {e}")
 
 if __name__ == "__main__":
-    generar_reporte_completo()
+    import sys
+    modo = "completo"
+    if "--modo" in sys.argv:
+        idx = sys.argv.index("--modo")
+        if idx + 1 < len(sys.argv):
+            modo = sys.argv[idx + 1]
+    generar_reporte_completo(modo=modo)
