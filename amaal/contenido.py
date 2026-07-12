@@ -14,6 +14,19 @@ GRAFICOS = [
     {"numero": 3, "tras": "estructura", "titulo": "Gráfico 3. Organigrama del Departamento de Administración.", "ancho_cm": 12, "lista": "Organigrama del Departamento de Administración.", "pagina": "5"},
 ]
 
+# Textos introductorios del Capítulo II
+PLANIFICACION_INTRO_TEXTO = "La planificación establece la relación entre cada objetivo específico y las actividades técnicas a ejecutar para el desarrollo de la evaluación del control administrativo:"
+CRONOGRAMA_INTRO_TEXTO = "El cronograma estructura temporalmente las fases de diagnóstico, análisis y propuesta de mejora, distribuidas a lo largo de las diez (10) semanas de duración de la pasantía:"
+
+# Título del Cuadro 2 (Cronograma)
+CUADRO_CRONOGRAMA_TITULO = "Cuadro 2. Cronograma de actividades del proyecto."
+
+# Lista de Cuadros (índice preliminar): (número, descripción, página)
+CUADROS_INDICE = [
+    ("1", "Planificación integral de objetivos específicos", "5"),
+    ("2", "Cronograma de actividades del proyecto", "6"),
+]
+
 # 2. Datos de Portada y Datos Personales
 MEMBRETE = [
     "REPÚBLICA BOLIVARIANA DE VENEZUELA",
@@ -40,12 +53,26 @@ FECHA_LUGAR = "El Tigre, julio de 2026"
 RAZON_SOCIAL = "Ingeniería de Telecomunicaciones, C.A. (IDETEL / INTELCA)"
 
 # 3. Páginas Preliminares
-DEDICATORIA = "A mis padres, por su apoyo incondicional en cada paso de mi formación académica y personal."
-AGRADECIMIENTOS = ""
-RESUMEN_TEXTO = ""
-PALABRAS_CLAVE = ""
+DEDICATORIA = "Aquí va la dedicatoria."
 
-INTRODUCCION_TEXTO = ""
+AGRADECIMIENTOS = "Aquí van los agradecimientos."
+
+RESUMEN_TEXTO = (
+    "Aquí va el resumen del informe. El presente informe describe la evaluación del control administrativo "
+    "aplicado a la gestión de solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de "
+    "Telecomunicaciones, C.A. (IDETEL). La investigación se enmarca en la modalidad de proyecto factible "
+    "apoyado en un diagnóstico de campo. [Completar con el resto del resumen: objetivo general, metodología, "
+    "resultados y conclusiones principales.]"
+)
+
+PALABRAS_CLAVE = "control administrativo, solicitudes de servicios, telecomunicaciones, proyecto factible, pasantías."
+
+INTRODUCCION_TEXTO = (
+    "Aquí va la introducción. La presente pasantía, desarrollada como requisito para optar al título de Técnico "
+    "Superior Universitario en Administración, tiene como propósito evaluar el control administrativo aplicado "
+    "a la gestión de solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de "
+    "Telecomunicaciones, C.A. [Completar con la estructura del informe: capítulos, enfoque metodológico y alcance.]"
+)
 
 # 4. CAPÍTULO I - Realidad Organizacional
 IDENTIFICACION_EMPRESA = (
@@ -108,14 +135,14 @@ UBICACION = (
     "estado Anzoátegui, Venezuela."
 )
 
-POBLACION = (
+POBLACION = [
     "La estructura del talento humano de Ingeniería de Telecomunicaciones, C.A. está conformada por personal "
     "multidisciplinario distribuido en las distintas áreas operativas y administrativas, con un total de ocho (8) "
     "trabajadores. La pasantía profesional se desarrolló en el Departamento de Administración, que dado el reducido "
     "tamaño del equipo tras un proceso de reestructuración de personal, opera con una estructura simplificada. "
     "Las funciones administrativas se concentran en dos (2) cargos activos: Supervisión de Administración, "
     "Contabilidad y Tributos, y Analista de Compras y Facturación, además del Analista de Atención al Cliente."
-)
+]
 
 ORGANIGRAMA_TEXTO = (
     "La estructura organizativa de Ingeniería de Telecomunicaciones, C.A. es de tipo vertical, diseñada para "
@@ -211,50 +238,106 @@ CRONOGRAMA_DATOS = [
 ]
 
 # 6. CAPÍTULO III - Marco Teórico
-BASES_TEORICAS_PARRAFOS = [
-    "Según Pérez (2020), la trazabilidad documental es fundamental para el control eficiente de los procesos "
-    "administrativos en las organizaciones, permitiendo el rastreo histórico y auditable de cada expediente.",
-    "La gestión documental en las organizaciones modernas no solo implica el almacenamiento pasivo de archivos, "
-    "sino la garantía activa de que cada movimiento y alteración quede registrada de forma inmutable para auditorías futuras."
+BASES_TEORICAS = [
+    {
+        "titulo": "Aquí va el título de la primera base teórica",
+        "parrafos": [
+            "Aquí va el desarrollo teórico del primer tema. [Completar con la definición y autores que sustentan este concepto.]",
+            "Aquí va un segundo párrafo de desarrollo. [Completar con la aplicación del concepto al proyecto.]"
+        ],
+        "cita_larga": None
+    },
+    {
+        "titulo": "Aquí va el título de la segunda base teórica",
+        "parrafos": [
+            "Aquí va el desarrollo teórico del segundo tema. [Completar con la definición y autores que sustentan este concepto.]"
+        ],
+        "cita_larga": None
+    },
 ]
 
-CITA_LARGA_TEXTO = ""
-CITA_LARGA_AUTOR = ""
+POST_CITA_TEXTO = "Aquí va el comentario posterior a la cita (opcional, solo si se usa cita larga)."
 
 # 7. CAPÍTULO IV - Actividades Realizadas
-ACTIVIDADES_DESCRIPCION = "Durante las diez semanas de pasantías, se llevaron a cabo actividades de evaluación y análisis en el Departamento de Administración de Ingeniería de Telecomunicaciones, C.A.:"
+ACTIVIDADES_DESCRIPCION = "Durante las diez (10) semanas de pasantías, se llevaron a cabo actividades de evaluación y análisis en el Departamento de Administración de Ingeniería de Telecomunicaciones, C.A.:"
 ACTIVIDADES_LISTA = [
-    "Semana 1: Inducción institucional y reconocimiento del área de trabajo.",
-    "Semana 2: Levantamiento de información sobre procesos administrativos.",
-    "Semana 3: Observación y análisis del proceso de solicitudes de servicio.",
-    "Semana 4: Diseño y aplicación de instrumentos de recolección de datos.",
-    "Semana 5: Diagnóstico de la situación problemática.",
-    "Semana 6: Revisión y elaboración del Marco Teórico.",
-    "Semana 7: Ejecución de actividades asignadas en el área administrativa.",
-    "Semana 8: Registro semanal de actividades realizadas.",
-    "Semana 9: Redacción de conclusiones y recomendaciones.",
-    "Semana 10: Revisión final y presentación del informe."
+    {
+        "semana": 1,
+        "operativa": "Aquí va la actividad operativa de la semana 1. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 1. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 2,
+        "operativa": "Aquí va la actividad operativa de la semana 2. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 2. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 3,
+        "operativa": "Aquí va la actividad operativa de la semana 3. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 3. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 4,
+        "operativa": "Aquí va la actividad operativa de la semana 4. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 4. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 5,
+        "operativa": "Aquí va la actividad operativa de la semana 5. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 5. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 6,
+        "operativa": "Aquí va la actividad operativa de la semana 6. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 6. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 7,
+        "operativa": "Aquí va la actividad operativa de la semana 7. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 7. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 8,
+        "operativa": "Aquí va la actividad operativa de la semana 8. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 8. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 9,
+        "operativa": "Aquí va la actividad operativa de la semana 9. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 9. [Completar con la tarea académica realizada.]"
+    },
+    {
+        "semana": 10,
+        "operativa": "Aquí va la actividad operativa de la semana 10. [Completar con la tarea realizada en la empresa.]",
+        "investigacion": "Aquí va la actividad de investigación de la semana 10. [Completar con la tarea académica realizada.]"
+    }
 ]
 
 # 8. CAPÍTULO V - Conclusiones y Recomendaciones
 CONCLUSIONES = [
-    "Se logró evaluar el control administrativo aplicado a la gestión de solicitudes de servicios, identificando las debilidades del proceso.",
-    "La propuesta de mejora contribuye a optimizar la atención al suscriptor y fortalecer los procesos internos del Departamento de Administración."
+    "Aquí va la conclusión correspondiente al primer objetivo específico. [Completar con el logro alcanzado.]",
+    "Aquí va la conclusión correspondiente al segundo objetivo específico. [Completar con el logro alcanzado.]",
+    "Aquí va la conclusión correspondiente al tercer objetivo específico. [Completar con el logro alcanzado.]",
+    "Aquí va la conclusión correspondiente al cuarto objetivo específico. [Completar con el logro alcanzado.]"
 ]
 
 RECOMENDACIONES = [
-    "Implementar un sistema de seguimiento unificado para las solicitudes de servicio que permita la trazabilidad en tiempo real.",
-    "Estandarizar los registros y procedimientos administrativos para la gestión de solicitudes de instalación y atención de incidencias."
+    "Aquí va la primera recomendación. [Completar con la acción sugerida.]",
+    "Aquí va la segunda recomendación. [Completar con la acción sugerida.]",
+    "Aquí va la tercera recomendación. [Completar con la acción sugerida.]",
+    "Aquí va la cuarta recomendación. [Completar con la acción sugerida.]"
 ]
 
 # 9. Referencias Bibliográficas
 REFERENCIAS_LISTA = [
-    "Asamblea Nacional. (1999). Constitución de la República Bolivariana de Venezuela. Caracas, La Torre.",
+    "Aquí va la primera referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]",
+    "Aquí va la segunda referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]",
+    "Aquí va la tercera referencia bibliográfica en formato APA. [Completar con autor, año, título, editorial y ciudad.]"
 ]
 
 # 10. Anexos
 ANEXOS_LISTA = [
-    ("ANEXO A", "Definición de Términos Básicos"),
-    ("ANEXO B", "Planes de Trabajo"),
-    ("ANEXO C", "Memoria Fotográfica")
+    ("ANEXO A", "Aquí va la descripción del Anexo A"),
+    ("ANEXO B", "Aquí va la descripción del Anexo B"),
+    ("ANEXO C", "Aquí va la descripción del Anexo C")
 ]
