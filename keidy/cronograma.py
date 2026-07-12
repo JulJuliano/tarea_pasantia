@@ -98,6 +98,7 @@ def generar_documento_semana(datos):
     add_label_value(doc, "PERÍODO: ", datos["periodo"])
     add_label_value(doc, "PASANTE: ", "Keidy Guzmán |  C.I.: 28.706.352")
 #    add_label_value(doc, "TUTOR INDUSTRIAL: ", "[Nombre del Tutor]  |  C.I.: [Cédula]")
+    add_label_value(doc, "TUTOR INDUSTRIAL: ", "Martina Rondón | C.I.: 12.208.768")
 
     doc.add_paragraph()
 
@@ -207,8 +208,10 @@ def generar_documento_semana(datos):
 
     set_cell_format(sign_table.rows[0].cells[0], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
 #    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-    set_cell_format(sign_table.rows[1].cells[0], "Firma del Pasante:\nKeidy Guzmán |  C.I.: 28.706.352", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+#    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+#    set_cell_format(sign_table.rows[1].cells[0], "Firma del Pasante:\nKeidy Guzmán |  C.I.: 28.706.352", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 #    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\n[Nombre del Tutor] | C.I.: [Cédula]", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+#    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nMartina Rondón | C.I.: 12.208.768", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.add_paragraph()
 
@@ -241,7 +244,7 @@ reportes_pasantias = [
     # ── SEMANA 1 ────────────────────────────────────────────────
     {
         "num_semana": "1",
-        "periodo": "Del 01 al 05 de junio de 2026",
+        "periodo": "Del 08 al 12 de junio de 2026",
         "objetivo": "Formalizar el inicio de las pasantías dentro de la modalidad institucional en el puesto habitual de trabajo y delimitar los tiempos de investigación.",
         "entregables": "Acta de inicio de pasantías visada por la empresa y cronograma operativo validado por el tutor industrial.",
         "observaciones_tutor": "La trabajadora y ahora pasante Keidy Guzmán formalizó el inicio de su período académico en su puesto habitual del área de procura. Mantiene su excelente desempeño y puntualidad, coordinando eficientemente sus obligaciones rutinarias con el levantamiento del proyecto.",
@@ -256,7 +259,7 @@ reportes_pasantias = [
     # ── SEMANA 2 ────────────────────────────────────────────────
     {
         "num_semana": "2",
-        "periodo": "Del 08 al 12 de junio de 2026",
+        "periodo": "Del 15 al 19 de junio de 2026",
         "objetivo": "Observar y registrar cómo se reciben y procesan actualmente las solicitudes de compra que llegan al departamento.",
         "entregables": "Lista de pasos detallada sobre el recorrido físico que hace una solicitud de compra desde que llega.",
         "observaciones_tutor": "La pasante recolectó la información solicitada con mucho orden. Identificó con facilidad la manera en que se archivan los papeles y se comunicó bien con el resto del personal.",
@@ -271,7 +274,7 @@ reportes_pasantias = [
     # ── SEMANA 3 ────────────────────────────────────────────────
     {
         "num_semana": "3",
-        "periodo": "Del 15 al 19 de junio de 2026",
+        "periodo": "Del 22 al 26 de junio de 2026",
         "objetivo": "Preparar una lista de preguntas sencillas para conversar con el personal sobre los retrasos en las compras.",
         "entregables": "Guía escrita con las preguntas básicas para las entrevistas, revisada por el tutor industrial.",
         "observaciones_tutor": "Keidy preparó un cuestionario bastante claro y directo. Las preguntas están enfocadas en entender por qué se tardan en autorizar los presupuestos de compras.",
@@ -286,7 +289,7 @@ reportes_pasantias = [
     # ── SEMANA 4 ────────────────────────────────────────────────
     {
         "num_semana": "4",
-        "periodo": "Del 22 al 26 de junio de 2026",
+        "periodo": "Del 29 de junio al 03 de julio de 2026",
         "objetivo": "Conversar con el personal administrativo usando el cuestionario para anotar los inconvenientes del proceso.",
         "entregables": "Hojas de respuestas llenas con los comentarios y notas tomadas del personal de compras.",
         "observaciones_tutor": "La pasante realizó las actividades con mucho respeto y organización. Logró obtener información valiosa sobre las demoras en la recolección de firmas de la junta directiva.",
@@ -301,7 +304,7 @@ reportes_pasantias = [
     # ── SEMANA 5 ────────────────────────────────────────────────
     {
         "num_semana": "5",
-        "periodo": "Del 29 de junio al 03 de julio de 2026",
+        "periodo": "Del 06 al 10 de julio de 2026",
         "objetivo": "Transcribir las entrevistas y analizar las órdenes de compra anteriores para identificar los problemas principales.",
         "entregables": "Resumen de entrevistas y tabla de tiempos históricos de órdenes de compra del último trimestre.",
         "observaciones_tutor": "Buen trabajo de oficina. La pasante organizó las respuestas y el análisis de tiempos históricos, dejando en evidencia los cuellos de botella con ciertos proveedores.",
@@ -316,7 +319,7 @@ reportes_pasantias = [
     # ── SEMANA 6 ────────────────────────────────────────────────
     {
         "num_semana": "6",
-        "periodo": "Del 06 al 10 de julio de 2026",
+        "periodo": "Del 13 al 17 de julio de 2026",
         "objetivo": "Estructurar las causas de las fallas del departamento en un diagrama de Ishikawa y fundamentar conceptualmente el proyecto.",
         "entregables": "Diagrama de Ishikawa digital y primer borrador del marco teórico del informe.",
         "observaciones_tutor": "El diagrama causa-efecto quedó muy claro y adaptado a nuestra oficina. El soporte teórico recopilado es pertinente con lo exigido para el nivel técnico.",
@@ -331,7 +334,7 @@ reportes_pasantias = [
     # ── SEMANA 7 ────────────────────────────────────────────────
     {
         "num_semana": "7",
-        "periodo": "Del 13 al 17 de julio de 2026",
+        "periodo": "Del 20 al 24 de julio de 2026",
         "objetivo": "Diseñar un nuevo protocolo procedimental y recorrido optimizado para las solicitudes de compras.",
         "entregables": "Esquema preliminar del nuevo circuito de compras y asignación de tareas del área.",
         "observaciones_tutor": "La ruta propuesta por la pasante es sencilla. La propuesta de utilizar un buzón de correo único evitará que se pierdan las cotizaciones recibidas.",
@@ -346,7 +349,7 @@ reportes_pasantias = [
     # ── SEMANA 8 ────────────────────────────────────────────────
     {
         "num_semana": "8",
-        "periodo": "Del 20 al 24 de julio de 2026",
+        "periodo": "Del 27 al 31 de julio de 2026",
         "objetivo": "Crear planillas automatizadas en Excel para registrar y comparar de manera objetiva los precios de proveedores.",
         "entregables": "Plantilla de Excel para la comparación de tres cotizaciones simultáneas con cálculo automático de totales.",
         "observaciones_tutor": "Keidy demostró un excelente dominio de Excel. La planilla diseñada permite visualizar de manera rápida la opción más económica e idónea.",
@@ -361,7 +364,7 @@ reportes_pasantias = [
     # ── SEMANA 9 ────────────────────────────────────────────────
     {
         "num_semana": "9",
-        "periodo": "Del 27 al 31 de julio de 2026",
+        "periodo": "Del 03 al 07 de agosto de 2026",
         "objetivo": "Probar y validar el uso de la planilla de Excel y el nuevo flujo operativo con los compañeros del departamento.",
         "entregables": "Registro de retroalimentación de los usuarios y formato Excel definitivo con correcciones aplicadas.",
         "observaciones_tutor": "Pusimos a prueba la planilla y el nuevo flujo. El personal se adaptó muy bien, y logramos reducir significativamente el tiempo de análisis de ofertas.",
@@ -376,7 +379,7 @@ reportes_pasantias = [
     # ── SEMANA 10 ───────────────────────────────────────────────
     {
         "num_semana": "10",
-        "periodo": "Del 03 al 07 de agosto de 2026",
+        "periodo": "Del 10 al 14 de agosto de 2026",
         "objetivo": "Consolidar el informe final del proyecto de pasantías y presentarlo ante la gerencia de la empresa.",
         "entregables": "Informe final de pasantías con anexos listos para consignar ante el IUTECP.",
         "observaciones_tutor": "La pasante Keidy Guzmán culminó exitosamente su proyecto. La propuesta de ordenamiento y formatos de compras constituye un gran aporte para el control interno. Proyecto aprobado.",
