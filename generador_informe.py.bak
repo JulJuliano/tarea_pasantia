@@ -1007,203 +1007,200 @@ def construir_cuerpo_documento(doc, modo="completo"):
         pag_lista_anexos = romanos.get(pag_actual_romana, str(pag_actual_romana))
         pag_actual_romana += 1
 
-    if not es_borrador:
-        # --- PÁGINAS PRELIMINARES ---
-        if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
-            iniciar_seccion_preliminar(doc, "DEDICATORIA", bookmark_id="bm_dedicatoria")
-            agregar_parrafo_normado(doc, c.DEDICATORIA)
+    # --- PÁGINAS PRELIMINARES ---
+    if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
+        iniciar_seccion_preliminar(doc, "DEDICATORIA", bookmark_id="bm_dedicatoria")
+        agregar_parrafo_normado(doc, c.DEDICATORIA)
+
+    if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
+        iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
+        agregar_parrafo_normado(doc, c.AGRADECIMIENTOS)
+
+    if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
+        iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
+        agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
+        doc.add_paragraph()
+        p_kw = doc.add_paragraph()
+        p_kw.paragraph_format.first_line_indent = Cm(1.25)
+        run_kw_label = p_kw.add_run("Palabras claves: ")
+        run_kw_label.font.bold = True
+        p_kw.add_run(c.PALABRAS_CLAVE)
+
+    # --- ÍNDICE DE CONTENIDO ---
+    iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO")
+    p_header_ind = doc.add_paragraph()
+    p_header_ind.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    p_header_ind.paragraph_format.space_after = Pt(12)
+    run_h_ind = p_header_ind.add_run("pp.")
+    run_h_ind.font.name = 'Times New Roman'
+    run_h_ind.font.size = Pt(12)
+    run_h_ind.font.bold = True
     
-        if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
-            iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
-            agregar_parrafo_normado(doc, c.AGRADECIMIENTOS)
+    if pag_dedicatoria:
+        agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
+    if pag_agradecimientos:
+        agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
+    if pag_resumen:
+        agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
+
+    agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
+    agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
+    if pag_lista_anexos:
+        agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
+
+    agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
+
+    # Capítulos
+    p_cap_lbl = doc.add_paragraph()
+    p_cap_lbl.paragraph_format.space_before = Pt(12)
+    p_cap_lbl.paragraph_format.space_after = Pt(6)
+    p_cap_lbl.add_run("CAPÍTULOS").font.bold = True
+
+    # Capítulo I
+    agregar_fila_indice_general_nativa(doc, "I REALIDAD ORGANIZACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap1")
+    agregar_fila_indice_general_nativa(doc, "Identificación de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_ident")
+    agregar_fila_indice_general_nativa(doc, "Reseña histórica", "", sangria_cm=0.5, bookmark_id="bm_cap1_resena")
+    agregar_fila_indice_general_nativa(doc, "Misión", "", sangria_cm=0.5, bookmark_id="bm_cap1_mision")
+    agregar_fila_indice_general_nativa(doc, "Visión", "", sangria_cm=0.5, bookmark_id="bm_cap1_vision")
+    agregar_fila_indice_general_nativa(doc, "Valores", "", sangria_cm=0.5, bookmark_id="bm_cap1_valores")
+    agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "", sangria_cm=0.5, bookmark_id="bm_cap1_obj")
+    agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
+    agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
+    agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
+
+    # Capítulo II
+    agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
+    agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
+    agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
+    agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
+    agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
+    agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
+
+    # Capítulo III
+    agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
+    agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
+
+    # Capítulo IV
+    agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
+    agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
+
+    # Capítulo V
+    agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
+    agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
+    agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
+
+    # Referencias y Anexos
+    agregar_fila_indice_general_nativa(doc, "REFERENCIAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_referencias")
+    agregar_fila_indice_general_nativa(doc, "ANEXOS", "", sangria_cm=0, negrita=True, bookmark_id="bm_anexos")
+
+    # --- LISTA DE CUADROS ---
+    iniciar_seccion_preliminar(doc, "LISTA DE CUADROS", bookmark_id="bm_lista_cuadros")
+    p_header_c = doc.add_paragraph()
+    p_header_c.paragraph_format.space_before = Pt(12)
+    p_header_c.paragraph_format.space_after = Pt(12)
     
-        if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-            iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
-            agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
-            doc.add_paragraph()
-            p_kw = doc.add_paragraph()
-            p_kw.paragraph_format.first_line_indent = Cm(1.25)
-            run_kw_label = p_kw.add_run("Palabras claves: ")
-            run_kw_label.font.bold = True
-            p_kw.add_run(c.PALABRAS_CLAVE)
+    section_c = doc.sections[-1]
+    ancho_c_emu = section_c.page_width - section_c.left_margin - section_c.right_margin
+    agregar_tabulacion_derecha(p_header_c, ancho_c_emu)
     
-        # --- ÍNDICE DE CONTENIDO ---
-        iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO")
-        p_header_ind = doc.add_paragraph()
-        p_header_ind.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        p_header_ind.paragraph_format.space_after = Pt(12)
-        run_h_ind = p_header_ind.add_run("pp.")
-        run_h_ind.font.name = 'Times New Roman'
-        run_h_ind.font.size = Pt(12)
-        run_h_ind.font.bold = True
+    run_c_lbl = p_header_c.add_run("CUADRO")
+    run_c_lbl.font.name = 'Times New Roman'
+    run_c_lbl.font.size = Pt(12)
+    run_c_lbl.font.bold = True
     
-        if pag_dedicatoria:
-            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
-        if pag_agradecimientos:
-            agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
-        if pag_resumen:
-            agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
+    p_header_c.add_run("\t")  # Salto de tabulador explícito para OXML
     
-        agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
-        agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
-        if pag_lista_anexos:
-            agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
+    run_pp_c = p_header_c.add_run("pp.")
+    run_pp_c.font.name = FUENTE
+    run_pp_c.font.size = Pt(TAMANO_BASE)
+    run_pp_c.font.bold = True
     
-        agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
+    # Lista de Cuadros: data-driven desde contenido.py (CUADROS_INDICE) o defaults
+    cuadros_indice_def = [
+        ("1", "Planificación integral de objetivos específicos", "5"),
+        ("2", "Cronograma de actividades administrativas", "6"),
+    ]
+    cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
+    for num, desc, pag in cuadros_indice:
+        bookmark_id = f"bm_cuadro{num}" if num else None
+        agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
+
+    # --- LISTA DE GRÁFICOS ---
+    iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
+    p_header_g = doc.add_paragraph()
+    p_header_g.paragraph_format.space_before = Pt(12)
+    p_header_g.paragraph_format.space_after = Pt(12)
     
-        # Capítulos
-        p_cap_lbl = doc.add_paragraph()
-        p_cap_lbl.paragraph_format.space_before = Pt(12)
-        p_cap_lbl.paragraph_format.space_after = Pt(6)
-        p_cap_lbl.add_run("CAPÍTULOS").font.bold = True
+    section_g = doc.sections[-1]
+    ancho_g_emu = section_g.page_width - section_g.left_margin - section_g.right_margin
+    agregar_tabulacion_derecha(p_header_g, ancho_g_emu)
     
-        # Capítulo I
-        agregar_fila_indice_general_nativa(doc, "I REALIDAD ORGANIZACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap1")
-        agregar_fila_indice_general_nativa(doc, "Identificación de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_ident")
-        agregar_fila_indice_general_nativa(doc, "Reseña histórica", "", sangria_cm=0.5, bookmark_id="bm_cap1_resena")
-        agregar_fila_indice_general_nativa(doc, "Misión", "", sangria_cm=0.5, bookmark_id="bm_cap1_mision")
-        agregar_fila_indice_general_nativa(doc, "Visión", "", sangria_cm=0.5, bookmark_id="bm_cap1_vision")
-        agregar_fila_indice_general_nativa(doc, "Valores", "", sangria_cm=0.5, bookmark_id="bm_cap1_valores")
-        agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "", sangria_cm=0.5, bookmark_id="bm_cap1_obj")
-        agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
-        agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
-        agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
+    run_g_lbl = p_header_g.add_run("GRÁFICO")
+    run_g_lbl.font.name = FUENTE
+    run_g_lbl.font.size = Pt(TAMANO_BASE)
+    run_g_lbl.font.bold = True
     
-        # Capítulo II
-        agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
-        agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
-        agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
-        agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
-        agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
-        agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
+    p_header_g.add_run("\t")  # Salto de tabulador explícito para OXML
     
-        # Capítulo III
-        agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
-        agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
+    run_pp_g = p_header_g.add_run("pp.")
+    run_pp_g.font.name = FUENTE
+    run_pp_g.font.size = Pt(TAMANO_BASE)
+    run_pp_g.font.bold = True
     
-        # Capítulo IV
-        agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
-        agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
-    
-        # Capítulo V
-        agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
-        agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
-        agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
-    
-        # Referencias y Anexos
-        agregar_fila_indice_general_nativa(doc, "REFERENCIAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_referencias")
-        agregar_fila_indice_general_nativa(doc, "ANEXOS", "", sangria_cm=0, negrita=True, bookmark_id="bm_anexos")
-    
-        # --- LISTA DE CUADROS ---
-        iniciar_seccion_preliminar(doc, "LISTA DE CUADROS", bookmark_id="bm_lista_cuadros")
-        p_header_c = doc.add_paragraph()
-        p_header_c.paragraph_format.space_before = Pt(12)
-        p_header_c.paragraph_format.space_after = Pt(12)
-    
-        section_c = doc.sections[-1]
-        ancho_c_emu = section_c.page_width - section_c.left_margin - section_c.right_margin
-        agregar_tabulacion_derecha(p_header_c, ancho_c_emu)
-    
-        run_c_lbl = p_header_c.add_run("CUADRO")
-        run_c_lbl.font.name = 'Times New Roman'
-        run_c_lbl.font.size = Pt(12)
-        run_c_lbl.font.bold = True
-    
-        p_header_c.add_run("\t")  # Salto de tabulador explícito para OXML
-    
-        run_pp_c = p_header_c.add_run("pp.")
-        run_pp_c.font.name = FUENTE
-        run_pp_c.font.size = Pt(TAMANO_BASE)
-        run_pp_c.font.bold = True
-    
-        # Lista de Cuadros: data-driven desde contenido.py (CUADROS_INDICE) o defaults
-        cuadros_indice_def = [
-            ("1", "Planificación integral de objetivos específicos", "5"),
-            ("2", "Cronograma de actividades administrativas", "6"),
-        ]
-        cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
-        for num, desc, pag in cuadros_indice:
-            bookmark_id = f"bm_cuadro{num}" if num else None
+    # Lista de Gráficos: data-driven desde contenido.py (GRAFICOS con campos "lista" y "pagina")
+    graficos_def = [
+        ("1", "Representación cartográfica y ubicación espacial de la empresa", "3"),
+        ("2", "Organigrama estructural y niveles jerárquicos de la organización", "4"),
+    ]
+    graficos_cfg = getattr(c, 'GRAFICOS', [])
+    if graficos_cfg:
+        for g in graficos_cfg:
+            num = str(g.get("numero", ""))
+            desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
+            pag = str(g.get("pagina", ""))
+            bookmark_id = f"bm_grafico{num}" if num else None
             agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
-    
-        # --- LISTA DE GRÁFICOS ---
-        iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
-        p_header_g = doc.add_paragraph()
-        p_header_g.paragraph_format.space_before = Pt(12)
-        p_header_g.paragraph_format.space_after = Pt(12)
-    
-        section_g = doc.sections[-1]
-        ancho_g_emu = section_g.page_width - section_g.left_margin - section_g.right_margin
-        agregar_tabulacion_derecha(p_header_g, ancho_g_emu)
-    
-        run_g_lbl = p_header_g.add_run("GRÁFICO")
-        run_g_lbl.font.name = FUENTE
-        run_g_lbl.font.size = Pt(TAMANO_BASE)
-        run_g_lbl.font.bold = True
-    
-        p_header_g.add_run("\t")  # Salto de tabulador explícito para OXML
-    
-        run_pp_g = p_header_g.add_run("pp.")
-        run_pp_g.font.name = FUENTE
-        run_pp_g.font.size = Pt(TAMANO_BASE)
-        run_pp_g.font.bold = True
-    
-        # Lista de Gráficos: data-driven desde contenido.py (GRAFICOS con campos "lista" y "pagina")
-        graficos_def = [
-            ("1", "Representación cartográfica y ubicación espacial de la empresa", "3"),
-            ("2", "Organigrama estructural y niveles jerárquicos de la organización", "4"),
-        ]
-        graficos_cfg = getattr(c, 'GRAFICOS', [])
-        if graficos_cfg:
-            for g in graficos_cfg:
-                num = str(g.get("numero", ""))
-                desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
-                pag = str(g.get("pagina", ""))
-                bookmark_id = f"bm_grafico{num}" if num else None
-                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
-        else:
-            for num, desc, pag in graficos_def:
-                bookmark_id = f"bm_grafico{num}" if num else None
-                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
-    
-        # --- LISTA DE ANEXOS ---
-        if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
-            iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS", bookmark_id="bm_lista_anexos")
-            p_header_a = doc.add_paragraph()
-            p_header_a.paragraph_format.space_before = Pt(12)
-            p_header_a.paragraph_format.space_after = Pt(12)
-        
-            section_a = doc.sections[-1]
-            ancho_a_emu = section_a.page_width - section_a.left_margin - section_a.right_margin
-            agregar_tabulacion_derecha(p_header_a, ancho_a_emu)
-        
-            run_a_lbl = p_header_a.add_run("ANEXOS")
-            run_a_lbl.font.name = 'Times New Roman'
-            run_a_lbl.font.size = Pt(12)
-            run_a_lbl.font.bold = True
-        
-            p_header_a.add_run("\t")  # Salto de tabulador explícito para OXML
-        
-            run_pp_a = p_header_a.add_run("pp.")
-            run_pp_a.font.name = 'Times New Roman'
-            run_pp_a.font.size = Pt(12)
-            run_pp_a.font.bold = True
-        
-            anexos_lista = getattr(c, 'ANEXOS_LISTA', [])
-            for idx, (cod, desc) in enumerate(anexos_lista):
-                letra = cod.split(" ")[-1]
-                pag_est = str(13 + idx)
-                bookmark_id = f"bm_anexo{letra.upper()}" if letra else None
-                agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est, bookmark_id=bookmark_id)
-    
-        # --- REGISTRO DEL INICIO DEL CUERPO ---
-        iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
-        agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
-    
-        # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
-        idx_cap1 = len(doc.sections)
     else:
-        idx_cap1 = len(doc.sections)
+        for num, desc, pag in graficos_def:
+            bookmark_id = f"bm_grafico{num}" if num else None
+            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
+
+    # --- LISTA DE ANEXOS ---
+    if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
+        iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS", bookmark_id="bm_lista_anexos")
+        p_header_a = doc.add_paragraph()
+        p_header_a.paragraph_format.space_before = Pt(12)
+        p_header_a.paragraph_format.space_after = Pt(12)
+        
+        section_a = doc.sections[-1]
+        ancho_a_emu = section_a.page_width - section_a.left_margin - section_a.right_margin
+        agregar_tabulacion_derecha(p_header_a, ancho_a_emu)
+        
+        run_a_lbl = p_header_a.add_run("ANEXOS")
+        run_a_lbl.font.name = 'Times New Roman'
+        run_a_lbl.font.size = Pt(12)
+        run_a_lbl.font.bold = True
+        
+        p_header_a.add_run("\t")  # Salto de tabulador explícito para OXML
+        
+        run_pp_a = p_header_a.add_run("pp.")
+        run_pp_a.font.name = 'Times New Roman'
+        run_pp_a.font.size = Pt(12)
+        run_pp_a.font.bold = True
+        
+        anexos_lista = getattr(c, 'ANEXOS_LISTA', [])
+        for idx, (cod, desc) in enumerate(anexos_lista):
+            letra = cod.split(" ")[-1]
+            pag_est = str(13 + idx)
+            bookmark_id = f"bm_anexo{letra.upper()}" if letra else None
+            agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est, bookmark_id=bookmark_id)
+
+    # --- REGISTRO DEL INICIO DEL CUERPO ---
+    iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
+    agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
+    
+    # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
+    idx_cap1 = len(doc.sections)
 
 # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
     iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL", bookmark_id="bm_cap1")
@@ -1425,17 +1422,16 @@ def generar_reporte_completo(modo="completo"):
     # 1. Portada (Sección 0) — solo autor, sin tutores
     construir_portada(doc, solo_autor=True)
     
-    # 2. Contraportada (Sección 1) — solo en modo completo
-    if modo != "borrador":
-        sec_contra = doc.add_section(WD_SECTION_START.NEW_PAGE)
-        sec_contra.top_margin = Cm(3)
-        sec_contra.bottom_margin = Cm(3)
-        sec_contra.left_margin = Cm(4)
-        sec_contra.right_margin = Cm(3)
-        sec_contra.different_first_page_header_footer = True
-        construir_portada(doc)
+    # 2. Contraportada (Sección 1)
+    sec_contra = doc.add_section(WD_SECTION_START.NEW_PAGE)
+    sec_contra.top_margin = Cm(3)
+    sec_contra.bottom_margin = Cm(3)
+    sec_contra.left_margin = Cm(4)
+    sec_contra.right_margin = Cm(3)
+    sec_contra.different_first_page_header_footer = True
+    construir_portada(doc)
     
-    # 3. Cuerpo (Sección 2 o 1 en borrador)
+    # 3. Cuerpo (Sección 2 en adelante)
     idx_cap1 = construir_cuerpo_documento(doc, modo=modo)
     
     # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
