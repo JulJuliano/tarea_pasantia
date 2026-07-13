@@ -745,10 +745,17 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     # ------------------------------------------------------------------
     # 3. Posiciones objetivo como porcentaje del área útil
     #    (ajusta estos valores para mover los bloques)
+    #    La contraportada tiene más datos (tutores), por eso usa
+    #    posiciones más tempranas para que la fecha no se desborde.
     # ------------------------------------------------------------------
-    POS_TITULO = 0.42   # El título empieza al 42% del área útil
-    POS_AUTOR  = 0.67   # El autor empieza al 67%
-    POS_FECHA  = 0.90   # La fecha empieza al 90%
+    if solo_autor:
+        POS_TITULO = 0.42   # El título empieza al 42% del área útil
+        POS_AUTOR  = 0.67   # El autor empieza al 67%
+        POS_FECHA  = 0.90   # La fecha empieza al 90%
+    else:
+        POS_TITULO = 0.35   # Contraportada: título más arriba
+        POS_AUTOR  = 0.58   # Contraportada: autor más arriba
+        POS_FECHA  = 0.82   # Contraportada: fecha más arriba
 
     # Espaciado calculado: posición absoluta menos lo ya consumido
     before_titulo = max(6.0, usable_h * POS_TITULO - h_membrete)
