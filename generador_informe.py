@@ -691,7 +691,7 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
 # ================================================================
 # CONSTRUCCIÓN DEL DOCUMENTO (PORTADA COMPATIBLE LIBREOFFICE)
 # ================================================================
-def construir_portada(doc, solo_autor=False):
+def construir_portada(doc, solo_autor=False, idx_seccion=0):
     """
     Construye la portada distribuyendo los 4 bloques de forma proporcional
     al área útil de la página, sin valores fijos de puntos.
@@ -707,7 +707,7 @@ def construir_portada(doc, solo_autor=False):
     # ------------------------------------------------------------------
     # 1. Leer dimensiones reales de la página (en puntos, 1 pt = 1/72 in)
     # ------------------------------------------------------------------
-    section = doc.sections[0]
+    section = doc.sections[idx_seccion]
     EMU_PER_PT = 12700  # 1 pt = 12700 EMU
 
     usable_h = (section.page_height - section.top_margin - section.bottom_margin) / EMU_PER_PT
@@ -754,6 +754,12 @@ def construir_portada(doc, solo_autor=False):
     before_titulo = max(6.0, usable_h * POS_TITULO - h_membrete)
     before_autor  = max(6.0, usable_h * POS_AUTOR  - usable_h * POS_TITULO - h_titulo)
     before_fecha  = max(6.0, usable_h * POS_FECHA  - usable_h * POS_AUTOR  - h_autor)
+
+    # Safety: verificar que la fecha no exceda el área útil
+    fin_fecha = h_membrete + before_titulo + h_titulo + before_autor + h_autor + before_fecha + h_fecha
+    if fin_fecha > usable_h:
+        exceso = fin_fecha - usable_h
+        before_fecha = max(6.0, before_fecha - exceso)
 
     # ------------------------------------------------------------------
     # 4. Renderizar cada bloque
@@ -1423,7 +1429,7 @@ def generar_reporte_completo(modo="completo"):
     doc = setup_iutecp_document()
     
     # 1. Portada (Sección 0) — solo autor, sin tutores
-    construir_portada(doc, solo_autor=True)
+    construir_portada(doc, solo_autor=True, idx_seccion=0)
     
     # 2. Contraportada (Sección 1) — solo en modo completo
     if modo != "borrador":
@@ -1433,7 +1439,7 @@ def generar_reporte_completo(modo="completo"):
         sec_contra.left_margin = Cm(4)
         sec_contra.right_margin = Cm(3)
         sec_contra.different_first_page_header_footer = True
-        construir_portada(doc)
+        construir_portada(doc, idx_seccion=1)
     
     # 3. Cuerpo (Sección 2 o 1 en borrador)
     idx_cap1 = construir_cuerpo_documento(doc, modo=modo)
