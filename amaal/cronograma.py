@@ -103,7 +103,7 @@ def generar_documento_semana(datos):
     add_label_value(doc, "SEMANA N°: ", datos["num_semana"])
     add_label_value(doc, "PERÍODO: ", datos["periodo"])
     add_label_value(doc, "PASANTE: ", f"{PASANTE_NOMBRE} |  C.I.: {PASANTE_CI}")
-#    add_label_value(doc, "TUTOR INDUSTRIAL: ", "[Nombre del Tutor]  |  C.I.: [Cédula]")
+    add_label_value(doc, "TUTOR INDUSTRIAL: ", "Lenny Mata  |  C.I.: 8969750")
 
     doc.add_paragraph()
 
@@ -185,20 +185,20 @@ def generar_documento_semana(datos):
 
     add_paragraph_normado(doc, datos["observaciones_tutor"])
 
-#    p_obs = doc.add_paragraph()
-#    p_obs.paragraph_format.line_spacing = 1.5
-#    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
-#    run_obs.font.name = 'Times New Roman'
-#    run_obs.font.size = Pt(11)
-#    run_obs.font.italic = True
+    p_obs = doc.add_paragraph()
+    p_obs.paragraph_format.line_spacing = 1.5
+    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
+    run_obs.font.name = 'Times New Roman'
+    run_obs.font.size = Pt(11)
+    run_obs.font.italic = True
 
-#    for _ in range(4):
-#        p_line = doc.add_paragraph()
-#        p_line.paragraph_format.space_before = Pt(8)
-#        p_line.paragraph_format.space_after = Pt(0)
-#        run_line = p_line.add_run("_" * 75)
-#        run_line.font.name = 'Times New Roman'
-#        run_line.font.bold = True
+    for _ in range(4):
+        p_line = doc.add_paragraph()
+        p_line.paragraph_format.space_before = Pt(8)
+        p_line.paragraph_format.space_after = Pt(0)
+        run_line = p_line.add_run("_" * 75)
+        run_line.font.name = 'Times New Roman'
+        run_line.font.bold = True
 
     doc.add_paragraph()
     doc.add_paragraph()
@@ -212,9 +212,9 @@ def generar_documento_semana(datos):
         row.cells[1].width = Cm(7.30)
 
     set_cell_format(sign_table.rows[0].cells[0], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
     set_cell_format(sign_table.rows[1].cells[0], f"Firma del Pasante:\n{PASANTE_NOMBRE} |  C.I.: {PASANTE_CI}", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
-#    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\n[Nombre del Tutor] | C.I.: [Cédula]", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nLenny Mata  |  C.I.: 8969750", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.add_paragraph()
 
