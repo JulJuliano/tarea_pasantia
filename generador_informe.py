@@ -764,7 +764,11 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     # Espaciado calculado: posición absoluta menos lo ya consumido
     before_titulo = max(6.0, usable_h * POS_TITULO - h_membrete)
     before_autor  = max(6.0, usable_h * POS_AUTOR  - usable_h * POS_TITULO - h_titulo)
-    before_fecha  = max(6.0, usable_h * POS_FECHA  - usable_h * POS_AUTOR  - h_autor)
+    if solo_autor:
+        before_fecha  = max(6.0, usable_h * POS_FECHA  - usable_h * POS_AUTOR  - h_autor)
+    else:
+        # Contraportada: fecha alineada al margen inferior
+        before_fecha = max(6.0, usable_h - (h_membrete + before_titulo + h_titulo + before_autor + h_autor + h_fecha))
 
     # Safety: verificar que la fecha no exceda el área útil
     fin_fecha = h_membrete + before_titulo + h_titulo + before_autor + h_autor + before_fecha + h_fecha
