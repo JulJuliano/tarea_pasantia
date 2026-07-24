@@ -767,7 +767,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     gap_df = max(6.0, gap * 0.5)  # datos-fecha mitad
 
     if tiene_logo:
-        logo_mitad = max(0, gap_mt / 3.0)
+        logo_mitad = max(0, gap_mt / 4.0)
         logo_resto = max(0, gap_mt - logo_mitad - h_logo)
         before_titulo = 0
     else:
