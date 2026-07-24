@@ -786,6 +786,18 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         if i < len(c.MEMBRETE) - 1:
             r.add_break()
 
+    # BLOQUE 1.5: LOGO IUTECP (solo portada, debajo del membrete)
+    if solo_autor:
+        logo_path = os.path.join("compartido", "iutecp.png")
+        if os.path.exists(logo_path):
+            pic = doc.add_picture(logo_path, width=Cm(4.5), height=Cm(4.0))
+            last_p = doc.paragraphs[-1]
+            last_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            last_p.paragraph_format.space_before = Pt(6)
+            last_p.paragraph_format.space_after = Pt(6)
+            # Reducir before_titulo para compensar el espacio del logo
+            before_titulo = max(6.0, before_titulo - 125.0)
+
     # BLOQUE 2: TÍTULO DEL PROYECTO (Centrado proporcionalmente)
     p_titulo = doc.add_paragraph()
     p_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -797,19 +809,62 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     r_title.font.size = Pt(12)
     r_title.font.bold = True
 
-    # BLOQUE 3: DATOS DEL AUTOR (Tercio inferior, alineado a la derecha)
-    p_datos = doc.add_paragraph()
-    p_datos.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    p_datos.paragraph_format.line_spacing = 1.15
-    p_datos.paragraph_format.space_before = Pt(before_autor)
-    p_datos.paragraph_format.space_after  = Pt(0)
-    for i, linea in enumerate(lineas_autor):
-        r = p_datos.add_run(linea)
-        r.font.name = 'Times New Roman'
-        r.font.size = Pt(12)
-        r.font.bold = True
-        if i < len(lineas_autor) - 1:
-            r.add_break()
+    # BLOQUE 3: DATOS DEL AUTOR Y TUTORES
+    if solo_autor:
+        # Portada: todo el bloque alineado a la derecha
+        p_datos = doc.add_paragraph()
+        p_datos.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        p_datos.paragraph_format.line_spacing = 1.15
+        p_datos.paragraph_format.space_before = Pt(before_autor)
+        p_datos.paragraph_format.space_after  = Pt(0)
+        for i, linea in enumerate(lineas_autor):
+            r = p_datos.add_run(linea)
+            r.font.name = 'Times New Roman'
+            r.font.size = Pt(12)
+            r.font.bold = True
+            if i < len(lineas_autor) - 1:
+                r.add_break()
+    else:
+        # Contraportada: autor a la izquierda, tutores a la derecha
+        # Dividir lineas_autor en dos bloques separados por strings vacíos
+        split_idx = len(lineas_autor)
+        for i, linea in enumerate(lineas_autor):
+            if not linea.strip():
+                split_idx = i
+                break
+        autor_block = lineas_autor[:split_idx]
+        tutor_start = split_idx
+        while tutor_start < len(lineas_autor) and not lineas_autor[tutor_start].strip():
+            tutor_start += 1
+        tutor_block = lineas_autor[tutor_start:]
+
+        if autor_block:
+            p_autor = doc.add_paragraph()
+            p_autor.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            p_autor.paragraph_format.line_spacing = 1.15
+            p_autor.paragraph_format.space_before = Pt(before_autor)
+            p_autor.paragraph_format.space_after  = Pt(8)
+            for i, linea in enumerate(autor_block):
+                r = p_autor.add_run(linea)
+                r.font.name = 'Times New Roman'
+                r.font.size = Pt(12)
+                r.font.bold = True
+                if i < len(autor_block) - 1:
+                    r.add_break()
+
+        if tutor_block:
+            p_tutor = doc.add_paragraph()
+            p_tutor.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            p_tutor.paragraph_format.line_spacing = 1.15
+            p_tutor.paragraph_format.space_before = Pt(0)
+            p_tutor.paragraph_format.space_after  = Pt(0)
+            for i, linea in enumerate(tutor_block):
+                r = p_tutor.add_run(linea)
+                r.font.name = 'Times New Roman'
+                r.font.size = Pt(12)
+                r.font.bold = True
+                if i < len(tutor_block) - 1:
+                    r.add_break()
 
     # BLOQUE 4: CIUDAD Y FECHA (Proporcional al margen inferior)
     p_pie = doc.add_paragraph()
@@ -987,23 +1042,19 @@ def construir_cuerpo_documento(doc, modo="completo"):
     es_borrador = modo == "borrador"
 
     # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
-    pag_actual_romana = 3  # Dedicatoria empieza en iii (portada=i, contraportada=ii)
+    pag_actual_romana = 3  # Agradecimientos empieza en iii (portada=i, contraportada=ii)
     romanos = {1: 'i', 2: 'ii', 3: 'iii', 4: 'iv', 5: 'v', 6: 'vi', 7: 'vii', 8: 'viii', 9: 'ix', 10: 'x', 11: 'xi', 12: 'xii'}
     
-    pag_dedicatoria = ""
     pag_agradecimientos = ""
+    pag_dedicatoria = ""
     pag_resumen = ""
     
-    if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
-        pag_dedicatoria = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
-        
     if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
         pag_agradecimientos = romanos.get(pag_actual_romana, str(pag_actual_romana))
         pag_actual_romana += 1
         
-    if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-        pag_resumen = romanos.get(pag_actual_romana, str(pag_actual_romana))
+    if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
+        pag_dedicatoria = romanos.get(pag_actual_romana, str(pag_actual_romana))
         pag_actual_romana += 1
         
     pag_indice = romanos.get(pag_actual_romana, str(pag_actual_romana))
@@ -1020,25 +1071,19 @@ def construir_cuerpo_documento(doc, modo="completo"):
         pag_lista_anexos = romanos.get(pag_actual_romana, str(pag_actual_romana))
         pag_actual_romana += 1
 
+    if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
+        pag_resumen = romanos.get(pag_actual_romana, str(pag_actual_romana))
+        pag_actual_romana += 1
+
     if not es_borrador:
-        # --- PÁGINAS PRELIMINARES ---
-        if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
-            iniciar_seccion_preliminar(doc, "DEDICATORIA", bookmark_id="bm_dedicatoria")
-            agregar_parrafo_normado(doc, c.DEDICATORIA)
-    
+        # --- PÁGINAS PRELIMINARES (orden: Agradec, Dedic, Indice, Listas, Resumen, Intro) ---
         if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
             iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
             agregar_parrafo_normado(doc, c.AGRADECIMIENTOS)
     
-        if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-            iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
-            agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
-            doc.add_paragraph()
-            p_kw = doc.add_paragraph()
-            p_kw.paragraph_format.first_line_indent = Cm(1.25)
-            run_kw_label = p_kw.add_run("Palabras claves: ")
-            run_kw_label.font.bold = True
-            p_kw.add_run(c.PALABRAS_CLAVE)
+        if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
+            iniciar_seccion_preliminar(doc, "DEDICATORIA", bookmark_id="bm_dedicatoria")
+            agregar_parrafo_normado(doc, c.DEDICATORIA)
     
         # --- ÍNDICE DE CONTENIDO ---
         iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO")
@@ -1050,17 +1095,17 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_h_ind.font.size = Pt(12)
         run_h_ind.font.bold = True
     
-        if pag_dedicatoria:
-            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
         if pag_agradecimientos:
             agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
-        if pag_resumen:
-            agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
+        if pag_dedicatoria:
+            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
     
         agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
         agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
         if pag_lista_anexos:
             agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
+        if pag_resumen:
+            agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
     
         agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
     
@@ -1209,6 +1254,17 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 bookmark_id = f"bm_anexo{letra.upper()}" if letra else None
                 agregar_fila_lista_preliminar_nativa(doc, letra, desc, pag_est, bookmark_id=bookmark_id)
     
+        # --- RESUMEN ---
+        if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
+            iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
+            agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
+            doc.add_paragraph()
+            p_kw = doc.add_paragraph()
+            p_kw.paragraph_format.first_line_indent = Cm(1.25)
+            run_kw_label = p_kw.add_run("Palabras claves: ")
+            run_kw_label.font.bold = True
+            p_kw.add_run(c.PALABRAS_CLAVE)
+
         # --- REGISTRO DEL INICIO DEL CUERPO ---
         iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
         agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))

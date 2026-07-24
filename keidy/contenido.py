@@ -31,7 +31,7 @@ MEMBRETE = [
     "REPÚBLICA BOLIVARIANA DE VENEZUELA",
     "MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN",
     "INSTITUTO UNIVERSITARIO DE TECNOLOGÍA",
-    "\"ELÍAS CALIXTO POMPA\" (IUTECP)",
+    "\"ELÍAS CALIXTO POMPA\"",
     "EL TIGRE, ESTADO ANZOÁTEGUI"
 ]
 
@@ -43,8 +43,8 @@ AUTOR_DATOS = [
     "Tutor Industrial: Martina Rondón",
     "C.I.: 12.208.768",
     "",
-    "Tutor Académico: Lic. Carlos Mendoza",
-    "C.I.: 4.273.815"
+    "Tutor Académico: Dra. Carmen J. Álvarez",
+    "C.I.: 14.452.956"
 ]
 FECHA_LUGAR = "El Tigre, julio de 2026"
 
