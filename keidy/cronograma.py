@@ -97,7 +97,6 @@ def generar_documento_semana(datos):
     add_label_value(doc, "SEMANA N°: ", datos["num_semana"])
     add_label_value(doc, "PERÍODO: ", datos["periodo"])
     add_label_value(doc, "PASANTE: ", "Keidy Guzmán |  C.I.: 28.706.352")
-#    add_label_value(doc, "TUTOR INDUSTRIAL: ", "[Nombre del Tutor]  |  C.I.: [Cédula]")
     add_label_value(doc, "TUTOR INDUSTRIAL: ", "Martina Rondón | C.I.: 12.208.768")
 
     doc.add_paragraph()
@@ -170,7 +169,7 @@ def generar_documento_semana(datos):
 
     doc.add_paragraph()
 
-    # 6. Observaciones del Tutor Industrial (Inyección cualitativa real)
+    # 6. Observaciones del Tutor Industrial (Espacio para llenar a mano)
     p_obs_t = doc.add_paragraph()
     p_obs_t.paragraph_format.space_after = Pt(4)
     run_ot2 = p_obs_t.add_run("OBSERVACIONES DEL TUTOR INDUSTRIAL:")
@@ -178,22 +177,20 @@ def generar_documento_semana(datos):
     run_ot2.font.size = Pt(12)
     run_ot2.font.bold = True
 
-    add_paragraph_normado(doc, datos["observaciones_tutor"])
+    p_obs = doc.add_paragraph()
+    p_obs.paragraph_format.line_spacing = 1.5
+    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
+    run_obs.font.name = 'Times New Roman'
+    run_obs.font.size = Pt(11)
+    run_obs.font.italic = True
 
-#    p_obs = doc.add_paragraph()
-#    p_obs.paragraph_format.line_spacing = 1.5
-#    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
-#    run_obs.font.name = 'Times New Roman'
-#    run_obs.font.size = Pt(11)
-#    run_obs.font.italic = True
-
-#    for _ in range(4):
-#        p_line = doc.add_paragraph()
-#        p_line.paragraph_format.space_before = Pt(8)
-#        p_line.paragraph_format.space_after = Pt(0)
-#        run_line = p_line.add_run("_" * 75)
-#        run_line.font.name = 'Times New Roman'
-#        run_line.font.bold = True
+    for _ in range(4):
+        p_line = doc.add_paragraph()
+        p_line.paragraph_format.space_before = Pt(8)
+        p_line.paragraph_format.space_after = Pt(0)
+        run_line = p_line.add_run("_" * 75)
+        run_line.font.name = 'Times New Roman'
+        run_line.font.bold = True
 
     doc.add_paragraph()
     doc.add_paragraph()
@@ -245,7 +242,6 @@ reportes_pasantias = [
         "periodo": "Del 08 al 12 de junio de 2026",
         "objetivo": "Formalizar el inicio de las pasantías dentro de la modalidad institucional en el puesto habitual de trabajo y delimitar los tiempos de investigación.",
         "entregables": "Acta de inicio de pasantías visada por la empresa y cronograma operativo validado por el tutor industrial.",
-        "observaciones_tutor": "La trabajadora y ahora pasante Keidy Guzmán formalizó el inicio de su período académico en su puesto habitual del área de procura. Mantiene su excelente desempeño y puntualidad, coordinando eficientemente sus obligaciones rutinarias con el levantamiento del proyecto.",
         "actividades": [
             ("1", "Formalización del inicio", "Reunión con la gerencia general y el tutor industrial para consignar los formatos institucionales del IUTECP.", "Cartas de postulación, plan institucional"),
             ("2", "Alineación de objetivos", "Vincular las metas del proyecto técnico con las funciones contables y de compra que ya ejecuta en su día a día.", "Manual de procesos, PC de oficina"),
@@ -260,7 +256,6 @@ reportes_pasantias = [
         "periodo": "Del 15 al 19 de junio de 2026",
         "objetivo": "Observar y registrar cómo se reciben y procesan actualmente las solicitudes de compra que llegan al departamento.",
         "entregables": "Lista de pasos detallada sobre el recorrido físico que hace una solicitud de compra desde que llega.",
-        "observaciones_tutor": "La pasante recolectó la información solicitada con mucho orden. Identificó con facilidad la manera en que se archivan los papeles y se comunicó bien con el resto del personal.",
         "actividades": [
             ("1", "Seguimiento de solicitudes", "Observar el momento en que llegan las hojas de solicitud de materiales desde el área de operaciones.", "Formatos de requisición, block de notas"),
             ("2", "Registro de documentos", "Anotar la correspondencia de compras entrante en el libro de control diario del departamento.", "Libro diario, PC de oficina"),
@@ -275,7 +270,6 @@ reportes_pasantias = [
         "periodo": "Del 22 al 26 de junio de 2026",
         "objetivo": "Preparar una lista de preguntas sencillas para conversar con el personal sobre los retrasos en las compras.",
         "entregables": "Guía escrita con las preguntas básicas para las entrevistas, revisada por el tutor industrial.",
-        "observaciones_tutor": "Keidy preparó un cuestionario bastante claro y directo. Las preguntas están enfocadas en entender por qué se tardan en autorizar los presupuestos de compras.",
         "actividades": [
             ("1", "Identificación de fallas", "Anotar cuáles son los retrasos más comunes comentados por los compañeros de oficina.", "Cuaderno de apuntes"),
             ("2", "Redacción de preguntas", "Escribir un cuestionario corto sobre los problemas diarios con las firmas y los formatos.", "Papelería, procesador de palabras"),
@@ -290,7 +284,6 @@ reportes_pasantias = [
         "periodo": "Del 29 de junio al 03 de julio de 2026",
         "objetivo": "Conversar con el personal administrativo usando el cuestionario para anotar los inconvenientes del proceso.",
         "entregables": "Hojas de respuestas llenas con los comentarios y notas tomadas del personal de compras.",
-        "observaciones_tutor": "La pasante realizó las actividades con mucho respeto y organización. Logró obtener información valiosa sobre las demoras en la recolección de firmas de la junta directiva.",
         "actividades": [
             ("1", "Coordinación de tiempos", "Acordar los momentos disponibles con los compañeros para realizar las entrevistas sin interrumpir.", "Calendario de oficina"),
             ("2", "Entrevistas al personal", "Hacer las preguntas preparadas al asistente de compras y al personal encargado de la administración.", "Cuestionarios impresos"),
@@ -305,7 +298,6 @@ reportes_pasantias = [
         "periodo": "Del 06 al 10 de julio de 2026",
         "objetivo": "Transcribir las entrevistas y analizar las órdenes de compra anteriores para identificar los problemas principales.",
         "entregables": "Resumen de entrevistas y tabla de tiempos históricos de órdenes de compra del último trimestre.",
-        "observaciones_tutor": "Buen trabajo de oficina. La pasante organizó las respuestas y el análisis de tiempos históricos, dejando en evidencia los cuellos de botella con ciertos proveedores.",
         "actividades": [
             ("1", "Transcripción de notas", "Pasar a la computadora las respuestas obtenidas en las hojas de las entrevistas.", "Computadora, Word"),
             ("2", "Acceso al archivo histórico", "Buscar e identificar las carpetas de órdenes de compra del último trimestre en el archivo físico.", "Archivo de documentos"),
@@ -320,7 +312,6 @@ reportes_pasantias = [
         "periodo": "Del 13 al 17 de julio de 2026",
         "objetivo": "Estructurar las causas de las fallas del departamento en un diagrama de Ishikawa y fundamentar conceptualmente el proyecto.",
         "entregables": "Diagrama de Ishikawa digital y primer borrador del marco teórico del informe.",
-        "observaciones_tutor": "El diagrama causa-efecto quedó muy claro y adaptado a nuestra oficina. El soporte teórico recopilado es pertinente con lo exigido para el nivel técnico.",
         "actividades": [
             ("1", "Clasificación de causas", "Dividir las causas de retrasos en las categorías de métodos, herramientas o factor humano.", "Block de notas"),
             ("2", "Estructuración del Ishikawa", "Diseñar en papel la estructura del diagrama de espina de pescado (causas y efectos).", "Lápiz, papel, regla"),
@@ -335,7 +326,6 @@ reportes_pasantias = [
         "periodo": "Del 20 al 24 de julio de 2026",
         "objetivo": "Diseñar un nuevo protocolo procedimental y recorrido optimizado para las solicitudes de compras.",
         "entregables": "Esquema preliminar del nuevo circuito de compras y asignación de tareas del área.",
-        "observaciones_tutor": "La ruta propuesta por la pasante es sencilla. La propuesta de utilizar un buzón de correo único evitará que se pierdan las cotizaciones recibidas.",
         "actividades": [
             ("1", "Lluvia de ideas", "Esbozar alternativas para simplificar los pasos de entrega y firma de las requisiciones.", "Papel de reciclaje, lápiz"),
             ("2", "Diseño del circuito", "Escribir el paso a paso ideal desde la recepción de la requisición hasta la orden de compra final.", "Hojas blancas, lápiz"),
@@ -350,7 +340,6 @@ reportes_pasantias = [
         "periodo": "Del 27 al 31 de julio de 2026",
         "objetivo": "Crear planillas automatizadas en Excel para registrar y comparar de manera objetiva los precios de proveedores.",
         "entregables": "Plantilla de Excel para la comparación de tres cotizaciones simultáneas con cálculo automático de totales.",
-        "observaciones_tutor": "Keidy demostró un excelente dominio de Excel. La planilla diseñada permite visualizar de manera rápida la opción más económica e idónea.",
         "actividades": [
             ("1", "Planificación del formato", "Definir los campos esenciales (proveedor, RIF, subtotal, IVA, total, entrega) a incluir en la planilla.", "Cuaderno de notas"),
             ("2", "Diseño de la estructura", "Crear las columnas y formato visual balanceado para comparar tres proveedores al mismo tiempo.", "Excel / Calc de oficina"),
@@ -365,7 +354,6 @@ reportes_pasantias = [
         "periodo": "Del 03 al 07 de agosto de 2026",
         "objetivo": "Probar y validar el uso de la planilla de Excel y el nuevo flujo operativo con los compañeros del departamento.",
         "entregables": "Registro de retroalimentación de los usuarios y formato Excel definitivo con correcciones aplicadas.",
-        "observaciones_tutor": "Pusimos a prueba la planilla y el nuevo flujo. El personal se adaptó muy bien, y logramos reducir significativamente el tiempo de análisis de ofertas.",
         "actividades": [
             ("1", "Explicación del recurso", "Presentar y explicar el funcionamiento del archivo de Excel al asistente administrativo de compras.", "Estación de trabajo"),
             ("2", "Prueba en vivo", "Acompañar al asistente en la carga de una cotización real usando la nueva planilla.", "Planilla de Excel, PC de oficina"),
@@ -380,7 +368,6 @@ reportes_pasantias = [
         "periodo": "Del 10 al 14 de agosto de 2026",
         "objetivo": "Consolidar el informe final del proyecto de pasantías y presentarlo ante la gerencia de la empresa.",
         "entregables": "Informe final de pasantías con anexos listos para consignar ante el IUTECP.",
-        "observaciones_tutor": "La pasante Keidy Guzmán culminó exitosamente su proyecto. La propuesta de ordenamiento y formatos de compras constituye un gran aporte para el control interno. Proyecto aprobado.",
         "actividades": [
             ("1", "Integración del informe", "Compilar los capítulos, diagnósticos, diagramas y anexos de formatos en el documento definitivo.", "Word, Normas IUTECP"),
             ("2", "Revisión de estilo", "Verificar la ortografía, referencias, sangrías y márgenes del informe final.", "PC de oficina"),
