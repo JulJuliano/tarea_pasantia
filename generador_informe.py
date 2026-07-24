@@ -761,7 +761,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     h_logo = 80.0 if tiene_logo else 0
 
     h_contenido = h_membrete + h_titulo + h_autor + h_fecha
-    gap = max(12.0, (usable_h - h_contenido) / 2.8)
+    gap = max(12.0, (usable_h - h_contenido - 30) / 2.7)
     gap_mt = gap * 1.2   # membrete-título más grande
     gap_td = gap          # título-datos
     gap_df = max(6.0, gap * 0.5)  # datos-fecha mitad
