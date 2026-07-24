@@ -544,7 +544,7 @@ def _insertar_campo_pagina(run, formato_pagina='PAGE'):
     run.font.name = 'Times New Roman'
     run.font.size = Pt(12)
 
-def agregar_numeracion_pie(doc, idx_inicio_cuerpo=None):
+def agregar_numeracion_pie(doc, idx_inicio_cuerpo=None, idx_indice_inicio=None, idx_indice_fin=None):
     """
     Numeración de páginas según norma IUTECP:
     - Portada y contraportada (secciones 0 y 1): SIN número.
@@ -578,7 +578,10 @@ def agregar_numeracion_pie(doc, idx_inicio_cuerpo=None):
         idx_inicio_cuerpo = 10
 
     # 3. Preliminares: romanos en minúsculas (desde sección 2 hasta idx_inicio_cuerpo - 1)
+    #    Se salta el Índice de Contenido (sus secciones no llevan número)
     for sec_idx in range(2, min(idx_inicio_cuerpo, len(doc.sections))):
+        if idx_indice_inicio is not None and idx_indice_inicio <= sec_idx < idx_indice_fin:
+            continue
         section = doc.sections[sec_idx]
         footer = section.footer
         footer.is_linked_to_previous = False
@@ -1086,6 +1089,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_parrafo_normado(doc, c.DEDICATORIA)
     
         # --- ÍNDICE DE CONTENIDO ---
+        idx_indice_inicio = len(doc.sections)
         iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO")
         p_header_ind = doc.add_paragraph()
         p_header_ind.alignment = WD_ALIGN_PARAGRAPH.RIGHT
@@ -1108,7 +1112,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
     
         agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
-    
+
+        idx_indice_fin = len(doc.sections)
+
         # Capítulos
         p_cap_lbl = doc.add_paragraph()
         p_cap_lbl.paragraph_format.space_before = Pt(12)
@@ -1364,7 +1370,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     doc.add_paragraph()
 
     if modo == "borrador":
-        return idx_cap1
+        return idx_cap1, None, None
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
@@ -1483,7 +1489,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             run_demo.font.size = Pt(TAMANO_TABLA)
             run_demo.font.italic = True
 
-    return idx_cap1
+    return idx_cap1, idx_indice_inicio, idx_indice_fin
 
 # ================================================================
 #  EJECUCIÓN PRINCIPAL
@@ -1507,10 +1513,10 @@ def generar_reporte_completo(modo="completo"):
         construir_portada(doc, idx_seccion=1)
     
     # 3. Cuerpo (Sección 2 o 1 en borrador)
-    idx_cap1 = construir_cuerpo_documento(doc, modo=modo)
+    idx_cap1, idx_indice_inicio, idx_indice_fin = construir_cuerpo_documento(doc, modo=modo)
     
     # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
-    agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1)
+    agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1, idx_indice_inicio=idx_indice_inicio, idx_indice_fin=idx_indice_fin)
 
     if modo == "borrador":
         sufijo = "_BORRADOR"
