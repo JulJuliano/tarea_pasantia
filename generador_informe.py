@@ -799,13 +799,13 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     if solo_autor:
         logo_path = os.path.join("compartido", "iutecp.png")
         if os.path.exists(logo_path):
-            pic = doc.add_picture(logo_path, width=Cm(4.5), height=Cm(4.0))
+            pic = doc.add_picture(logo_path, width=Cm(3.0))
             last_p = doc.paragraphs[-1]
             last_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             last_p.paragraph_format.space_before = Pt(6)
             last_p.paragraph_format.space_after = Pt(6)
             # Reducir before_titulo para compensar el espacio del logo
-            before_titulo = max(6.0, before_titulo - 125.0)
+            before_titulo = max(6.0, before_titulo - 90.0)
 
     # BLOQUE 2: TÍTULO DEL PROYECTO (Centrado proporcionalmente)
     p_titulo = doc.add_paragraph()
