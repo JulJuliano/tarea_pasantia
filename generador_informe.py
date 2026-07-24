@@ -747,7 +747,8 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     h_fecha    = LINE_PT
 
     # ------------------------------------------------------------------
-    # 3. Calcular gaps iguales en puntos entre todos los bloques
+    # 3. Calcular gaps en puntos entre bloques
+    #    El gap datos-fecha es la mitad del gap normal
     # ------------------------------------------------------------------
     h_membrete = membrete_lines * LINE_PT
     h_titulo   = titulo_lines   * LINE_PT
@@ -760,18 +761,17 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     h_logo = 80.0 if tiene_logo else 0
 
     h_contenido = h_membrete + h_titulo + h_autor + h_fecha
-    num_gaps = 3
-    gap = max(12.0, (usable_h - h_contenido) / num_gaps)
+    gap = max(12.0, (usable_h - h_contenido) / 2.5)
+    gap_fecha = max(6.0, gap * 0.5)
 
     if tiene_logo:
-        # Logo centrado en el gap membrete-titulo, sin gaps propios
         logo_mitad = max(0, (gap - h_logo) / 2.0)
         before_titulo = 0
     else:
         logo_mitad = 0
         before_titulo = gap
     before_autor  = gap
-    before_fecha  = gap
+    before_fecha  = gap_fecha
 
     # ------------------------------------------------------------------
     # 4. Renderizar cada bloque
