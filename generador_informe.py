@@ -581,11 +581,11 @@ def agregar_numeracion_pie(doc, idx_inicio_cuerpo=None, idx_indice_inicio=None, 
     # 3. Preliminares: romanos en minúsculas (desde sección 2 hasta idx_inicio_cuerpo - 1)
     #    Se salta el Índice de Contenido (sus secciones no llevan número)
     for sec_idx in range(2, min(idx_inicio_cuerpo, len(doc.sections))):
-        if idx_indice_inicio is not None and idx_indice_inicio <= sec_idx < idx_indice_fin:
-            continue
         section = doc.sections[sec_idx]
         footer = section.footer
         footer.is_linked_to_previous = False
+        if idx_indice_inicio is not None and idx_indice_inicio <= sec_idx < idx_indice_fin:
+            continue
         p = footer.paragraphs[0] if footer.paragraphs else footer.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run()
