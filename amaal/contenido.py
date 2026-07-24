@@ -42,8 +42,8 @@ AUTOR_DATOS = [
     "Autor: Alrifaai Alrifaaie Amaal",
     "C.I.: 31.985.792",
     "",
-    "Tutor Industrial: [Nombre del Tutor Industrial]",
-    "C.I.: [Cédula del Tutor Industrial]",
+    "Tutor Industrial: Lenny Mata",
+    "C.I.: 8969750",
     "",
     "Tutor Académico: Lic. Carlos Mendoza",
     "C.I.: 4.273.815"

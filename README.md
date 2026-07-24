@@ -110,7 +110,7 @@ Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas co
 ./selector.py --estudiantes <estudiante_id> --acciones <accion_id>
 ```
 * **Argumento `--estudiantes`:** Permite especificar qué estudiantes compilar separados por comas (`juliano`, `keidy`, `amaal`, `all`).
-* **Argumento `--acciones`:** Permite especificar qué tareas realizar separadas por comas (`informe`, `cronogramas`, `all`).
+* **Argumento `--acciones`:** Permite especificar qué tareas realizar separadas por comas (`informe`, `borrador`, `borrador2`, `cronogramas`, `all`).
 
 **Ejemplos prácticos:**
 * Compilar solo el informe de Keidy:
@@ -121,6 +121,18 @@ Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas co
   ```bash
   ./selector.py --estudiantes juliano,amaal --acciones all
   ```
+* Compilar borrador2 (todo excepto Cap IV + V) para todos:
+  ```bash
+  ./selector.py --acciones borrador2
+  ```
+
+### Modos de generación de informe
+
+| Modo | Acción | Portada | Contraportada | Preliminares | Cap I–III | Cap IV + V | Ref. + Anexos | Suffix archivo |
+|---|---|---|---|---|---|---|---|---|
+| **completo** | `informe` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
+| **borrador** | `borrador` | ✓ | ✗ | ✗ | ✓ (solo I–II) | ✗ | ✗ | `_BORRADOR` |
+| **borrador2** | `borrador2` | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | `_BORRADOR2` |
 
 ---
 
