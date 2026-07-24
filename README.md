@@ -20,9 +20,11 @@ tarea_pasantia/
 │
 ├── generador_informe.py     # Script principal (motor de generación de plantillas DOCX y conversión PDF)
 ├── selector.py              # Panel de control interactivo y automatizado por CLI
+├── revisiones_tutor.md      # Registro de observaciones y retroalimentación del tutor académico
 ├── .gitignore               # Exclusiones de Git (entornos virtuales, temporales y bloqueos de oficina)
 │
 ├── compartido/              # Recursos transversales a todos los estudiantes
+│   ├── iutecp.png           # Logo del IUTECP (portada)
 │   └── normativa/           # Normativa oficial de transcripción del IUTECP
 │       ├── Reglas_1.md
 │       ├── reglas_1.docx
@@ -134,6 +136,24 @@ Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas co
 | **borrador** | `borrador` | ✓ | ✗ | ✗ | ✓ (solo I–II) | ✗ | ✗ | `_BORRADOR` |
 | **borrador2** | `borrador2` | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | `_BORRADOR2` |
 
+### Portada y Contraportada
+
+- **Portada**: Membrete centrado → Logo IUTECP (`compartido/iutecp.png`) en el primer cuarto del gap → Título del proyecto → Datos del autor (nombre + CI, alineado derecha) → Ciudad y fecha
+- **Contraportada**: Membrete → Título → Tabla invisible de 2 columnas (tutores a la izquierda, autor a la derecha, TOP alignment) → Ciudad y fecha pegada al margen inferior
+- Los gaps entre bloques se calculan en puntos (no porcentajes), distribuidos equitativamente: `gap_mt = 1.2×` (membrete–título), `gap_td = 1×` (título–datos), `gap_df = 0.5×` (datos–fecha). Todos los márgenes de sección son 3cm; el efecto de 5cm en primera página de capítulo se logra con `space_before`.
+
+### Orden de páginas preliminares
+
+1. Agradecimientos
+2. Dedicatoria
+3. Índice de Contenido (sin numeración de página visible, aunque ocupe 2+ páginas)
+4. Lista de Cuadros
+5. Lista de Figuras
+6. Lista de Gráficos
+7. Lista de Anexos
+8. Resumen (con palabras clave)
+9. Introducción
+
 ---
 
 ## 🧠 Funcionamiento Inteligente del Compilador
@@ -174,6 +194,18 @@ Los archivos gráficos se colocan en `<estudiante>/imagenes/` con nombres numér
 ## 📚 Formatos de Contenido Soportados (refactor del generador)
 
 El generador (`generador_informe.py`) soporta dos formatos alternativos para ciertos bloques de contenido, detectándolos dinámicamente:
+
+### Capítulo I — Realidad Organizacional
+
+Los subtítulos del Capítulo I (Identificación de la empresa, Razón social, Reseña histórica, Misión, Visión, Valores, Objetivos Organizacionales, Ubicación, Población, Estructura Organizativa) se renderizan con `agregar_titulo_nivel2`: **sin numeración**, alineados a la izquierda, negrita. El contenido de Misión y Visión va en redonda (sin cursiva).
+
+"Identificación de la empresa" se muestra centrado y sin texto de entrada asociado.
+
+**Objetivos Organizacionales** incluye:
+- "Objetivo General" (de la empresa) → texto desde `OBJETIVO_GENERAL_EMPRESA`
+- "Objetivos Específicos" (de la empresa) → lista numerada desde `OBJETIVOS_ESPECIFICOS_EMPRESA`
+
+*(Estos son distintos del Objetivo General y Objetivos Específicos del proyecto, que aparecen en Capítulo II).*
 
 ### Marco Teórico (Cap. III)
 
