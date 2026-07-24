@@ -58,7 +58,7 @@ DOCX_SALIDA = "Informe_Pasantia_IUTECP.docx"
 PDF_SALIDA  = "Informe_Pasantia_IUTECP.pdf"
 
 # Espaciado de la portadilla de ANEXOS (Art. 26)
-ESP_PORTADILLA_ANEXOS = Pt(180)
+ESP_PORTADILLA_ANEXOS = Pt(237)  # 180pt + 57pt (compensa cambio de 5cm a 3cm)
 TAMANO_PORTADILLA_ANEXOS = 16  # Pt, un poco más grande para portadilla
 
 # Títulos por defecto de Cuadros y Gráficos (configurables desde contenido.py)
@@ -239,15 +239,16 @@ def _config_seccion(sec, sup=None):
 
 def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     """
-    Crea un nuevo capítulo con margen superior de 5cm en la primera página (Art. 6),
-    centrado, negrita, mayúsculas (Art. 9) y sección continua para volver a 3cm.
+    Crea un nuevo capítulo con espacio extra de 2cm en el título (simula Art. 6),
+    centrado, negrita, mayúsculas (Art. 9).
     """
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    _config_seccion(sec, sup=MARGEN_SUP_CAP)
+    _config_seccion(sec)
 
-    # Título CAPÍTULO X
+    # Título CAPÍTULO X — con espacio extra para simular margen superior de 5cm
     p1 = doc.add_paragraph()
     p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p1.paragraph_format.space_before = Pt(57)
     p1.paragraph_format.space_after = ESP_DOBLE
     r1 = p1.add_run(f"CAPÍTULO {numero_romano}")
     r1.font.name = FUENTE
@@ -265,17 +266,17 @@ def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     if bookmark_id:
         _agregar_bookmark(p2, bookmark_id)
 
-    # Salto continuo para restaurar margen superior a 3cm en el resto de la página
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
     _config_seccion(sec2)
 
 def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None):
     """Para secciones preliminares que inician en página nueva (Art. 9, 12)"""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    _config_seccion(sec, sup=MARGEN_SUP_CAP)
+    _config_seccion(sec)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(57)
     p.paragraph_format.space_after = ESP_DOBLE
     r = p.add_run(titulo.upper())
     r.font.name = FUENTE
@@ -1472,7 +1473,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
         # Portadilla de ANEXOS (Art. 26: una hoja sola con la palabra ANEXOS centrada y en negrita)
         sec_portadilla = doc.add_section(WD_SECTION_START.NEW_PAGE)
-        _config_seccion(sec_portadilla, sup=MARGEN_SUP_CAP)
+        _config_seccion(sec_portadilla)
         
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -1487,7 +1488,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
         for cod, desc in c.ANEXOS_LISTA:
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
-            _config_seccion(sec_anexo, sup=MARGEN_SUP_CAP)
+            _config_seccion(sec_anexo)
 
             p_anexo = doc.add_paragraph()
             p_anexo.alignment = WD_ALIGN_PARAGRAPH.CENTER
