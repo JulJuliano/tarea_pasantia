@@ -37,13 +37,16 @@ MEMBRETE = [
 
 TITULO_PROYECTO = "PROPUESTA DE OPTIMIZACIÓN DEL PROCESO DE PROCURA EN EL DEPARTAMENTO ADMINISTRATIVO DE LUBRICANTES Y EQUIPOS VARYNA, C.A."
 AUTOR_DATOS = [
-    "Autor: Keidy Guzmán",
+    "Autor:",
+    "Keidy Guzmán",
     "C.I.: 28.706.352",
     "",
-    "Tutor Industrial: Martina Rondón",
+    "Tutor Industrial:",
+    "Martina Rondón",
     "C.I.: 12.208.768",
     "",
-    "Tutor Académico: Dra. Carmen J. Álvarez",
+    "Tutor Académico:",
+    "Dra. Carmen J. Álvarez",
     "C.I.: 14.452.956"
 ]
 FECHA_LUGAR = "El Tigre, julio de 2026"

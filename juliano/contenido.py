@@ -32,13 +32,16 @@ MEMBRETE = [
 TITULO_PROYECTO = "DISEÑO DE UN SISTEMA PARA EL CONTROL, TRAZABILIDAD Y REPORTE DE MOVIMIENTOS DOCUMENTALES EN LA PRESIDENCIA DE LA EMPRESA MIXTA PETROLERA VENANGOCUPET, S.A."
 
 AUTOR_DATOS = [
-    "Autor: Juliano Cardona",
+    "Autor:",
+    "Juliano Cardona",
     "C.I.: 32.281.199",
     "",
-    "Tutor Industrial: Ing. Yasmin Sabaneta",
+    "Tutor Industrial:",
+    "Ing. Yasmin Sabaneta",
     "C.I.: 14.187.924",
     "",
-    "Tutor Académico: Lic. Carlos Mendoza",
+    "Tutor Académico:",
+    "Lic. Carlos Mendoza",
     "C.I.: 4.273.815"
 ]
 

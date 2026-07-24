@@ -735,7 +735,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             lineas_autor.append(linea)
     else:
         lineas_autor = lineas_autor_completo
-    autor_lines  = len(lineas_autor)
+    autor_lines  = sum(1 for l in lineas_autor if l.strip())
 
     # Times New Roman 12pt: ancho promedio ~6pt por carácter
     chars_per_line = max(1, int(usable_w / 6.0))

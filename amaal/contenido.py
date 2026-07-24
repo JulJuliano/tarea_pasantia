@@ -39,13 +39,16 @@ MEMBRETE = [
 TITULO_PROYECTO = "EVALUACIÓN DEL CONTROL ADMINISTRATIVO APLICADO A LA GESTIÓN DE SOLICITUDES DE SERVICIOS DE TELECOMUNICACIONES EN LA EMPRESA INGENIERÍA DE TELECOMUNICACIONES, C.A."
 
 AUTOR_DATOS = [
-    "Autor: Alrifaai Alrifaaie Amaal",
+    "Autor:",
+    "Alrifaai Alrifaaie Amaal",
     "C.I.: 31.985.792",
     "",
-    "Tutor Industrial: Lenny Mata",
+    "Tutor Industrial:",
+    "Lenny Mata",
     "C.I.: 8969750",
     "",
-    "Tutor Académico: Lic. Carlos Mendoza",
+    "Tutor Académico:",
+    "Lic. Carlos Mendoza",
     "C.I.: 4.273.815"
 ]
 
