@@ -747,35 +747,25 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     h_fecha    = LINE_PT
 
     # ------------------------------------------------------------------
-    # 3. Posiciones objetivo como porcentaje del área útil
-    #    (ajusta estos valores para mover los bloques)
-    #    La contraportada tiene más datos (tutores), por eso usa
-    #    posiciones más tempranas para que la fecha no se desborde.
+    # 3. Calcular gaps iguales en puntos entre todos los bloques
     # ------------------------------------------------------------------
-    if solo_autor:
-        POS_TITULO = 0.42   # El título empieza al 42% del área útil
-        POS_AUTOR  = 0.67   # El autor empieza al 67%
-        POS_FECHA  = 0.90   # La fecha empieza al 90%
-    else:
-        POS_TITULO = 0.35   # Contraportada: título más arriba
-        POS_AUTOR  = 0.58   # Contraportada: autor más arriba
-        POS_FECHA  = 0.82   # Contraportada: fecha más arriba
+    h_membrete = membrete_lines * LINE_PT
+    h_titulo   = titulo_lines   * LINE_PT
+    h_autor    = autor_lines    * LINE_PT
+    h_fecha    = LINE_PT
 
-    # Espaciado calculado: posición absoluta menos lo ya consumido
-    before_titulo = max(6.0, usable_h * POS_TITULO - h_membrete)
-    before_autor  = max(6.0, usable_h * POS_AUTOR  - usable_h * POS_TITULO - h_titulo)
-    if solo_autor:
-        before_fecha  = max(6.0, usable_h * POS_FECHA  - usable_h * POS_AUTOR  - h_autor)
-    else:
-        # Contraportada: fecha lo más abajo posible sin pasarse de página
-        before_fecha = usable_h * 0.92 - (h_membrete + before_titulo + h_titulo + before_autor + h_autor)
-        before_fecha = max(6.0, min(before_fecha, 120))
+    # Logo height estimate (solo portada, 3cm de ancho ≈ 80pt de alto)
+    logo_path = os.path.join("compartido", "iutecp.png")
+    tiene_logo = solo_autor and os.path.exists(logo_path)
+    h_logo = 80.0 if tiene_logo else 0
 
-    # Safety: verificar que la fecha no exceda el área útil
-    fin_fecha = h_membrete + before_titulo + h_titulo + before_autor + h_autor + before_fecha + h_fecha
-    if fin_fecha > usable_h:
-        exceso = fin_fecha - usable_h
-        before_fecha = max(6.0, before_fecha - exceso)
+    h_contenido = h_membrete + h_logo + h_titulo + h_autor + h_fecha
+    num_gaps = 4 if tiene_logo else 3
+    gap = max(12.0, (usable_h - h_contenido) / num_gaps)
+
+    before_titulo = gap
+    before_autor  = gap
+    before_fecha  = gap
 
     # ------------------------------------------------------------------
     # 4. Renderizar cada bloque
@@ -796,14 +786,12 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             r.add_break()
 
     # BLOQUE 1.5: LOGO IUTECP (solo portada, debajo del membrete)
-    if solo_autor:
-        logo_path = os.path.join("compartido", "iutecp.png")
-        if os.path.exists(logo_path):
-            pic = doc.add_picture(logo_path, width=Cm(3.0))
-            last_p = doc.paragraphs[-1]
-            last_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            last_p.paragraph_format.space_before = Pt(12)
-            last_p.paragraph_format.space_after = Pt(12)
+    if solo_autor and os.path.exists(logo_path):
+        pic = doc.add_picture(logo_path, width=Cm(3.0))
+        last_p = doc.paragraphs[-1]
+        last_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        last_p.paragraph_format.space_before = Pt(gap)
+        last_p.paragraph_format.space_after  = Pt(gap)
 
     # BLOQUE 2: TÍTULO DEL PROYECTO (Centrado proporcionalmente)
     p_titulo = doc.add_paragraph()
