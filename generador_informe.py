@@ -6,6 +6,7 @@ from docx import Document
 from docx.shared import Cm, Pt, Emu, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_TAB_LEADER
 from docx.enum.section import WD_SECTION_START
+from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
@@ -828,8 +829,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             if i < len(lineas_autor) - 1:
                 r.add_break()
     else:
-        # Contraportada: autor a la izquierda, tutores a la derecha
-        # Dividir lineas_autor en dos bloques separados por strings vacíos
+        # Contraportada: tutores a la izquierda, autor a la derecha, misma fila
         split_idx = len(lineas_autor)
         for i, linea in enumerate(lineas_autor):
             if not linea.strip():
@@ -841,33 +841,63 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             tutor_start += 1
         tutor_block = lineas_autor[tutor_start:]
 
-        if autor_block:
-            p_autor = doc.add_paragraph()
-            p_autor.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            p_autor.paragraph_format.line_spacing = 1.15
-            p_autor.paragraph_format.space_before = Pt(before_autor)
-            p_autor.paragraph_format.space_after  = Pt(8)
-            for i, linea in enumerate(autor_block):
-                r = p_autor.add_run(linea)
-                r.font.name = 'Times New Roman'
-                r.font.size = Pt(12)
-                r.font.bold = True
-                if i < len(autor_block) - 1:
-                    r.add_break()
+        # Tabla invisible de 1 fila × 2 columnas
+        table = doc.add_table(rows=1, cols=2)
+        table.alignment = WD_TABLE_ALIGNMENT.CENTER
+        table.allow_autofit = True
 
-        if tutor_block:
-            p_tutor = doc.add_paragraph()
-            p_tutor.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-            p_tutor.paragraph_format.line_spacing = 1.15
-            p_tutor.paragraph_format.space_before = Pt(0)
-            p_tutor.paragraph_format.space_after  = Pt(0)
-            for i, linea in enumerate(tutor_block):
-                r = p_tutor.add_run(linea)
-                r.font.name = 'Times New Roman'
-                r.font.size = Pt(12)
-                r.font.bold = True
-                if i < len(tutor_block) - 1:
-                    r.add_break()
+        # Quitar bordes
+        tbl = table._tbl
+        tblPr = tbl.tblPr if tbl.tblPr is not None else OxmlElement('w:tblPr')
+        borders = OxmlElement('w:tblBorders')
+        for border_name in ['top', 'left', 'bottom', 'right', 'insideH', 'insideV']:
+            border = OxmlElement(f'w:{border_name}')
+            border.set(qn('w:val'), 'none')
+            border.set(qn('w:sz'), '0')
+            borders.append(border)
+        tblPr.append(borders)
+
+        # Espaciado antes de la tabla
+        tblPr_old = table._tbl.tblPr
+        if tblPr_old is None:
+            tblPr_old = OxmlElement('w:tblPr')
+            table._tbl.insert(0, tblPr_old)
+        # No podemos poner space_before en tabla, pero podemos ajustar espacio con párrafo
+        p_before = doc.add_paragraph()
+        p_before.paragraph_format.space_before = Pt(before_autor)
+        p_before.paragraph_format.space_after = Pt(0)
+        p_before.paragraph_format.line_spacing = Pt(1)
+        # Mover la tabla después de este párrafo (la tabla ya se agregó al final)
+
+        # Cell 0: tutores (izquierda)
+        cell_tutor = table.rows[0].cells[0]
+        cell_tutor.width = Cm(7.29)
+        cell_tutor.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        p_t = cell_tutor.paragraphs[0]
+        p_t.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        p_t.paragraph_format.line_spacing = 1.15
+        for i, linea in enumerate(tutor_block):
+            run = p_t.add_run(linea)
+            run.font.name = 'Times New Roman'
+            run.font.size = Pt(12)
+            run.font.bold = True
+            if i < len(tutor_block) - 1:
+                run.add_break()
+
+        # Cell 1: autor (derecha)
+        cell_autor = table.rows[0].cells[1]
+        cell_autor.width = Cm(7.30)
+        cell_autor.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        p_a = cell_autor.paragraphs[0]
+        p_a.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        p_a.paragraph_format.line_spacing = 1.15
+        for i, linea in enumerate(autor_block):
+            run = p_a.add_run(linea)
+            run.font.name = 'Times New Roman'
+            run.font.size = Pt(12)
+            run.font.bold = True
+            if i < len(autor_block) - 1:
+                run.add_break()
 
     # BLOQUE 4: CIUDAD Y FECHA (Proporcional al margen inferior)
     p_pie = doc.add_paragraph()
