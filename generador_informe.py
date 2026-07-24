@@ -1159,6 +1159,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_fila_indice_general_nativa(doc, "Visión", "", sangria_cm=0.5, bookmark_id="bm_cap1_vision")
         agregar_fila_indice_general_nativa(doc, "Valores", "", sangria_cm=0.5, bookmark_id="bm_cap1_valores")
         agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "", sangria_cm=0.5, bookmark_id="bm_cap1_obj")
+        agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap1_objgral")
+        agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap1_objespec")
         agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
         agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
         agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
@@ -1166,8 +1168,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
         # Capítulo II
         agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
         agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
-        agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
-        agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
         agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
         agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
     
@@ -1350,10 +1350,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_item_lista(doc, i, descripcion, valor)
 
     agregar_titulo_nivel2(doc, "Objetivos Organizacionales", bookmark_id="bm_cap1_obj")
-    agregar_parrafo_normado(doc, "Entre sus objetivos organizacionales se encuentran:")
-    objs_org = getattr(c, 'OBJETIVOS_ORG', [])
-    for i, objetivo in enumerate(objs_org, 1):
-        agregar_item_lista(doc, i, objetivo)
+
+    agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap1_objgral")
+    agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
+
+    agregar_titulo_nivel2(doc, "Objetivos Específicos", bookmark_id="bm_cap1_objespec")
+    objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
+    for i, obj in enumerate(objs_especificos, 1):
+        agregar_item_lista(doc, i, obj)
 
     agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
@@ -1383,14 +1387,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
     else:
         for parrafo in situacion_problematica:
             agregar_parrafo_normado(doc, parrafo)
-
-    agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
-    agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
-
-    agregar_titulo_nivel2(doc, "Objetivos Específicos", bookmark_id="bm_cap2_obje")
-    objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
-    for i, obj in enumerate(objs_especificos, 1):
-        agregar_item_lista(doc, i, obj)
 
     agregar_titulo_nivel2(doc, "Planificación integral de objetivos", bookmark_id="bm_cap2_planif")
     intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
