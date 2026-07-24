@@ -1315,10 +1315,16 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
 # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
     iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL", bookmark_id="bm_cap1")
-    agregar_titulo_nivel2(doc, "Identificación de la empresa", bookmark_id="bm_cap1_ident")
-    identificacion_empresa = getattr(c, 'IDENTIFICACION_EMPRESA', '')
-    if identificacion_empresa:
-        agregar_parrafo_normado(doc, identificacion_empresa)
+    p_ident = doc.add_paragraph()
+    p_ident.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_ident.paragraph_format.space_before = ESP_DOBLE
+    p_ident.paragraph_format.space_after = ESP_DOBLE
+    p_ident.paragraph_format.line_spacing = INTERLINEADO
+    r_ident = p_ident.add_run("Identificación de la empresa")
+    r_ident.font.name = FUENTE
+    r_ident.font.size = Pt(TAMANO_BASE)
+    r_ident.font.bold = True
+    _agregar_bookmark(p_ident, "bm_cap1_ident")
 
     agregar_titulo_nivel2(doc, "Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
