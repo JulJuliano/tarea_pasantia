@@ -841,6 +841,12 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             tutor_start += 1
         tutor_block = lineas_autor[tutor_start:]
 
+        # Espaciador antes de la tabla (para posicionar a la altura de POS_AUTOR)
+        p_before = doc.add_paragraph()
+        p_before.paragraph_format.space_before = Pt(before_autor)
+        p_before.paragraph_format.space_after = Pt(0)
+        p_before.paragraph_format.line_spacing = Pt(1)
+
         # Tabla invisible de 1 fila × 2 columnas
         table = doc.add_table(rows=1, cols=2)
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -856,18 +862,6 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
             border.set(qn('w:sz'), '0')
             borders.append(border)
         tblPr.append(borders)
-
-        # Espaciado antes de la tabla
-        tblPr_old = table._tbl.tblPr
-        if tblPr_old is None:
-            tblPr_old = OxmlElement('w:tblPr')
-            table._tbl.insert(0, tblPr_old)
-        # No podemos poner space_before en tabla, pero podemos ajustar espacio con párrafo
-        p_before = doc.add_paragraph()
-        p_before.paragraph_format.space_before = Pt(before_autor)
-        p_before.paragraph_format.space_after = Pt(0)
-        p_before.paragraph_format.line_spacing = Pt(1)
-        # Mover la tabla después de este párrafo (la tabla ya se agregó al final)
 
         # Cell 0: tutores (izquierda)
         cell_tutor = table.rows[0].cells[0]
