@@ -88,13 +88,6 @@ INTRODUCCION_TEXTO = (
 )
 
 # 4. CAPÍTULO I - Realidad Organizacional
-IDENTIFICACION_EMPRESA = (
-    "La pasantía profesional se llevó a cabo en Ingeniería de Telecomunicaciones, C.A., empresa del sector "
-    "tecnológico conocida comercialmente bajo las siglas IDETEL o INTELCA, registrada bajo el Registro de "
-    "Información Fiscal (RIF) N° J-08011691-7. La organización actúa como operador autorizado por la Comisión "
-    "Nacional de Telecomunicaciones (CONATEL) y se desempeña como Distribuidor Autorizado de la marca Motorola "
-    "en la región oriental del país."
-)
 
 RESENA_HISTORICA = [
     "Ingeniería de Telecomunicaciones, C.A. se consolidó en la ciudad de El Tigre, estado Anzoátegui, "

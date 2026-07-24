@@ -64,9 +64,6 @@ INTRODUCCION_TEXTO = (
 )
 
 # 4. CAPÍTULO I - Realidad Organizacional
-IDENTIFICACION_EMPRESA = (
-    "La práctica profesional se desarrolla en la Empresa Mixta Petrolera Venangocupet, S.A., entidad filial de la Corporación Venezolana de Petróleo (CVP). Su actividad principal se centra en la exploración y producción primaria de hidrocarburos, operando bajo los lineamientos estratégicos de la División Ayacucho de la Faja Petrolífera del Orinoco."
-)
 
 RESENA_HISTORICA = [
     "Venangocupet, S.A. fue constituida formalmente el 26 de noviembre de 2012, como parte de la estrategia de alianzas para el desarrollo de la Faja Petrolífera del Orinoco. Inicialmente, su estructura accionaria estaba compuesta por un 60% correspondiente a Petróleos de Venezuela, S.A. (PDVSA), a través de la CVP, y un 40% distribuido entre socios internacionales.",

@@ -89,12 +89,6 @@ INTRODUCCION_TEXTO = (
 # ================================================================
 RAZON_SOCIAL = "Lubricantes y Equipos Varyna, C.A."
 
-IDENTIFICACION_EMPRESA = (
-    "La práctica profesional se desarrolla en Lubricantes y Equipos Varyna, C.A., empresa venezolana con más "
-    "de treinta y seis (36) años de trayectoria en el sector petrolero, industrial y de construcción. Su actividad "
-    "principal se enfoca en el procesamiento y suministro de productos químicos especializados, el tratamiento "
-    "de crudo y la provisión de maquinaria pesada para operaciones industriales."
-)
 
 RESENA_HISTORICA = [
     "Lubricantes y Equipos Varyná C.A. es una empresa venezolana con más de treinta y seis (36) años de trayectoria en el sector petrolero, industrial y de construcción, consolidándose como una organización de amplia experiencia y reconocimiento dentro del mercado nacional. Desde sus inicios, la empresa ha orientado sus esfuerzos al desarrollo de soluciones integrales que contribuyan al fortalecimiento de las actividades productivas del país.",
