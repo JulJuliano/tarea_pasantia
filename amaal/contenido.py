@@ -142,8 +142,12 @@ OBJETIVOS_ORG = [
     "Representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
 ]
 
-OBJETIVO_GENERAL_EMPRESA = OBJETIVOS_ORG[0]
-OBJETIVOS_ESPECIFICOS_EMPRESA = OBJETIVOS_ORG[1:]
+OBJETIVO_GENERAL_EMPRESA = "Ejecutar todo género de actividad o prestación de servicios relacionados directa o indirectamente con el ramo de las comunicaciones, computación y la electrónica en general."
+
+OBJETIVOS_ESPECIFICOS_EMPRESA = [
+    "Prestar servicios de importación, manufacturación, asesoría, ventas, instalaciones, arrendamientos, supervisión y mantenimiento en el área de telecomunicaciones.",
+    "Representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
+]
 
 UBICACION = (
     "La sede administrativa y operativa de Ingeniería de Telecomunicaciones, C.A. se encuentra ubicada en la "

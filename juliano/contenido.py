@@ -94,8 +94,12 @@ OBJETIVOS_ORG = [
     "Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa."
 ]
 
-OBJETIVO_GENERAL_EMPRESA = OBJETIVOS_ORG[0]
-OBJETIVOS_ESPECIFICOS_EMPRESA = OBJETIVOS_ORG[1:]
+OBJETIVO_GENERAL_EMPRESA = "Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas."
+
+OBJETIVOS_ESPECIFICOS_EMPRESA = [
+    "Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.",
+    "Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa."
+]
 
 UBICACION = (
     "La Empresa Mixta Petrolera Venangocupet, S.A. se encuentra ubicada en el sur del estado Anzoátegui, operando geográficamente en los bloques asignados dentro de la División Ayacucho, Faja Petrolífera del Orinoco."
