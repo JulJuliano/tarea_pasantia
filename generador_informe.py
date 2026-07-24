@@ -102,7 +102,7 @@ def agregar_parrafo_normado(doc, texto, cursiva=False, sangria=True):
     p_format = p.paragraph_format
     p_format.line_spacing = INTERLINEADO
     p_format.first_line_indent = SANGRIA_LINEA if sangria else Cm(0)
-    p_format.space_after = Pt(0)
+    p_format.space_after = Pt(6)
     p_format.space_before = Pt(0)
 
     run = p.add_run(texto)
