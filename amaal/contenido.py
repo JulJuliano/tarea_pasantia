@@ -142,6 +142,9 @@ OBJETIVOS_ORG = [
     "Representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
 ]
 
+OBJETIVO_GENERAL_EMPRESA = OBJETIVOS_ORG[0]
+OBJETIVOS_ESPECIFICOS_EMPRESA = OBJETIVOS_ORG[1:]
+
 UBICACION = (
     "La sede administrativa y operativa de Ingeniería de Telecomunicaciones, C.A. se encuentra ubicada en la "
     "Calle Bolívar, Edificio La Suiza, Piso 1, Oficina Nro. 28, ciudad de El Tigre, Municipio Simón Rodríguez, "

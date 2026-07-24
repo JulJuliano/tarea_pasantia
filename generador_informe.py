@@ -1350,6 +1350,13 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_item_lista(doc, i, descripcion, valor)
 
     agregar_titulo_nivel2(doc, "Objetivos Organizacionales", bookmark_id="bm_cap1_obj")
+    agregar_titulo_nivel2(doc, "Objetivo General")
+    agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL_EMPRESA', ''))
+    objs_espec_emp = getattr(c, 'OBJETIVOS_ESPECIFICOS_EMPRESA', [])
+    if objs_espec_emp:
+        agregar_titulo_nivel2(doc, "Objetivos Específicos")
+        for i, obj in enumerate(objs_espec_emp, 1):
+            agregar_item_lista(doc, i, obj)
 
     agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)

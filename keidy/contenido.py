@@ -115,6 +115,9 @@ OBJETIVOS_ORG = [
     "Entre sus objetivos organizacionales se encuentran ejecutar todo género de actividad o prestación de servicios relacionados directa o indirectamente con el ramo de las comunicaciones, computación y la electrónica en general; prestar servicios de importación, manufacturación, asesoría, ventas, instalaciones, arrendamientos, supervisión y mantenimiento en el área de telecomunicaciones; así como representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
 ]
 
+OBJETIVO_GENERAL_EMPRESA = OBJETIVOS_ORG[0]
+OBJETIVOS_ESPECIFICOS_EMPRESA = []
+
 UBICACION = "Calle 23 de enero entre calle principal el palomar y calle la paz sector vista al sol, San José de Guanipa Edo. Anzoátegui."
 
 POBLACION = [
