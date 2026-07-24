@@ -759,11 +759,17 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     tiene_logo = solo_autor and os.path.exists(logo_path)
     h_logo = 80.0 if tiene_logo else 0
 
-    h_contenido = h_membrete + h_logo + h_titulo + h_autor + h_fecha
-    num_gaps = 4 if tiene_logo else 3
+    h_contenido = h_membrete + h_titulo + h_autor + h_fecha
+    num_gaps = 3
     gap = max(12.0, (usable_h - h_contenido) / num_gaps)
 
-    before_titulo = gap
+    if tiene_logo:
+        # Logo centrado en el gap membrete-titulo, sin gaps propios
+        logo_mitad = max(0, (gap - h_logo) / 2.0)
+        before_titulo = 0
+    else:
+        logo_mitad = 0
+        before_titulo = gap
     before_autor  = gap
     before_fecha  = gap
 
@@ -790,8 +796,8 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         pic = doc.add_picture(logo_path, width=Cm(3.0))
         last_p = doc.paragraphs[-1]
         last_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        last_p.paragraph_format.space_before = Pt(gap)
-        last_p.paragraph_format.space_after  = Pt(gap)
+        last_p.paragraph_format.space_before = Pt(logo_mitad)
+        last_p.paragraph_format.space_after  = Pt(logo_mitad)
 
     # BLOQUE 2: TÍTULO DEL PROYECTO (Centrado proporcionalmente)
     p_titulo = doc.add_paragraph()
