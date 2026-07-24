@@ -39,3 +39,4 @@
 ### Sobre el Punto 3
 
 * **Título académico:** Keidy cursa el plan de estudios para la obtención del título de **Técnico Superior Universitario (TSU) en Administración**.
+* **Departamento:** Asistente Administrativo
