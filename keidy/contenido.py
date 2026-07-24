@@ -35,7 +35,7 @@ MEMBRETE = [
     "EL TIGRE, ESTADO ANZOÁTEGUI"
 ]
 
-TITULO_PROYECTO = "PROPUESTA DE OPTIMIZACIÓN DEL PROCESO DE PROCURA EN EL DEPARTAMENTO ADMINISTRATIVO DE LUBRICANTES Y EQUIPOS VARYNA, C.A."
+TITULO_PROYECTO = "PROPUESTA DE SIMPLIFICACIÓN ADMINISTRATIVA DE LA PROCURA EN LUBRICANTES Y EQUIPOS VARYNA, C.A."
 AUTOR_DATOS = [
     "Autor:",
     "Keidy Guzmán",
@@ -105,13 +105,13 @@ VALORES = [
     ("Transparencia", "Garantizar la trazabilidad y la claridad en los procesos de selección y adjudicación de compras.")
 ]
 
-OBJETIVOS_ORG = [
-    "Entre sus objetivos organizacionales se encuentran ejecutar todo género de actividad o prestación de servicios relacionados directa o indirectamente con el ramo de las comunicaciones, computación y la electrónica en general; prestar servicios de importación, manufacturación, asesoría, ventas, instalaciones, arrendamientos, supervisión y mantenimiento en el área de telecomunicaciones; así como representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
-]
-
 OBJETIVO_GENERAL_EMPRESA = "Ejecutar todo género de actividad o prestación de servicios relacionados directa o indirectamente con el ramo de las comunicaciones, computación y la electrónica en general; prestar servicios de importación, manufacturación, asesoría, ventas, instalaciones, arrendamientos, supervisión y mantenimiento en el área de telecomunicaciones; así como representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles."
 
-OBJETIVOS_ESPECIFICOS_EMPRESA = []
+OBJETIVOS_ESPECIFICOS_EMPRESA = [
+    "Ejecutar todo género de actividad o prestación de servicios relacionados directa o indirectamente con el ramo de las comunicaciones, computación y la electrónica en general.",
+    "Prestar servicios de importación, manufacturación, asesoría, ventas, instalaciones, arrendamientos, supervisión y mantenimiento en el área de telecomunicaciones.",
+    "Representar total o parcialmente cualquier producto comercial relacionado con sus operaciones mercantiles.",
+]
 
 UBICACION = "Calle 23 de enero entre calle principal el palomar y calle la paz sector vista al sol, San José de Guanipa Edo. Anzoátegui."
 
