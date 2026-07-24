@@ -872,7 +872,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         # Cell 0: tutores (izquierda)
         cell_tutor = table.rows[0].cells[0]
         cell_tutor.width = Cm(7.29)
-        cell_tutor.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        cell_tutor.vertical_alignment = WD_ALIGN_VERTICAL.TOP
         p_t = cell_tutor.paragraphs[0]
         p_t.alignment = WD_ALIGN_PARAGRAPH.LEFT
         p_t.paragraph_format.line_spacing = 1.15
@@ -887,7 +887,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         # Cell 1: autor (derecha)
         cell_autor = table.rows[0].cells[1]
         cell_autor.width = Cm(7.30)
-        cell_autor.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        cell_autor.vertical_alignment = WD_ALIGN_VERTICAL.TOP
         p_a = cell_autor.paragraphs[0]
         p_a.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         p_a.paragraph_format.line_spacing = 1.15
