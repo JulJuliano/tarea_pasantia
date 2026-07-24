@@ -1319,10 +1319,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
     if identificacion_empresa:
         agregar_parrafo_normado(doc, identificacion_empresa)
 
-    agregar_titulo_nivel3(doc, "1.1.1 Razón social")
+    agregar_titulo_nivel2(doc, "Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
 
-    agregar_titulo_nivel3(doc, "1.1.2 Reseña histórica", bookmark_id="bm_cap1_resena")
+    agregar_titulo_nivel2(doc, "Reseña histórica", bookmark_id="bm_cap1_resena")
     resena_data = getattr(c, 'RESENA_HISTORICA', [])
     if isinstance(resena_data, str):
         agregar_parrafo_normado(doc, resena_data)
@@ -1330,31 +1330,31 @@ def construir_cuerpo_documento(doc, modo="completo"):
         for parrafo in resena_data:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel3(doc, "1.1.3 Misión", bookmark_id="bm_cap1_mision")
-    agregar_parrafo_normado(doc, getattr(c, 'MISION', 'Misión no proporcionada.'), cursiva=True)
+    agregar_titulo_nivel2(doc, "Misión", bookmark_id="bm_cap1_mision")
+    agregar_parrafo_normado(doc, getattr(c, 'MISION', 'Misión no proporcionada.'))
 
-    agregar_titulo_nivel3(doc, "1.1.4 Visión", bookmark_id="bm_cap1_vision")
-    agregar_parrafo_normado(doc, getattr(c, 'VISION', 'Visión no proporcionada.'), cursiva=True)
+    agregar_titulo_nivel2(doc, "Visión", bookmark_id="bm_cap1_vision")
+    agregar_parrafo_normado(doc, getattr(c, 'VISION', 'Visión no proporcionada.'))
 
-    agregar_titulo_nivel3(doc, "1.1.5 Valores", bookmark_id="bm_cap1_valores")
+    agregar_titulo_nivel2(doc, "Valores", bookmark_id="bm_cap1_valores")
     agregar_parrafo_normado(doc, "Los valores que orientan las actividades de la organización destacan:")
     valores_data = getattr(c, 'VALORES', [])
     for i, (valor, descripcion) in enumerate(valores_data, 1):
         agregar_item_lista(doc, i, descripcion, valor)
 
-    agregar_titulo_nivel3(doc, "1.1.6 Objetivos Organizacionales", bookmark_id="bm_cap1_obj")
+    agregar_titulo_nivel2(doc, "Objetivos Organizacionales", bookmark_id="bm_cap1_obj")
     agregar_parrafo_normado(doc, "Entre sus objetivos organizacionales se encuentran:")
     objs_org = getattr(c, 'OBJETIVOS_ORG', [])
     for i, objetivo in enumerate(objs_org, 1):
         agregar_item_lista(doc, i, objetivo)
 
-    agregar_titulo_nivel3(doc, "1.1.7 Ubicación geográfica", bookmark_id="bm_cap1_ubic")
+    agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
 
     carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "ubicacion")
 
-    agregar_titulo_nivel3(doc, "1.1.8 Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
+    agregar_titulo_nivel2(doc, "Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
     poblacion_data = getattr(c, 'POBLACION', '')
     if isinstance(poblacion_data, str):
         agregar_parrafo_normado(doc, poblacion_data)
@@ -1362,7 +1362,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         for parrafo in poblacion_data:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel3(doc, "1.1.9 Estructura Organizativa", bookmark_id="bm_cap1_estruct")
+    agregar_titulo_nivel2(doc, "Estructura Organizativa", bookmark_id="bm_cap1_estruct")
     agregar_parrafo_normado(doc, getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.'))
 
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
