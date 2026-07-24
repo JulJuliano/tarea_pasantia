@@ -1314,7 +1314,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
 # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
     iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL", bookmark_id="bm_cap1")
-    agregar_titulo_nivel2(doc, "IDENTIFICACIÓN DE LA EMPRESA", bookmark_id="bm_cap1_ident")
+    agregar_titulo_nivel2(doc, "Identificación de la empresa", bookmark_id="bm_cap1_ident")
     identificacion_empresa = getattr(c, 'IDENTIFICACION_EMPRESA', '')
     if identificacion_empresa:
         agregar_parrafo_normado(doc, identificacion_empresa)
