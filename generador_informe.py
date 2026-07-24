@@ -1091,6 +1091,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
     pag_lista_cuadros = romanos.get(pag_actual_romana, str(pag_actual_romana))
     pag_actual_romana += 1
     
+    pag_lista_figuras = romanos.get(pag_actual_romana, str(pag_actual_romana))
+    pag_actual_romana += 1
+    
     pag_lista_graficos = romanos.get(pag_actual_romana, str(pag_actual_romana))
     pag_actual_romana += 1
     
@@ -1130,6 +1133,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
     
         agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
+        agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", "", bookmark_id="bm_lista_figuras")
         agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
         if pag_lista_anexos:
             agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
@@ -1215,6 +1219,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
             bookmark_id = f"bm_cuadro{num}" if num else None
             agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
     
+        # --- LISTA DE FIGURAS ---
+        iniciar_seccion_preliminar(doc, "LISTA DE FIGURAS", bookmark_id="bm_lista_figuras")
+
         # --- LISTA DE GRÁFICOS ---
         iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
         p_header_g = doc.add_paragraph()
