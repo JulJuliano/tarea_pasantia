@@ -982,7 +982,7 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
 def construir_cuerpo_documento(doc, modo="completo"):
     """Escribe secuencialmente todas las secciones del informe de pasantía.
     
-    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II)
+    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II) | "borrador2" (todo excepto Cap IV + V)
     """
     es_borrador = modo == "borrador"
 
@@ -1337,31 +1337,33 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_parrafo_normado(doc, post_cita, sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
-    iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS", bookmark_id="bm_cap4")
-    agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana", bookmark_id="bm_cap4_desc")
-    agregar_parrafo_normado(doc, getattr(c, 'ACTIVIDADES_DESCRIPCION', 'Descripción de actividades ejecutadas.'))
-    actividades_lista = getattr(c, 'ACTIVIDADES_LISTA', [])
-    for i, actividad in enumerate(actividades_lista, 1):
-        if isinstance(actividad, dict):
-            agregar_titulo_nivel2(doc, f"Semana {actividad.get('semana', i)}")
-            if actividad.get('operativa'):
-                agregar_item_lista(doc, 1, actividad['operativa'], negrita_inicio="Actividad operativa")
-            if actividad.get('investigacion'):
-                agregar_item_lista(doc, 2, actividad['investigacion'], negrita_inicio="Actividad de investigación")
-        else:
-            agregar_item_lista(doc, i, actividad)
+    if modo != "borrador2":
+        iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS", bookmark_id="bm_cap4")
+        agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana", bookmark_id="bm_cap4_desc")
+        agregar_parrafo_normado(doc, getattr(c, 'ACTIVIDADES_DESCRIPCION', 'Descripción de actividades ejecutadas.'))
+        actividades_lista = getattr(c, 'ACTIVIDADES_LISTA', [])
+        for i, actividad in enumerate(actividades_lista, 1):
+            if isinstance(actividad, dict):
+                agregar_titulo_nivel2(doc, f"Semana {actividad.get('semana', i)}")
+                if actividad.get('operativa'):
+                    agregar_item_lista(doc, 1, actividad['operativa'], negrita_inicio="Actividad operativa")
+                if actividad.get('investigacion'):
+                    agregar_item_lista(doc, 2, actividad['investigacion'], negrita_inicio="Actividad de investigación")
+            else:
+                agregar_item_lista(doc, i, actividad)
 
     # --- CAPÍTULO V: CONCLUSIONES Y RECOMENDACIONES ---
-    iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES", bookmark_id="bm_cap5")
-    agregar_titulo_nivel2(doc, "Conclusiones", bookmark_id="bm_cap5_concl")
-    conclusiones = getattr(c, 'CONCLUSIONES', [])
-    for i, conclusion in enumerate(conclusiones, 1):
-        agregar_item_lista(doc, i, conclusion)
+    if modo != "borrador2":
+        iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES", bookmark_id="bm_cap5")
+        agregar_titulo_nivel2(doc, "Conclusiones", bookmark_id="bm_cap5_concl")
+        conclusiones = getattr(c, 'CONCLUSIONES', [])
+        for i, conclusion in enumerate(conclusiones, 1):
+            agregar_item_lista(doc, i, conclusion)
 
-    agregar_titulo_nivel2(doc, "Recomendaciones", bookmark_id="bm_cap5_recom")
-    recomendaciones = getattr(c, 'RECOMENDACIONES', [])
-    for i, recomendacion in enumerate(recomendaciones, 1):
-        agregar_item_lista(doc, i, recomendacion)
+        agregar_titulo_nivel2(doc, "Recomendaciones", bookmark_id="bm_cap5_recom")
+        recomendaciones = getattr(c, 'RECOMENDACIONES', [])
+        for i, recomendacion in enumerate(recomendaciones, 1):
+            agregar_item_lista(doc, i, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
     iniciar_seccion_preliminar(doc, "REFERENCIAS", bookmark_id="bm_referencias")
@@ -1454,7 +1456,12 @@ def generar_reporte_completo(modo="completo"):
     # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
     agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1)
 
-    sufijo = "_BORRADOR" if modo == "borrador" else ""
+    if modo == "borrador":
+        sufijo = "_BORRADOR"
+    elif modo == "borrador2":
+        sufijo = "_BORRADOR2"
+    else:
+        sufijo = ""
     docx_output = f"Informe_Pasantia_IUTECP{sufijo}.docx"
     doc.save(docx_output)
     print(f"✔ Archivo Word generado: {docx_output}")
