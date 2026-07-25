@@ -1372,6 +1372,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
         table = doc.add_table(rows=1, cols=5)
         table.style = 'Table Grid'
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
+        table.allow_autofit = False
+        tblLayout = OxmlElement('w:tblLayout')
+        tblLayout.set(qn('w:type'), 'fixed')
+        table._tbl.tblPr.append(tblLayout)
         headers = ["Departamento / Área", "Cargo", "Femenino", "Masculino", "Total"]
         for i, h in enumerate(headers):
             cell = table.rows[0].cells[i]
@@ -1385,6 +1389,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
             shading = OxmlElement('w:shd')
             shading.set(qn('w:fill'), "D9E2F3")
             cell._tc.get_or_add_tcPr().append(shading)
+        widths = [Cm(3.5), Cm(5.09), Cm(2), Cm(2), Cm(2)]
+        for idx, width in enumerate(widths):
+            table.columns[idx].width = width
+        for row in table.rows:
+            for idx, width in enumerate(widths):
+                row.cells[idx].width = width
         for dep, cargo, fem, masc, total in poblacion_tabla:
             row = table.add_row()
             for j, val in enumerate([dep, cargo, fem, masc, total]):
