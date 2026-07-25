@@ -140,21 +140,29 @@ Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas co
 
 Todos los modos incluyen portada, contraportada, páginas preliminares, referencias y anexos. El índice solo muestra los capítulos presentes en cada modo.
 
+### Portada y Contraportada
+
 - **Portada**: Membrete centrado → Logo IUTECP (`compartido/iutecp.png`) en el primer cuarto del gap → Título del proyecto → Datos del autor (nombre + CI, alineado derecha) → Ciudad y fecha
 - **Contraportada**: Membrete → Título → Tabla invisible de 2 columnas (tutores a la izquierda, autor a la derecha, TOP alignment) → Ciudad y fecha pegada al margen inferior
 - Los gaps entre bloques se calculan en puntos (no porcentajes), distribuidos equitativamente: `gap_mt = 1.2×` (membrete–título), `gap_td = 1×` (título–datos), `gap_df = 0.5×` (datos–fecha). Todos los márgenes de sección son 3cm; el efecto de 5cm en primera página de capítulo se logra con `space_before`.
 
+### Páginas de Aprobación
+
+Dos páginas con membrete, título "APROBACIÓN DEL TUTOR INDUSTRIAL" / "APROBACIÓN DEL TUTOR ACADÉMICO", párrafo justificado con datos del pasante, fecha, línea de firma y nombre + C.I. del tutor extraídos automáticamente de `AUTOR_DATOS`.
+
 ### Orden de páginas preliminares
 
-1. Agradecimientos
-2. Dedicatoria
-3. Índice de Contenido (sin numeración de página visible, aunque ocupe 2+ páginas)
-4. Lista de Cuadros
-5. Lista de Figuras
-6. Lista de Gráficos
-7. Lista de Anexos
-8. Resumen (con palabras clave)
-9. Introducción
+1. Aprobación del Tutor Industrial
+2. Aprobación del Tutor Académico
+3. Agradecimientos
+4. Dedicatoria
+5. Índice de Contenido (sin numeración de página visible, aunque ocupe 2+ páginas)
+6. Lista de Cuadros
+7. Lista de Figuras
+8. Lista de Gráficos
+9. Lista de Anexos
+10. Resumen (con palabras clave)
+11. Introducción
 
 ---
 

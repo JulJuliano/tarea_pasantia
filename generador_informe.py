@@ -1088,8 +1088,8 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         bookmark_id = f"bm_grafico{numero}" if numero else None
         agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), bookmark_id=bookmark_id)
 
-def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma):
-    """Agrega página de aprobación con membrete, título centrado y firma."""
+def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tutor, ci_tutor):
+    """Agrega página de aprobación con membrete, título centrado, firma y datos del tutor."""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
     _config_seccion(sec)
     
@@ -1133,19 +1133,32 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma):
     run_f.font.name = FUENTE
     run_f.font.size = Pt(12)
     
-    for _ in range(6):
+    for _ in range(4):
         doc.add_paragraph()
     
-    p_firma = doc.add_paragraph()
-    p_firma.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    run_n = p_firma.add_run("Apellidos y Nombres")
-    run_n.font.name = FUENTE
-    run_n.font.size = Pt(12)
-    tab = p_firma.paragraph_format.tab_stops.add_tab_stop(Cm(18), WD_TAB_ALIGNMENT.LEFT)
-    run_tab = p_firma.add_run("\t")
-    run_tab.font.name = FUENTE
-    run_tab.font.size = Pt(12)
-    run_ci = p_firma.add_run("C.I.: _______________")
+    # Línea de firma
+    p_linea = doc.add_paragraph()
+    p_linea.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run_linea = p_linea.add_run("_" * 55)
+    run_linea.font.name = FUENTE
+    run_linea.font.size = Pt(12)
+    
+    doc.add_paragraph()
+    
+    # Nombre del tutor centrado
+    p_nom = doc.add_paragraph()
+    p_nom.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_nom.paragraph_format.line_spacing = 1.5
+    run_nom = p_nom.add_run(nombre_tutor)
+    run_nom.font.name = FUENTE
+    run_nom.font.size = Pt(12)
+    run_nom.font.bold = True
+    
+    # Cédula del tutor centrada
+    p_ci = doc.add_paragraph()
+    p_ci.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_ci.paragraph_format.space_before = Pt(0)
+    run_ci = p_ci.add_run(ci_tutor)
     run_ci.font.name = FUENTE
     run_ci.font.size = Pt(12)
 
@@ -1216,8 +1229,41 @@ def construir_cuerpo_documento(doc, modo="completo"):
             f"y que, por lo tanto, considero que re\u00fane los m\u00e9ritos suficientes para ser "
             f"evaluado por el jurado que se decida designar a tal fin."
         )
+        # Extraer nombres y CIs de tutores desde AUTOR_DATOS
+        autor_datos = getattr(c, 'AUTOR_DATOS', [])
+        tut_ind_nom = ""
+        tut_ind_ci = ""
+        tut_acad_nom = ""
+        tut_acad_ci = ""
+        for i, linea in enumerate(autor_datos):
+            if "Tutor Industrial" in linea and ":" in linea:
+                partes = linea.split(":", 1)
+                if len(partes) > 1 and partes[1].strip():
+                    tut_ind_nom = partes[1].strip()
+                elif i + 2 < len(autor_datos):
+                    tut_ind_nom = autor_datos[i + 1].strip()
+                    if "C.I.:" in autor_datos[i + 2]:
+                        tut_ind_ci = autor_datos[i + 2].split(":", 1)[1].strip()
+            if "Tutor Académico" in linea and ":" in linea:
+                partes = linea.split(":", 1)
+                if len(partes) > 1 and partes[1].strip():
+                    tut_acad_nom = partes[1].strip()
+                elif i + 2 < len(autor_datos):
+                    tut_acad_nom = autor_datos[i + 1].strip()
+                    if "C.I.:" in autor_datos[i + 2]:
+                        tut_acad_ci = autor_datos[i + 2].split(":", 1)[1].strip()
+            if "C.I.:" in linea and i > 0:
+                prev = autor_datos[i - 1].strip()
+                if prev == tut_ind_nom:
+                    tut_ind_ci = linea.split(":", 1)[1].strip()
+                elif prev == tut_acad_nom:
+                    tut_acad_ci = linea.split(":", 1)[1].strip()
+
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", texto_base,
-            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026")
+            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026",
+            tut_ind_nom, f"C.I.: {tut_ind_ci}" if tut_ind_ci else "")
+
+        # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
 
         # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
         texto_base_acad = (
@@ -1230,7 +1276,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
             f"evaluado por el jurado que se decida designar a tal fin."
         )
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", texto_base_acad,
-            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026")
+            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026",
+            tut_acad_nom, f"C.I.: {tut_acad_ci}" if tut_acad_ci else "")
 
         # --- PÁGINAS PRELIMINARES ---
         if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
