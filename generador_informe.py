@@ -1365,6 +1365,44 @@ def construir_cuerpo_documento(doc, modo="completo"):
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "ubicacion")
 
     agregar_titulo_nivel2(doc, "Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
+    poblacion_tabla = getattr(c, 'POBLACION_TABLA', None)
+    if poblacion_tabla:
+        p_ant = doc.add_paragraph()
+        p_ant.paragraph_format.space_after = Pt(6)
+        table = doc.add_table(rows=1, cols=5)
+        table.style = 'Table Grid'
+        table.alignment = WD_TABLE_ALIGNMENT.CENTER
+        headers = ["Departamento / Área", "Cargo", "Femenino", "Masculino", "Total"]
+        for i, h in enumerate(headers):
+            cell = table.rows[0].cells[i]
+            cell.text = ""
+            p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            run = p.add_run(h)
+            run.font.name = FUENTE
+            run.font.size = Pt(8)
+            run.font.bold = True
+            shading = OxmlElement('w:shd')
+            shading.set(qn('w:fill'), "D9E2F3")
+            cell._tc.get_or_add_tcPr().append(shading)
+        for dep, cargo, fem, masc, total in poblacion_tabla:
+            row = table.add_row()
+            for j, val in enumerate([dep, cargo, fem, masc, total]):
+                cell = row.cells[j]
+                cell.text = ""
+                p = cell.paragraphs[0]
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER if j >= 2 else WD_ALIGN_PARAGRAPH.LEFT
+                run = p.add_run(str(val))
+                run.font.name = FUENTE
+                run.font.size = Pt(8)
+                if j == 0 and dep.startswith("**"):
+                    run.font.bold = True
+        p_fuente = doc.add_paragraph()
+        p_fuente.paragraph_format.space_before = Pt(6)
+        run_f = p_fuente.add_run("Fuente: Departamento Administrativo de Lubricantes y Equipos Varyna, C.A. (2026).")
+        run_f.font.name = FUENTE
+        run_f.font.size = Pt(8)
+        run_f.font.italic = True
     poblacion_data = getattr(c, 'POBLACION', '')
     if isinstance(poblacion_data, str):
         agregar_parrafo_normado(doc, poblacion_data)
