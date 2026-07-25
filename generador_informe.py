@@ -459,14 +459,14 @@ def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
         _agregar_bookmark(p, bookmark_id)
 
 def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None):
-    """Genera la tabla de planificación de objetivos con anchos y estilos fijos"""
+    """Genera la tabla de planificación de objetivos con 5 columnas"""
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
 
-    ENCABEZADOS = ['Objetivo Específico', 'Actividades', 'Recursos', 'Indicadores de Logro']
-    ANCHOS_CM   = [4.5, 4.5, 3.0, 3.5]
+    ENCABEZADOS = ['Objetivo', 'Variable', 'Actividades', 'Técnica', 'Instrumento']
+    ANCHOS_CM   = [2.9, 2.9, 2.9, 2.9, 2.99]
 
-    tabla = doc.add_table(rows=1 + len(datos), cols=4)
+    tabla = doc.add_table(rows=1 + len(datos), cols=5)
     tabla.style = 'Table Grid'
     aplicar_formato_tabla_xml(tabla, ANCHOS_CM)
 
@@ -475,8 +475,11 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None
         set_cell_shading(cell, COLOR_ENCABEZADO)
         _celda(cell, enc, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
 
-    for fila, (obj, act, rec, ind) in enumerate(datos, start=1):
-        contenidos = [obj, act, rec, ind]
+    for fila, datos_fila in enumerate(datos, start=1):
+        if len(datos_fila) == 5:
+            contenidos = list(datos_fila)
+        else:
+            contenidos = list(datos_fila) + ['']
         fondo = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         for col, texto in enumerate(contenidos):
             cell = tabla.cell(fila, col)
@@ -484,7 +487,7 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None
             _celda(cell, texto, tamaño=Pt(TAMANO_TABLA))
 
 def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
-    """Genera la tabla Gantt de actividades con cálculo dinámico del ancho útil"""
+    """Genera la tabla Gantt con 2 filas de encabezado (meses y semanas)"""
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
 
@@ -494,32 +497,54 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
     ancho_util_cm = Emu(ancho_util_emu).cm
 
-    # Detectar la etiqueta S más ancha (ej: S10 > S9) y calcular ancho de columna necesario
-    etiquetas_sem = [f'S{s+1}' for s in range(num_sem)]
-    max_chars_s = max(len(e) for e in etiquetas_sem) if etiquetas_sem else 2
-    # Times New Roman ~0.55 * pt por carácter + 0.4cm de relleno por celda
-    COL_SEM_CM = Pt(max_chars_s * TAMANO_TABLA_CHICO * 0.55).cm + 0.4
+    COL_SEM_CM = Pt(3 * TAMANO_TABLA_CHICO * 0.55).cm + 0.4
     min_act_cm = 3.0
     max_s_por_col = (ancho_util_cm - min_act_cm) / num_sem if num_sem > 0 else ancho_util_cm
     COL_SEM_CM = min(COL_SEM_CM, max_s_por_col)
     COL_ACT_CM = ancho_util_cm - num_sem * COL_SEM_CM
 
-    tabla = doc.add_table(rows=1 + len(semanas), cols=1 + num_sem)
+    tabla = doc.add_table(rows=2 + len(semanas), cols=1 + num_sem)
     tabla.style = 'Table Grid'
 
     anchos_gantt = [COL_ACT_CM] + [COL_SEM_CM] * num_sem
     aplicar_formato_tabla_xml(tabla, anchos_gantt)
 
-    cell_h = tabla.cell(0, 0)
-    set_cell_shading(cell_h, COLOR_ENCABEZADO)
-    _celda(cell_h, 'Actividades Administrativas', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+    # ── Fila 0: meses (JUNIO, JULIO, AGOSTO) ──
+    cell_label = tabla.cell(0, 0)
+    set_cell_shading(cell_label, COLOR_ENCABEZADO)
+    _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
 
-    for s in range(num_sem):
-        cell_s = tabla.cell(0, s + 1)
-        set_cell_shading(cell_s, COLOR_ENCABEZADO)
-        _celda(cell_s, f'S{s+1}', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO)
+    meses = [("JUNIO", 4), ("JULIO", 4), ("AGOSTO", 2)]
+    col_start = 1
+    for nombre, ncols in meses:
+        if col_start > num_sem:
+            break
+        ncols = min(ncols, num_sem - col_start + 1)
+        c1 = tabla.cell(0, col_start)
+        c2 = tabla.cell(0, col_start + ncols - 1)
+        merged = c1.merge(c2)
+        set_cell_shading(merged, COLOR_ENCABEZADO)
+        _celda(merged, nombre, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+        col_start += ncols
 
-    for fila, (desc, activas) in enumerate(semanas, start=1):
+    # ── Fila 1: semanas (1..n) ──
+    cell_act = tabla.cell(1, 0)
+    set_cell_shading(cell_act, COLOR_ENCABEZADO)
+    _celda(cell_act, 'Actividad', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+
+    semana_meses = [4, 4, 2]  # weeks per month
+    col_actual = 1
+    for ncols in semana_meses:
+        for w in range(1, ncols + 1):
+            if col_actual > num_sem:
+                break
+            cell_s = tabla.cell(1, col_actual)
+            set_cell_shading(cell_s, COLOR_ENCABEZADO)
+            _celda(cell_s, str(w), negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO)
+            col_actual += 1
+
+    # ── Filas de datos ──
+    for fila, (desc, activas) in enumerate(semanas, start=2):
         fondo_fila = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         cell_a = tabla.cell(fila, 0)
         set_cell_shading(cell_a, fondo_fila)

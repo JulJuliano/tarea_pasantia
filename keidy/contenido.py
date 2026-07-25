@@ -167,27 +167,31 @@ OBJETIVOS_ESPECIFICOS = [
 PLANIFICACION_DATOS = [
     (
         "Diagnosticar el proceso actual de procura e identificar los pasos susceptibles de simplificación.",
-        "Aplicación de guías de observación directa y entrevistas al personal encargado del ciclo de compras de la empresa.",
-        "Guía de entrevista, libreta de notas de campo, computadora de oficina.",
-        "Mapeo situacional del flujo actual de las solicitudes de compra elaborado."
+        "Flujo procedimental y canales de recepción de solicitudes.",
+        "Observación directa del ciclo de compras y entrevistas al personal.",
+        "Observación directa y entrevistas.",
+        "Guía de entrevista, libreta de notas de campo, computadora."
     ),
     (
         "Identificar complejidades, redundancias y cuellos de botella en el seguimiento y aprobación.",
-        "Revisión y análisis de los tiempos promedio de respuesta en expedientes de compras anteriores y detección de fases críticas y pasos duplicados.",
-        "Hojas de registro, histórico de órdenes de compra, software de oficina.",
-        "Matriz de criticidad con los puntos de complejidad y retraso documental identificados."
+        "Tiempos de respuesta y etapas críticas del proceso de compras.",
+        "Revisión de expedientes históricos y detección de fases duplicadas.",
+        "Análisis documental y revisión de tiempos.",
+        "Hojas de registro, histórico de órdenes de compra, software de oficina."
     ),
     (
         "Analizar las causas organizativas que generan procedimientos innecesariamente complejos.",
-        "Clasificación analítica de los factores determinantes de las demoras y redundancias mediante mesas de trabajo técnica con la administración.",
-        "Diagramas causa-efecto, material de papelería, marco de control de procesos.",
-        "Informe analítico con la jerarquización de las causas raíz de la complejidad procedimental."
+        "Factores determinantes de demoras y redundancias.",
+        "Clasificación analítica de causas mediante mesas de trabajo con la administración.",
+        "Diagrama causa-efecto y jerarquización de factores.",
+        "Material de papelería, marco de control de procesos."
     ),
     (
         "Diseñar una propuesta de simplificación administrativa para el control de la procura.",
-        "Redacción del nuevo flujo de trabajo simplificado, asignación formal de roles y diseño de plantillas estandarizadas para cotizaciones.",
-        "Procesador de texto, guías metodológicas de administración, normativas de la empresa.",
-        "Propuesta de simplificación administrativa de la procura formulada y validada."
+        "Flujo de trabajo y formatos de control de la procura.",
+        "Redacción del nuevo flujo simplificado y diseño de plantillas estandarizadas.",
+        "Diseño procedimental y estandarización de formatos.",
+        "Procesador de texto, guías metodológicas de administración."
     ),
 ]
 
