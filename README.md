@@ -130,13 +130,15 @@ Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas co
 
 ### Modos de generación de informe
 
-| Modo | Acción | Portada | Contraportada | Preliminares | Cap I–III | Cap IV + V | Ref. + Anexos | Suffix archivo |
-|---|---|---|---|---|---|---|---|---|
-| **completo** | `informe` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| **borrador** | `borrador` | ✓ | ✗ | ✗ | ✓ (solo I–II) | ✗ | ✗ | `_BORRADOR` |
-| **borrador2** | `borrador2` | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | `_BORRADOR2` |
+| Modo | Acción | Capítulos incluidos | Suffix archivo |
+|---|---|---|---|
+| **completo** | `informe` | I, II, III, IV, V | — |
+| **borrador 1** | `borrador1` | Solo Cap I | `_BORRADOR1` |
+| **borrador 2** | `borrador2` | Cap I + II | `_BORRADOR2` |
+| **borrador 3** | `borrador3` | Cap I + II + III | `_BORRADOR3` |
+| **borrador 4** | `borrador4` | Cap I + II + III + IV | `_BORRADOR4` |
 
-### Portada y Contraportada
+Todos los modos incluyen portada, contraportada, páginas preliminares, referencias y anexos. El índice solo muestra los capítulos presentes en cada modo.
 
 - **Portada**: Membrete centrado → Logo IUTECP (`compartido/iutecp.png`) en el primer cuarto del gap → Título del proyecto → Datos del autor (nombre + CI, alineado derecha) → Ciudad y fecha
 - **Contraportada**: Membrete → Título → Tabla invisible de 2 columnas (tutores a la izquierda, autor a la derecha, TOP alignment) → Ciudad y fecha pegada al margen inferior
