@@ -1133,7 +1133,7 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
     run_f.font.name = FUENTE
     run_f.font.size = Pt(12)
     
-    for _ in range(4):
+    for _ in range(1):
         doc.add_paragraph()
     
     # Línea de firma
