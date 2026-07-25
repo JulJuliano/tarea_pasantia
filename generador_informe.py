@@ -1091,9 +1091,13 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
 def construir_cuerpo_documento(doc, modo="completo"):
     """Escribe secuencialmente todas las secciones del informe de pasantía.
     
-    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II) | "borrador2" (todo excepto Cap IV + V)
+    modo: "completo" | "borrador1" (solo Cap I) | "borrador2" (Cap I+II) |
+          "borrador3" (Cap I+II+III) | "borrador4" (Cap I+II+III+IV)
     """
-    es_borrador = modo == "borrador"
+    tiene_cap2 = modo in ("completo", "borrador2", "borrador3", "borrador4")
+    tiene_cap3 = modo in ("completo", "borrador3", "borrador4")
+    tiene_cap4 = modo in ("completo", "borrador4")
+    tiene_cap5 = modo == "completo"
 
     # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
     pag_actual_romana = 3  # Agradecimientos empieza en iii (portada=i, contraportada=ii)
@@ -1132,7 +1136,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         pag_resumen = romanos.get(pag_actual_romana, str(pag_actual_romana))
         pag_actual_romana += 1
 
-    if not es_borrador:
+    if True:
         # --- PÁGINAS PRELIMINARES (orden: Agradec, Dedic, Indice, Listas, Resumen, Intro) ---
         if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
             iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
@@ -1189,25 +1193,29 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
     
         # Capítulo II
-        agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
-        agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
-        agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
-        agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
-        agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
-        agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
+        if tiene_cap2:
+            agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
+            agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
+            agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
+            agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
+            agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
+            agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
     
         # Capítulo III
-        agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
-        agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
+        if tiene_cap3:
+            agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
+            agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
     
         # Capítulo IV
-        agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
-        agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
+        if tiene_cap4:
+            agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
+            agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
     
         # Capítulo V
-        agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
-        agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
-        agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
+        if tiene_cap5:
+            agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
+            agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
+            agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
     
         # Referencias y Anexos
         agregar_fila_indice_general_nativa(doc, "REFERENCIAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_referencias")
@@ -1449,44 +1457,42 @@ def construir_cuerpo_documento(doc, modo="completo"):
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
 
     # --- CAPÍTULO II: DIAGNÓSTICO SITUACIONAL ---
-    iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL", bookmark_id="bm_cap2")
-    agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática", bookmark_id="bm_cap2_sit")
-    situacion_problematica = getattr(c, 'SITUACION_PROBLEMATICA', [])
-    if isinstance(situacion_problematica, str):
-        agregar_parrafo_normado(doc, situacion_problematica)
-    else:
-        for parrafo in situacion_problematica:
-            agregar_parrafo_normado(doc, parrafo)
+    if tiene_cap2:
+        iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL", bookmark_id="bm_cap2")
+        agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática", bookmark_id="bm_cap2_sit")
+        situacion_problematica = getattr(c, 'SITUACION_PROBLEMATICA', [])
+        if isinstance(situacion_problematica, str):
+            agregar_parrafo_normado(doc, situacion_problematica)
+        else:
+            for parrafo in situacion_problematica:
+                agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
-    agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
+        agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
+        agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
 
-    agregar_titulo_nivel2(doc, "Objetivos Específicos", bookmark_id="bm_cap2_obje")
-    objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
-    for i, obj in enumerate(objs_especificos, 1):
-        agregar_item_lista(doc, i, obj)
+        agregar_titulo_nivel2(doc, "Objetivos Específicos", bookmark_id="bm_cap2_obje")
+        objs_especificos = getattr(c, 'OBJETIVOS_ESPECIFICOS', [])
+        for i, obj in enumerate(objs_especificos, 1):
+            agregar_item_lista(doc, i, obj)
 
-    agregar_titulo_nivel2(doc, "Planificación integral de objetivos", bookmark_id="bm_cap2_planif")
-    intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
-        "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
-    agregar_parrafo_normado(doc, intro_planif)
-    titulo_planif = getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF)
-    agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif, bookmark_id="bm_cuadro1")
-    doc.add_paragraph()
+        agregar_titulo_nivel2(doc, "Planificación integral de objetivos", bookmark_id="bm_cap2_planif")
+        intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
+            "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
+        agregar_parrafo_normado(doc, intro_planif)
+        titulo_planif = getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF)
+        agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif, bookmark_id="bm_cuadro1")
+        doc.add_paragraph()
 
-    agregar_titulo_nivel2(doc, "Cronograma de actividades", bookmark_id="bm_cap2_crono")
-    intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
-        "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
-    agregar_parrafo_normado(doc, intro_crono)
-    titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
-    agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
-    doc.add_paragraph()
-
-    if modo == "borrador":
-        return idx_cap1, None, None
+        agregar_titulo_nivel2(doc, "Cronograma de actividades", bookmark_id="bm_cap2_crono")
+        intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
+            "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
+        agregar_parrafo_normado(doc, intro_crono)
+        titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
+        agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
+        doc.add_paragraph()
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
-    if modo not in ("borrador2", "borrador3"):
+    if tiene_cap3:
         iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
         if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
             primer_sub = True
@@ -1513,7 +1519,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 agregar_parrafo_normado(doc, post_cita, sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
-    if modo != "borrador2":
+    if tiene_cap4:
         iniciar_capitulo(doc, "IV", "ACTIVIDADES REALIZADAS", bookmark_id="bm_cap4")
         agregar_titulo_nivel2(doc, "Descripción de Actividades Ejecutadas por Semana", bookmark_id="bm_cap4_desc")
         agregar_parrafo_normado(doc, getattr(c, 'ACTIVIDADES_DESCRIPCION', 'Descripción de actividades ejecutadas.'))
@@ -1529,7 +1535,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 agregar_item_lista(doc, i, actividad)
 
     # --- CAPÍTULO V: CONCLUSIONES Y RECOMENDACIONES ---
-    if modo != "borrador2":
+    if tiene_cap5:
         iniciar_capitulo(doc, "V", "CONCLUSIONES Y RECOMENDACIONES", bookmark_id="bm_cap5")
         agregar_titulo_nivel2(doc, "Conclusiones", bookmark_id="bm_cap5_concl")
         conclusiones = getattr(c, 'CONCLUSIONES', [])
@@ -1616,15 +1622,14 @@ def generar_reporte_completo(modo="completo"):
     # 1. Portada (Sección 0) — solo autor, sin tutores
     construir_portada(doc, solo_autor=True, idx_seccion=0)
     
-    # 2. Contraportada (Sección 1) — solo en modo completo
-    if modo != "borrador":
-        sec_contra = doc.add_section(WD_SECTION_START.NEW_PAGE)
-        sec_contra.top_margin = Cm(3)
-        sec_contra.bottom_margin = Cm(3)
-        sec_contra.left_margin = Cm(4)
-        sec_contra.right_margin = Cm(3)
-        sec_contra.different_first_page_header_footer = True
-        construir_portada(doc, idx_seccion=1)
+    # 2. Contraportada (Sección 1)
+    sec_contra = doc.add_section(WD_SECTION_START.NEW_PAGE)
+    sec_contra.top_margin = Cm(3)
+    sec_contra.bottom_margin = Cm(3)
+    sec_contra.left_margin = Cm(4)
+    sec_contra.right_margin = Cm(3)
+    sec_contra.different_first_page_header_footer = True
+    construir_portada(doc, idx_seccion=1)
     
     # 3. Cuerpo (Sección 2 o 1 en borrador)
     idx_cap1, idx_indice_inicio, idx_indice_fin = construir_cuerpo_documento(doc, modo=modo)
@@ -1632,12 +1637,14 @@ def generar_reporte_completo(modo="completo"):
     # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
     agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1, idx_indice_inicio=idx_indice_inicio, idx_indice_fin=idx_indice_fin)
 
-    if modo == "borrador":
-        sufijo = "_BORRADOR"
+    if modo == "borrador1":
+        sufijo = "_BORRADOR1"
     elif modo == "borrador2":
         sufijo = "_BORRADOR2"
     elif modo == "borrador3":
         sufijo = "_BORRADOR3"
+    elif modo == "borrador4":
+        sufijo = "_BORRADOR4"
     else:
         sufijo = ""
     docx_output = f"Informe_Pasantia_IUTECP{sufijo}.docx"

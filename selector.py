@@ -67,9 +67,10 @@ ESTUDIANTES = _detectar_estudiantes()
 # Acciones globales
 ACCIONES = [
     {"id": "informe", "nombre": "Compilar Informe de Pasantía (.docx y .pdf)", "def": True},
-    {"id": "borrador", "nombre": "Compilar Borrador (solo Portada + Cap I + Cap II)", "def": False},
-    {"id": "borrador2", "nombre": "Compilar Borrador 2 (todo excepto Cap IV + V)", "def": False},
-    {"id": "borrador3", "nombre": "Compilar Borrador 3 (todo excepto Cap III + IV + V)", "def": False},
+    {"id": "borrador1", "nombre": "Compilar Borrador 1 (solo Cap I)", "def": False},
+    {"id": "borrador2", "nombre": "Compilar Borrador 2 (Cap I + II)", "def": False},
+    {"id": "borrador3", "nombre": "Compilar Borrador 3 (Cap I + II + III)", "def": False},
+    {"id": "borrador4", "nombre": "Compilar Borrador 4 (Cap I + II + III + IV)", "def": False},
     {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True}
 ]
 
@@ -162,9 +163,10 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
 def compilar_informe_estudiante(est, modo="completo"):
     """Genera el informe de un estudiante y lo mueve a su carpeta de reportes.
     
-    modo: "completo" (todo) | "borrador" | "borrador2" | "borrador3"
+    modo: "completo" | "borrador1" (solo Cap I) | "borrador2" (Cap I+II) |
+          "borrador3" (Cap I+II+III) | "borrador4" (Cap I+II+III+IV)
     """
-    modo_label = {"completo": "Informe Completo", "borrador": "Borrador (Cap I+II)", "borrador2": "Borrador 2 (sin Cap IV+V)", "borrador3": "Borrador 3 (sin Cap III+IV+V)"}.get(modo, modo)
+    modo_label = {"completo": "Informe Completo", "borrador1": "Borrador 1 (Cap I)", "borrador2": "Borrador 2 (Cap I+II)", "borrador3": "Borrador 3 (Cap I+II+III)", "borrador4": "Borrador 4 (Cap I+II+III+IV)"}.get(modo, modo)
     print(f"\n{BOLD}{CYAN}» Generando {modo_label} para {est['nombre']}...{RESET}")
     
     if not os.path.exists(est["source_content"]):
@@ -203,12 +205,14 @@ def compilar_informe_estudiante(est, modo="completo"):
         # Ejecutar generador_informe.py
         print(f"{GRAY}Ejecutando generador_informe.py...{RESET}")
         cmd = [PYTHON_EXEC, GENERATOR_SCRIPT]
-        if modo == "borrador":
-            cmd.extend(["--modo", "borrador"])
+        if modo == "borrador1":
+            cmd.extend(["--modo", "borrador1"])
         elif modo == "borrador2":
             cmd.extend(["--modo", "borrador2"])
         elif modo == "borrador3":
             cmd.extend(["--modo", "borrador3"])
+        elif modo == "borrador4":
+            cmd.extend(["--modo", "borrador4"])
         proc = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -228,12 +232,14 @@ def compilar_informe_estudiante(est, modo="completo"):
         os.makedirs(dest_reportes, exist_ok=True)
 
         # Mover archivos generados
-        if modo == "borrador":
-            sufijo = "_BORRADOR"
+        if modo == "borrador1":
+            sufijo = "_BORRADOR1"
         elif modo == "borrador2":
             sufijo = "_BORRADOR2"
         elif modo == "borrador3":
             sufijo = "_BORRADOR3"
+        elif modo == "borrador4":
+            sufijo = "_BORRADOR4"
         else:
             sufijo = ""
         docx_name = f"Informe_Pasantia_IUTECP{sufijo}.docx"
@@ -417,22 +423,13 @@ def main():
             else:
                 errores_totales += 1
 
-        # 2. Compilar borrador (solo portada + Cap I + Cap II) si aplica
-        if "borrador" in acciones_a_ejecutar:
-            if compilar_informe_estudiante(est, modo="borrador"):
-                exito_total += 1
-            else:
-                errores_totales += 1
-
-        # 2b. Compilar borrador2 (todo excepto Cap IV + V) si aplica
-        if "borrador2" in acciones_a_ejecutar:
-            if compilar_informe_estudiante(est, modo="borrador2"):
-                exito_total += 1
-            else:
-                errores_totales += 1
-
-        # 2c. Compilar borrador3 (todo excepto Cap III + IV + V) si aplica
-        if "borrador3" in acciones_a_ejecutar:
+        # 2. Compilar borradores si aplica
+        for bid, bnombre in [("borrador1", "borrador1"), ("borrador2", "borrador2"), ("borrador3", "borrador3"), ("borrador4", "borrador4")]:
+            if bid in acciones_a_ejecutar:
+                if compilar_informe_estudiante(est, modo=bnombre):
+                    exito_total += 1
+                else:
+                    errores_totales += 1
             if compilar_informe_estudiante(est, modo="borrador3"):
                 exito_total += 1
             else:
