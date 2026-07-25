@@ -169,7 +169,7 @@ def generar_documento_semana(datos):
 
     doc.add_paragraph()
 
-    # 6. Observaciones del Tutor Industrial (Espacio para llenar a mano)
+    # 6. Observaciones del Tutor Industrial
     p_obs_t = doc.add_paragraph()
     p_obs_t.paragraph_format.space_after = Pt(4)
     run_ot2 = p_obs_t.add_run("OBSERVACIONES DEL TUTOR INDUSTRIAL:")
@@ -177,20 +177,24 @@ def generar_documento_semana(datos):
     run_ot2.font.size = Pt(12)
     run_ot2.font.bold = True
 
-    p_obs = doc.add_paragraph()
-    p_obs.paragraph_format.line_spacing = 1.5
-    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
-    run_obs.font.name = 'Times New Roman'
-    run_obs.font.size = Pt(11)
-    run_obs.font.italic = True
+    obs_texto = datos.get("observaciones", "")
+    if obs_texto:
+        add_paragraph_normado(doc, obs_texto)
+    else:
+        p_obs = doc.add_paragraph()
+        p_obs.paragraph_format.line_spacing = 1.5
+        run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
+        run_obs.font.name = 'Times New Roman'
+        run_obs.font.size = Pt(11)
+        run_obs.font.italic = True
 
-    for _ in range(4):
-        p_line = doc.add_paragraph()
-        p_line.paragraph_format.space_before = Pt(8)
-        p_line.paragraph_format.space_after = Pt(0)
-        run_line = p_line.add_run("_" * 75)
-        run_line.font.name = 'Times New Roman'
-        run_line.font.bold = True
+        for _ in range(4):
+            p_line = doc.add_paragraph()
+            p_line.paragraph_format.space_before = Pt(8)
+            p_line.paragraph_format.space_after = Pt(0)
+            run_line = p_line.add_run("_" * 75)
+            run_line.font.name = 'Times New Roman'
+            run_line.font.bold = True
 
     doc.add_paragraph()
     doc.add_paragraph()
@@ -272,6 +276,7 @@ reportes_pasantias = [
         "periodo": "Del 08 al 12 de junio de 2026",
         "objetivo": "Formalizar el inicio de las pasantías y observar el flujo procedimental de las solicitudes de compra del departamento.",
         "entregables": "Acta de inicio de pasantías visada por la empresa y registro inicial del flujo observado de requisiciones.",
+        "observaciones": "La pasante cumplió con la formalización del inicio de pasantías de manera oportuna. Mostró disposición e interés en conocer el funcionamiento del departamento.",
         "actividades": [
             ("1", "Formalización del inicio", "Reunión con la gerencia y el tutor industrial para consignar los formatos institucionales del IUTECP.", "Cartas de postulación, plan institucional"),
             ("2", "Recorrido por las instalaciones", "Conocer las áreas físicas del departamento administrativo y los actores clave del proceso de procura.", "Agenda, cuaderno de apuntes"),
@@ -286,6 +291,7 @@ reportes_pasantias = [
         "periodo": "Del 15 al 19 de junio de 2026",
         "objetivo": "Apoyar en la recepción de solicitudes de compra y levantar el flujo secuencial del proceso de adquisición.",
         "entregables": "Registro de solicitudes recibidas y mapeo situacional preliminar del proceso actual de procura.",
+        "observaciones": "Se integró activamente al área de procura. El mapeo preliminar del flujo de requisiciones refleja buena capacidad de observación.",
         "actividades": [
             ("1", "Recepción de solicitudes", "Apoyar en la recepción y clasificación de las solicitudes de compra pendientes del período.", "Formatos de requisición, archiveros"),
             ("2", "Registro de documentos", "Anotar la correspondencia de compras entrante en el libro de control diario del departamento.", "Libro diario, PC de oficina"),
@@ -300,6 +306,7 @@ reportes_pasantias = [
         "periodo": "Del 22 al 26 de junio de 2026",
         "objetivo": "Tramitar requisiciones del departamento y aplicar la guía de entrevista estructurada al personal de compras.",
         "entregables": "Requisiciones tramitadas del período y guía de entrevista aplicada con respuestas registradas.",
+        "observaciones": "Colaboró eficientemente en la tramitación de requisiciones. La guía de entrevista fue aplicada con orden y respeto hacia el personal.",
         "actividades": [
             ("1", "Tramitación de requisiciones", "Colaborar en la tramitación de requisiciones de materiales e insumos recibidas durante la semana.", "Formatos de requisición, archivos"),
             ("2", "Comunicación con proveedores", "Apoyar en el contacto con proveedores para el seguimiento de cotizaciones en proceso.", "Teléfono, correo de oficina"),
@@ -314,6 +321,7 @@ reportes_pasantias = [
         "periodo": "Del 29 de junio al 03 de julio de 2026",
         "objetivo": "Dar seguimiento a órdenes de compra abiertas y revisar expedientes históricos para medir tiempos de respuesta.",
         "entregables": "Registro actualizado de órdenes de compra abiertas y tabla de tiempos promedio históricos por fase.",
+        "observaciones": "Demostró responsabilidad en el seguimiento de órdenes abiertas. El análisis de expedientes históricos fue realizado con precisión.",
         "actividades": [
             ("1", "Seguimiento de órdenes abiertas", "Verificar el estatus de las órdenes de compra en proceso y actualizar el registro del departamento.", "Expedientes activos, PC de oficina"),
             ("2", "Verificación de cotizaciones pendientes", "Revisar las cotizaciones sin respuesta e identificar las de mayor antigüedad en el sistema.", "Hojas de seguimiento, archiveros"),
@@ -328,6 +336,7 @@ reportes_pasantias = [
         "periodo": "Del 06 al 10 de julio de 2026",
         "objetivo": "Tramitar solicitudes de compra de la semana y analizar las causas organizativas de los retrasos identificados.",
         "entregables": "Solicitudes tramitadas del período y diagrama causa-efecto con clasificación jerárquica de factores de demora.",
+        "observaciones": "Tramitó las solicitudes del período sin contratiempos. El diagrama causa-efecto elaborado refleja comprensión del problema identificado.",
         "actividades": [
             ("1", "Tramitación de solicitudes", "Procesar las solicitudes de compra recibidas durante la semana y gestionar su trámite correspondiente.", "Formatos de requisición, archivos"),
             ("2", "Elaboración de cuadros comparativos", "Apoyar en la preparación de cuadros comparativos de cotizaciones de proveedores activos.", "Excel, hojas de comparación"),
@@ -342,6 +351,7 @@ reportes_pasantias = [
         "periodo": "Del 13 al 17 de julio de 2026",
         "objetivo": "Dar seguimiento a cotizaciones pendientes y diseñar el nuevo flujo de trabajo simplificado de la procura.",
         "entregables": "Expedientes de cotizaciones actualizados y esquema del nuevo flujo simplificado con puntos de control definidos.",
+        "observaciones": "Mantuvo los expedientes de cotizaciones al día. El esquema del flujo simplificado propuesto es claro y pertinente.",
         "actividades": [
             ("1", "Seguimiento a cotizaciones", "Verificar el estatus de las cotizaciones pendientes de aprobación gerencial y actualizar los expedientes.", "Hojas de seguimiento, PC de oficina"),
             ("2", "Actualización de expedientes activos", "Registrar los avances de las compras en proceso en los expedientes del período.", "Archiveros, formatos de control"),
@@ -356,6 +366,7 @@ reportes_pasantias = [
         "periodo": "Del 20 al 24 de julio de 2026",
         "objetivo": "Procesar requisiciones urgentes del período y diseñar las plantillas estandarizadas de cotización y orden de compra.",
         "entregables": "Requisiciones urgentes tramitadas y plantillas estandarizadas de solicitud de cotización y orden de compra diseñadas.",
+        "observaciones": "Atendió las requisiciones urgentes con diligencia. Las plantillas diseñadas se ajustan a los requerimientos operativos del departamento.",
         "actividades": [
             ("1", "Recepción de requisiciones urgentes", "Procesar las solicitudes de compra urgentes recibidas durante la semana con prioridad operativa.", "Formatos de requisición, archivos"),
             ("2", "Verificación presupuestaria", "Colaborar en la verificación de disponibilidad presupuestaria para las compras urgentes en trámite.", "Sistema contable, hojas de control"),
@@ -370,6 +381,7 @@ reportes_pasantias = [
         "periodo": "Del 27 al 31 de julio de 2026",
         "objetivo": "Actualizar registros de proveedores del período y redactar el documento de propuesta de simplificación administrativa.",
         "entregables": "Registros de proveedores actualizados y borrador del documento de propuesta de simplificación administrativa.",
+        "observaciones": "Actualizó los registros de proveedores con orden. El borrador de la propuesta presenta una estructura bien fundamentada.",
         "actividades": [
             ("1", "Seguimiento a órdenes en proceso", "Verificar el avance de las órdenes de compra activas y actualizar su estatus en el sistema.", "Expedientes activos, PC de oficina"),
             ("2", "Actualización de registros de proveedores", "Incorporar datos actualizados de proveedores y condiciones de entrega al registro del departamento.", "Base de datos, PC de oficina"),
@@ -384,6 +396,7 @@ reportes_pasantias = [
         "periodo": "Del 03 al 07 de agosto de 2026",
         "objetivo": "Apoyar el cierre administrativo del período y validar la propuesta de simplificación con el tutor industrial.",
         "entregables": "Órdenes de compra del período archivadas y propuesta de simplificación validada con observaciones incorporadas.",
+        "observaciones": "Apoyó el cierre administrativo con responsabilidad. La propuesta fue presentada al tutor con los ajustes solicitados debidamente incorporados.",
         "actividades": [
             ("1", "Cierre administrativo del ciclo", "Apoyar en el cierre del ciclo de compras del período y la organización de los expedientes pendientes.", "Archiveros, formatos de cierre"),
             ("2", "Archivo de órdenes de compra", "Organizar y archivar ordenadamente las órdenes de compra gestionadas durante la pasantía.", "Carpetas físicas, archiveros"),
@@ -398,6 +411,7 @@ reportes_pasantias = [
         "periodo": "Del 10 al 14 de agosto de 2026",
         "objetivo": "Presentar formalmente la propuesta de simplificación ante la gerencia y consolidar el informe académico de pasantías.",
         "entregables": "Carta de aprobación del tutor industrial firmada e informe académico final listo para entrega institucional.",
+        "observaciones": "La pasante culminó satisfactoriamente su período de pasantías. La presentación ante la gerencia fue clara y el informe final cumple con los requisitos institucionales.",
         "actividades": [
             ("1", "Presentación ante la gerencia", "Exponer formalmente la propuesta de simplificación administrativa ante la gerencia del departamento.", "Documento final, oficina de gerencia"),
             ("2", "Firma de la carta de aprobación", "Gestionar la firma de la carta de aprobación del tutor industrial para el expediente académico.", "Formato institucional, bolígrafo"),
