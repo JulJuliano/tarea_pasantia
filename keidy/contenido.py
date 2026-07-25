@@ -130,7 +130,7 @@ POBLACION_TABLA = [
     ("Ingeniería y Campo", "Ingenieros Residentes / Coordinadores (SIHO-A, Calidad)", 2, 3, 5),
     ("", "Inspectores (SIHO, Ambiente, Paramédicos, Calidad)", 2, 2, 4),
     ("", "Supervisor de Obras, Operadores, Chóferes, Soldadores, Obreros", 1, 10, 11),
-    ("**TOTAL GENERAL**", "", 14, 28, 42),
+    ("TOTAL GENERAL", "", 14, 28, 42),
 ]
 
 POBLACION = []

@@ -240,140 +240,140 @@ reportes_pasantias = [
     {
         "num_semana": "1",
         "periodo": "Del 08 al 12 de junio de 2026",
-        "objetivo": "Formalizar el inicio de las pasantías dentro de la modalidad institucional en el puesto habitual de trabajo y delimitar los tiempos de investigación.",
-        "entregables": "Acta de inicio de pasantías visada por la empresa y cronograma operativo validado por el tutor industrial.",
+        "objetivo": "Formalizar el inicio de las pasantías y observar el flujo procedimental de las solicitudes de compra del departamento.",
+        "entregables": "Acta de inicio de pasantías visada por la empresa y registro inicial del flujo observado de requisiciones.",
         "actividades": [
-            ("1", "Formalización del inicio", "Reunión con la gerencia general y el tutor industrial para consignar los formatos institucionales del IUTECP.", "Cartas de postulación, plan institucional"),
-            ("2", "Alineación de objetivos", "Vincular las metas del proyecto técnico con las funciones contables y de compra que ya ejecuta en su día a día.", "Manual de procesos, PC de oficina"),
-            ("3", "Establecimiento de tiempos", "Definir los bloques horarios de la jornada diaria dedicados exclusivamente a la recolección de datos y revisión de expedientes.", "Calendario laboral, agenda"),
-            ("4", "Revisión metodológica", "Revisar los lineamientos del instituto con el tutor para asegurar el correcto resguardo confidencial de la información empresarial.", "Normativa IUTECP, documentos internos"),
-            ("5", "Apertura del cuaderno de campo", "Organizar la libreta de registro técnico para documentar los eventos específicos observados durante la jornada.", "Cuaderno de apuntes, papelería")
+            ("1", "Formalización del inicio", "Reunión con la gerencia y el tutor industrial para consignar los formatos institucionales del IUTECP.", "Cartas de postulación, plan institucional"),
+            ("2", "Recorrido por las instalaciones", "Conocer las áreas físicas del departamento administrativo y los actores clave del proceso de procura.", "Agenda, cuaderno de apuntes"),
+            ("3", "Presentación ante el equipo", "Integrarse formalmente al equipo del departamento administrativo y al área de procura.", "Documentos de presentación"),
+            ("4", "Observación del flujo de requisiciones", "Observar el recorrido de una solicitud de compra desde su recepción hasta su procesamiento inicial.", "Cuaderno de campo, lápiz"),
+            ("5", "Formulación de la situación problemática", "Registrar las primeras observaciones sobre la complejidad procedimental identificada en el área.", "Libreta de notas, papelería")
         ]
     },
     # ── SEMANA 2 ────────────────────────────────────────────────
     {
         "num_semana": "2",
         "periodo": "Del 15 al 19 de junio de 2026",
-        "objetivo": "Observar y registrar cómo se reciben y procesan actualmente las solicitudes de compra que llegan al departamento.",
-        "entregables": "Lista de pasos detallada sobre el recorrido físico que hace una solicitud de compra desde que llega.",
+        "objetivo": "Apoyar en la recepción de solicitudes de compra y levantar el flujo secuencial del proceso de adquisición.",
+        "entregables": "Registro de solicitudes recibidas y mapeo situacional preliminar del proceso actual de procura.",
         "actividades": [
-            ("1", "Seguimiento de solicitudes", "Observar el momento en que llegan las hojas de solicitud de materiales desde el área de operaciones.", "Formatos de requisición, block de notas"),
+            ("1", "Recepción de solicitudes", "Apoyar en la recepción y clasificación de las solicitudes de compra pendientes del período.", "Formatos de requisición, archiveros"),
             ("2", "Registro de documentos", "Anotar la correspondencia de compras entrante en el libro de control diario del departamento.", "Libro diario, PC de oficina"),
-            ("3", "Clasificación de papeles", "Separar los documentos entre compras de oficina comunes y pedidos de repuestos para maquinaria.", "Hojas de cálculo, archivos físicos"),
-            ("4", "Revisión de carpetas", "Verificar el estado y orden de las carpetas físicas donde se guardan los datos de los proveedores.", "Archiveros del departamento"),
-            ("5", "Mapeo preliminar de ruta", "Dibujar un esquema simple con el trayecto físico que sigue cada solicitud dentro de la oficina.", "Papel, lápiz, regla")
+            ("3", "Entrevistas informales al personal", "Conversar con el personal encargado para levantar el flujo secuencial del proceso de adquisición.", "Cuaderno de apuntes, lápiz"),
+            ("4", "Familiarización con el sistema de cotizaciones", "Revisar el sistema de seguimiento de cotizaciones vigente y su funcionamiento en el área.", "Expedientes, archivos físicos"),
+            ("5", "Elaboración del mapeo situacional", "Documentar el flujo secuencial de las adquisiciones con base en las observaciones y entrevistas realizadas.", "Papel, lápiz, procesador de textos")
         ]
     },
     # ── SEMANA 3 ────────────────────────────────────────────────
     {
         "num_semana": "3",
         "periodo": "Del 22 al 26 de junio de 2026",
-        "objetivo": "Preparar una lista de preguntas sencillas para conversar con el personal sobre los retrasos en las compras.",
-        "entregables": "Guía escrita con las preguntas básicas para las entrevistas, revisada por el tutor industrial.",
+        "objetivo": "Tramitar requisiciones del departamento y aplicar la guía de entrevista estructurada al personal de compras.",
+        "entregables": "Requisiciones tramitadas del período y guía de entrevista aplicada con respuestas registradas.",
         "actividades": [
-            ("1", "Identificación de fallas", "Anotar cuáles son los retrasos más comunes comentados por los compañeros de oficina.", "Cuaderno de apuntes"),
-            ("2", "Redacción de preguntas", "Escribir un cuestionario corto sobre los problemas diarios con las firmas y los formatos.", "Papelería, procesador de palabras"),
-            ("3", "Estructuración de la guía", "Organizar el orden de las preguntas para asegurar que el diálogo sea rápido y fluido.", "Borrador de guía, software de oficina"),
-            ("4", "Aprobación de la guía", "Mostrar el cuestionario al tutor para confirmar que las preguntas sean las adecuadas para el personal.", "Formato borrador"),
-            ("5", "Impresión de instrumentos", "Preparar las copias físicas definitivas del cuestionario para su aplicación en el área.", "Impresora, hojas base")
+            ("1", "Tramitación de requisiciones", "Colaborar en la tramitación de requisiciones de materiales e insumos recibidas durante la semana.", "Formatos de requisición, archivos"),
+            ("2", "Comunicación con proveedores", "Apoyar en el contacto con proveedores para el seguimiento de cotizaciones en proceso.", "Teléfono, correo de oficina"),
+            ("3", "Actualización del registro de cotizaciones", "Registrar el estado actual de las cotizaciones activas en el sistema de control del departamento.", "PC de oficina, hojas de seguimiento"),
+            ("4", "Aplicación de la guía de entrevista", "Aplicar la guía de entrevista estructurada al personal de compras y administración.", "Guía de entrevista impresa, lápiz"),
+            ("5", "Identificación de cuellos de botella", "Registrar los hallazgos sobre los pasos que generan mayor demora en las fases de seguimiento y aprobación.", "Cuaderno de campo, notas de entrevista")
         ]
     },
     # ── SEMANA 4 ────────────────────────────────────────────────
     {
         "num_semana": "4",
         "periodo": "Del 29 de junio al 03 de julio de 2026",
-        "objetivo": "Conversar con el personal administrativo usando el cuestionario para anotar los inconvenientes del proceso.",
-        "entregables": "Hojas de respuestas llenas con los comentarios y notas tomadas del personal de compras.",
+        "objetivo": "Dar seguimiento a órdenes de compra abiertas y revisar expedientes históricos para medir tiempos de respuesta.",
+        "entregables": "Registro actualizado de órdenes de compra abiertas y tabla de tiempos promedio históricos por fase.",
         "actividades": [
-            ("1", "Coordinación de tiempos", "Acordar los momentos disponibles con los compañeros para realizar las entrevistas sin interrumpir.", "Calendario de oficina"),
-            ("2", "Entrevistas al personal", "Hacer las preguntas preparadas al asistente de compras y al personal encargado de la administración.", "Cuestionarios impresos"),
-            ("3", "Registro de quejas", "Tomar nota sobre los días que se tarda un papel en ser firmado o revisado.", "Libreta de notas, lápiz"),
-            ("4", "Observación de firmas", "Anotar el camino que sigue una carpeta de compra cuando sale a aprobación final.", "Expedientes en trámite"),
-            ("5", "Cotejo de respuestas", "Revisar los puntos en común donde los entrevistados coinciden sobre los cuellos de botella.", "Cuestionarios llenos")
+            ("1", "Seguimiento de órdenes abiertas", "Verificar el estatus de las órdenes de compra en proceso y actualizar el registro del departamento.", "Expedientes activos, PC de oficina"),
+            ("2", "Verificación de cotizaciones pendientes", "Revisar las cotizaciones sin respuesta e identificar las de mayor antigüedad en el sistema.", "Hojas de seguimiento, archiveros"),
+            ("3", "Actualización del registro de proveedores", "Depurar y actualizar la base de datos de proveedores activos del departamento.", "PC de oficina, software de oficina"),
+            ("4", "Revisión de expedientes históricos", "Acceder a los expedientes de compras anteriores para calcular los tiempos promedio de respuesta por fase.", "Archivo histórico, hojas de cálculo"),
+            ("5", "Identificación de etapas críticas", "Determinar cuáles fases del ciclo concentran los mayores retrasos a partir del análisis de los expedientes.", "Excel, cuaderno de notas")
         ]
     },
     # ── SEMANA 5 ────────────────────────────────────────────────
     {
         "num_semana": "5",
         "periodo": "Del 06 al 10 de julio de 2026",
-        "objetivo": "Transcribir las entrevistas y analizar las órdenes de compra anteriores para identificar los problemas principales.",
-        "entregables": "Resumen de entrevistas y tabla de tiempos históricos de órdenes de compra del último trimestre.",
+        "objetivo": "Tramitar solicitudes de compra de la semana y analizar las causas organizativas de los retrasos identificados.",
+        "entregables": "Solicitudes tramitadas del período y diagrama causa-efecto con clasificación jerárquica de factores de demora.",
         "actividades": [
-            ("1", "Transcripción de notas", "Pasar a la computadora las respuestas obtenidas en las hojas de las entrevistas.", "Computadora, Word"),
-            ("2", "Acceso al archivo histórico", "Buscar e identificar las carpetas de órdenes de compra del último trimestre en el archivo físico.", "Archivo de documentos"),
-            ("3", "Cálculo de tiempos", "Calcular los días exactos transcurridos entre la solicitud del material y su compra definitiva.", "Excel, cuaderno de notas"),
-            ("4", "Agrupación de fallas", "Juntar en una lista las fallas similares como falta de cotizaciones o retraso de firmas.", "Software de oficina"),
-            ("5", "Consolidación de resultados", "Estructurar una tabla de tiempos de respuesta históricos del proceso de compras.", "PC de oficina, Excel")
+            ("1", "Tramitación de solicitudes", "Procesar las solicitudes de compra recibidas durante la semana y gestionar su trámite correspondiente.", "Formatos de requisición, archivos"),
+            ("2", "Elaboración de cuadros comparativos", "Apoyar en la preparación de cuadros comparativos de cotizaciones de proveedores activos.", "Excel, hojas de comparación"),
+            ("3", "Actualización de la base de proveedores", "Incorporar nuevos datos de contacto y condiciones de proveedores al registro del departamento.", "PC de oficina, base de datos"),
+            ("4", "Elaboración del diagrama causa-efecto", "Construir el diagrama de Ishikawa con las causas organizativas de los retrasos identificadas en semanas anteriores.", "Papel, lápiz, procesador de textos"),
+            ("5", "Jerarquización de factores", "Clasificar jerárquicamente las causas de demora según su impacto en el ciclo de adquisición.", "Cuaderno de notas, software de oficina")
         ]
     },
     # ── SEMANA 6 ────────────────────────────────────────────────
     {
         "num_semana": "6",
         "periodo": "Del 13 al 17 de julio de 2026",
-        "objetivo": "Estructurar las causas de las fallas del departamento en un diagrama de Ishikawa y fundamentar conceptualmente el proyecto.",
-        "entregables": "Diagrama de Ishikawa digital y primer borrador del marco teórico del informe.",
+        "objetivo": "Dar seguimiento a cotizaciones pendientes y diseñar el nuevo flujo de trabajo simplificado de la procura.",
+        "entregables": "Expedientes de cotizaciones actualizados y esquema del nuevo flujo simplificado con puntos de control definidos.",
         "actividades": [
-            ("1", "Clasificación de causas", "Dividir las causas de retrasos en las categorías de métodos, herramientas o factor humano.", "Block de notas"),
-            ("2", "Estructuración del Ishikawa", "Diseñar en papel la estructura del diagrama de espina de pescado (causas y efectos).", "Lápiz, papel, regla"),
-            ("3", "Digitalización del gráfico", "Pasar a limpio el diagrama de espina de pescado usando herramientas de la computadora.", "PC de oficina, Word"),
-            ("4", "Lectura de manuales", "Revisar libros de administración y control de compras para fundamentar conceptualmente la propuesta.", "Manuales de administración, guías"),
-            ("5", "Cierre de diagnóstico", "Redactar la conclusión final del diagnóstico situacional del departamento para el informe.", "Procesador de textos")
+            ("1", "Seguimiento a cotizaciones", "Verificar el estatus de las cotizaciones pendientes de aprobación gerencial y actualizar los expedientes.", "Hojas de seguimiento, PC de oficina"),
+            ("2", "Actualización de expedientes activos", "Registrar los avances de las compras en proceso en los expedientes del período.", "Archiveros, formatos de control"),
+            ("3", "Diseño del flujo simplificado", "Redactar el nuevo flujo de trabajo con reducción de pasos y definición de puntos de control.", "Procesador de textos, papel"),
+            ("4", "Asignación de responsables por etapa", "Definir el responsable de cada fase del nuevo procedimiento simplificado de procura.", "Organigrama, procesador de textos"),
+            ("5", "Definición de tiempos máximos por fase", "Establecer los tiempos máximos de respuesta aceptables para cada etapa del nuevo circuito de compras.", "Cuaderno de notas, software de oficina")
         ]
     },
     # ── SEMANA 7 ────────────────────────────────────────────────
     {
         "num_semana": "7",
         "periodo": "Del 20 al 24 de julio de 2026",
-        "objetivo": "Diseñar un nuevo protocolo procedimental y recorrido optimizado para las solicitudes de compras.",
-        "entregables": "Esquema preliminar del nuevo circuito de compras y asignación de tareas del área.",
+        "objetivo": "Procesar requisiciones urgentes del período y diseñar las plantillas estandarizadas de cotización y orden de compra.",
+        "entregables": "Requisiciones urgentes tramitadas y plantillas estandarizadas de solicitud de cotización y orden de compra diseñadas.",
         "actividades": [
-            ("1", "Lluvia de ideas", "Esbozar alternativas para simplificar los pasos de entrega y firma de las requisiciones.", "Papel de reciclaje, lápiz"),
-            ("2", "Diseño del circuito", "Escribir el paso a paso ideal desde la recepción de la requisición hasta la orden de compra final.", "Hojas blancas, lápiz"),
-            ("3", "Asignación de roles", "Definir las responsabilidades del personal en cada fase del nuevo procedimiento de compras.", "Procesador de palabras"),
-            ("4", "Propuesta de correo único", "Definir las reglas para centralizar el flujo de cotizaciones en una sola cuenta de correo.", "Computadora"),
-            ("5", "Elaboración de flujograma", "Representar de forma gráfica la nueva secuencia de actividades administrativas diseñadas.", "PC de oficina, Word")
+            ("1", "Recepción de requisiciones urgentes", "Procesar las solicitudes de compra urgentes recibidas durante la semana con prioridad operativa.", "Formatos de requisición, archivos"),
+            ("2", "Verificación presupuestaria", "Colaborar en la verificación de disponibilidad presupuestaria para las compras urgentes en trámite.", "Sistema contable, hojas de control"),
+            ("3", "Diseño de plantilla de cotización", "Elaborar el formato estandarizado de solicitud de cotización adaptado a los requerimientos del departamento.", "PC de oficina, procesador de textos"),
+            ("4", "Diseño de plantilla de orden de compra", "Elaborar el formato estandarizado de orden de compra con los campos esenciales del proceso.", "PC de oficina, procesador de textos"),
+            ("5", "Diseño de plantilla de seguimiento de estatus", "Crear el formato de control de estatus de cotizaciones para el monitoreo del ciclo de adquisición.", "Excel, PC de oficina")
         ]
     },
     # ── SEMANA 8 ────────────────────────────────────────────────
     {
         "num_semana": "8",
         "periodo": "Del 27 al 31 de julio de 2026",
-        "objetivo": "Crear planillas automatizadas en Excel para registrar y comparar de manera objetiva los precios de proveedores.",
-        "entregables": "Plantilla de Excel para la comparación de tres cotizaciones simultáneas con cálculo automático de totales.",
+        "objetivo": "Actualizar registros de proveedores del período y redactar el documento de propuesta de simplificación administrativa.",
+        "entregables": "Registros de proveedores actualizados y borrador del documento de propuesta de simplificación administrativa.",
         "actividades": [
-            ("1", "Planificación del formato", "Definir los campos esenciales (proveedor, RIF, subtotal, IVA, total, entrega) a incluir en la planilla.", "Cuaderno de notas"),
-            ("2", "Diseño de la estructura", "Crear las columnas y formato visual balanceado para comparar tres proveedores al mismo tiempo.", "Excel / Calc de oficina"),
-            ("3", "Prueba de fórmulas", "Colocar fórmulas de sumatoria y cálculo de impuestos para automatizar los resultados financieros.", "Excel, funciones lógicas"),
-            ("4", "Llenado de muestra", "Probar el funcionamiento de la tabla ingresando datos históricos de cotizaciones pasadas.", "Datos de prueba, PC"),
-            ("5", "Ajustes de visualización", "Aplicar colores de destaque y bordes legibles para facilitar la comprensión de la tabla por el personal.", "Estilos de celda")
+            ("1", "Seguimiento a órdenes en proceso", "Verificar el avance de las órdenes de compra activas y actualizar su estatus en el sistema.", "Expedientes activos, PC de oficina"),
+            ("2", "Actualización de registros de proveedores", "Incorporar datos actualizados de proveedores y condiciones de entrega al registro del departamento.", "Base de datos, PC de oficina"),
+            ("3", "Redacción del documento de propuesta", "Redactar el cuerpo principal de la propuesta de simplificación administrativa integrando el nuevo flujo.", "Procesador de textos, notas de campo"),
+            ("4", "Integración de formatos diseñados", "Incorporar las plantillas estandarizadas diseñadas como componentes formales de la propuesta.", "Archivos digitales, procesador de textos"),
+            ("5", "Redacción de recomendaciones de control interno", "Documentar las recomendaciones de mejora de control interno derivadas del diagnóstico realizado.", "Procesador de textos, cuaderno de notas")
         ]
     },
     # ── SEMANA 9 ────────────────────────────────────────────────
     {
         "num_semana": "9",
         "periodo": "Del 03 al 07 de agosto de 2026",
-        "objetivo": "Probar y validar el uso de la planilla de Excel y el nuevo flujo operativo con los compañeros del departamento.",
-        "entregables": "Registro de retroalimentación de los usuarios y formato Excel definitivo con correcciones aplicadas.",
+        "objetivo": "Apoyar el cierre administrativo del período y validar la propuesta de simplificación con el tutor industrial.",
+        "entregables": "Órdenes de compra del período archivadas y propuesta de simplificación validada con observaciones incorporadas.",
         "actividades": [
-            ("1", "Explicación del recurso", "Presentar y explicar el funcionamiento del archivo de Excel al asistente administrativo de compras.", "Estación de trabajo"),
-            ("2", "Prueba en vivo", "Acompañar al asistente en la carga de una cotización real usando la nueva planilla.", "Planilla de Excel, PC de oficina"),
-            ("3", "Registro de sugerencias", "Anotar sugerencias del personal para mejorar la comodidad de uso de la herramienta.", "Papel y lápiz"),
-            ("4", "Ajuste de celdas", "Realizar las correcciones y bloqueos de celdas sugeridos para evitar errores de tipeo accidentales.", "Excel, protección de hojas"),
-            ("5", "Validación del proceso", "Confirmar que la nueva metodología agiliza la toma de decisiones sobre las adquisiciones de la semana.", "Formato Excel final")
+            ("1", "Cierre administrativo del ciclo", "Apoyar en el cierre del ciclo de compras del período y la organización de los expedientes pendientes.", "Archiveros, formatos de cierre"),
+            ("2", "Archivo de órdenes de compra", "Organizar y archivar ordenadamente las órdenes de compra gestionadas durante la pasantía.", "Carpetas físicas, archiveros"),
+            ("3", "Presentación de la propuesta al tutor", "Presentar el documento de simplificación administrativa al tutor industrial para su revisión.", "Documento impreso, PC de oficina"),
+            ("4", "Registro de observaciones", "Anotar las observaciones y correcciones indicadas por el tutor industrial sobre la propuesta.", "Libreta de notas, lápiz"),
+            ("5", "Ajustes al documento final", "Incorporar las observaciones recibidas y realizar los ajustes al documento final de la propuesta.", "Procesador de textos, PC de oficina")
         ]
     },
     # ── SEMANA 10 ───────────────────────────────────────────────
     {
         "num_semana": "10",
         "periodo": "Del 10 al 14 de agosto de 2026",
-        "objetivo": "Consolidar el informe final del proyecto de pasantías y presentarlo ante la gerencia de la empresa.",
-        "entregables": "Informe final de pasantías con anexos listos para consignar ante el IUTECP.",
+        "objetivo": "Presentar formalmente la propuesta de simplificación ante la gerencia y consolidar el informe académico de pasantías.",
+        "entregables": "Carta de aprobación del tutor industrial firmada e informe académico final listo para entrega institucional.",
         "actividades": [
-            ("1", "Integración del informe", "Compilar los capítulos, diagnósticos, diagramas y anexos de formatos en el documento definitivo.", "Word, Normas IUTECP"),
-            ("2", "Revisión de estilo", "Verificar la ortografía, referencias, sangrías y márgenes del informe final.", "PC de oficina"),
-            ("3", "Firma de avales", "Coordinar con el tutor industrial la firma y sellado de las planillas de evaluación y culminación.", "Documentos impresos, bolígrafos"),
-            ("4", "Resguardo de archivos", "Guardar copias digitales de los informes y del formato de Excel en un dispositivo de almacenamiento.", "Pendrive, carpetas compartidas"),
-            ("5", "Exposición de cierre", "Explicar a la gerencia de la empresa cómo quedan instaurados los nuevos formatos y el protocolo del departamento.", "Formatos finales, oficina de gerencia")
+            ("1", "Presentación ante la gerencia", "Exponer formalmente la propuesta de simplificación administrativa ante la gerencia del departamento.", "Documento final, oficina de gerencia"),
+            ("2", "Firma de la carta de aprobación", "Gestionar la firma de la carta de aprobación del tutor industrial para el expediente académico.", "Formato institucional, bolígrafo"),
+            ("3", "Consolidación del informe académico", "Integrar todos los capítulos, anexos y formatos en el documento académico definitivo.", "PC de oficina, procesador de textos"),
+            ("4", "Revisión final del informe", "Verificar ortografía, referencias bibliográficas, márgenes y normas de presentación del informe.", "Normativa IUTECP, PC de oficina"),
+            ("5", "Preparación para entrega institucional", "Organizar los archivos digitales e impresos del informe final para su consignación ante el IUTECP.", "Pendrive, impresora, carpeta de entrega")
         ]
     }
 ]
