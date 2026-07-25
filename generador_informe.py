@@ -1373,7 +1373,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_parrafo_normado(doc, parrafo)
 
     agregar_titulo_nivel2(doc, "Estructura Organizativa", bookmark_id="bm_cap1_estruct")
-    agregar_parrafo_normado(doc, getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.'))
+    org_texto = getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.')
+    if isinstance(org_texto, list):
+        for parrafo in org_texto:
+            agregar_parrafo_normado(doc, parrafo)
+    else:
+        agregar_parrafo_normado(doc, org_texto)
 
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
 

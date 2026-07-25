@@ -117,42 +117,26 @@ OBJETIVOS_ESPECIFICOS_EMPRESA = [
 UBICACION = "Calle 23 de enero entre calle principal el palomar y calle la paz sector vista al sol, San José de Guanipa Edo. Anzoátegui."
 
 POBLACION = [
-    "La población de trabajadores de Lubricantes y Equipos Varyná C.A. está conformada por un total de cuarenta y dos (42) trabajadores distribuidos en los siguientes departamentos y áreas operativas:",
-    "",
-    "Cuadro N° X. Distribución de la Población de Trabajadores",
-    "",
-    "| Departamento / Área | Cargo | Sexo Femenino | Sexo Masculino | Total |",
-    "| --- | --- | --- | --- | --- |",
-    "| Alta Dirección | Gerente General | 0 | 1 | 1 |",
-    "| Dirección Operativa | Gerente de Operaciones | 0 | 1 | 1 |",
-    "| Control y Avance | Gerente / Operaciones Morichal | 1 | 1 | 2 |",
-    "| Administración (Área de Pasantía) | Administración / Asistentes Administrativos | 2 | 1 | 3 |",
-    "| | Control de Avance, Logística y Compras (Procura) | 1 | 1 | 2 |",
-    "| | Operarios, Sup. Patio, Mantenimiento y Logística | 0 | 2 | 2 |",
-    "| Contratación y Adm. Contratos | Gerente / Estimadores, Administradores, Planificadores | 2 | 1 | 3 |",
-    "| Recursos Humanos | Gerente de RRHH-Laborales / Asistentes | 2 | 1 | 3 |",
-    "| Proyectos y Producción | Gerentes de Proyecto, Optimización y Servicios | 1 | 2 | 3 |",
-    "| | Gerente Metalmecánico | 0 | 1 | 1 |",
-    "| Ingeniería y Campo | Ingenieros Residentes / Coordinadores (SIHO-A, Calidad) | 2 | 3 | 5 |",
-    "| | Inspectores (SIHO, Ambiente, Paramédicos, Calidad) | 2 | 2 | 4 |",
-    "| | Supervisor de Obras, Operadores, Chóferes, Soldadores, Obreros | 1 | 10 | 11 |",
-    "| **TOTAL GENERAL** | | **14** | **28** | **42** |",
-    "",
-    "*Fuente: Departamento Administrativo de Lubricantes y Equipos Varyna, C.A. (2026).*"
+    "La población de trabajadores de Lubricantes y Equipos Varyná C.A. está conformada por un total de cuarenta y dos (42) trabajadores, distribuidos en catorce (14) del sexo femenino y veintiocho (28) del sexo masculino, organizados en los siguientes departamentos y áreas operativas:",
+    "En la Alta Dirección labora 1 Gerente General (masculino). En la Dirección Operativa, 1 Gerente de Operaciones (masculino). En Control y Avance y Operaciones Morichal, 2 trabajadores (1 femenino, 1 masculino).",
+    "En el Departamento Administrativo, área donde se desarrolla la pasantía, se desempeñan 3 trabajadores en Administración y Asistentes Administrativos (2 femenino, 1 masculino); 2 en Control de Avance, Logística y Compras o Procura (1 femenino, 1 masculino); y 2 operarios, supervisores de patio, mantenimiento y logística (masculino).",
+    "En Contratación y Administración de Contratos laboran 3 trabajadores (2 femenino, 1 masculino). En Recursos Humanos, 3 trabajadores (2 femenino, 1 masculino).",
+    "En Proyectos y Producción se desempeñan 3 Gerentes de Proyecto, Optimización y Servicios (1 femenino, 2 masculino); y 1 Gerente Metalmecánico (masculino).",
+    "En Ingeniería y Campo laboran 5 Ingenieros Residentes y Coordinadores de SIHO-A y Calidad (2 femenino, 3 masculino); 4 Inspectores de SIHO, Ambiente, Paramédicos y Calidad (2 femenino, 2 masculino); y 11 Supervisores de Obras, Operadores, Chóferes, Soldadores y Obreros (1 femenino, 10 masculino).",
+    "Fuente: Departamento Administrativo de Lubricantes y Equipos Varyna, C.A. (2026)."
 ]
 
-ORGANIGRAMA_TEXTO = (
-    "A continuación, se presenta la estructura organizativa de la empresa, reflejando las líneas de mando y la distribución de los departamentos administrativos y de procura. "
-    "Los departamentos que conforman la organización son los siguientes:\n\n"
-    "Gerencia General: Es la máxima autoridad ejecutiva encargada de la dirección estratégica, la toma de decisiones corporativas y el cumplimiento de los objetivos globales de la organización.\n\n"
-    "Gerencia de Operaciones: Coordina y supervisa la ejecución técnica y operativa de los proyectos, garantizando la eficiencia en el uso de recursos e infraestructura en campo.\n\n"
-    "Gerencia de Control y Avance (y Operaciones Morichal): Responsable de monitorear el rendimiento, cumplimiento de metas de avance físico de obras y la logística operativa regional en el área de Morichal.\n\n"
-    "Departamento Administrativo (Área de Pasantía): Unidad encargada de la gestión financiera, presupuestaria, logística interna, control contable e inventarios. En este departamento se desenvuelve la pasante en el rol de Asistente Administrativo, brindando apoyo operativo y de control, con énfasis en el área de Procura (Compras y Logística) mediante la recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y seguimiento a la adquisición oportuna de bienes, materiales y servicios esenciales.\n\n"
-    "Gerencia de Contratación y Administración de Contratos: Encargada del análisis de costos, estimaciones presupuestarias, planificación y control legal y operativo de las licitaciones y contratos vigentes.\n\n"
-    "Gerencia de Recursos Humanos y Relaciones Laborales: Dirige el reclutamiento, selección, administración de personal, nómina y la gestión del clima laboral de la empresa.\n\n"
-    "Gerencias Técnicas (Proyectos, Optimización, Servicios Eléctricos y Metalmecánico): Áreas especializadas dedicadas al diseño, mantenimiento, ejecución de estructuras metálicas y optimización de servicios de ingeniería en campo.\n\n"
+ORGANIGRAMA_TEXTO = [
+    "A continuación, se presenta la estructura organizativa de la empresa, reflejando las líneas de mando y la distribución de los departamentos administrativos y de procura. Los departamentos que conforman la organización son los siguientes:",
+    "Gerencia General: Es la máxima autoridad ejecutiva encargada de la dirección estratégica, la toma de decisiones corporativas y el cumplimiento de los objetivos globales de la organización.",
+    "Gerencia de Operaciones: Coordina y supervisa la ejecución técnica y operativa de los proyectos, garantizando la eficiencia en el uso de recursos e infraestructura en campo.",
+    "Gerencia de Control y Avance (y Operaciones Morichal): Responsable de monitorear el rendimiento, cumplimiento de metas de avance físico de obras y la logística operativa regional en el área de Morichal.",
+    "Departamento Administrativo (Área de Pasantía): Unidad encargada de la gestión financiera, presupuestaria, logística interna, control contable e inventarios. En este departamento se desenvuelve la pasante en el rol de Asistente Administrativo, brindando apoyo operativo y de control, con énfasis en el área de Procura (Compras y Logística) mediante la recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y seguimiento a la adquisición oportuna de bienes, materiales y servicios esenciales.",
+    "Gerencia de Contratación y Administración de Contratos: Encargada del análisis de costos, estimaciones presupuestarias, planificación y control legal y operativo de las licitaciones y contratos vigentes.",
+    "Gerencia de Recursos Humanos y Relaciones Laborales: Dirige el reclutamiento, selección, administración de personal, nómina y la gestión del clima laboral de la empresa.",
+    "Gerencias Técnicas (Proyectos, Optimización, Servicios Eléctricos y Metalmecánico): Áreas especializadas dedicadas al diseño, mantenimiento, ejecución de estructuras metálicas y optimización de servicios de ingeniería en campo.",
     "Coordinaciones de SIHO-A y Calidad: Unidades orientadas a garantizar la Seguridad Industrial, Higiene Ocupacional y Ambiente, asegurando el cumplimiento de normas de prevención de riesgos y estándares de calidad en las operaciones."
-)
+]
 
 # ================================================================
 #  DIAGNÓSTICO SITUACIONAL (CAPÍTULO II)
