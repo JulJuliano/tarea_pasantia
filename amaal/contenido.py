@@ -53,13 +53,17 @@ AUTOR_DATOS = [
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"
+CIUDAD_FECHA = FECHA_LUGAR
+NOMBRE_PASANTE = "Alrifaai Alrifaaie Amaal"
+CI_PASANTE = "31.985.792"
+ESPECIALIDAD = "Administración"
 
 RAZON_SOCIAL = "Ingeniería de Telecomunicaciones, C.A. (IDETEL / INTELCA)"
 
 # 3. Páginas Preliminares
-DEDICATORIA = "Aquí va la dedicatoria."
+DEDICATORIA = ""
 
-AGRADECIMIENTOS = "Aquí van los agradecimientos."
+AGRADECIMIENTOS = ""
 
 RESUMEN_TEXTO = (
     "El presente informe describe la evaluación del control administrativo aplicado a la gestión de solicitudes "
@@ -390,8 +394,4 @@ REFERENCIAS_LISTA = [
 ]
 
 # 10. Anexos
-ANEXOS_LISTA = [
-    ("ANEXO A", "Aquí va la descripción del Anexo A"),
-    ("ANEXO B", "Aquí va la descripción del Anexo B"),
-    ("ANEXO C", "Aquí va la descripción del Anexo C")
-]
+ANEXOS_LISTA = []
