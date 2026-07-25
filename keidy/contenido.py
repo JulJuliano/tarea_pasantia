@@ -54,9 +54,9 @@ FECHA_LUGAR = "El Tigre, julio de 2026"
 # ================================================================
 #  PÁGINAS PRELIMINARES
 # ================================================================
-DEDICATORIA = "Aquí va la dedicatoria."
+DEDICATORIA = ""
 
-AGRADECIMIENTOS = "Aquí van los agradecimientos."
+AGRADECIMIENTOS = ""
 
 RESUMEN_TEXTO = (
     "El presente informe describe la propuesta de simplificación administrativa del proceso "
@@ -230,7 +230,7 @@ BASES_TEORICAS = [
     }
 ]
 
-POST_CITA_TEXTO = "Aquí va el comentario posterior a la cita (opcional, solo si se usa cita larga)."
+POST_CITA_TEXTO = ""
 
 # ================================================================
 #  CAPÍTULO IV - Actividades Realizadas
@@ -322,8 +322,4 @@ REFERENCIAS_LISTA = [
 # ================================================================
 #  Anexos
 # ================================================================
-ANEXOS_LISTA = [
-    ("ANEXO A", "Aquí va la descripción del Anexo A"),
-    ("ANEXO B", "Aquí va la descripción del Anexo B"),
-    ("ANEXO C", "Aquí va la descripción del Anexo C")
-]
+ANEXOS_LISTA = []

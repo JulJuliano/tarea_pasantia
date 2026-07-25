@@ -69,6 +69,7 @@ ACCIONES = [
     {"id": "informe", "nombre": "Compilar Informe de Pasantía (.docx y .pdf)", "def": True},
     {"id": "borrador", "nombre": "Compilar Borrador (solo Portada + Cap I + Cap II)", "def": False},
     {"id": "borrador2", "nombre": "Compilar Borrador 2 (todo excepto Cap IV + V)", "def": False},
+    {"id": "borrador3", "nombre": "Compilar Borrador 3 (todo excepto Cap III + IV + V)", "def": False},
     {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True}
 ]
 
@@ -161,9 +162,9 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
 def compilar_informe_estudiante(est, modo="completo"):
     """Genera el informe de un estudiante y lo mueve a su carpeta de reportes.
     
-    modo: "completo" (todo) | "borrador" (solo portada + Cap I + Cap II) | "borrador2" (todo excepto Cap IV + V)
+    modo: "completo" (todo) | "borrador" | "borrador2" | "borrador3"
     """
-    modo_label = {"completo": "Informe Completo", "borrador": "Borrador (Cap I+II)", "borrador2": "Borrador 2 (sin Cap IV+V)"}.get(modo, modo)
+    modo_label = {"completo": "Informe Completo", "borrador": "Borrador (Cap I+II)", "borrador2": "Borrador 2 (sin Cap IV+V)", "borrador3": "Borrador 3 (sin Cap III+IV+V)"}.get(modo, modo)
     print(f"\n{BOLD}{CYAN}» Generando {modo_label} para {est['nombre']}...{RESET}")
     
     if not os.path.exists(est["source_content"]):
@@ -206,6 +207,8 @@ def compilar_informe_estudiante(est, modo="completo"):
             cmd.extend(["--modo", "borrador"])
         elif modo == "borrador2":
             cmd.extend(["--modo", "borrador2"])
+        elif modo == "borrador3":
+            cmd.extend(["--modo", "borrador3"])
         proc = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -229,6 +232,8 @@ def compilar_informe_estudiante(est, modo="completo"):
             sufijo = "_BORRADOR"
         elif modo == "borrador2":
             sufijo = "_BORRADOR2"
+        elif modo == "borrador3":
+            sufijo = "_BORRADOR3"
         else:
             sufijo = ""
         docx_name = f"Informe_Pasantia_IUTECP{sufijo}.docx"
@@ -422,6 +427,13 @@ def main():
         # 2b. Compilar borrador2 (todo excepto Cap IV + V) si aplica
         if "borrador2" in acciones_a_ejecutar:
             if compilar_informe_estudiante(est, modo="borrador2"):
+                exito_total += 1
+            else:
+                errores_totales += 1
+
+        # 2c. Compilar borrador3 (todo excepto Cap III + IV + V) si aplica
+        if "borrador3" in acciones_a_ejecutar:
+            if compilar_informe_estudiante(est, modo="borrador3"):
                 exito_total += 1
             else:
                 errores_totales += 1

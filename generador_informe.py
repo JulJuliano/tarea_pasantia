@@ -1264,7 +1264,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
     
         # --- LISTA DE ANEXOS ---
-        if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
+        if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA is not None:
             iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS", bookmark_id="bm_lista_anexos")
             p_header_a = doc.add_paragraph()
             p_header_a.paragraph_format.space_before = Pt(12)
@@ -1307,7 +1307,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         # --- REGISTRO DEL INICIO DEL CUERPO ---
         iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
         agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
-    
+
         # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
         idx_cap1 = len(doc.sections)
     else:
@@ -1415,30 +1415,31 @@ def construir_cuerpo_documento(doc, modo="completo"):
         return idx_cap1, None, None
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
-    iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
-    if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
-        primer_sub = True
-        for sub in c.BASES_TEORICAS:
-            bm = "bm_cap3_bases" if primer_sub else None
-            agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
-            primer_sub = False
-            for p in sub.get('parrafos', []):
-                agregar_parrafo_normado(doc, p)
-            cita = sub.get('cita_larga')
-            if cita and cita.get('texto'):
-                agregar_cita_larga(doc, cita['texto'], cita.get('autor', ''))
+    if modo not in ("borrador2", "borrador3"):
+        iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
+        if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
+            primer_sub = True
+            for sub in c.BASES_TEORICAS:
+                bm = "bm_cap3_bases" if primer_sub else None
+                agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
+                primer_sub = False
+                for p in sub.get('parrafos', []):
+                    agregar_parrafo_normado(doc, p)
+                cita = sub.get('cita_larga')
+                if cita and cita.get('texto'):
+                    agregar_cita_larga(doc, cita['texto'], cita.get('autor', ''))
+                    post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
+                    if post_cita:
+                        agregar_parrafo_normado(doc, post_cita, sangria=True)
+        else:
+            agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales", bookmark_id="bm_cap3_bases")
+            bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
+            for parrafo in bases_teoricas:
+                agregar_parrafo_normado(doc, parrafo)
+            if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
+                agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
                 post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
-                if post_cita:
-                    agregar_parrafo_normado(doc, post_cita, sangria=True)
-    else:
-        agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales", bookmark_id="bm_cap3_bases")
-        bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
-        for parrafo in bases_teoricas:
-            agregar_parrafo_normado(doc, parrafo)
-        if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
-            agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
-            post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
-            agregar_parrafo_normado(doc, post_cita, sangria=True)
+                agregar_parrafo_normado(doc, post_cita, sangria=True)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
     if modo != "borrador2":
@@ -1479,7 +1480,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_referencia(doc, ref)
 
     # --- ANEXOS ---
-    if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
+    if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA is not None:
         # Portadilla de ANEXOS (Art. 26: una hoja sola con la palabra ANEXOS centrada y en negrita)
         sec_portadilla = doc.add_section(WD_SECTION_START.NEW_PAGE)
         _config_seccion(sec_portadilla)
@@ -1564,6 +1565,8 @@ def generar_reporte_completo(modo="completo"):
         sufijo = "_BORRADOR"
     elif modo == "borrador2":
         sufijo = "_BORRADOR2"
+    elif modo == "borrador3":
+        sufijo = "_BORRADOR3"
     else:
         sufijo = ""
     docx_output = f"Informe_Pasantia_IUTECP{sufijo}.docx"
