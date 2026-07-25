@@ -1181,7 +1181,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         p_cap_lbl.add_run("CAPÍTULOS").font.bold = True
     
         # Capítulo I
-        agregar_fila_indice_general_nativa(doc, "I REALIDAD ORGANIZACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap1")
+        agregar_fila_indice_general_nativa(doc, "CAPÍTULO I: REALIDAD ORGANIZACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap1")
         agregar_fila_indice_general_nativa(doc, "Identificación de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_ident")
         agregar_fila_indice_general_nativa(doc, "Reseña histórica", "", sangria_cm=0.5, bookmark_id="bm_cap1_resena")
         agregar_fila_indice_general_nativa(doc, "Misión", "", sangria_cm=0.5, bookmark_id="bm_cap1_mision")
@@ -1194,7 +1194,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     
         # Capítulo II
         if tiene_cap2:
-            agregar_fila_indice_general_nativa(doc, "II DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
+            agregar_fila_indice_general_nativa(doc, "CAPÍTULO II: DIAGNÓSTICO SITUACIONAL", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap2")
             agregar_fila_indice_general_nativa(doc, "Identificación de la situación problemática", "", sangria_cm=0.5, bookmark_id="bm_cap2_sit")
             agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
             agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
@@ -1203,17 +1203,17 @@ def construir_cuerpo_documento(doc, modo="completo"):
     
         # Capítulo III
         if tiene_cap3:
-            agregar_fila_indice_general_nativa(doc, "III MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
+            agregar_fila_indice_general_nativa(doc, "CAPÍTULO III: MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
             agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
     
         # Capítulo IV
         if tiene_cap4:
-            agregar_fila_indice_general_nativa(doc, "IV ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
+            agregar_fila_indice_general_nativa(doc, "CAPÍTULO IV: ACTIVIDADES REALIZADAS", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap4")
             agregar_fila_indice_general_nativa(doc, "Descripción de actividades ejecutadas por semana", "", sangria_cm=0.5, bookmark_id="bm_cap4_desc")
     
         # Capítulo V
         if tiene_cap5:
-            agregar_fila_indice_general_nativa(doc, "V CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
+            agregar_fila_indice_general_nativa(doc, "CAPÍTULO V: CONCLUSIONES Y RECOMENDACIONES", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap5")
             agregar_fila_indice_general_nativa(doc, "Conclusiones", "", sangria_cm=0.5, bookmark_id="bm_cap5_concl")
             agregar_fila_indice_general_nativa(doc, "Recomendaciones", "", sangria_cm=0.5, bookmark_id="bm_cap5_recom")
     
