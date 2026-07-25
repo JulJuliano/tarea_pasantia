@@ -1088,6 +1088,67 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         bookmark_id = f"bm_grafico{numero}" if numero else None
         agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), bookmark_id=bookmark_id)
 
+def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma):
+    """Agrega página de aprobación con membrete, título centrado y firma."""
+    sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
+    _config_seccion(sec)
+    
+    for linea in c.MEMBRETE:
+        p_m = doc.add_paragraph()
+        p_m.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_m.paragraph_format.line_spacing = 1.15
+        p_m.paragraph_format.space_before = Pt(0)
+        p_m.paragraph_format.space_after = Pt(0)
+        run_m = p_m.add_run(linea)
+        run_m.font.name = FUENTE
+        run_m.font.size = Pt(12)
+        run_m.font.bold = True
+    
+    doc.add_paragraph()
+    
+    p_t = doc.add_paragraph()
+    p_t.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_t.paragraph_format.space_before = Pt(24)
+    p_t.paragraph_format.space_after = Pt(24)
+    run_t = p_t.add_run(titulo)
+    run_t.font.name = FUENTE
+    run_t.font.size = Pt(12)
+    run_t.font.bold = True
+    
+    p_ap = doc.add_paragraph()
+    p_ap.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    p_ap.paragraph_format.line_spacing = 1.5
+    p_ap.paragraph_format.first_line_indent = Cm(0)
+    run_ap = p_ap.add_run(texto_parrafo)
+    run_ap.font.name = FUENTE
+    run_ap.font.size = Pt(12)
+    
+    doc.add_paragraph()
+    doc.add_paragraph()
+    
+    p_f = doc.add_paragraph()
+    p_f.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_f.paragraph_format.line_spacing = 1.5
+    run_f = p_f.add_run(pie_firma)
+    run_f.font.name = FUENTE
+    run_f.font.size = Pt(12)
+    
+    for _ in range(6):
+        doc.add_paragraph()
+    
+    p_firma = doc.add_paragraph()
+    p_firma.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    run_n = p_firma.add_run("Apellidos y Nombres")
+    run_n.font.name = FUENTE
+    run_n.font.size = Pt(12)
+    tab = p_firma.paragraph_format.tab_stops.add_tab_stop(Cm(18), WD_TAB_ALIGNMENT.LEFT)
+    run_tab = p_firma.add_run("\t")
+    run_tab.font.name = FUENTE
+    run_tab.font.size = Pt(12)
+    run_ci = p_firma.add_run("C.I.: _______________")
+    run_ci.font.name = FUENTE
+    run_ci.font.size = Pt(12)
+
 def construir_cuerpo_documento(doc, modo="completo"):
     """Escribe secuencialmente todas las secciones del informe de pasantía.
     
@@ -1100,9 +1161,11 @@ def construir_cuerpo_documento(doc, modo="completo"):
     tiene_cap5 = modo == "completo"
 
     # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
-    pag_actual_romana = 3  # Agradecimientos empieza en iii (portada=i, contraportada=ii)
+    pag_actual_romana = 5  # portada=i, contraportada=ii, aprob_tutor_industrial=iii, aprob_tutor_academico=iv
     romanos = {1: 'i', 2: 'ii', 3: 'iii', 4: 'iv', 5: 'v', 6: 'vi', 7: 'vii', 8: 'viii', 9: 'ix', 10: 'x', 11: 'xi', 12: 'xii'}
     
+    pag_aprob_ind = romanos.get(3, 'iii')  # Siempre presente
+    pag_aprob_acad = romanos.get(4, 'iv')  # Siempre presente
     pag_agradecimientos = ""
     pag_dedicatoria = ""
     pag_resumen = ""
@@ -1137,7 +1200,39 @@ def construir_cuerpo_documento(doc, modo="completo"):
         pag_actual_romana += 1
 
     if True:
-        # --- PÁGINAS PRELIMINARES (orden: Agradec, Dedic, Indice, Listas, Resumen, Intro) ---
+        # --- APROBACIÓN DEL TUTOR INDUSTRIAL ---
+        nom_pas = getattr(c, 'NOMBRE_PASANTE', '[Nombre del Pasante]')
+        ci_pas = getattr(c, 'CI_PASANTE', 'XX.XXX.XXX')
+        esp = getattr(c, 'ESPECIALIDAD', '[Especialidad]')
+        tit_proy = getattr(c, 'TITULO_PROYECTO', '[Título del Proyecto]')
+        ciudad = getattr(c, 'CIUDAD_FECHA', 'El Tigre').split(",")[0] if "," in getattr(c, 'CIUDAD_FECHA', 'El Tigre') else 'El Tigre'
+        
+        texto_base = (
+            f"En mi car\u00e1cter de tutor industrial del informe de pasant\u00edas presentado por: "
+            f"{nom_pas}, de C\u00e9dula de Identidad V-{ci_pas}; para optar al grado de "
+            f"T\u00e9cnico Superior Universitario en la especialidad de: {esp}, cuyo t\u00edtulo es; "
+            f"\u201c{tit_proy}\u201d, manifiesto que cumple con los requisitos exigidos por el "
+            f"Instituto Universitario de Tecnolog\u00eda \u201cEl\u00edas Calixto Pompa\u201d (IUTECP); "
+            f"y que, por lo tanto, considero que re\u00fane los m\u00e9ritos suficientes para ser "
+            f"evaluado por el jurado que se decida designar a tal fin."
+        )
+        agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", texto_base,
+            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026")
+
+        # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
+        texto_base_acad = (
+            f"En mi car\u00e1cter de tutor acad\u00e9mico del informe de pasant\u00edas presentado por: "
+            f"{nom_pas}, de C\u00e9dula de Identidad V-{ci_pas}; para optar al grado de "
+            f"T\u00e9cnico Superior Universitario en la especialidad de: {esp}, cuyo t\u00edtulo es; "
+            f"\u201c{tit_proy}\u201d, manifiesto que cumple con los requisitos exigidos por el "
+            f"Instituto Universitario de Tecnolog\u00eda \u201cEl\u00edas Calixto Pompa\u201d (IUTECP); "
+            f"y que, por lo tanto, considero que re\u00fane los m\u00e9ritos suficientes para ser "
+            f"evaluado por el jurado que se decida designar a tal fin."
+        )
+        agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", texto_base_acad,
+            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026")
+
+        # --- PÁGINAS PRELIMINARES ---
         if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
             iniciar_seccion_preliminar(doc, "AGRADECIMIENTOS", bookmark_id="bm_agradecimientos")
             agregar_parrafo_normado(doc, c.AGRADECIMIENTOS)
@@ -1161,6 +1256,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
         if pag_dedicatoria:
             agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
+    
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", "", bookmark_id="bm_aprob_ind")
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", "", bookmark_id="bm_aprob_acad")
     
         agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
         agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", "", bookmark_id="bm_lista_figuras")

@@ -50,6 +50,10 @@ AUTOR_DATOS = [
     "C.I.: 14.452.956"
 ]
 FECHA_LUGAR = "El Tigre, julio de 2026"
+CIUDAD_FECHA = FECHA_LUGAR
+NOMBRE_PASANTE = "Keidy Guzmán"
+CI_PASANTE = "28.706.352"
+ESPECIALIDAD = "Administración"
 
 # ================================================================
 #  PÁGINAS PRELIMINARES
