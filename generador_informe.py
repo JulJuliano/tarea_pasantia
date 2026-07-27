@@ -1722,6 +1722,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         for anexo in c.ANEXOS_LISTA:
             cod, desc = anexo[:2]
             numero_imagen = anexo[2] if len(anexo) > 2 else None
+            alto_imagen = anexo[3] if len(anexo) > 3 else None
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -1754,7 +1755,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 if ruta_imagen:
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                    p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
+                    if alto_imagen is not None:
+                        p_imagen.add_run().add_picture(ruta_imagen, height=Cm(alto_imagen))
+                    else:
+                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
 
     return idx_cap1, idx_indice_inicio, idx_indice_fin
 

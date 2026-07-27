@@ -399,5 +399,5 @@ REFERENCIAS_LISTA = [
 
 # 10. Anexos
 ANEXOS_LISTA = [
-    ("ANEXO A", "Flujograma del proceso de gestión de solicitudes de servicios", 4)
+    ("ANEXO A", "Flujograma del proceso de gestión de solicitudes de servicios", 4, 17)
 ]
