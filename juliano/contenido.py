@@ -133,27 +133,31 @@ OBJETIVOS_ESPECIFICOS = [
 PLANIFICACION_DATOS = [
     (
         "Diagnosticar el flujo procedimental actual de los movimientos documentales.",
+        "Flujo procedimental y trazabilidad de los movimientos documentales.",
         "Observación directa del ciclo de expedientes y análisis de las fallas en las hojas de cálculo existentes.",
-        "Cuaderno de notas, registros de Excel",
-        "Diagnóstico con identificación de debilidades en el flujo documental y la trazabilidad."
+        "Observación directa y análisis documental.",
+        "Cuaderno de notas y registros de Excel."
     ),
     (
         "Determinar los requerimientos técnicos y funcionales del sistema.",
-        "Levantamiento de metadatos requeridos (fechas, remitente, estatus) y definición de reglas de validación mediante entrevista no estructurada.",
-        "Formatos de requerimientos, diccionario de datos",
-        "Documento de especificación de requerimientos funcionales y técnicos."
+        "Requerimientos técnicos y funcionales para la trazabilidad documental.",
+        "Levantamiento de metadatos requeridos y definición de reglas de validación mediante entrevista no estructurada.",
+        "Entrevista no estructurada y revisión documental.",
+        "Formatos de requerimientos y diccionario de datos."
     ),
     (
         "Diseñar la arquitectura lógica y la interfaz gráfica de usuario.",
+        "Arquitectura lógica e interfaz gráfica del sistema documental.",
         "Modelado del diagrama Entidad-Relación y diseño de los módulos visuales mediante análisis documental.",
-        "Herramientas de modelado, editores de código",
-        "Diagrama Entidad-Relación y maquetado de la interfaz gráfica aprobados."
+        "Modelado de datos y análisis documental.",
+        "Herramientas de modelado y editores de código."
     ),
     (
         "Desarrollar un prototipo funcional del sistema para su validación.",
+        "Prototipo funcional para el control y reporte de movimientos documentales.",
         "Implementación en SQLite, integración de la interfaz con Wails y ejecución de pruebas de escritorio.",
-        "Framework Wails, motor SQLite, equipo informático",
-        "Prototipo funcional validado con pruebas de escritorio exitosas."
+        "Desarrollo de software y pruebas funcionales.",
+        "Framework Wails, motor SQLite y equipo informático."
     )
 ]
 
@@ -327,7 +331,5 @@ REFERENCIAS_LISTA = [
 
 # 10. Anexos
 ANEXOS_LISTA = [
-    ("ANEXO A", "Diagrama Entidad-Relación de la Base de Datos"),
-    ("ANEXO B", "Capturas de la Interfaz del Sistema (Wails/HTML)"),
-    ("ANEXO C", "Memoria Fotográfica del Área de Presidencia")
+    ("ANEXO A", "Árbol del problema del control de movimientos documentales", 3)
 ]

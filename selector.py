@@ -430,10 +430,6 @@ def main():
                     exito_total += 1
                 else:
                     errores_totales += 1
-            if compilar_informe_estudiante(est, modo="borrador3"):
-                exito_total += 1
-            else:
-                errores_totales += 1
                 
         # 3. Compilar cronogramas si aplica
         if "cronogramas" in acciones_a_ejecutar:

@@ -217,27 +217,31 @@ OBJETIVOS_ESPECIFICOS = [
 PLANIFICACION_DATOS = [
     (
         "Describir los procesos administrativos actuales de solicitudes de servicio.",
-        "Observación directa y revisión documental de los procedimientos internos.",
-        "Guía de observación, documentos de la empresa, PC.",
-        "Mapeo del flujo actual de solicitudes."
+        "Procesos administrativos de gestión de solicitudes de servicio.",
+        "Observación directa y revisión documental del flujo de solicitudes.",
+        "Observación directa y análisis documental.",
+        "Guía de observación, documentos internos y computadora."
     ),
     (
         "Identificar las deficiencias en el control administrativo de solicitudes.",
+        "Deficiencias del control administrativo de solicitudes.",
         "Entrevistas al personal administrativo y revisión de registros históricos.",
-        "Guía de entrevista, históricos de tickets, PC.",
-        "Matriz de deficiencias identificadas."
+        "Entrevista no estructurada y análisis documental.",
+        "Guía de entrevista, registros históricos de tickets y computadora."
     ),
     (
         "Analizar el impacto de las debilidades en la calidad del servicio.",
+        "Impacto del control administrativo en la calidad del servicio.",
         "Análisis de tiempos de respuesta y correlación con quejas de suscriptores.",
-        "Base de datos de incidencias, hojas de cálculo.",
-        "Informe analítico de impacto."
+        "Análisis estadístico y revisión de registros.",
+        "Base de datos de incidencias y hojas de cálculo."
     ),
     (
         "Proponer mejoras al proceso de control administrativo.",
+        "Mejoras al proceso de control administrativo de solicitudes.",
         "Diseño de procedimientos estandarizados y formatos de control.",
-        "Procesador de texto, normativas internas.",
-        "Propuesta de mejora procedimental formulada."
+        "Diseño procedimental y estandarización de formatos.",
+        "Procesador de texto y normativas internas."
     ),
 ]
 
@@ -394,4 +398,6 @@ REFERENCIAS_LISTA = [
 ]
 
 # 10. Anexos
-ANEXOS_LISTA = []
+ANEXOS_LISTA = [
+    ("ANEXO A", "Flujograma del proceso de gestión de solicitudes de servicios", 4)
+]

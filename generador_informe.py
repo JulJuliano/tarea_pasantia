@@ -1139,7 +1139,7 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
     # Línea de firma
     p_linea = doc.add_paragraph()
     p_linea.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run_linea = p_linea.add_run("_" * 55)
+    run_linea = p_linea.add_run("_" * 35)
     run_linea.font.name = FUENTE
     run_linea.font.size = Pt(12)
     
@@ -1465,7 +1465,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
             run_pp_a.font.bold = True
         
             anexos_lista = getattr(c, 'ANEXOS_LISTA', [])
-            for idx, (cod, desc) in enumerate(anexos_lista):
+            for idx, anexo in enumerate(anexos_lista):
+                cod, desc = anexo[:2]
                 letra = cod.split(" ")[-1]
                 pag_est = str(13 + idx)
                 bookmark_id = f"bm_anexo{letra.upper()}" if letra else None
@@ -1718,7 +1719,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_anexos_tit.font.bold = True
 
     # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
-        for cod, desc in c.ANEXOS_LISTA:
+        for anexo in c.ANEXOS_LISTA:
+            cod, desc = anexo[:2]
+            numero_imagen = anexo[2] if len(anexo) > 2 else None
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -1746,13 +1749,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
             run_desc.font.size = Pt(TAMANO_BASE)
             run_desc.font.bold = True
             
-            # Párrafo de demostración vacío para cumplir la estructura visual
-            p_demo = doc.add_paragraph()
-            p_demo.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run_demo = p_demo.add_run("(Contenido elaborado por el estudiante)")
-            run_demo.font.name = FUENTE
-            run_demo.font.size = Pt(TAMANO_TABLA)
-            run_demo.font.italic = True
+            if numero_imagen is not None:
+                ruta_imagen = buscar_imagen_por_numero(carpeta_imagenes, numero_imagen)
+                if ruta_imagen:
+                    p_imagen = doc.add_paragraph()
+                    p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
 
     return idx_cap1, idx_indice_inicio, idx_indice_fin
 
