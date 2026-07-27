@@ -1654,6 +1654,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
                     post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
                     if post_cita:
                         agregar_parrafo_normado(doc, post_cita, sangria=True)
+                posicion_autor = sub.get('posicion_autor')
+                if posicion_autor:
+                    agregar_parrafo_normado(doc, posicion_autor)
         else:
             agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales", bookmark_id="bm_cap3_bases")
             bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])

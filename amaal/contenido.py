@@ -262,6 +262,7 @@ CRONOGRAMA_DATOS = [
 BASES_TEORICAS = [
     {
         "titulo": "Control Administrativo",
+        "posicion_autor": "Desde la perspectiva de quien desarrolla este informe, el control administrativo en IDETEL debe convertirse en una herramienta de seguimiento continuo y no limitarse a la revisión posterior de los casos.",
         "parrafos": [
             "El control administrativo constituye una de las funciones fundamentales del proceso administrativo y se define como el mecanismo mediante el cual la organización verifica que las actividades ejecutadas se correspondan con lo planificado, detectando desviaciones y aplicando las medidas correctivas necesarias. Robbins y Coulter (2010) señalan que el control eficaz no solo identifica fallas, sino que proporciona información oportuna para la toma de decisiones gerenciales, convirtiéndose en un instrumento de mejora continua y no únicamente de fiscalización.",
             "En el contexto del Departamento de Administración de Ingeniería de Telecomunicaciones, C.A., el control administrativo se aplica sobre el ciclo de gestión de solicitudes de servicio, abarcando desde la recepción de la solicitud del suscriptor hasta el cierre definitivo del caso. La ausencia de mecanismos formales de control en este ciclo genera inconsistencias entre los departamentos involucrados y dificulta la evaluación del desempeño del proceso de atención."
@@ -273,6 +274,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Gestión de Solicitudes de Servicio",
+        "posicion_autor": "En el contexto de IDETEL, la gestión de solicitudes requiere un flujo único que permita conocer el responsable, el estado y el tiempo de atención de cada caso.",
         "parrafos": [
             "La gestión de solicitudes de servicio comprende el conjunto de procedimientos administrativos orientados a recepcionar, registrar, procesar y dar seguimiento a los requerimientos presentados por los clientes o suscriptores de una organización. Zeithaml, Parasuraman y Berry (1993) establecen que la calidad del servicio percibida por el cliente está directamente vinculada a la capacidad de la organización para gestionar sus solicitudes de forma ágil, transparente y con comunicación fluida en cada etapa del proceso.",
             "En empresas de telecomunicaciones como IDETEL, la gestión de solicitudes abarca dos categorías principales: las solicitudes de afiliación de nuevos suscriptores, que implican la coordinación entre las áreas comercial, técnica y administrativa; y las incidencias reportadas por suscriptores activos, que requieren diagnóstico, despacho de cuadrillas y cierre verificado del caso. La ausencia de un sistema unificado de seguimiento para ambas categorías genera retrasos y reprocesos que impactan directamente en la satisfacción del cliente."
@@ -281,6 +283,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Procesos Administrativos y Estandarización de Procedimientos",
+        "posicion_autor": "A juicio de quien suscribe, la estandarización propuesta no busca aumentar la carga administrativa, sino eliminar ambigüedades y hacer verificable cada etapa del proceso.",
         "parrafos": [
             "El proceso administrativo constituye el marco conceptual que rige el funcionamiento de las organizaciones modernas. Chiavenato (2006) lo describe como el conjunto secuencial e interrelacionado de funciones de planificación, organización, dirección y control, orientadas al logro eficiente de los objetivos organizacionales. La estandarización de los procedimientos dentro de este marco garantiza que las actividades se ejecuten de manera uniforme, reduciendo la variabilidad y los errores derivados de la discrecionalidad individual.",
             "La formalización de los procedimientos mediante manuales, flujogramas y formatos estandarizados constituye una herramienta esencial para el control administrativo. Según Harrington (1993), un proceso estandarizado es medible, controlable y mejorable, condiciones que permiten a la organización identificar con precisión los puntos de falla y aplicar acciones correctivas focalizadas. En el caso de IDETEL, la ausencia de procedimientos escritos para la gestión de solicitudes es una de las causas raíz de las deficiencias identificadas."
@@ -289,6 +292,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Calidad del Servicio en Empresas de Telecomunicaciones",
+        "posicion_autor": "Para este estudio, la calidad del servicio se relaciona directamente con la capacidad administrativa de IDETEL para responder y dar seguimiento oportuno a las solicitudes del suscriptor.",
         "parrafos": [
             "La calidad del servicio se define como el grado en que las características del servicio prestado satisfacen o superan las expectativas del cliente. Parasuraman, Zeithaml y Berry (1988) desarrollaron el modelo SERVQUAL, que identifica cinco dimensiones de la calidad del servicio: fiabilidad, capacidad de respuesta, seguridad, empatía y elementos tangibles. En el sector de telecomunicaciones, la fiabilidad y la capacidad de respuesta son las dimensiones con mayor peso en la percepción del cliente.",
             "Las deficiencias en el control administrativo del proceso de solicitudes de servicio impactan directamente sobre la fiabilidad y la capacidad de respuesta de IDETEL. Cuando una solicitud no es gestionada dentro de los tiempos establecidos o su estatus no puede ser verificado en tiempo real, el cliente percibe una falla en la calidad del servicio que deteriora su confianza en la organización y puede derivar en la cancelación del contrato o en la difusión de experiencias negativas."
@@ -297,6 +301,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Sistemas de Información para el Control Administrativo",
+        "posicion_autor": "Desde la posición del investigador, una herramienta de seguimiento centralizada es viable para IDETEL porque permite mejorar la trazabilidad sin modificar la naturaleza de los servicios que presta la empresa.",
         "parrafos": [
             "Un sistema de información constituye un conjunto organizado de recursos tecnológicos y procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos con el propósito de apoyar la toma de decisiones. Laudon y Laudon (2016) distinguen los sistemas de procesamiento de transacciones como la categoría que registra y gestiona las operaciones rutinarias de la organización, siendo esta la tipología más pertinente para el control de solicitudes de servicio en una empresa de telecomunicaciones.",
             "La implementación de un sistema de tickets o plataforma de seguimiento de solicitudes en IDETEL permitiría centralizar el registro de cada caso, asignar responsables, definir tiempos de atención y generar alertas ante incumplimientos. Esta herramienta transformaría el control administrativo de reactivo a proactivo, dotando a la supervisión de información en tiempo real para la toma de decisiones y la evaluación continua del desempeño del proceso."
@@ -305,6 +310,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Proyecto Factible como Modalidad de Investigación",
+        "posicion_autor": "La elección del proyecto factible responde a la necesidad de transformar el diagnóstico realizado en procedimientos y formatos aplicables a la realidad operativa de IDETEL.",
         "parrafos": [
             "La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta modalidad exige un diagnóstico de campo que evidencie la situación deficitaria y la comprobación de la viabilidad técnica y operativa de la solución planteada.",
             "Arias (2012) señala que el proyecto factible avanza hasta proponer y en muchos casos desarrollar la solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en esta modalidad al partir de la evaluación del control administrativo de IDETEL para proponer mejoras procedimentales cuya implementación es viable dentro de la estructura organizativa y los recursos disponibles de la empresa."

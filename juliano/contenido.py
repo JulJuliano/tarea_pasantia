@@ -185,6 +185,7 @@ CRONOGRAMA_DATOS = [
 BASES_TEORICAS = [
     {
         "titulo": "Sistemas de Información",
+        "posicion_autor": "Desde la perspectiva del investigador, el sistema propuesto debe priorizar información confiable y oportuna para apoyar las decisiones de la Presidencia.",
         "parrafos": [
             "Un sistema de información constituye un conjunto organizado de recursos humanos, tecnológicos y procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos con el propósito de apoyar la toma de decisiones dentro de una organización. Laudon y Laudon (2016) distinguen entre sistemas de procesamiento de transacciones, sistemas de soporte a la decisión y sistemas de información gerencial, siendo estos últimos los que transforman datos operativos en reportes consolidados de utilidad directiva.",
             "En el contexto del presente proyecto, el sistema propuesto se enmarca en la categoría de sistema de información operacional con capacidad de reporte gerencial, dado que registra cada movimiento documental de forma transaccional y provee resúmenes inmediatos al nivel de presidencia. Según Kendall y Kendall (2011), el análisis y diseño de sistemas busca comprender sistemáticamente cómo interactúan los datos y los usuarios para proponer soluciones tecnológicas que mejoren el flujo de trabajo de una organización."
@@ -196,6 +197,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Gestión Documental",
+        "posicion_autor": "En Venangocupet, la gestión documental debe reflejar el recorrido real de cada expediente, desde su recepción hasta su despacho, sin agregar pasos que no correspondan al proceso.",
         "parrafos": [
             "La gestión documental se define como el conjunto de normas, técnicas y prácticas que regulan el ciclo de vida de los documentos dentro de una organización, desde su creación o recepción hasta su disposición final. Cruz Mundet (2011) señala que una gestión documental eficaz garantiza la autenticidad, integridad, fiabilidad y disponibilidad de la información registrada, constituyendo un pilar fundamental para la transparencia administrativa y la continuidad operativa.",
             "En el Departamento de Presidencia de Venangocupet, S.A., el flujo documental responde a un ciclo específico: recepción del expediente externo, revisión de forma, registro de ingreso, firma presidencial, registro de egreso y despacho al departamento destinatario. La automatización de este ciclo mediante un sistema digitalizado reduce la propensión al error humano y dota al departamento de un historial auditable de cada movimiento, en concordancia con los principios de gestión documental descritos por Cruz Mundet (2011)."
@@ -204,6 +206,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Modelo Relacional de Bases de Datos",
+        "posicion_autor": "A juicio de quien suscribe, el modelo relacional resulta adecuado porque representa la relación entre procesos y documentos sin duplicar la información que se necesita consultar.",
         "parrafos": [
             "El modelo relacional, propuesto originalmente por Codd (1970), organiza la información en tablas bidimensionales denominadas relaciones, cuyos atributos representan las propiedades de las entidades y cuyas filas corresponden a instancias individuales de datos. La fortaleza de este modelo radica en la aplicación de reglas de normalización que eliminan la redundancia y preservan la integridad referencial entre tablas relacionadas mediante claves primarias y foráneas.",
             "Date (2001) establece que un diseño relacional correctamente normalizado garantiza que cada dato se almacene una sola vez, reduciendo la posibilidad de inconsistencias derivadas de actualizaciones parciales. En el sistema propuesto, la relación entre procesos administrativos y documentos sigue una cardinalidad uno a muchos (1:N), permitiendo registrar múltiples expedientes asociados a un mismo proceso contractual o administrativo sin duplicar los datos maestros del proceso."
@@ -212,6 +215,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "SQLite como Sistema Gestor de Base de Datos",
+        "posicion_autor": "La selección de SQLite se fundamenta en las condiciones reales del entorno de Presidencia, donde se requiere una solución portable y funcional sin depender de una infraestructura de servidor.",
         "parrafos": [
             "SQLite es un motor de base de datos relacional de código abierto, autocontenido y sin servidor, cuya arquitectura embebida lo diferencia de sistemas cliente-servidor convencionales como MySQL o PostgreSQL. Su funcionamiento se basa en un único archivo portable que aloja el esquema completo de la base de datos, eliminando la necesidad de procesos de servidor independientes o configuraciones de red. Esta característica lo convierte en la opción técnica idónea para entornos corporativos con restricciones de instalación de software.",
             "Pressman (2010) señala que la selección de herramientas tecnológicas debe estar guiada por los atributos del entorno de despliegue y no exclusivamente por las capacidades abstractas del instrumento. En el caso particular del Departamento de Presidencia de Venangocupet, S.A., las restricciones de permisos administrativos sobre los equipos de la organización hacen de SQLite la alternativa técnicamente viable para implementar persistencia de datos sin requerir intervención del departamento de tecnología de la empresa."
@@ -220,6 +224,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Trazabilidad Documental",
+        "posicion_autor": "Para este proyecto, la trazabilidad es el elemento que permite demostrar qué ocurrió con cada expediente y ofrecer respuestas verificables a la dirección de la empresa.",
         "parrafos": [
             "La trazabilidad documental se entiende como la capacidad de reconstruir el historial completo de un documento a lo largo de su ciclo de vida, identificando en cada etapa el responsable, la fecha, la acción ejecutada y el estado resultante. Gómez (2019) señala que la trazabilidad constituye el mecanismo central de auditoría en los sistemas de gestión documental, dado que permite verificar la integridad del proceso y detectar cuellos de botella o irregularidades en el flujo.",
             "En el ámbito de la alta dirección, la trazabilidad cobra especial relevancia porque los expedientes que transitan por la Presidencia frecuentemente están vinculados a procesos contractuales y decisiones gerenciales de impacto organizacional. El sistema propuesto registra automáticamente cada movimiento de ingreso y egreso del expediente, almacenando la fecha, el estatus y el departamento de origen o destino, lo que permite generar reportes de trazabilidad de forma inmediata ante cualquier requerimiento directivo."
@@ -231,6 +236,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Automatización de Procesos Administrativos",
+        "posicion_autor": "Desde la posición del investigador, automatizar el registro y los reportes permite que el personal dedique más tiempo a revisar y coordinar los expedientes, en lugar de copiar datos manualmente.",
         "parrafos": [
             "La automatización de procesos administrativos consiste en la sustitución de tareas manuales repetitivas por flujos de trabajo controlados por sistemas informáticos, con el objetivo de reducir los tiempos de ejecución, minimizar el error humano y liberar al personal para actividades de mayor valor analítico. Laudon y Laudon (2016) plantean que la automatización de procesos de negocio genera mejoras medibles en la productividad organizacional al estandarizar los procedimientos y centralizar el control de la información.",
             "En el Departamento de Presidencia de Venangocupet, S.A., la automatización se justifica por la naturaleza del proceso actual: el personal destina un porcentaje significativo de su tiempo operativo al copiado y pegado de datos entre documentos y hojas de cálculo, así como a la redacción manual de resúmenes solicitados por la dirección. La implementación del sistema automatizado propuesto traslada estas tareas al software, permitiendo que el personal se concentre en las funciones de revisión y coordinación propias del departamento."
@@ -239,6 +245,7 @@ BASES_TEORICAS = [
     },
     {
         "titulo": "Proyecto Factible como Modalidad de Investigación",
+        "posicion_autor": "La modalidad de proyecto factible se ajusta a este trabajo porque el diagnóstico del flujo documental culmina en un prototipo desarrollado y validado según las necesidades de Presidencia.",
         "parrafos": [
             "La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta modalidad exige la comprobación de la viabilidad técnica, económica y operativa de la solución planteada, sustentada en un diagnóstico de campo que evidencie la situación deficitaria que da origen a la propuesta.",
             "Arias (2012) complementa esta definición señalando que el proyecto factible no se limita a diagnosticar un problema, sino que avanza hasta proponer y en muchos casos desarrollar la solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en esta modalidad al partir de un diagnóstico situacional del flujo documental en Presidencia, proponer una arquitectura tecnológica específica y materializar un prototipo funcional del sistema como evidencia de la viabilidad de la propuesta."
