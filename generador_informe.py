@@ -328,7 +328,7 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
         run_autor = p_autor.add_run(texto)
         run_autor.font.name = FUENTE
         run_autor.font.size = Pt(TAMANO_BASE)
-        if indice in (0, 2):
+        if indice == 0:
             run_autor.font.bold = True
         if indice < 3:
             run_autor.add_break()
