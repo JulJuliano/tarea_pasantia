@@ -38,20 +38,20 @@ MEMBRETE = [
 TITULO_PROYECTO = "PROPUESTA DE SIMPLIFICACIÓN ADMINISTRATIVA DE LA PROCURA EN LUBRICANTES Y EQUIPOS VARYNA, C.A."
 AUTOR_DATOS = [
     "Autor:",
-    "Keidy Guzmán",
+    "Guzmán, Keidy",
     "C.I.: 28.706.352",
     "",
     "Tutor Industrial:",
-    "Martina Rondón",
+    "Rondón, Martina",
     "C.I.: 12.208.768",
     "",
     "Tutor Académico:",
-    "Dra. Carmen J. Álvarez",
+    "Dra. Álvarez, Carmen",
     "C.I.: 14.452.956"
 ]
 FECHA_LUGAR = "El Tigre, julio de 2026"
 CIUDAD_FECHA = FECHA_LUGAR
-NOMBRE_PASANTE = "Keidy Guzmán"
+NOMBRE_PASANTE = "Guzmán, Keidy"
 CI_PASANTE = "28.706.352"
 ESPECIALIDAD = "Administración"
 

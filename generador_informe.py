@@ -288,6 +288,64 @@ def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None):
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
     _config_seccion(sec2)
 
+def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
+    """Construye la página de resumen con membrete, autor y fecha."""
+    sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
+    _config_seccion(sec)
+
+    for linea in contenido.MEMBRETE:
+        p_membrete = doc.add_paragraph()
+        p_membrete.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_membrete.paragraph_format.space_after = Pt(0)
+        run_membrete = p_membrete.add_run(linea)
+        run_membrete.font.name = FUENTE
+        run_membrete.font.size = Pt(TAMANO_BASE)
+        run_membrete.font.bold = True
+
+    p_espacio = doc.add_paragraph()
+    p_espacio.paragraph_format.space_after = Pt(18)
+
+    p_titulo = doc.add_paragraph()
+    p_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_titulo.paragraph_format.space_after = ESP_DOBLE
+    run_titulo = p_titulo.add_run(contenido.TITULO_PROYECTO.upper())
+    run_titulo.font.name = FUENTE
+    run_titulo.font.size = Pt(TAMANO_BASE)
+    run_titulo.font.bold = True
+
+    tabla_autor = doc.add_table(rows=2, cols=2)
+    tabla_autor.style = 'Table Grid'
+    for fila, (etiqueta, valor) in enumerate((
+        ("Autor", contenido.NOMBRE_PASANTE),
+        ("C.I.", contenido.CI_PASANTE),
+    )):
+        _celda(tabla_autor.cell(fila, 0), etiqueta, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA))
+        _celda(tabla_autor.cell(fila, 1), valor, tamaño=Pt(TAMANO_TABLA))
+
+    fecha = getattr(contenido, 'FECHA_LUGAR', '')
+    fecha_resumen = fecha.split(',', 1)[1].strip() if ',' in fecha else fecha
+    p_fecha = doc.add_paragraph()
+    p_fecha.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_fecha.paragraph_format.space_before = ESP_SENCILLO
+    p_fecha.paragraph_format.space_after = ESP_DOBLE
+    run_fecha = p_fecha.add_run(fecha_resumen)
+    run_fecha.font.name = FUENTE
+    run_fecha.font.size = Pt(TAMANO_BASE)
+
+    p_resumen = doc.add_paragraph()
+    p_resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_resumen.paragraph_format.space_before = ESP_DOBLE
+    p_resumen.paragraph_format.space_after = ESP_DOBLE
+    run_resumen = p_resumen.add_run("RESUMEN")
+    run_resumen.font.name = FUENTE
+    run_resumen.font.size = Pt(TAMANO_BASE)
+    run_resumen.font.bold = True
+    if bookmark_id:
+        _agregar_bookmark(p_resumen, bookmark_id)
+
+    sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
+    _config_seccion(sec2)
+
 def agregar_cita_larga(doc, texto, cita):
     """
     Citas textuales de más de 40 palabras:
@@ -1474,7 +1532,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     
         # --- RESUMEN ---
         if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-            iniciar_seccion_preliminar(doc, "RESUMEN", bookmark_id="bm_resumen")
+            iniciar_seccion_resumen(doc, c, bookmark_id="bm_resumen")
             agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
             doc.add_paragraph()
             p_kw = doc.add_paragraph()

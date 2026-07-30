@@ -40,21 +40,21 @@ TITULO_PROYECTO = "EVALUACIÓN DEL CONTROL ADMINISTRATIVO APLICADO A LA GESTIÓN
 
 AUTOR_DATOS = [
     "Autor:",
-    "Alrifaai Alrifaaie Amaal",
+    "Alrifaai Alrifaaie, Amaal",
     "C.I.: 31.985.792",
     "",
     "Tutor Industrial:",
-    "Lenny Mata",
+    "Mata, Lenny",
     "C.I.: 8969750",
     "",
     "Tutor Académico:",
-    "Lic. Carlos Mendoza",
+    "Lic. Mendoza, Carlos",
     "C.I.: 4.273.815"
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"
 CIUDAD_FECHA = FECHA_LUGAR
-NOMBRE_PASANTE = "Alrifaai Alrifaaie Amaal"
+NOMBRE_PASANTE = "Alrifaai Alrifaaie, Amaal"
 CI_PASANTE = "31.985.792"
 ESPECIALIDAD = "Administración"
 

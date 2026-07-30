@@ -33,21 +33,21 @@ TITULO_PROYECTO = "DISEÑO DE UN SISTEMA PARA EL CONTROL, TRAZABILIDAD Y REPORTE
 
 AUTOR_DATOS = [
     "Autor:",
-    "Juliano Cardona",
+    "Cardona, Juliano",
     "C.I.: 32.281.199",
     "",
     "Tutor Industrial:",
-    "Ing. Yasmin Sabaneta",
+    "Ing. Sabaneta, Yasmin",
     "C.I.: 14.187.924",
     "",
     "Tutor Académico:",
-    "Lic. Carlos Mendoza",
+    "Lic. Mendoza, Carlos",
     "C.I.: 4.273.815"
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"
 CIUDAD_FECHA = FECHA_LUGAR
-NOMBRE_PASANTE = "Juliano Cardona"
+NOMBRE_PASANTE = "Cardona, Juliano"
 CI_PASANTE = "32.281.199"
 ESPECIALIDAD = "Informática"
 RAZON_SOCIAL = "Empresa Mixta Petrolera Venangocupet, S.A."
