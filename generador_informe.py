@@ -313,24 +313,25 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     run_titulo.font.size = Pt(TAMANO_BASE)
     run_titulo.font.bold = True
 
-    tabla_autor = doc.add_table(rows=2, cols=2)
-    tabla_autor.style = 'Table Grid'
-    for fila, (etiqueta, valor) in enumerate((
-        ("Autor", contenido.NOMBRE_PASANTE),
-        ("C.I.", contenido.CI_PASANTE),
-    )):
-        _celda(tabla_autor.cell(fila, 0), etiqueta, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA))
-        _celda(tabla_autor.cell(fila, 1), valor, tamaño=Pt(TAMANO_TABLA))
-
     fecha = getattr(contenido, 'FECHA_LUGAR', '')
     fecha_resumen = fecha.split(',', 1)[1].strip() if ',' in fecha else fecha
-    p_fecha = doc.add_paragraph()
-    p_fecha.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_fecha.paragraph_format.space_before = ESP_SENCILLO
-    p_fecha.paragraph_format.space_after = ESP_DOBLE
-    run_fecha = p_fecha.add_run(fecha_resumen)
-    run_fecha.font.name = FUENTE
-    run_fecha.font.size = Pt(TAMANO_BASE)
+    p_autor = doc.add_paragraph()
+    p_autor.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_autor.paragraph_format.left_indent = Cm(0)
+    p_autor.paragraph_format.space_after = ESP_DOBLE
+    for indice, texto in enumerate((
+        "Autor:",
+        contenido.NOMBRE_PASANTE,
+        f"C.I.: {contenido.CI_PASANTE}",
+        fecha_resumen,
+    )):
+        run_autor = p_autor.add_run(texto)
+        run_autor.font.name = FUENTE
+        run_autor.font.size = Pt(TAMANO_BASE)
+        if indice in (0, 2):
+            run_autor.font.bold = True
+        if indice < 3:
+            run_autor.add_break()
 
     p_resumen = doc.add_paragraph()
     p_resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
