@@ -1173,6 +1173,8 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
     run_t.font.name = FUENTE
     run_t.font.size = Pt(12)
     run_t.font.bold = True
+    bookmark_id = "bm_aprob_ind" if "INDUSTRIAL" in titulo else "bm_aprob_acad"
+    _agregar_bookmark(p_t, bookmark_id)
     
     p_ap = doc.add_paragraph()
     p_ap.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -1453,9 +1455,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
             ("2", "Cronograma de actividades administrativas", "6"),
         ]
         cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
-        for num, desc, pag in cuadros_indice:
-            bookmark_id = f"bm_cuadro{num}" if num else None
-            agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
+        if tiene_cap2:
+            for num, desc, pag in cuadros_indice:
+                bookmark_id = f"bm_cuadro{num}" if num else None
+                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
     
         # --- LISTA DE FIGURAS ---
         iniciar_seccion_preliminar(doc, "LISTA DE FIGURAS", bookmark_id="bm_lista_figuras")
