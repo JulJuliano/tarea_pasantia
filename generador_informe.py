@@ -316,7 +316,7 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     fecha = getattr(contenido, 'FECHA_LUGAR', '')
     fecha_resumen = fecha.split(',', 1)[1].strip() if ',' in fecha else fecha
     p_autor = doc.add_paragraph()
-    p_autor.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_autor.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p_autor.paragraph_format.left_indent = Cm(0)
     p_autor.paragraph_format.space_after = ESP_DOBLE
     for indice, texto in enumerate((
