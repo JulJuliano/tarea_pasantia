@@ -211,21 +211,48 @@ def generar_documento_semana(datos):
         row.cells[0].width = Cm(7.29)
         row.cells[1].width = Cm(7.30)
 
-    set_cell_format(sign_table.rows[0].cells[0], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
-    set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+    # Insertar firma del pasante si existe
+    ruta_firma_amaal = os.path.join("imagenes", "firma_amaal.png")
+    if os.path.exists(ruta_firma_amaal):
+        cell_fk = sign_table.rows[0].cells[0]
+        cell_fk.text = ""
+        cell_fk.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_fk = cell_fk.paragraphs[0].add_run()
+        run_fk.add_picture(ruta_firma_amaal, width=Cm(3.5))
+    else:
+        set_cell_format(sign_table.rows[0].cells[0], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+
+    ruta_firma_tutor = os.path.join("imagenes", "firma_tutor_amaal.png")
+    if os.path.exists(ruta_firma_tutor):
+        cell_ft = sign_table.rows[0].cells[1]
+        cell_ft.text = ""
+        cell_ft.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_ft = cell_ft.paragraphs[0].add_run()
+        run_ft.add_picture(ruta_firma_tutor, width=Cm(3.5))
+    else:
+        set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
+
     set_cell_format(sign_table.rows[1].cells[0], f"Firma del Pasante:\n{PASANTE_NOMBRE} |  C.I.: {PASANTE_CI}", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
     set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nLenny Mata  |  C.I.: 8969750", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.add_paragraph()
 
     # 8. Bloque Sello Corporativo
-    p_sello = doc.add_paragraph()
-    p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_sello.paragraph_format.space_before = Pt(12)
-    run_s = p_sello.add_run("SELLO DE LA EMPRESA")
-    run_s.font.name = 'Times New Roman'
-    run_s.font.size = Pt(10)
-    run_s.font.bold = True
+    ruta_sello = os.path.join("imagenes", "sello_amaal.png")
+    if os.path.exists(ruta_sello):
+        p_sello = doc.add_paragraph()
+        p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_sello.paragraph_format.space_before = Pt(12)
+        run_s = p_sello.add_run()
+        run_s.add_picture(ruta_sello, width=Cm(4))
+    else:
+        p_sello = doc.add_paragraph()
+        p_sello.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_sello.paragraph_format.space_before = Pt(12)
+        run_s = p_sello.add_run("SELLO DE LA EMPRESA")
+        run_s.font.name = 'Times New Roman'
+        run_s.font.size = Pt(10)
+        run_s.font.bold = True
 
     fn_word = f"Cronograma_Administracion_Semana{datos['num_semana']}_IUTECP.docx"
     doc.save(fn_word)
