@@ -8,7 +8,7 @@
 - **Carrera:** TSU en Administración — IUTECP (El Tigre, Anzoátegui)
 - **Empresa:** Ingeniería de Telecomunicaciones, C.A. (IDETEL / INTELCA)
 - **Tutor industrial:** Lenny Mata — C.I. 8.969.750
-- **Tutor académico:** Lic. Carlos Mendoza — C.I. 4.273.815
+- **Tutor académico:** Dra. Carmen J. Álvarez — C.I. 14.452.956
 - **Duración:** 10 semanas — Julio 2026
 
 ---

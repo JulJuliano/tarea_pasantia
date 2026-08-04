@@ -7,6 +7,9 @@
 # 1. Rutas y Carpetas
 CARPETA_IMAGENES = "imagenes"
 
+# Firma del tutor industrial para la página de aprobación (imagen dentro de CARPETA_IMAGENES)
+FIRMA_TUTOR_INDUSTRIAL = "firma_tutor_amaal.png"
+
 # Gráficos del informe: cada uno indica tras qué sección va (anclas: "ubicacion" | "estructura")
 GRAFICOS = [
     {"numero": 1, "tras": "ubicacion", "titulo": "Gráfico 1. Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.", "ancho_cm": 5, "lista": "Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.", "pagina": "3"},
@@ -48,8 +51,8 @@ AUTOR_DATOS = [
     "C.I.: 8969750",
     "",
     "Tutor Académico:",
-    "Lic. Mendoza, Carlos",
-    "C.I.: 4.273.815"
+    "Dra. Álvarez, Carmen",
+    "C.I.: 14.452.956"
 ]
 
 FECHA_LUGAR = "El Tigre, julio de 2026"

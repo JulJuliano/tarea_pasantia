@@ -1197,12 +1197,29 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
     for _ in range(1):
         doc.add_paragraph()
     
-    # Línea de firma
-    p_linea = doc.add_paragraph()
-    p_linea.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run_linea = p_linea.add_run("_" * 35)
-    run_linea.font.name = FUENTE
-    run_linea.font.size = Pt(12)
+    # Línea de firma (o imagen de firma si está configurada en contenido.py)
+    if "INDUSTRIAL" in titulo:
+        firma_img = getattr(c, 'FIRMA_TUTOR_INDUSTRIAL', None)
+    else:
+        firma_img = getattr(c, 'FIRMA_TUTOR_ACADEMICO', None)
+
+    ruta_firma = None
+    if firma_img:
+        ruta_firma = os.path.join(getattr(c, 'CARPETA_IMAGENES', 'imagenes'), firma_img)
+        if not os.path.exists(ruta_firma):
+            ruta_firma = None
+
+    if ruta_firma:
+        p_firma = doc.add_paragraph()
+        p_firma.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_firma = p_firma.add_run()
+        run_firma.add_picture(ruta_firma, width=Cm(4))
+    else:
+        p_linea = doc.add_paragraph()
+        p_linea.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_linea = p_linea.add_run("_" * 35)
+        run_linea.font.name = FUENTE
+        run_linea.font.size = Pt(12)
     
     doc.add_paragraph()
     
