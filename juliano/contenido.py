@@ -41,7 +41,7 @@ AUTOR_DATOS = [
     "C.I.: 14.187.924",
     "",
     "Tutor Académico:",
-    "Lic. Mendoza, Carlos",
+    "Ing. Mejías, José",
     "C.I.: 4.273.815"
 ]
 

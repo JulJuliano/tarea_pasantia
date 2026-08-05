@@ -9,7 +9,7 @@
 - **Empresa:** Venangocupet, S.A. (empresa mixta adscrita a la CVP)
 - **Área de pasantía:** Departamento de Presidencia
 - **Tutor industrial:** Ing. Yasmin Sabaneta — C.I. 14.187.924
-- **Tutor académico:** Lic. Carlos Mendoza — C.I. 4.273.815
+- **Tutor académico:** Ing. Mejías José — C.I. 4.273.815
 - **Duración:** 9 semanas
 
 ---
