@@ -181,10 +181,22 @@ POBLACION = ['El Departamento de Presidencia cuenta con una fuerza laboral activ
  'no se reportaron vacantes en esta unidad. Esta población corresponde al departamento donde se ejecutaron las '
  'actividades de pasantía y es la directamente vinculada con el flujo documental analizado.']
 
-ORGANIGRAMA_TEXTO = ('La estructura organizativa de Venangocupet, S.A. responde a un esquema jerárquico-funcional encabezado por la '
- 'Junta Directiva y la Presidencia. El Departamento de Presidencia constituye el área donde se desarrollaron las '
- 'pasantías y actúa como punto de recepción, revisión, firma y despacho de correspondencia ejecutiva. A '
- 'continuación se presentan el organigrama general de la empresa y el organigrama específico del departamento.')
+ORGANIGRAMA_TEXTO = (
+    "La estructura organizativa de Venangocupet, S.A. responde a un esquema jerárquico-funcional encabezado por "
+    "la Junta Directiva y la Presidencia. A continuación se presentan el organigrama general de la empresa y el "
+    "organigrama específico del Departamento de Presidencia, área donde se desarrollaron las pasantías."
+)
+
+DESCRIPCION_DEPARTAMENTO = [
+    "El Departamento de Presidencia funciona como unidad de tránsito y validación de correspondencia ejecutiva. "
+    "Recibe expedientes remitidos por otras dependencias, verifica aspectos ortográficos y de presentación, registra "
+    "su ingreso, los canaliza para la firma del Presidente y, una vez firmados, registra el egreso y los despacha al "
+    "departamento destinatario. La unidad no conserva de manera permanente los expedientes que transitan por ella, "
+    "por lo que la exactitud del registro de cada movimiento resulta esencial para mantener la trazabilidad documental.",
+    "Durante la pasantía se apoyaron actividades relacionadas con este flujo y se analizó la forma en que el registro "
+    "manual en hojas de cálculo influye en el control, la consulta y la generación de reportes sobre los movimientos "
+    "documentales del área."
+]
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -523,3 +535,6 @@ ANEXOS_LISTA = [('ANEXO A',
    'consolidar el seguimiento en una sola estructura de consulta.',
    'Efectos principales: duplicidad u omisión de registros; mayor tiempo para elaborar reportes; dificultad para '
    'conocer de inmediato el estado y recorrido de los expedientes.'])]
+
+# Distribución real de semanas por mes para el encabezado del Gantt.
+CRONOGRAMA_MESES = [('JUNIO', 3), ('JULIO', 4), ('AGOSTO', 2)]

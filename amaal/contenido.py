@@ -189,12 +189,23 @@ POBLACION = ['Ingeniería de Telecomunicaciones, C.A. cuenta con una población 
  'facilitó observar el recorrido de la información desde la atención inicial hasta el seguimiento administrativo '
  'de los casos.']
 
-ORGANIGRAMA_TEXTO = ('La estructura organizativa de Ingeniería de Telecomunicaciones, C.A. es de tipo vertical, diseñada para '
- 'garantizar una comunicación fluida entre los niveles directivos y operativos. A la cabeza se encuentra la '
- 'Presidencia, seguida de la Gerencia General y Operaciones, de la cual se desprenden los departamentos de '
- 'Supervisión de Administración, Contabilidad y Tributos, Supervisión Comercial, Área de Internet, Supervisión '
- 'del NOC (Network Operations Center) y Mantenimiento de Radiocomunicación. Se presenta a continuación el '
- 'organigrama general de la empresa y del Departamento de Administración.')
+ORGANIGRAMA_TEXTO = (
+    "La estructura organizativa de Ingeniería de Telecomunicaciones, C.A. es de tipo vertical y articula los niveles "
+    "directivos, administrativos, comerciales y técnicos. A la cabeza se encuentra la Presidencia, seguida de la "
+    "Gerencia General y Operaciones. A continuación se presentan el organigrama general de la empresa y el "
+    "organigrama del área administrativa vinculada con la pasantía."
+)
+
+DESCRIPCION_DEPARTAMENTO = [
+    "La experiencia de pasantía comprendió una rotación inicial por Atención al Cliente durante las primeras tres "
+    "semanas y, posteriormente, la incorporación al área de Administración. Esta secuencia permitió conocer el "
+    "recorrido de las solicitudes desde el contacto inicial con el suscriptor hasta su tratamiento administrativo y "
+    "coordinación con las unidades técnicas.",
+    "En el ámbito administrativo se observaron funciones relacionadas con Supervisión de Administración, Contabilidad "
+    "y Tributos; Compras y Facturación; y Atención al Cliente. Las actividades incluyeron recepción y registro de "
+    "solicitudes, revisión de recaudos, seguimiento de incidencias y afiliaciones, apoyo en facturación y archivo, así "
+    "como coordinación de información con otras áreas de IDETEL."
+]
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -507,3 +518,6 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'España.']
 
 ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4)]
+
+# Distribución real de semanas por mes para el encabezado del Gantt.
+CRONOGRAMA_MESES = [('JUNIO', 5), ('JULIO', 4), ('AGOSTO', 1)]
