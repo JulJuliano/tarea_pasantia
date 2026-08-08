@@ -1,116 +1,218 @@
-# Revisiones del Tutor — 20/07/26
+# Revisiones del Tutor — Registro de seguimiento
+
+> Documento de referencia acumulativo. Las observaciones originales **no se eliminan** aunque ya hayan sido atendidas, para conservar el historial de correcciones y poder comprobarlas nuevamente antes de la entrega final.
+>
+> **Estados:** `[x] Corregido` · `[~] Corregido / verificar en versión final` · `[ ] Pendiente` · `[i] Referencia o instrucción permanente`.
 
 ---
 
 ## Keidy
 
-### Portada / Contraportada
-- [ ] Logo centrado justo después del membrete (no está puesto)
-- [ ] Contraportada con nombres de tutores: Tutor Industrial (completar) y Tutor Académico Dra. Carmen J. Álvarez C.I. 14.452.956
+### Observaciones del 20/07/2026
 
-### Hojas preliminares (faltan)
-- [ ] Aprobación del tutor industrial
-- [ ] Aprobación del tutor académico
-- [ ] Agradecimientos (dejar título, completar al final)
-- [ ] Dedicatorias (dejar título, completar al final)
-- [ ] Índice de contenido
-- [ ] Índice de cuadros
-- [ ] Lista de figuras, gráficos y anexos
-- [ ] Resumen (dejar hoja con título, completar al final)
+#### Portada / Contraportada
 
-### Introducción
-- [ ] No está hecha. Debe explicar qué se va a realizar y cuál es la problemática a resolver
+- [x] **Corregido — Logo centrado justo después del membrete.**  
+  Se incorporó el logotipo institucional en la portada mediante el generador.
+- [x] **Corregido — Contraportada con nombres de tutores.**  
+  Tutor Industrial: Martina Rondón, C.I. 12.208.768. Tutor Académico: Dra. Carmen J. Álvarez, C.I. 14.452.956.
+- [x] **Corregido posteriormente — Texto institucional de la contraportada.**  
+  Se restituyó: “Informe de pasantías para obtener el título de Técnico Superior Universitario en la especialidad de: Administración”.
+- [x] **Corregido posteriormente — Contraportada en una sola hoja.**  
+  El generador fue ajustado para distribuir los bloques verticalmente sin desbordar la página carta.
 
-### Título de portada
-- [ ] Revisar: "PROPUESTA DE OPTIMIZACIÓN DE PROCESOS DE PROCURA EN EL DEPARTAMENTO ADMINISTRATIVO DE LUBRICANTES Y EQUIPOS VARYNA" es muy largo
-- [ ] Verbo "optimizar" no es adecuado para proceso administrativo
-- [ ] Sugerencia del tutor: "PROPUESTA DE SIMPLIFICACIÓN ADMINISTRATIVA DE LA PROCURA EN LUBRICANTES Y EQUIPOS VARYNA, C.A."
+#### Hojas preliminares
 
-### Capítulo I — Formato general
-- [ ] Los subtítulos van en minúscula y alineados a la izquierda
-- [ ] Subtítulos no van numerados (eliminar numeración)
-- [ ] Leer manuales de trabajos escritos y normativas del campus
+- [x] **Corregido — Aprobación del Tutor Industrial.**
+- [x] **Corregido — Aprobación del Tutor Académico.**
+- [~] **Preparado — Agradecimientos.**  
+  La sección está contemplada por el generador; el contenido definitivo puede completarse al cierre si se desea utilizarla.
+- [~] **Preparado — Dedicatoria.**  
+  La sección está contemplada por el generador; el contenido definitivo puede completarse al cierre si se desea utilizarla.
+- [x] **Corregido — Índice de contenido.**
+- [x] **Corregido — Lista de cuadros.**
+- [x] **Corregido — Lista de gráficos.**
+- [x] **Corregido — Lista de anexos cuando existen anexos.**
+- [x] **Corregido — Lista de figuras vacía eliminada.**  
+  El generador solo la crea cuando realmente existen elementos definidos como figuras.
+- [x] **Corregido — Resumen incorporado con membrete y estructura institucional.**
 
-### Contenido específico
-- [ ] "Identificación de la empresa": va en minúscula, colocar nombre de la empresa donde se realizan las pasantías
-- [ ] Reseña histórica: muy deficiente para una empresa de 36 años, debe describir cómo logran posicionarse en el mercado
-- [ ] Objetivos organizacionales: es solo un subtítulo
-- [ ] Objetivo general de la empresa: debe iniciar con verbo en infinitivo (no está visible)
-- [ ] Objetivos específicos: aclarar si son los 4 que plantea
-- [ ] Población: expresar cantidad de trabajadores, cargo, sexo; especificar el departamento donde realiza las pasantías; recomienda hacer un cuadro para totalizar
-- [ ] Estructura organizacional: después del organigrama de la empresa describir los departamentos y el departamento donde realiza las pasantías
+#### Introducción
 
-### Capítulo II
-- [ ] Adjuntar en la próxima entrega (entregas son por separado)
+- [x] **Corregido — Introducción redactada.**  
+  Presenta la pasantía, problemática, propósito y estructura general del informe.
 
+#### Título de portada
 
-NUEVAS:
-bservaciones 06/08/26
+- [x] **Corregido — Título reducido y ajustado según sugerencia del tutor.**  
+  **PROPUESTA DE SIMPLIFICACIÓN ADMINISTRATIVA DE LA PROCURA EN LUBRICANTES Y EQUIPOS VARYNA, C.A.**
+- [x] **Corregido — Se eliminó el enfoque “optimización” como verbo central del título.**
 
-Saludos Keidy
+#### Capítulo I — Formato general
 
-1) Debes revisar el formato del Resumen, en el instructivo de trabajos escritos ya que te falta el membrete y otros detalles, adicionalmente este debe plasmar tu objetivo general, tú no estás haciendo una tesis, por eso no debes hablar de investigación y menos de un proyecto factible, realizaste unas pasantías en un departamento "X" por lo que no puedes hablar de un estudio debes indicar brevemente la problemática, realizar una conclusión y mencionar como lo resolverás. este debe tener al menos 250 palabras.
+- [x] **Corregido — Subtítulos en minúscula y alineados a la izquierda.**
+- [x] **Corregido — Subtítulos sin numeración.**
+- [i] **Referencia permanente — Leer manuales de trabajos escritos y normativas del campus.**  
+  Mantener esta indicación para cada revisión final de formato.
 
-2) Revisa el manual de manuales escritos ya que tienes detalles y son a nivel de estructura
+#### Contenido específico
 
-3) Lee algunos comentarios que te hice directamente en el documento.
+- [x] **Corregido — “Identificación de la empresa” en minúscula y con la razón social correspondiente.**
+- [x] **Corregido — Reseña histórica ampliada.**  
+  Se desarrolló la trayectoria de más de 36 años y la evolución/posicionamiento de la empresa.
+- [x] **Corregido — “Objetivos organizacionales” tratado como subtítulo.**
+- [x] **Corregido — Objetivo general de la empresa con verbo en infinitivo.**
+- [x] **Corregido — Objetivos específicos de la empresa identificados de forma diferenciada.**
+- [x] **Corregido — Población presentada en cuadro con cantidad, cargo y sexo, incluyendo el área de pasantía y totalización.**
+- [x] **Corregido — Estructura organizacional desarrollada.**  
+  Después del organigrama se describen las unidades/departamentos y particularmente el Departamento Administrativo / área de Procura donde se realizó la pasantía.
 
-4) Debes incorporar en la situación problemática los subtítulos (Nivel macro, meso y micro) no recuerdo si los tenías y te dije que los eliminaras, pero leyendo nuevamente el instructivo me percaté que estos deben estar en el informe desglosados amplia la información ya que está muy incompleta y le agregas esos subtítulos.
+#### Capítulo II
 
-5) No realizaste la técnica que desarrollaste para la problemática. (Árbol del problema, matriz DOFA, diagrama de causa y efecto) no se cual desarrollaste
+- [i] **Referencia administrativa — Entregar Capítulo I y Capítulo II por separado cuando así lo solicite la tutora.**
 
-6) No Realizaste la interrogante que da paso a tu objetivo general.
+### Observaciones del 06/08/2026
 
-7) Recuerda que los verbos de los objetivos esta ya predeterminados y son solo tres 
+1. [x] **Corregido — Resumen.**  
+   Se ajustó el formato institucional, se incorporó el objetivo general y se eliminó del resumen el lenguaje de tesis, “investigación”, “estudio” y “proyecto factible”. Se desarrolló como resumen de pasantías, indicando problemática, propósito, solución/aporte y cierre. Se llevó al rango solicitado por la tutora sin superar el máximo institucional.
 
-Objetivo específico 01 Diagnosticar (Lo tienes)
+2. [~] **Corregido / verificar en PDF final — Estructura según manual de trabajos escritos.**  
+   El generador fue auditado y ajustado en papel carta, márgenes, tipografía, paginación, preliminares, contraportada, índices, cuadros, gráficos, resumen y referencias. Revisar visualmente cada PDF final porque ciertos saltos dependen de la extensión real del contenido.
 
-Objetivo específico 02 Identificar (Lo tienes)
+3. [ ] **Verificación manual pendiente — Comentarios realizados directamente dentro del documento de la tutora.**  
+   Esta observación se conserva porque el archivo de comentarios insertados directamente por la tutora no forma parte de este registro textual y debe contrastarse con la versión anotada que ella haya entregado.
 
-Objetivo específico 03 Definir o formular (Ajusta ya que tienes 4 y deben ser son estos verbos.)
+4. [x] **Corregido — Situación problemática ampliada con Nivel macro, Nivel meso y Nivel micro.**  
+   Los tres niveles están desarrollados de lo general a lo particular.
 
-8) El cuadro de la página 18 debe quedarte en una sola hoja, colocarle la fuente.
+5. [x] **Corregido — Técnica utilizada para desarrollar la problemática.**  
+   Se definió el **diagrama de causa-efecto (Ishikawa)** y se relacionó con observación directa, entrevistas y revisión documental. Debe conservarse también su representación gráfica dentro de los anexos cuando esté lista.
 
-9) Debes colocar y sustentar con autores los conceptos y definiciones que se relacionan con tu informe y el departamento donde estas realizando las prácticas profesionales, incluso debes tener unas bases teóricas, así como bases legales donde debes reflejar artículos de leyes, normar, etc. que guarden relación legal con tu informe donde cada artículo debe ser textual a las normas, realizar un análisis de cada uno que indique el aporte legal que este da a tu informe.
+6. [x] **Corregido — Interrogante que da paso al objetivo general.**
 
-10) Creo copiaste doble la información.
+7. [x] **Corregido — Objetivos específicos reducidos a tres y ajustados a los verbos indicados por la tutora.**  
+   1. **Diagnosticar**.  
+   2. **Identificar**.  
+   3. **Formular**.  
+   La planificación integral, cronograma, actividades y conclusiones fueron reajustados para conservar correspondencia con estos tres objetivos.
+
+8. [~] **Corregido en el generador / verificar en PDF final — Cuadro de planificación en una sola hoja y con fuente.**  
+   Se ajustó la presentación del cuadro; confirmar siempre el resultado renderizado porque el salto de página depende de la longitud final del texto.
+
+9. [x] **Corregido — Bases teóricas con autores y bases legales.**  
+   Se desarrollaron conceptos vinculados con procura, proceso administrativo, control interno y simplificación administrativa, sustentados con autores. También se incorporaron bases legales con el artículo correspondiente y análisis de su aporte al informe.
+
+10. [x] **Corregido — Información duplicada revisada.**  
+    Se reorganizó el contenido para reducir repeticiones entre diagnóstico, marco teórico y actividades.
+
+### Recordatorios actuales de Keidy
+
+- [i] Mantener coherencia entre **3 objetivos específicos → planificación integral → Gantt → actividades realizadas → conclusiones**.
+- [i] Conservar las observaciones semanales precargadas solo como apoyo de redacción; revisar especialmente la semana final antes de presentar el documento definitivo.
+- [i] Incorporar como anexo el diagrama de Ishikawa cuando se genere su imagen definitiva.
 
 ---
 
 ## Amaal
 
-### Generales
-- [ ] Recordar que las entregas son por separado (Cap I y Cap II se entregan por separado)
-- [ ] Leer manuales de trabajos escritos y normativas del campus
+### Observaciones registradas
 
-### Capítulo I — Formato
-- [ ] Subtítulos en minúscula y alineados a la izquierda
-- [ ] "Identificación de la empresa": va en minúscula
-- [ ] "Reseña histórica", "Misión", "Visión", "Valores": alineados a la izquierda y en minúscula
+#### Generales
 
-### Páginas preliminares
-- [ ] Faltan páginas preliminares e índices
+- [i] **Referencia administrativa — Las entregas del Capítulo I y Capítulo II pueden solicitarse por separado.**
+- [i] **Referencia permanente — Leer manuales de trabajos escritos y normativas del campus.**
 
-### Capítulo II
-- [ ] Revisar subtítulos
-- [ ] Sería importante realizar un flujograma donde se visualicen los procesos
+#### Capítulo I — Formato
+
+- [x] **Corregido — Subtítulos en minúscula y alineados a la izquierda.**
+- [x] **Corregido — “Identificación de la empresa” en minúscula.**
+- [x] **Corregido — “Reseña histórica”, “Misión”, “Visión” y “Valores” alineados a la izquierda y en minúscula.**
+
+#### Páginas preliminares
+
+- [x] **Corregido — Páginas preliminares e índices incorporados.**  
+  El generador contempla portada, contraportada, aprobaciones, índices/listas aplicables y resumen.
+- [x] **Corregido posteriormente — Lista de figuras vacía eliminada.**  
+  Solo se genera cuando existen figuras reales.
+- [x] **Corregido posteriormente — Contraportada con el texto institucional y ajustada a una sola página.**
+
+#### Capítulo II
+
+- [x] **Corregido — Subtítulos revisados y organización del diagnóstico mejorada.**
+- [x] **Corregido — Flujograma del proceso incorporado como anexo.**  
+  Se configuró una imagen de anexo y se ajustó el generador para limitar proporcionalmente su tamaño y evitar que exceda el área útil de la página.
+- [x] **Corrección adicional — Técnica del diagnóstico definida.**  
+  Se relacionó el análisis con un diagrama de Ishikawa y con los instrumentos empleados.
+- [x] **Corrección adicional — Interrogante orientadora incorporada.**
+- [x] **Corrección adicional — Coherencia temporal revisada.**  
+  Se tomó como referencia la rotación real indicada en el contexto: primeras semanas vinculadas con Atención al Cliente y posteriormente actividades en Administración; el cronograma y las actividades fueron reajustados con este criterio.
+
+### Recordatorios actuales de Amaal
+
+- [i] Mantener exactamente la misma denominación del instrumento de recolección de datos en planificación, cronograma y Capítulo IV.
+- [i] Si se conserva el Ishikawa como técnica del diagnóstico, incorporar su imagen como anexo adicional y mencionarlo previamente en el cuerpo del informe.
+- [i] Mantener coherencia entre el flujograma propuesto, las actividades de las semanas de diseño y la propuesta descrita en las conclusiones/recomendaciones.
 
 ---
 
 ## Juliano
 
-### Capítulo II
-- [ ] Falta el árbol del problema
-- [ ] "Planificación integral de los objetivos": revisar
-- [ ] "Cronograma de actividades (Diagrama de Gantt)": revisar
+### Observaciones registradas
 
-### Formato
-- [ ] Misión y Visión: el contenido (no los subtítulos) va en normal, no en cursiva
+#### Capítulo II
 
-NUEVAS
+- [x] **Corregido — Árbol del problema incorporado.**  
+  La técnica está explicada dentro del diagnóstico y el anexo está configurado como **ANEXO A — Árbol del problema del control de movimientos documentales**, usando `3.png`.
+- [x] **Corregido — Planificación integral de los objetivos revisada.**  
+  Se alineó con diagnóstico, requerimientos, diseño, implementación/validación y con los objetivos específicos actuales.
+- [x] **Corregido — Cronograma de actividades / Diagrama de Gantt revisado.**  
+  Se ajustó el Gantt interno del informe para representar las fases del proyecto y se incorporó la actividad de empaquetado/despliegue correspondiente. Las modificaciones específicas de las semanas 8 y 9 del plan semanal quedan sujetas a las correcciones que realice Juliano en su `cronograma.py`.
 
-Por favor ampliar la Introducción
-Capítulo I falta:
-El logo de la empresa
-El mapa de ubicación geográfica de la empresa
-El cuadro de la población del departamento donde estas ejecutando la pasantía
+#### Formato
+
+- [x] **Corregido — Misión y Visión en texto normal, no en cursiva.**
+
+#### Nuevas observaciones
+
+- [x] **Corregido — Introducción ampliada y posteriormente compactada para evitar desbordamiento de página.**  
+  Conserva problemática, propósito, soporte general y estructura del informe sin extender innecesariamente el último párrafo.
+- [x] **Corregido — Logo de la empresa incorporado.**  
+  Se utiliza `logo.png` y se ubica inmediatamente antes de “Ubicación geográfica”, seguido del título del gráfico y su fuente, conforme al ejemplo suministrado por el profesor.
+- [x] **Corregido — Mapa de ubicación geográfica incorporado.**  
+  Se utiliza `mapa.png` y se describe la ubicación de las oficinas administrativas en el Centro Comercial San Remo Mall, Local 89-PB.
+- [x] **Corregido — Cuadro de población del departamento incorporado.**  
+  Departamento de Presidencia: Presidente (1), Secretaría (1), total de personal activo (2), con distribución por sexo.
+
+### Correcciones adicionales realizadas después de las observaciones del tutor
+
+- [x] **Título, objetivo general y alcance técnico armonizados.**  
+  El informe se formula alrededor del desarrollo de un **prototipo de sistema automatizado**, de modo que resulte coherente con las actividades reales de análisis, diseño, implementación, empaquetado y pruebas sin requerir rehacer el cronograma ya desarrollado.
+- [x] **Flujo real de Presidencia corregido.**  
+  Se mantiene la secuencia recepción → revisión → registro de ingreso → firma presidencial → registro de egreso → despacho, sin afirmar que Presidencia conserva permanentemente los expedientes.
+- [x] **Interrogante orientadora incorporada.**
+- [x] **Objetivos específicos y conclusiones organizados con correspondencia directa.**
+- [x] **Reseña histórica complementada con material institucional de Venangocupet.**
+- [x] **Misión, visión y objetivos organizacionales reforzados con información institucional suministrada.**
+- [x] **Contraportada restaurada con el texto institucional y ajustada a una sola página.**
+- [x] **Lista de figuras vacía eliminada automáticamente.**
+
+### Pendientes / verificaciones de Juliano
+
+- [ ] **Pendiente del pasante — Correcciones específicas de las semanas 8 y 9 del `cronograma.py`.**  
+  Una vez finalizadas, volver a comprobar su correspondencia con el Gantt y el Capítulo IV.
+- [~] **Verificación final — Anexo A (`3.png`).**  
+  Confirmar que la imagen final del árbol del problema sea legible al tamaño de página y que coincida exactamente con las causas, problema central y efectos descritos en el Capítulo II.
+- [i] **Duración del período.**  
+  El informe de Juliano trabaja con nueve (9) semanas. Mantener esa duración de forma uniforme en resumen, introducción, cronograma y Capítulo IV; no introducir una décima semana en sus documentos.
+
+---
+
+## Control general antes de entregar cualquiera de los tres informes
+
+- [ ] Generar el PDF definitivo y revisar visualmente que ningún título, cuadro, gráfico, contraportada o anexo se desborde.
+- [ ] Confirmar que todas las actividades descritas como **realizadas** hayan ocurrido efectivamente; las futuras deben permanecer únicamente como planificación hasta su ejecución.
+- [ ] Comprobar que cada objetivo específico tenga al menos una conclusión asociada.
+- [ ] Comprobar que cada recomendación nazca de una conclusión previa.
+- [ ] Verificar que toda fuente citada aparezca en Referencias y que no existan referencias nunca citadas.
+- [ ] Confirmar que cada anexo sea mencionado previamente en el cuerpo del informe.
+- [ ] Actualizar ciudad, mes y año de la versión definitiva según la fecha real de entrega.

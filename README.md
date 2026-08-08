@@ -1,239 +1,678 @@
 # Sistema Multi-Compilador de Informes de Pasantías (IUTECP)
 
-Este proyecto implementa una solución automatizada para la generación de informes y cronogramas de pasantía conformes a la **Normativa de Transcripción de Trabajos e Informes Escritos del IUTECP**. Permite compilar y organizar de manera inteligente los documentos de múltiples estudiantes (**Juliano, Keidy y Amaal**) de forma individual y modular.
+Este repositorio implementa una solución automatizada para generar, organizar y revisar los **informes de pasantías** y **cronogramas semanales** de tres estudiantes del IUTECP: **Juliano, Keidy y Amaal**.
 
-> **🤖 Instrucción para asistentes IA:** Antes de modificar `generador_informe.py` o cualquier `contenido.py`, lee obligatoriamente los archivos de normativa en `compartido/normativa/`:
-> - `Reglas_1.md` — reglas generales de presentación y transcripción.
-> - `Reglas_2_resumido.md` — resumen de reglas de formato, márgenes, sangrías y citas.
-> - `Reglas_3.md` — reglas de referencias, anexos y tabla de contenido.
+Los tres cursan la misma asignatura de **Pasantías Profesionales**, comparten la normativa institucional y el entorno académico/Moodle, pero sus empresas, proyectos, tutores y actividades son diferentes. Por ello, el sistema mantiene un generador común y contenidos separados por estudiante.
+
+> [!IMPORTANT]
+> **Instrucción para asistentes IA y para futuras modificaciones**
 >
-> Estos documentos definen las restricciones de formato (fuente, márgenes, interlineado, sangrías, citas, índices) que el generador implementa. Cualquier cambio al generador o a los contenidos debe respetar lo allí establecido.
+> Antes de modificar `generador_informe.py`, `selector.py`, cualquier `contenido.py` o cualquier `cronograma.py`:
+>
+> 1. leer `CONTEXTO_GENERAL.md`;
+> 2. leer `revisiones_tutor.md`;
+> 3. consultar la normativa vigente dentro de `compartido/normativa/`;
+> 4. contrastar cualquier cambio de actividades con el `cronograma.py` del estudiante;
+> 5. mantener la cadena de coherencia:
+>
+> **problema → interrogante → objetivo general → objetivos específicos → planificación integral → Gantt → cronogramas semanales → Capítulo IV → conclusiones → recomendaciones → anexos**.
+>
+> No se deben recuperar automáticamente versiones antiguas de contenidos, objetivos o enfoques metodológicos que ya hayan sido corregidos.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 1. Fuentes normativas del proyecto
 
-El repositorio está organizado con una arquitectura modular y **simétrica**: cada estudiante posee exactamente la misma estructura interna de archivos y carpetas, de forma aislada y consistente.
+La normativa común está centralizada en:
+
+```text
+compartido/normativa/
+├── 00_LEEME_GUIA_PASANTIAS_REGULARES_IUTECP.md
+├── 01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md
+├── 02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME_IUTECP.md
+├── 03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL_IUTECP.md
+└── opcional/
+```
+
+Uso recomendado:
+
+| Archivo | Función |
+|---|---|
+| `00_LEEME...` | Explica cómo usar el conjunto normativo y qué corresponde a las pasantías regulares. |
+| `01_FORMATO...` | Fuente, márgenes, interlineado, sangrías, citas, cuadros, gráficos, paginación y referencias. |
+| `02_ESTRUCTURA...` | Qué debe contener el informe: preliminares, capítulos I–V, planificación, Gantt y anexos. |
+| `03_PROCESO...` | Proceso de pasantías, responsabilidades, evaluación y presentación oral. |
+| `opcional/` | Material institucional complementario que no constituye por sí solo la guía principal. |
+
+Los tres casos corresponden a **pasantías profesionales regulares**. Las disposiciones exclusivas de acreditación por experiencia laboral no deben aplicarse a estos informes.
+
+---
+
+## 2. Contexto y revisiones
+
+### `CONTEXTO_GENERAL.md`
+
+Es la **fuente maestra de contexto** del proyecto y sustituye los antiguos `contexto.md` separados.
+
+Incluye:
+
+- contexto académico común;
+- datos de Juliano, Keidy y Amaal;
+- empresas y áreas de pasantía;
+- títulos y objetivos actuales;
+- problemas identificados;
+- técnicas e instrumentos;
+- imágenes esperadas;
+- decisiones ya tomadas;
+- restricciones que no deben aparecer en algunos informes;
+- estado actual y pendientes.
+
+### `revisiones_tutor.md`
+
+Es un registro acumulativo de observaciones. **No se eliminan las correcciones antiguas** aunque ya hayan sido atendidas, porque sirven como referencia futura.
+
+Convención:
+
+- `[x]` corregido;
+- `[~]` corregido, pero requiere comprobación visual/final;
+- `[ ]` pendiente;
+- `[i]` nota o instrucción de referencia.
+
+### `ANEXOS_PROPUESTOS.md`
+
+Contiene el banco de anexos y diagramas que pueden producirse mediante Mermaid, PlantUML, GraphViz, DBML, Kroki u otras herramientas.
+
+---
+
+## 3. Estructura actual del repositorio
 
 ```text
 tarea_pasantia/
 │
-├── generador_informe.py     # Script principal (motor de generación de plantillas DOCX y conversión PDF)
-├── selector.py              # Panel de control interactivo y automatizado por CLI
-├── revisiones_tutor.md      # Registro de observaciones y retroalimentación del tutor académico
-├── .gitignore               # Exclusiones de Git (entornos virtuales, temporales y bloqueos de oficina)
+├── amaal/
+│   ├── contenido.py
+│   ├── cronograma.py
+│   ├── cronogramas/
+│   │   └── combinados/
+│   ├── imagenes/
+│   ├── reportes/
+│   └── varios/
+│       └── mermaids.txt
 │
-├── compartido/              # Recursos transversales a todos los estudiantes
-│   ├── iutecp.png           # Logo del IUTECP (portada)
-│   └── normativa/           # Normativa oficial de transcripción del IUTECP
-│       ├── Reglas_1.md
-│       ├── reglas_1.docx
-│       ├── Reglas_2.md
-│       ├── Reglas_2_resumido.md
-│       └── Reglas_3.md
+├── ANEXOS_PROPUESTOS.md
 │
-├── juliano/                 # Proyecto de Juliano (TSU en Informática)
-│   ├── contenido.py         # Textos, tablas, objetivos y variables de Juliano
-│   ├── contexto.md          # Diagnóstico situacional, flujo de correspondencias y metas
-│   ├── cronograma.py        # Generador de cronogramas semanales de Juliano
-│   ├── reportes/            # Salida del Informe de Pasantías (DOCX + PDF)
-│   ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Informatica_SemanaN_IUTECP.*)
-│   ├── imagenes/            # Insumos gráficos (1.png = Organigrama general, 2.png = Organigrama del depa)
-│   └── varios/              # Documentos de referencia del pasante (JulianoCardona.docx)
+├── compartido/
+│   └── normativa/
+│       ├── 00_LEEME_GUIA_PASANTIAS_REGULARES_IUTECP.md
+│       ├── 01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md
+│       ├── 02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME_IUTECP.md
+│       ├── 03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL_IUTECP.md
+│       └── opcional/
 │
-├── keidy/                   # Proyecto de Keidy (TSU en Administración)
-│   ├── contenido.py         # Textos, tablas y variables de Keidy
-│   ├── contexto.md          # Diagnóstico situacional de Keidy
-│   ├── cronograma.py        # Generador de cronogramas semanales de Keidy
-│   ├── reportes/            # Salida del Informe de Pasantías (DOCX + PDF)
-│   ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Procura_SemanaN_IUTECP.*)
-│   ├── imagenes/            # Insumos gráficos (1.png = Mapa, 2.png = Organigrama)
-│   └── varios/              # Documentos de referencia del pasante
+├── CONTEXTO_GENERAL.md
+├── generador_informe.py
+├── .gitignore
 │
-└── amaal/                   # Proyecto de Amaal (TSU en Administración)
-    ├── contenido.py         # Capítulos I y II completados con datos reales de IDETEL
-    ├── contexto.md          # Diagnóstico situacional de Amaal
-    ├── cronograma.py        # Generador de cronogramas semanales de Amaal
-    ├── reportes/            # Salida del Informe de Pasantías (vacío, en desarrollo)
-    ├── cronogramas/         # Salida de Cronogramas Semanales (Cronograma_Administracion_SemanaN_IUTECP.*)
-    ├── imagenes/            # Insumos gráficos (1.png = Ubicación, 2.png = Organigrama general, 3.png = Organigrama del depa)
-    └── varios/              # Documentos de referencia del pasante
+├── juliano/
+│   ├── contenido.py
+│   ├── cronograma.py
+│   ├── cronogramas/
+│   ├── imagenes/
+│   ├── reportes/
+│   └── varios/
+│       └── mermaids.txt
+│
+├── keidy/
+│   ├── contenido.py
+│   ├── cronograma.py
+│   ├── cronogramas/
+│   │   └── combinados/
+│   ├── imagenes/
+│   ├── reportes/
+│   └── varios/
+│
+├── README.md
+├── revisiones_tutor.md
+└── selector.py
 ```
 
-### Convenciones internas (idénticas en cada carpeta de estudiante)
+### Elementos principales
 
-Cada subcarpeta de estudiante contiene **exactamente** los mismos 7 elementos, garantizando consistencia:
-
-| Elemento         | Descripción                                                                       |
-| ---------------- | --------------------------------------------------------------------------------- |
-| `contenido.py`   | Variables académicas del informe (portada, capítulos I-V, referencias, anexos).  |
-| `contexto.md`    | Diagnóstico situacional, flujo del proceso, enfoque metodológico y datos académicos. |
-| `cronograma.py`  | Generador local de cronogramas semanales (DOCX + PDF).                            |
-| `reportes/`      | Salida del Informe de Pasantías compilado por `generador_informe.py`.              |
-| `cronogramas/`   | Salida de los cronogramas semanales compilados por `cronograma.py`.               |
-| `imagenes/`      | Insumos gráficos numerados (`1.png`, `2.png`, ...) definidos en `GRAFICOS`.    |
-| `varios/`        | Documentos de referencia del pasante (puede estar vacío).                         |
-
-### Patrón de nombres de cronogramas
-
-Todos los cronogramas siguen el patrón uniforme:
-
-```
-Cronograma_<Area>_Semana<N>_IUTECP.{docx,pdf}
-```
-
-| Estudiante | `<Area>`         |
-| ---------- | ---------------- |
-| Juliano    | `Informatica`    |
-| Keidy      | `Procura`        |
-| Amaal      | `Administracion`|
+| Elemento | Descripción |
+|---|---|
+| `generador_informe.py` | Motor común que genera los informes DOCX/PDF según la normativa IUTECP. |
+| `selector.py` | Orquestador para seleccionar estudiantes y acciones de compilación. |
+| `CONTEXTO_GENERAL.md` | Contexto académico y particular de los tres estudiantes. |
+| `revisiones_tutor.md` | Historial acumulativo de observaciones y correcciones. |
+| `ANEXOS_PROPUESTOS.md` | Banco de anexos técnicos y académicos. |
+| `<estudiante>/contenido.py` | Datos académicos y contenido de los capítulos I–V. |
+| `<estudiante>/cronograma.py` | Generador de planes/cronogramas semanales del estudiante. |
+| `<estudiante>/imagenes/` | Logos, mapas, organigramas, diagramas y anexos gráficos. |
+| `<estudiante>/reportes/` | Informes generados. |
+| `<estudiante>/cronogramas/` | Cronogramas generados. |
+| `<estudiante>/cronogramas/combinados/` | Versiones combinadas, cuando se utilicen. |
+| `<estudiante>/varios/` | Material de apoyo y referencias específicas del estudiante. |
 
 ---
 
-## ⚙️ Panel de Control (`selector.py`)
+## 4. Estudiantes
 
-El script `selector.py` en la raíz del proyecto es el orquestador principal. Cuenta con dos modos de ejecución:
+| Estudiante | Carrera | Empresa / área principal | Tutor académico |
+|---|---|---|---|
+| **Juliano** | TSU en Informática | Venangocupet, S.A. — Presidencia | Ing. José Mejías |
+| **Keidy** | TSU en Administración | Lubricantes y Equipos Varyna, C.A. — Administración/Procura | Dra. Carmen J. Álvarez |
+| **Amaal** | TSU en Administración | Ingeniería de Telecomunicaciones, C.A. — Atención al Cliente/Administración | Dra. Carmen J. Álvarez |
 
-### 1. Modo Interactivo (TUI)
-Si lo ejecutas directamente desde una terminal interactiva:
+Keidy y Amaal comparten tutora académica. Juliano tiene un tutor académico diferente.
+
+Una observación particular de un tutor **no debe copiarse automáticamente** al otro proyecto, salvo que también esté respaldada por la normativa institucional o por una instrucción común de la asignatura.
+
+---
+
+## 5. Panel de control (`selector.py`)
+
+`selector.py` funciona como orquestador principal del proyecto.
+
+### Modo interactivo
+
 ```bash
 python selector.py
-# o bien:
+```
+
+o:
+
+```bash
 ./selector.py
 ```
-* **Navegación:** Flechas `↑` y `↓` para desplazarte por las opciones.
-* **Selección:** Barra espaciadora (`Espacio`) para marcar o desmarcar acciones y estudiantes.
-* **Ejecución:** Tecla `Enter` para comenzar el procesamiento.
-* **Salida:** Tecla `Q` o `Ctrl+C` para cancelar.
 
-### 2. Modo Directo por Línea de Comandos (CLI / Scripts)
-Puedes automatizar las tareas usando argumentos, lo cual es ideal si ejecutas compilaciones desde scripts externos o terminales no interactivas:
+Controles habituales:
+
+- `↑` / `↓`: navegar;
+- `Espacio`: marcar/desmarcar;
+- `Enter`: ejecutar;
+- `Q` o `Ctrl+C`: salir/cancelar.
+
+### Modo CLI
+
 ```bash
 ./selector.py --estudiantes <estudiante_id> --acciones <accion_id>
 ```
-* **Argumento `--estudiantes`:** Permite especificar qué estudiantes compilar separados por comas (`juliano`, `keidy`, `amaal`, `all`).
-* **Argumento `--acciones`:** Permite especificar qué tareas realizar separadas por comas (`informe`, `borrador`, `borrador2`, `cronogramas`, `all`).
 
-**Ejemplos prácticos:**
-* Compilar solo el informe de Keidy:
-  ```bash
-  ./selector.py --estudiantes keidy --acciones informe
-  ```
-* Compilar todo (informe y cronogramas) para Juliano y Amaal:
-  ```bash
-  ./selector.py --estudiantes juliano,amaal --acciones all
-  ```
-* Compilar borrador2 (todo excepto Cap IV + V) para todos:
-  ```bash
-  ./selector.py --acciones borrador2
-  ```
+Ejemplos:
 
-### Modos de generación de informe
+```bash
+./selector.py --estudiantes keidy --acciones informe
+```
 
-| Modo | Acción | Capítulos incluidos | Suffix archivo |
+```bash
+./selector.py --estudiantes juliano,amaal --acciones all
+```
+
+```bash
+./selector.py --acciones borrador2
+```
+
+### Modos de informe
+
+| Modo | Acción | Capítulos incluidos | Sufijo |
 |---|---|---|---|
-| **completo** | `informe` | I, II, III, IV, V | — |
-| **borrador 1** | `borrador1` | Solo Cap I | `_BORRADOR1` |
-| **borrador 2** | `borrador2` | Cap I + II | `_BORRADOR2` |
-| **borrador 3** | `borrador3` | Cap I + II + III | `_BORRADOR3` |
-| **borrador 4** | `borrador4` | Cap I + II + III + IV | `_BORRADOR4` |
+| completo | `informe` | I, II, III, IV, V | — |
+| borrador 1 | `borrador1` | I | `_BORRADOR1` |
+| borrador 2 | `borrador2` | I + II | `_BORRADOR2` |
+| borrador 3 | `borrador3` | I + II + III | `_BORRADOR3` |
+| borrador 4 | `borrador4` | I + II + III + IV | `_BORRADOR4` |
 
-Todos los modos incluyen portada, contraportada, páginas preliminares, referencias y anexos. El índice solo muestra los capítulos presentes en cada modo.
-
-### Portada y Contraportada
-
-- **Portada**: Membrete centrado → Logo IUTECP (`compartido/iutecp.png`) en el primer cuarto del gap → Título del proyecto → Datos del autor (nombre + CI, alineado derecha) → Ciudad y fecha
-- **Contraportada**: Membrete → Título → Tabla invisible de 2 columnas (tutores a la izquierda, autor a la derecha, TOP alignment) → Ciudad y fecha pegada al margen inferior
-- Los gaps entre bloques se calculan en puntos (no porcentajes), distribuidos equitativamente: `gap_mt = 1.2×` (membrete–título), `gap_td = 1×` (título–datos), `gap_df = 0.5×` (datos–fecha). Todos los márgenes de sección son 3cm; el efecto de 5cm en primera página de capítulo se logra con `space_before`.
-
-### Páginas de Aprobación
-
-Dos páginas con membrete, título "APROBACIÓN DEL TUTOR INDUSTRIAL" / "APROBACIÓN DEL TUTOR ACADÉMICO", párrafo justificado con datos del pasante, fecha, línea de firma y nombre + C.I. del tutor extraídos automáticamente de `AUTOR_DATOS`.
-
-### Orden de páginas preliminares
-
-1. Aprobación del Tutor Industrial
-2. Aprobación del Tutor Académico
-3. Agradecimientos
-4. Dedicatoria
-5. Índice de Contenido (sin numeración de página visible, aunque ocupe 2+ páginas)
-6. Lista de Cuadros
-7. Lista de Figuras
-8. Lista de Gráficos
-9. Lista de Anexos
-10. Resumen (con palabras clave)
-11. Introducción
+Los borradores conservan las páginas preliminares necesarias y generan un índice acorde con los capítulos incluidos.
 
 ---
 
-## 🧠 Funcionamiento Inteligente del Compilador
+## 6. Funcionamiento del compilador
 
-El selector realiza un proceso de "montaje y desmontaje" dinámico en la raíz del proyecto para que no tengas que modificar código:
+El flujo general del selector es:
 
-1. **Copia de Insumos:** Copia temporalmente el archivo `<carpeta_estudiante>/contenido.py` a la raíz como `contenido.py`.
-2. **Montaje de Imágenes:** Copia la carpeta `<carpeta_estudiante>/imagenes/` a la raíz como `imagenes/` de forma temporal.
-3. **Ejecución y Tolerancia a Fallos:** Lanza `generador_informe.py` utilizando de manera prioritaria el entorno virtual (`venv`) del proyecto para evitar errores de dependencias (`python-docx`). El motor del informe cuenta con fallback seguro (usa `getattr`), lo que significa que si el `contenido.py` de un estudiante no está completo, el informe se compilará con campos vacíos sin colapsar.
-4. **Organización de Salidas:** Mueve los reportes resultantes a la carpeta `reportes/` del estudiante respectivo.
-5. **Ejecución de Cronogramas:** Cambia el directorio de trabajo (`CWD`) a la carpeta del estudiante, ejecuta su script local `cronograma.py` (si existe), recopila recursivamente todos los documentos PDF y Word generados y los organiza limpiamente dentro de su subcarpeta `cronogramas/`.
-6. **Limpieza Absoluta:** Limpia y elimina todos los archivos temporales y directorios de bloqueo de la raíz y subcarpetas (como `cronogramas generados/`), garantizando que tu repositorio se mantenga ordenado y libre de archivos huérfanos.
+1. toma el `contenido.py` del estudiante seleccionado;
+2. monta temporalmente sus imágenes;
+3. ejecuta `generador_informe.py`;
+4. genera DOCX y, cuando LibreOffice está disponible, PDF;
+5. mueve los resultados a `reportes/`;
+6. ejecuta `cronograma.py` cuando se solicita;
+7. organiza los archivos producidos dentro de `cronogramas/`;
+8. limpia archivos temporales.
+
+El contenido de un estudiante debe permanecer aislado del de los otros.
 
 ---
 
-## 🎨 Insumos y Gráficos por Estudiante
+## 7. Formato general implementado
 
-Los gráficos del informe se configuran **data-driven** desde cada `contenido.py` mediante una lista `GRAFICOS`. Cada entrada define el número de imagen, la sección tras la cual se inserta (`tras`), el título y el ancho:
+El generador se ha ajustado para reflejar, entre otras, estas reglas:
+
+- papel carta;
+- margen izquierdo de 4 cm;
+- márgenes superior, derecho e inferior de 3 cm;
+- Times New Roman de 12 pt para texto general;
+- 10 pt en cuadros/gráficos cuando corresponde;
+- interlineado 1,5 en el cuerpo;
+- capítulos en página nueva;
+- subtítulos alineados a la izquierda y sin numeración;
+- preliminares con números romanos minúsculos;
+- numeración arábiga desde la Introducción;
+- primera página de Introducción, capítulos y referencias contada pero sin número visible;
+- contraportada con la frase:
+  **“Informe de pasantías para obtener el título de Técnico Superior Universitario en la especialidad de: …”**;
+- referencias con orden alfabético y sangría francesa;
+- anexos ajustados al área útil de la página.
+
+> El cumplimiento final siempre debe verificarse sobre el **PDF renderizado**, porque algunos saltos de página, tamaños de imágenes y longitud de párrafos dependen del contenido real.
+
+---
+
+## 8. Portada y contraportada
+
+### Portada
+
+Incluye:
+
+- membrete institucional;
+- logo IUTECP;
+- título del informe;
+- datos del autor;
+- ciudad y fecha.
+
+### Contraportada
+
+Incluye:
+
+- membrete;
+- título;
+- texto institucional:
+  **“Informe de pasantías para obtener el título de Técnico Superior Universitario en la especialidad de: …”**;
+- Tutor Industrial;
+- Autor;
+- Tutor Académico;
+- ciudad, mes y año.
+
+Debe mantenerse dentro de **una sola página**.
+
+---
+
+## 9. Páginas preliminares
+
+Orden general utilizado:
+
+1. Aprobación del Tutor Industrial.
+2. Aprobación del Tutor Académico.
+3. Agradecimiento, si aplica.
+4. Dedicatoria, si aplica.
+5. Índice de contenido.
+6. Lista de cuadros, si aplica.
+7. Lista de figuras, **solo si existen figuras**.
+8. Lista de gráficos, si aplica.
+9. Lista de anexos.
+10. Resumen.
+11. Introducción.
+
+### Figuras y gráficos
+
+La normativa contempla ambas listas, pero son condicionales.
+
+Actualmente los tres informes trabajan sus elementos visuales principalmente como **gráficos**. Por eso el generador no debe crear una página vacía de `LISTA DE FIGURAS` cuando no exista ninguna figura declarada.
+
+---
+
+## 10. Capítulo I y recursos gráficos
+
+`contenido.py` define los elementos académicos del Capítulo I:
+
+- identificación de la empresa;
+- razón social;
+- reseña histórica;
+- misión;
+- visión;
+- valores;
+- objetivos organizacionales;
+- objetivo general de la empresa;
+- objetivos específicos de la empresa;
+- logotipo;
+- ubicación geográfica;
+- población;
+- estructura organizacional;
+- descripción del departamento donde se realizó la pasantía.
+
+Los objetivos organizacionales de la empresa son **diferentes** de los objetivos del proyecto, que pertenecen al Capítulo II.
+
+### Logos
+
+Los logos empresariales se ubican antes de la sección de ubicación geográfica siguiendo el modelo utilizado por el profesor:
+
+```text
+[LOGO]
+
+Gráfico N. Logotipo de la empresa.
+Fuente: Empresa X (2026).
+
+Ubicación geográfica
+...
+```
+
+No se agrega actualmente un párrafo de interpretación/descripción del logo.
+
+### Gráficos
+
+Los gráficos se configuran desde `contenido.py`, por ejemplo:
 
 ```python
 GRAFICOS = [
-    {"numero": 1, "tras": "ubicacion",  "titulo": "Gráfico 1. Mapa de ubicación...",  "ancho_cm": 5},
-    {"numero": 2, "tras": "estructura", "titulo": "Gráfico 2. Organigrama general...", "ancho_cm": 12},
-    {"numero": 3, "tras": "estructura", "titulo": "Gráfico 3. Organigrama del depa...", "ancho_cm": 12},
+    {
+        "numero": 2,
+        "tras": "ubicacion",
+        "titulo": "Gráfico 2. Referencia cartográfica...",
+        "ancho_cm": 10,
+        "lista": "Referencia cartográfica...",
+    },
 ]
 ```
 
-**Anclas válidas para `tras`:**
-| Ancla         | Se inserta después de                          |
-| ------------- | ---------------------------------------------- |
-| `"ubicacion"` | Sección 1.1.7 Ubicación geográfica             |
-| `"estructura"`| Sección 1.1.9 Estructura Organizativa          |
-
-Los archivos gráficos se colocan en `<estudiante>/imagenes/` con nombres numéricos (`1.png`, `2.png`, `3.png`, ...). El selector los copia temporalmente a la raíz antes de compilar.
+Las imágenes deben existir dentro de `<estudiante>/imagenes/`.
 
 ---
 
-## 📚 Formatos de Contenido Soportados (refactor del generador)
+## 11. Imágenes actuales por estudiante
 
-El generador (`generador_informe.py`) soporta dos formatos alternativos para ciertos bloques de contenido, detectándolos dinámicamente:
+### Juliano
 
-### Capítulo I — Realidad Organizacional
+```text
+juliano/imagenes/
+├── logo.png
+├── mapa.png
+├── 1.png
+├── 2.png
+└── 3.png
+```
 
-Los subtítulos del Capítulo I (Identificación de la empresa, Razón social, Reseña histórica, Misión, Visión, Valores, Objetivos Organizacionales, Ubicación, Población, Estructura Organizativa) se renderizan con `agregar_titulo_nivel2`: **sin numeración**, alineados a la izquierda, negrita. El contenido de Misión y Visión va en redonda (sin cursiva).
+Referencia actual:
 
-"Identificación de la empresa" se muestra centrado y sin texto de entrada asociado.
+- `logo.png`: logotipo de Venangocupet;
+- `mapa.png`: mapa/referencia de las oficinas administrativas;
+- `1.png`: organigrama general;
+- `2.png`: organigrama del Departamento de Presidencia;
+- `3.png`: árbol del problema — Anexo A.
 
-**Objetivos Organizacionales** incluye:
-- "Objetivo General" (de la empresa) → texto desde `OBJETIVO_GENERAL_EMPRESA`
-- "Objetivos Específicos" (de la empresa) → lista numerada desde `OBJETIVOS_ESPECIFICOS_EMPRESA`
+### Keidy
 
-*(Estos son distintos del Objetivo General y Objetivos Específicos del proyecto, que aparecen en Capítulo II).*
+```text
+keidy/imagenes/
+├── logo.jpg
+├── 1.png
+└── 2.png
+```
 
-### Marco Teórico (Cap. III)
+Además puede incorporarse una imagen adicional del **diagrama de Ishikawa** cuando se genere.
 
-Se reconoce automáticamente si el estudiante usa el formato enriquecido o el formato plano:
+### Amaal
 
-- **Enriquecido (`BASES_TEORICAS`)**: lista de dicts, cada uno con `titulo`, `parrafos` (lista de strings) y `cita_larga` opcional (dict con `texto` y `autor`). El generador renderiza cada subsección con un encabezado Nivel 2, sus párrafos normados y, si existe la cita larga, la inserta con post-cita sangrada.
-- **Plano (`BASES_TEORICAS_PARRAFOS`)**: lista simple de strings. Se renderiza bajo un único encabezado "Bases Teóricas Referenciales", con una cita larga global opcional (`CITA_LARGA_TEXTO` + `CITA_LARGA_AUTOR`).
+```text
+amaal/imagenes/
+├── logo.jpg
+├── 1.png
+├── 2.png
+├── 3.png
+└── 4.png
+```
 
-### Actividades Realizadas (Cap. IV)
+Referencia actual:
 
-`ACTIVIDADES_LISTA` admite dos formatos:
+- `logo.jpg`: logotipo;
+- `1.png`: ubicación;
+- `2.png`: organigrama general;
+- `3.png`: organigrama del departamento;
+- `4.png`: flujograma utilizado como anexo.
 
-- **Strings**: cada elemento es un texto enumerado (formato Amaal/Keidy).
-- **Dicts por semana**: cada elemento es un dict con `semana` (int), `operativa` e `investigacion` (strings). El generador produce un subtítulo "Semana N" por cada entrada y dos ítems numerados con etiquetas en negrita "Actividad operativa" e "Actividad de investigación".
+Las imágenes de anexos se escalan proporcionalmente para respetar el tamaño carta, los márgenes y el espacio destinado al título.
 
 ---
 
-## 🛠️ Requisitos Técnicos
-* **Python 3.10+**
-* Dependencias instaladas en el entorno virtual (`python-docx` para manipulación de XML de Word).
-* **LibreOffice** instalado en el sistema (el script lo llama con `--headless` para renderizar y exportar los archivos PDF con la tipografía e índices alineados de forma nativa).
+## 12. Capítulo II y coherencia metodológica
+
+El diagnóstico debe estar conectado con el resto del informe.
+
+Elementos esperados:
+
+- situación problemática;
+- desarrollo desde contexto amplio hasta realidad específica;
+- técnica utilizada para representar/analizar el problema;
+- interrogante;
+- objetivo general;
+- objetivos específicos;
+- planificación integral;
+- cronograma/Gantt.
+
+Actualmente se trabaja con la lógica **macro → meso → micro**. Las instrucciones particulares sobre la presentación de esos rótulos deben revisarse en `revisiones_tutor.md`, porque han existido observaciones de tutor que requieren conservarse como referencia.
+
+---
+
+## 13. Capítulo III — Marco Teórico
+
+El generador admite contenido estructurado mediante `BASES_TEORICAS`.
+
+Una entrada típica puede contener:
+
+```python
+{
+    "titulo": "Control Administrativo",
+    "parrafos": [
+        "...",
+        "..."
+    ],
+    "cita_larga": {
+        "texto": "...",
+        "autor": "(Autor, año, p. X)"
+    }
+}
+```
+
+También puede incorporarse, cuando corresponde, una posición o análisis del autor.
+
+Las bases teóricas deben guardar relación real con:
+
+- el problema;
+- los objetivos;
+- el área de pasantía;
+- la solución/propuesta.
+
+No deben agregarse conceptos únicamente para aumentar extensión.
+
+---
+
+## 14. Capítulo IV — Actividades realizadas
+
+`ACTIVIDADES_LISTA` puede organizarse por semana:
+
+```python
+{
+    "semana": 1,
+    "operativa": "...",
+    "investigacion": "..."
+}
+```
+
+La palabra `investigacion` es una **clave interna del código**; su redacción visible debe ajustarse al enfoque académico que corresponda a cada estudiante y a las observaciones de su tutor.
+
+El contenido del Capítulo IV debe coincidir con los planes semanales reales.
+
+No deben presentarse como realizadas actividades futuras o actividades que no aparezcan en el cronograma real.
+
+---
+
+## 15. Conclusiones y recomendaciones
+
+Las conclusiones deben responder a los objetivos específicos.
+
+Regla práctica:
+
+```text
+Objetivo específico 1 → Conclusión 1
+Objetivo específico 2 → Conclusión 2
+...
+```
+
+Las recomendaciones deben derivarse de los resultados y conclusiones, y pueden dirigirse a:
+
+- la empresa;
+- el IUTECP;
+- futuros pasantes;
+- responsables del proceso evaluado.
+
+---
+
+## 16. Anexos
+
+Los anexos deben:
+
+- estar mencionados previamente en el cuerpo del informe;
+- tener relación directa con actividades, diagnóstico o propuesta;
+- evitar contenido decorativo o redundante;
+- mantener legibilidad dentro del área útil de la página.
+
+`ANEXOS_PROPUESTOS.md` contiene opciones como:
+
+- árboles del problema;
+- Ishikawa;
+- flujogramas AS-IS / TO-BE;
+- diagramas de estados;
+- swimlanes;
+- diagramas entidad-relación;
+- arquitecturas de software;
+- secuencias;
+- matrices RACI;
+- SIPOC;
+- matrices de pruebas;
+- formatos propuestos.
+
+Muchos pueden generarse mediante **Kroki** usando Mermaid, GraphViz, PlantUML, DBML, C4, D2 u otros lenguajes.
+
+---
+
+## 17. Cronogramas
+
+Patrón histórico de nombres:
+
+```text
+Cronograma_<Area>_Semana<N>_IUTECP.{docx,pdf}
+```
+
+Áreas:
+
+| Estudiante | Área |
+|---|---|
+| Juliano | `Informatica` |
+| Keidy | `Procura` |
+| Amaal | `Administracion` |
+
+Al modificar un cronograma semanal se debe revisar inmediatamente:
+
+- Gantt del informe;
+- Capítulo IV;
+- resumen, si menciona actividades;
+- conclusiones, si cambian los productos/resultados;
+- anexos relacionados.
+
+---
+
+## 18. Estado particular importante
+
+### Juliano
+
+- duración documentada: **9 semanas**;
+- no agregar una décima semana automáticamente;
+- el `cronograma.py` de Juliano es mantenido/corregido directamente por Juliano cuando así se indique;
+- después de cambios de semanas 8 y 9 debe revisarse la coherencia con el informe.
+
+### Keidy
+
+- la tutora exige actualmente **tres objetivos específicos**;
+- las observaciones del cronograma fueron restauradas como texto de apoyo;
+- verificar las observaciones directas realizadas por la tutora dentro de versiones comentadas del documento.
+
+### Amaal
+
+- el contexto real distingue:
+  - semanas 1–3: Atención al Cliente;
+  - semanas 4–10: Administración;
+- cronograma y Capítulo IV deben conservar esa transición.
+
+Para detalles completos consultar `CONTEXTO_GENERAL.md`.
+
+---
+
+## 19. Requisitos técnicos
+
+- Python 3.10+.
+- `python-docx`.
+- LibreOffice para conversión headless a PDF.
+- Sistema capaz de ejecutar los scripts desde la raíz del repositorio.
+
+Ejemplo de dependencia:
+
+```bash
+pip install python-docx
+```
+
+---
+
+## 20. Flujo recomendado de trabajo
+
+Antes de efectuar cambios:
+
+```text
+1. CONTEXTO_GENERAL.md
+        ↓
+2. revisiones_tutor.md
+        ↓
+3. normativa aplicable
+        ↓
+4. contenido.py
+        ↓
+5. cronograma.py (si el cambio afecta actividades)
+        ↓
+6. generador_informe.py (solo si el cambio es estructural/formato)
+        ↓
+7. generar DOCX/PDF
+        ↓
+8. inspección visual final
+```
+
+### Lista de control antes de una entrega
+
+- [ ] Portada en una página.
+- [ ] Contraportada en una página y con la frase institucional.
+- [ ] Preliminares completos.
+- [ ] Lista de figuras omitida si no aplica.
+- [ ] Índices actualizados.
+- [ ] Logo, mapa y organigramas legibles.
+- [ ] Problema coherente con objetivos.
+- [ ] Técnica del problema incluida y anexada.
+- [ ] Planificación y Gantt coherentes.
+- [ ] Cronograma semanal coherente con Capítulo IV.
+- [ ] Bases teóricas y legales sustentadas cuando correspondan.
+- [ ] Conclusiones vinculadas uno a uno con objetivos.
+- [ ] Recomendaciones derivadas de conclusiones.
+- [ ] Referencias citadas correctamente.
+- [ ] Anexos mencionados dentro del cuerpo.
+- [ ] PDF revisado visualmente.
+
+---
+
+## 21. Principio de mantenimiento
+
+Este repositorio no debe tratarse solamente como un generador de Word.
+
+La prioridad es conservar **coherencia académica y trazabilidad de las decisiones**. Por ello:
+
+- `CONTEXTO_GENERAL.md` documenta el estado real;
+- `revisiones_tutor.md` conserva el historial de cambios;
+- la normativa define las reglas;
+- `contenido.py` representa el informe;
+- `cronograma.py` representa lo planificado/realizado;
+- `generador_informe.py` se limita a convertir esas decisiones académicas en un documento con el formato institucional.
+
