@@ -1181,7 +1181,24 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), fuente=g.get("fuente"), bookmark_id=bookmark_id)
 
 def _insertar_logo_empresa(doc, carpeta_imagenes):
-    """Inserta un logotipo empresarial opcional sin tratarlo como gráfico académico."""
+    """Inserta el logotipo configurado en GRAFICOS o mediante LOGO_EMPRESA."""
+    logo_grafico = next(
+        (g for g in getattr(c, 'GRAFICOS', []) if g.get("tras") == "logo_empresa"),
+        None,
+    )
+    if logo_grafico:
+        numero = logo_grafico.get("numero")
+        ruta = _resolver_ruta_imagen(carpeta_imagenes, logo_grafico)
+        agregar_imagen(
+            doc,
+            ruta,
+            logo_grafico.get("titulo", f"Gráfico {numero}."),
+            ancho=Cm(logo_grafico.get("ancho_cm", 12)),
+            fuente=logo_grafico.get("fuente"),
+            bookmark_id=f"bm_grafico{numero}" if numero else None,
+        )
+        return
+
     cfg = getattr(c, 'LOGO_EMPRESA', None)
     if not cfg:
         return
