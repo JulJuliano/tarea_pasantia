@@ -6,18 +6,37 @@
 # ========================================================================
 CARPETA_IMAGENES = 'imagenes'
 
-GRAFICOS = [{'numero': 1,
-  'tras': 'ubicacion',
-  'titulo': 'Gráfico 1. Representación cartográfica y ubicación espacial de la empresa.',
-  'ancho_cm': 5,
-  'lista': 'Representación cartográfica y ubicación espacial de la empresa',
-  'pagina': '3'},
- {'numero': 2,
-  'tras': 'estructura',
-  'titulo': 'Gráfico 2. Organigrama estructural y niveles jerárquicos de la organización.',
-  'ancho_cm': 12,
-  'lista': 'Organigrama estructural y niveles jerárquicos de la organización',
-  'pagina': '4'}]
+GRAFICOS = [
+    {
+        'numero': 1,
+        'archivo': 'logo.jpg',
+        'tras': 'logo_empresa',
+        'titulo': 'Gráfico 1. Logotipo de Lubricantes y Equipos Varyna, C.A.',
+        'ancho_cm': 4.2,
+        'lista': 'Logotipo de Lubricantes y Equipos Varyna, C.A.',
+        'pagina': '3',
+        'fuente': 'Lubricantes y Equipos Varyna, C.A. (2026).',
+        'explicacion': 'El logotipo representa la identidad visual de Lubricantes y Equipos Varyna, C.A., organización donde se desarrolló la pasantía profesional en el área administrativa y de procura.'
+    },
+    {
+        'numero': 2,
+        'archivo': '1.png',
+        'tras': 'ubicacion',
+        'titulo': 'Gráfico 2. Representación cartográfica y ubicación espacial de la empresa.',
+        'ancho_cm': 5,
+        'lista': 'Representación cartográfica y ubicación espacial de la empresa',
+        'pagina': '4'
+    },
+    {
+        'numero': 3,
+        'archivo': '2.png',
+        'tras': 'estructura',
+        'titulo': 'Gráfico 3. Organigrama estructural y niveles jerárquicos de la organización.',
+        'ancho_cm': 12,
+        'lista': 'Organigrama estructural y niveles jerárquicos de la organización',
+        'pagina': '5'
+    }
+]
 
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona los tres objetivos específicos con las actividades, técnicas e instrumentos '
  'necesarios para diagnosticar el proceso, identificar sus deficiencias y formular la propuesta de simplificación '
@@ -189,6 +208,11 @@ ORGANIGRAMA_TEXTO = ['A continuación, se presenta la estructura organizativa de
  'la eficiencia en el uso de recursos e infraestructura en campo.',
  'Gerencia de Control y Avance (y Operaciones Morichal): Responsable de monitorear el rendimiento, cumplimiento '
  'de metas de avance físico de obras y la logística operativa regional en el área de Morichal.',
+ 'Departamento Administrativo (Área de Pasantía): Unidad encargada de la gestión financiera, presupuestaria, '
+ 'logística interna, control contable e inventarios. En este departamento se desenvuelve la pasante en el rol de '
+ 'Asistente Administrativo, brindando apoyo operativo y de control, con énfasis en el área de Procura (Compras y '
+ 'Logística) mediante la recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y '
+ 'seguimiento a la adquisición oportuna de bienes, materiales y servicios esenciales.',
  'Gerencia de Contratación y Administración de Contratos: Encargada del análisis de costos, estimaciones '
  'presupuestarias, planificación y control legal y operativo de las licitaciones y contratos vigentes.',
  'Gerencia de Recursos Humanos y Relaciones Laborales: Dirige el reclutamiento, selección, administración de '
@@ -199,18 +223,6 @@ ORGANIGRAMA_TEXTO = ['A continuación, se presenta la estructura organizativa de
  'Coordinaciones de SIHO-A y Calidad: Unidades orientadas a garantizar la Seguridad Industrial, Higiene '
  'Ocupacional y Ambiente, asegurando el cumplimiento de normas de prevención de riesgos y estándares de calidad '
  'en las operaciones.']
-
-
-DESCRIPCION_DEPARTAMENTO = [
-    "El Departamento Administrativo constituye el área donde se desarrolló la pasantía y concentra funciones de "
-    "gestión financiera, presupuestaria, logística interna, control contable e inventarios. Dentro de esta unidad, "
-    "la pasante se desempeñó como Asistente Administrativo con participación directa en actividades vinculadas con "
-    "el área de Procura (Compras y Logística).",
-    "En procura se reciben requerimientos internos, se gestionan solicitudes de cotización, se comparan alternativas "
-    "de proveedores, se tramitan requisiciones y órdenes de compra y se realiza seguimiento al estado de las "
-    "adquisiciones. Estas funciones permitieron observar el recorrido administrativo de las solicitudes y detectar "
-    "oportunidades de simplificación y fortalecimiento del control interno."
-]
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -569,6 +581,3 @@ ANEXOS_LISTA = [('ANEXO A',
    'Responsabilidades y autorización: criterios de aprobación y niveles de autorización susceptibles de '
    'formalización.',
    'Seguimiento: control manual del estatus de cotizaciones y ausencia de indicadores básicos de gestión.'])]
-
-# Distribución real de semanas por mes para el encabezado del Gantt.
-CRONOGRAMA_MESES = [('JUNIO', 4), ('JULIO', 4), ('AGOSTO', 2)]

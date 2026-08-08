@@ -8,25 +8,46 @@ CARPETA_IMAGENES = 'imagenes'
 
 FIRMA_TUTOR_INDUSTRIAL = 'firma_tutor_amaal.png'
 
-GRAFICOS = [{'numero': 1,
-  'tras': 'ubicacion',
-  'titulo': 'Gráfico 1. Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, '
-            'C.A.',
-  'ancho_cm': 5,
-  'lista': 'Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.',
-  'pagina': '3'},
- {'numero': 2,
-  'tras': 'estructura',
-  'titulo': 'Gráfico 2. Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
-  'ancho_cm': 12,
-  'lista': 'Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
-  'pagina': '4'},
- {'numero': 3,
-  'tras': 'estructura',
-  'titulo': 'Gráfico 3. Organigrama del Departamento de Administración.',
-  'ancho_cm': 12,
-  'lista': 'Organigrama del Departamento de Administración.',
-  'pagina': '5'}]
+GRAFICOS = [
+    {
+        'numero': 1,
+        'archivo': 'logo.jpg',
+        'tras': 'logo_empresa',
+        'titulo': 'Gráfico 1. Logotipo de Ingeniería de Telecomunicaciones, C.A.',
+        'ancho_cm': 4.2,
+        'lista': 'Logotipo de Ingeniería de Telecomunicaciones, C.A.',
+        'pagina': '3',
+        'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).',
+        'explicacion': 'El logotipo identifica visualmente a Ingeniería de Telecomunicaciones, C.A. y representa la imagen institucional de la empresa donde se desarrolló la pasantía profesional en las áreas de Atención al Cliente y Administración.'
+    },
+    {
+        'numero': 2,
+        'archivo': '1.png',
+        'tras': 'ubicacion',
+        'titulo': 'Gráfico 2. Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.',
+        'ancho_cm': 5,
+        'lista': 'Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.',
+        'pagina': '4'
+    },
+    {
+        'numero': 3,
+        'archivo': '2.png',
+        'tras': 'estructura',
+        'titulo': 'Gráfico 3. Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
+        'ancho_cm': 12,
+        'lista': 'Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
+        'pagina': '5'
+    },
+    {
+        'numero': 4,
+        'archivo': '3.png',
+        'tras': 'estructura',
+        'titulo': 'Gráfico 4. Organigrama del Departamento de Administración.',
+        'ancho_cm': 12,
+        'lista': 'Organigrama del Departamento de Administración.',
+        'pagina': '6'
+    }
+]
 
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona cada objetivo específico con las actividades de observación, diagnóstico, análisis y '
  'formulación de mejoras al control administrativo:')
@@ -189,23 +210,12 @@ POBLACION = ['Ingeniería de Telecomunicaciones, C.A. cuenta con una población 
  'facilitó observar el recorrido de la información desde la atención inicial hasta el seguimiento administrativo '
  'de los casos.']
 
-ORGANIGRAMA_TEXTO = (
-    "La estructura organizativa de Ingeniería de Telecomunicaciones, C.A. es de tipo vertical y articula los niveles "
-    "directivos, administrativos, comerciales y técnicos. A la cabeza se encuentra la Presidencia, seguida de la "
-    "Gerencia General y Operaciones. A continuación se presentan el organigrama general de la empresa y el "
-    "organigrama del área administrativa vinculada con la pasantía."
-)
-
-DESCRIPCION_DEPARTAMENTO = [
-    "La experiencia de pasantía comprendió una rotación inicial por Atención al Cliente durante las primeras tres "
-    "semanas y, posteriormente, la incorporación al área de Administración. Esta secuencia permitió conocer el "
-    "recorrido de las solicitudes desde el contacto inicial con el suscriptor hasta su tratamiento administrativo y "
-    "coordinación con las unidades técnicas.",
-    "En el ámbito administrativo se observaron funciones relacionadas con Supervisión de Administración, Contabilidad "
-    "y Tributos; Compras y Facturación; y Atención al Cliente. Las actividades incluyeron recepción y registro de "
-    "solicitudes, revisión de recaudos, seguimiento de incidencias y afiliaciones, apoyo en facturación y archivo, así "
-    "como coordinación de información con otras áreas de IDETEL."
-]
+ORGANIGRAMA_TEXTO = ('La estructura organizativa de Ingeniería de Telecomunicaciones, C.A. es de tipo vertical, diseñada para '
+ 'garantizar una comunicación fluida entre los niveles directivos y operativos. A la cabeza se encuentra la '
+ 'Presidencia, seguida de la Gerencia General y Operaciones, de la cual se desprenden los departamentos de '
+ 'Supervisión de Administración, Contabilidad y Tributos, Supervisión Comercial, Área de Internet, Supervisión '
+ 'del NOC (Network Operations Center) y Mantenimiento de Radiocomunicación. Se presenta a continuación el '
+ 'organigrama general de la empresa y del Departamento de Administración.')
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -517,7 +527,4 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'Zeithaml, V., Parasuraman, A., y Berry, L. (1993). Calidad total en la gestión de servicios. Díaz de Santos, '
  'España.']
 
-ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4)]
-
-# Distribución real de semanas por mes para el encabezado del Gantt.
-CRONOGRAMA_MESES = [('JUNIO', 5), ('JULIO', 4), ('AGOSTO', 1)]
+ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, 15.5)]

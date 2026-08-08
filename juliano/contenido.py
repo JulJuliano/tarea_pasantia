@@ -6,34 +6,50 @@
 # ========================================================================
 CARPETA_IMAGENES = 'imagenes'
 
-LOGO_EMPRESA = {'archivo': 'logo.png', 'ancho_cm': 4.0}
-
-GRAFICOS = [{'numero': 1,
-  'archivo': 'mapa.png',
-  'tras': 'ubicacion',
-  'titulo': 'Gráfico 1. Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, '
-            'S.A.',
-  'ancho_cm': 11,
-  'lista': 'Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, S.A.',
-  'pagina': '4',
-  'fuente': 'Captura cartográfica de Google Maps (2026). La empresa no aparece rotulada de forma independiente; '
-            'se emplea como referencia el Centro Comercial San Remo Mall.'},
- {'numero': 2,
-  'archivo': '1.png',
-  'tras': 'estructura',
-  'titulo': 'Gráfico 2. Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
-  'ancho_cm': 12,
-  'lista': 'Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
-  'pagina': '6',
-  'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'},
- {'numero': 3,
-  'archivo': '2.png',
-  'tras': 'estructura',
-  'titulo': 'Gráfico 3. Organigrama del Departamento de Presidencia.',
-  'ancho_cm': 12,
-  'lista': 'Organigrama del Departamento de Presidencia',
-  'pagina': '7',
-  'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'}]
+# El logotipo se inserta como gráfico académico antes de la ubicación geográfica.
+GRAFICOS = [
+    {
+        'numero': 1,
+        'archivo': 'logo.png',
+        'tras': 'logo_empresa',
+        'titulo': 'Gráfico 1. Logotipo de la Empresa Mixta Petrolera Venangocupet, S.A.',
+        'ancho_cm': 4.2,
+        'lista': 'Logotipo de la Empresa Mixta Petrolera Venangocupet, S.A.',
+        'pagina': '4',
+        'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).',
+        'explicacion': 'El logotipo institucional identifica visualmente a la Empresa Mixta Petrolera Venangocupet, S.A. y representa su vinculación con la actividad petrolera nacional, sirviendo como elemento gráfico de reconocimiento de la organización donde se desarrolló la pasantía profesional.'
+    },
+    {
+        'numero': 2,
+        'archivo': 'mapa.png',
+        'tras': 'ubicacion',
+        'titulo': 'Gráfico 2. Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, S.A.',
+        'ancho_cm': 11,
+        'lista': 'Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, S.A.',
+        'pagina': '5',
+        'fuente': 'Captura cartográfica de Google Maps (2026). La empresa no aparece rotulada de forma independiente; se emplea como referencia el Centro Comercial San Remo Mall.'
+    },
+    {
+        'numero': 3,
+        'archivo': '1.png',
+        'tras': 'estructura',
+        'titulo': 'Gráfico 3. Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
+        'ancho_cm': 12,
+        'lista': 'Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
+        'pagina': '7',
+        'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'
+    },
+    {
+        'numero': 4,
+        'archivo': '2.png',
+        'tras': 'estructura',
+        'titulo': 'Gráfico 4. Organigrama del Departamento de Presidencia.',
+        'ancho_cm': 12,
+        'lista': 'Organigrama del Departamento de Presidencia',
+        'pagina': '8',
+        'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'
+    }
+]
 
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona cada objetivo específico con las actividades técnicas necesarias para el desarrollo '
  'y validación del sistema automatizado:')
@@ -181,22 +197,10 @@ POBLACION = ['El Departamento de Presidencia cuenta con una fuerza laboral activ
  'no se reportaron vacantes en esta unidad. Esta población corresponde al departamento donde se ejecutaron las '
  'actividades de pasantía y es la directamente vinculada con el flujo documental analizado.']
 
-ORGANIGRAMA_TEXTO = (
-    "La estructura organizativa de Venangocupet, S.A. responde a un esquema jerárquico-funcional encabezado por "
-    "la Junta Directiva y la Presidencia. A continuación se presentan el organigrama general de la empresa y el "
-    "organigrama específico del Departamento de Presidencia, área donde se desarrollaron las pasantías."
-)
-
-DESCRIPCION_DEPARTAMENTO = [
-    "El Departamento de Presidencia funciona como unidad de tránsito y validación de correspondencia ejecutiva. "
-    "Recibe expedientes remitidos por otras dependencias, verifica aspectos ortográficos y de presentación, registra "
-    "su ingreso, los canaliza para la firma del Presidente y, una vez firmados, registra el egreso y los despacha al "
-    "departamento destinatario. La unidad no conserva de manera permanente los expedientes que transitan por ella, "
-    "por lo que la exactitud del registro de cada movimiento resulta esencial para mantener la trazabilidad documental.",
-    "Durante la pasantía se apoyaron actividades relacionadas con este flujo y se analizó la forma en que el registro "
-    "manual en hojas de cálculo influye en el control, la consulta y la generación de reportes sobre los movimientos "
-    "documentales del área."
-]
+ORGANIGRAMA_TEXTO = ('La estructura organizativa de Venangocupet, S.A. responde a un esquema jerárquico-funcional encabezado por la '
+ 'Junta Directiva y la Presidencia. El Departamento de Presidencia constituye el área donde se desarrollaron las '
+ 'pasantías y actúa como punto de recepción, revisión, firma y despacho de correspondencia ejecutiva. A '
+ 'continuación se presentan el organigrama general de la empresa y el organigrama específico del departamento.')
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -526,15 +530,6 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'Universidad Pedagógica Experimental Libertador. (2016). Manual de trabajos de grado de especialización y '
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
-ANEXOS_LISTA = [('ANEXO A',
-  'Árbol del problema del control de movimientos documentales',
-  None,
-  None,
-  ['Problema central: control manual y limitada automatización de los movimientos documentales en Presidencia.',
-   'Causas principales: transcripción repetitiva de datos; ausencia de validaciones automáticas; dificultad para '
-   'consolidar el seguimiento en una sola estructura de consulta.',
-   'Efectos principales: duplicidad u omisión de registros; mayor tiempo para elaborar reportes; dificultad para '
-   'conocer de inmediato el estado y recorrido de los expedientes.'])]
-
-# Distribución real de semanas por mes para el encabezado del Gantt.
-CRONOGRAMA_MESES = [('JUNIO', 3), ('JULIO', 4), ('AGOSTO', 2)]
+ANEXOS_LISTA = [
+    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, 15.5)
+]
