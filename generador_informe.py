@@ -1690,8 +1690,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
     agregar_titulo_nivel2(doc, "Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
-    carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
-    _insertar_logo_empresa(doc, carpeta_imagenes)
 
     agregar_titulo_nivel2(doc, "Reseña histórica", bookmark_id="bm_cap1_resena")
     resena_data = getattr(c, 'RESENA_HISTORICA', [])
@@ -1721,6 +1719,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_titulo_nivel2(doc, "Objetivos Específicos")
         for i, obj in enumerate(objs_espec_emp, 1):
             agregar_item_lista(doc, i, obj)
+
+    carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
+    _insertar_logo_empresa(doc, carpeta_imagenes)
 
     agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
