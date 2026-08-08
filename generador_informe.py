@@ -862,6 +862,13 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     before_autor  = gap_td
     before_fecha  = gap_df
 
+    # La contraportada necesita una distribución más compacta porque incluye
+    # la descripción institucional y los datos de ambos tutores.
+    if not solo_autor:
+        before_titulo = 64
+        before_autor = 105
+        before_fecha = 40
+
     # ------------------------------------------------------------------
     # 4. Renderizar cada bloque
     # ------------------------------------------------------------------
@@ -869,7 +876,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     # BLOQUE 1: MEMBRETE (Alineado al margen superior)
     p_memb = doc.add_paragraph()
     p_memb.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_memb.paragraph_format.line_spacing = 1.15
+    p_memb.paragraph_format.line_spacing = 1.0 if not solo_autor else 1.15
     p_memb.paragraph_format.space_before = Pt(0)
     p_memb.paragraph_format.space_after  = Pt(0)
     for i, linea in enumerate(c.MEMBRETE):
@@ -898,6 +905,20 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
     r_title.font.name = 'Times New Roman'
     r_title.font.size = Pt(12)
     r_title.font.bold = True
+
+    if not solo_autor:
+        p_desc = doc.add_paragraph()
+        p_desc.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_desc.paragraph_format.line_spacing = 1.15
+        p_desc.paragraph_format.space_before = Pt(22)
+        p_desc.paragraph_format.space_after = Pt(0)
+        r_desc = p_desc.add_run(
+            "Informe de pasantías para obtener el título de Técnico Superior Universitario "
+            f"en la especialidad de: {getattr(c, 'ESPECIALIDAD', '')}"
+        )
+        r_desc.font.name = 'Times New Roman'
+        r_desc.font.size = Pt(12)
+        r_desc.font.bold = True
 
     # BLOQUE 3: DATOS DEL AUTOR Y TUTORES
     if solo_autor:
@@ -936,7 +957,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         # Tabla invisible de 1 fila × 2 columnas
         table = doc.add_table(rows=1, cols=2)
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
-        table.allow_autofit = True
+        table.allow_autofit = False
 
         # Quitar bordes
         tbl = table._tbl
@@ -955,7 +976,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         cell_tutor.vertical_alignment = WD_ALIGN_VERTICAL.TOP
         p_t = cell_tutor.paragraphs[0]
         p_t.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        p_t.paragraph_format.line_spacing = 1.15
+        p_t.paragraph_format.line_spacing = 1.0
         for i, linea in enumerate(tutor_block):
             run = p_t.add_run(linea)
             run.font.name = 'Times New Roman'
@@ -970,7 +991,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         cell_autor.vertical_alignment = WD_ALIGN_VERTICAL.TOP
         p_a = cell_autor.paragraphs[0]
         p_a.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        p_a.paragraph_format.line_spacing = 1.15
+        p_a.paragraph_format.line_spacing = 1.0
         for i, linea in enumerate(autor_block):
             run = p_a.add_run(linea)
             run.font.name = 'Times New Roman'
@@ -1306,9 +1327,11 @@ def construir_cuerpo_documento(doc, modo="completo"):
     
     pag_lista_cuadros = romanos.get(pag_actual_romana, str(pag_actual_romana))
     pag_actual_romana += 1
-    
-    pag_lista_figuras = romanos.get(pag_actual_romana, str(pag_actual_romana))
-    pag_actual_romana += 1
+
+    pag_lista_figuras = ""
+    if getattr(c, 'FIGURAS', []):
+        pag_lista_figuras = romanos.get(pag_actual_romana, str(pag_actual_romana))
+        pag_actual_romana += 1
     
     pag_lista_graficos = romanos.get(pag_actual_romana, str(pag_actual_romana))
     pag_actual_romana += 1
@@ -1418,7 +1441,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", "", bookmark_id="bm_aprob_acad")
     
         agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
-        agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", "", bookmark_id="bm_lista_figuras")
+        if pag_lista_figuras:
+            agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", "", bookmark_id="bm_lista_figuras")
         agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
         if pag_lista_anexos:
             agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
@@ -1510,7 +1534,33 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
     
         # --- LISTA DE FIGURAS ---
-        iniciar_seccion_preliminar(doc, "LISTA DE FIGURAS", bookmark_id="bm_lista_figuras")
+        figuras_cfg = getattr(c, 'FIGURAS', [])
+        if figuras_cfg:
+            iniciar_seccion_preliminar(doc, "LISTA DE FIGURAS", bookmark_id="bm_lista_figuras")
+            p_header_f = doc.add_paragraph()
+            p_header_f.paragraph_format.space_before = Pt(12)
+            p_header_f.paragraph_format.space_after = Pt(12)
+
+            section_f = doc.sections[-1]
+            ancho_f_emu = section_f.page_width - section_f.left_margin - section_f.right_margin
+            agregar_tabulacion_derecha(p_header_f, ancho_f_emu)
+
+            run_f_lbl = p_header_f.add_run("FIGURA")
+            run_f_lbl.font.name = FUENTE
+            run_f_lbl.font.size = Pt(TAMANO_BASE)
+            run_f_lbl.font.bold = True
+            p_header_f.add_run("\t")
+            run_pp_f = p_header_f.add_run("pp.")
+            run_pp_f.font.name = FUENTE
+            run_pp_f.font.size = Pt(TAMANO_BASE)
+            run_pp_f.font.bold = True
+
+            for figura in figuras_cfg:
+                num = str(figura.get("numero", ""))
+                desc = figura.get("lista", figura.get("titulo", "").split('. ', 1)[-1])
+                pag = str(figura.get("pagina", ""))
+                bookmark_id = f"bm_figura{num}" if num else None
+                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
 
         # --- LISTA DE GRÁFICOS ---
         iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
