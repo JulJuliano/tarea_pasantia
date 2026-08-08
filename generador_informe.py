@@ -1130,10 +1130,9 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, b
 #  INSERCIÓN DE GRÁFICOS DATA-DRIVEN
 # ================================================================
 # Anclas válidas donde pueden insertarse gráficos:
-#   "logo_empresa" -> antes de la sección Ubicación geográfica
-#   "ubicacion"    -> tras la sección Ubicación geográfica
-#   "estructura"   -> tras la sección Estructura Organizativa
-ANCLAS_VALIDAS = {"logo_empresa", "ubicacion", "estructura"}
+#   "ubicacion"  -> tras la sección 1.1.7 Ubicación geográfica
+#   "estructura" -> tras la sección 1.1.9 Estructura Organizativa
+ANCLAS_VALIDAS = {"ubicacion", "estructura"}
 
 def _resolver_ruta_imagen(carpeta_imagenes, cfg):
     """Resuelve una imagen por nombre explícito (`archivo`) o por número, manteniendo compatibilidad."""
@@ -1159,27 +1158,9 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         ruta = _resolver_ruta_imagen(carpeta_imagenes, g)
         bookmark_id = f"bm_grafico{numero}" if numero else None
         agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), fuente=g.get("fuente"), bookmark_id=bookmark_id)
-        explicacion = g.get("explicacion") or g.get("descripcion")
-        if explicacion:
-            if isinstance(explicacion, (list, tuple)):
-                for parrafo in explicacion:
-                    agregar_parrafo_normado(doc, str(parrafo))
-            else:
-                agregar_parrafo_normado(doc, str(explicacion))
-
-def _obtener_items_lista_graficos():
-    """Devuelve los elementos configurados en GRAFICOS para la lista de gráficos."""
-    items = []
-    for g in getattr(c, 'GRAFICOS', []):
-        num = str(g.get('numero', ''))
-        desc = g.get('lista', g.get('titulo', '').split('. ', 1)[-1] if '. ' in g.get('titulo', '') else g.get('titulo', ''))
-        pag = str(g.get('pagina', ''))
-        items.append((num, desc, pag, f"bm_grafico{num}" if num else None))
-    return items
-
 
 def _insertar_logo_empresa(doc, carpeta_imagenes):
-    """Inserta un logotipo empresarial, opcionalmente con tratamiento de gráfico (título, fuente y descripción)."""
+    """Inserta un logotipo empresarial opcional sin tratarlo como gráfico académico."""
     cfg = getattr(c, 'LOGO_EMPRESA', None)
     if not cfg:
         return
@@ -1188,66 +1169,15 @@ def _insertar_logo_empresa(doc, carpeta_imagenes):
     ruta = _resolver_ruta_imagen(carpeta_imagenes, cfg)
     if not ruta:
         return
-
     ancho = Cm(cfg.get("ancho_cm", 4.0))
-    numero = cfg.get('numero')
-    titulo = cfg.get('titulo')
-    fuente = cfg.get('fuente')
-    descripcion = cfg.get('descripcion')
-    bookmark_id = f"bm_grafico{numero}" if numero else None
-
-    p_img = doc.add_paragraph()
-    p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_img.paragraph_format.space_before = Pt(12)
-    p_img.paragraph_format.space_after = Pt(6)
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(12)
+    p.paragraph_format.space_after = Pt(12)
     try:
-        p_img.add_run().add_picture(ruta, width=ancho)
+        p.add_run().add_picture(ruta, width=ancho)
     except Exception as e:
         print(f"❌ Error al agregar logo empresarial {ruta}: {e}")
-        return
-
-    if titulo:
-        p_t = doc.add_paragraph()
-        p_t.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_t.paragraph_format.space_before = Pt(0)
-        p_t.paragraph_format.space_after = Pt(6)
-        if bookmark_id:
-            _agregar_bookmark(p_t, bookmark_id)
-        run_t = p_t.add_run(titulo)
-        run_t.font.name = FUENTE
-        run_t.font.size = Pt(10)
-        run_t.font.bold = True
-
-    if fuente:
-        p_f = doc.add_paragraph()
-        p_f.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_f.paragraph_format.space_before = Pt(0)
-        p_f.paragraph_format.space_after = Pt(6)
-        run_f = p_f.add_run(f"Fuente: {fuente}")
-        run_f.font.name = FUENTE
-        run_f.font.size = Pt(8)
-        run_f.font.italic = True
-
-    if descripcion:
-        bloques = descripcion if isinstance(descripcion, (list, tuple)) else [descripcion]
-        for bloque in bloques:
-            agregar_parrafo_normado(doc, str(bloque), sangria=False)
-
-
-def _dimension_imagen_ajustada(ruta_imagen, max_ancho_cm=11.5, max_alto_cm=15.0):
-    """Calcula un tamaño proporcional para anexos sin exceder el área útil disponible."""
-    try:
-        from PIL import Image
-        with Image.open(ruta_imagen) as im:
-            w_px, h_px = im.size
-        if not w_px or not h_px:
-            return {"width": Cm(max_ancho_cm)}
-        ratio = min(max_ancho_cm / (w_px / 96 * 2.54), max_alto_cm / (h_px / 96 * 2.54), 1.0)
-        ancho_cm = (w_px / 96 * 2.54) * ratio
-        alto_cm = (h_px / 96 * 2.54) * ratio
-        return {"width": Cm(ancho_cm), "height": Cm(alto_cm)}
-    except Exception:
-        return {"width": Cm(max_ancho_cm)}
 
 def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tutor, ci_tutor):
     """Agrega página de aprobación con membrete, título centrado, firma y datos del tutor."""
@@ -1609,9 +1539,13 @@ def construir_cuerpo_documento(doc, modo="completo"):
             ("1", "Representación cartográfica y ubicación espacial de la empresa", "3"),
             ("2", "Organigrama estructural y niveles jerárquicos de la organización", "4"),
         ]
-        graficos_cfg = _obtener_items_lista_graficos()
+        graficos_cfg = getattr(c, 'GRAFICOS', [])
         if graficos_cfg:
-            for num, desc, pag, bookmark_id in graficos_cfg:
+            for g in graficos_cfg:
+                num = str(g.get("numero", ""))
+                desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
+                pag = str(g.get("pagina", ""))
+                bookmark_id = f"bm_grafico{num}" if num else None
                 agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
         else:
             for num, desc, pag in graficos_def:
@@ -1690,6 +1624,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     agregar_titulo_nivel2(doc, "Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
     carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
+    _insertar_logo_empresa(doc, carpeta_imagenes)
 
     agregar_titulo_nivel2(doc, "Reseña histórica", bookmark_id="bm_cap1_resena")
     resena_data = getattr(c, 'RESENA_HISTORICA', [])
@@ -1719,12 +1654,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_titulo_nivel2(doc, "Objetivos Específicos")
         for i, obj in enumerate(objs_espec_emp, 1):
             agregar_item_lista(doc, i, obj)
-
-    # Logotipo institucional de la empresa, cuando se configure como gráfico académico.
-    # Se ubica antes de la ubicación geográfica, siguiendo el criterio indicado por el tutor.
-    _insertar_graficos_por_ancla(doc, carpeta_imagenes, "logo_empresa")
-
-    _insertar_logo_empresa(doc, carpeta_imagenes)
 
     agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
@@ -1929,15 +1858,15 @@ def construir_cuerpo_documento(doc, modo="completo"):
         for anexo in c.ANEXOS_LISTA:
             cod, desc = anexo[:2]
             numero_imagen = anexo[2] if len(anexo) > 2 else None
-            especificacion_imagen = anexo[3] if len(anexo) > 3 else None
+            alto_imagen = anexo[3] if len(anexo) > 3 else None
             contenido_anexo = anexo[4] if len(anexo) > 4 else None
-            max_ancho_personalizado = None
-            alto_imagen = None
-            if isinstance(especificacion_imagen, dict):
-                max_ancho_personalizado = especificacion_imagen.get('width_cm')
-                alto_imagen = especificacion_imagen.get('height_cm')
-            else:
-                alto_imagen = especificacion_imagen
+            ancho_img = None
+            alto_img = None
+            if isinstance(alto_imagen, dict):
+                ancho_img = alto_imagen.get('width_cm')
+                alto_img = alto_imagen.get('height_cm')
+            elif alto_imagen is not None:
+                alto_img = alto_imagen
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -1970,10 +1899,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 if ruta_imagen:
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                    max_ancho_anexo = max_ancho_personalizado if max_ancho_personalizado is not None else getattr(c, 'ANEXO_IMAGEN_MAX_ANCHO_CM', 11.5)
-                    max_alto_anexo = alto_imagen if alto_imagen is not None else getattr(c, 'ANEXO_IMAGEN_MAX_ALTO_CM', 15.0)
-                    dims = _dimension_imagen_ajustada(ruta_imagen, max_ancho_cm=max_ancho_anexo, max_alto_cm=max_alto_anexo)
-                    p_imagen.add_run().add_picture(ruta_imagen, **dims)
+                    if ancho_img is not None and alto_img is not None:
+                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(ancho_img), height=Cm(alto_img))
+                    elif alto_img is not None:
+                        p_imagen.add_run().add_picture(ruta_imagen, height=Cm(alto_img))
+                    elif ancho_img is not None:
+                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(ancho_img))
+                    else:
+                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
 
             if contenido_anexo:
                 bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]
