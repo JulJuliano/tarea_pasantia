@@ -6,6 +6,7 @@
 # ========================================================================
 CARPETA_IMAGENES = 'imagenes'
 
+
 GRAFICOS = [
     {
         'numero': 1,
@@ -15,9 +16,7 @@ GRAFICOS = [
         'ancho_cm': 4.2,
         'lista': 'Logotipo de Lubricantes y Equipos Varyna, C.A.',
         'pagina': '3',
-        'fuente': 'Lubricantes y Equipos Varyna, C.A. (2026).',
-        'explicacion': 'El logotipo representa la identidad visual de Lubricantes y Equipos Varyna, C.A., organización donde se desarrolló la pasantía profesional en el área administrativa y de procura.'
-    },
+        'fuente': 'Lubricantes y Equipos Varyna, C.A. (2026).',},
     {
         'numero': 2,
         'archivo': '1.png',

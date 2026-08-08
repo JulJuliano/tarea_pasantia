@@ -8,6 +8,7 @@ CARPETA_IMAGENES = 'imagenes'
 
 FIRMA_TUTOR_INDUSTRIAL = 'firma_tutor_amaal.png'
 
+
 GRAFICOS = [
     {
         'numero': 1,
@@ -17,9 +18,7 @@ GRAFICOS = [
         'ancho_cm': 4.2,
         'lista': 'Logotipo de Ingeniería de Telecomunicaciones, C.A.',
         'pagina': '3',
-        'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).',
-        'explicacion': 'El logotipo identifica visualmente a Ingeniería de Telecomunicaciones, C.A. y representa la imagen institucional de la empresa donde se desarrolló la pasantía profesional en las áreas de Atención al Cliente y Administración.'
-    },
+        'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).',},
     {
         'numero': 2,
         'archivo': '1.png',
@@ -220,26 +219,35 @@ ORGANIGRAMA_TEXTO = ('La estructura organizativa de Ingeniería de Telecomunicac
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
-SITUACION_PROBLEMATICA = ['En las organizaciones de servicios, el control administrativo permite verificar que las solicitudes recibidas '
- 'avancen por etapas definidas, cuenten con responsables identificados y dispongan de información suficiente para '
- 'conocer su estado. Cuando ese recorrido depende de canales informales o registros no unificados, se incrementa '
- 'la posibilidad de reprocesos y se dificulta responder oportunamente al usuario.',
- 'En el sector de telecomunicaciones, las solicitudes pueden involucrar atención al cliente, administración, '
- 'comercialización, soporte y personal técnico. Por ello, la continuidad del servicio depende no solo de la '
- 'ejecución técnica, sino también de que la información administrativa se transfiera de manera ordenada entre las '
- 'áreas involucradas, especialmente en afiliaciones, pagos, incidencias y cierres de casos.',
- 'En Ingeniería de Telecomunicaciones, C.A. (IDETEL), la rotación realizada durante las pasantías permitió '
- 'observar que las solicitudes de afiliación e incidencias no cuentan con un procedimiento único y formalizado de '
- 'seguimiento desde su recepción hasta el cierre. Se identificaron registros no estandarizados, actualización '
- 'desigual del estatus de los casos y dificultades para conocer en un mismo punto la información manejada por '
- 'Atención al Cliente, Administración y las áreas técnicas.',
- 'Las principales manifestaciones se relacionan con demoras en la actualización de casos, comunicación '
- 'fragmentada entre áreas, ausencia de tiempos de referencia por etapa y carencia de indicadores básicos de '
- 'seguimiento. Como consecuencias pueden generarse reprocesos, mayor tiempo de respuesta y dificultades para '
- 'ofrecer al suscriptor información precisa sobre el estado de su solicitud.',
- 'Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado con observación '
- 'directa, revisión de registros y entrevistas estructuradas al personal. La técnica permitió relacionar factores '
- 'de procedimiento, comunicación, registro y seguimiento con las demoras e inconsistencias identificadas.']
+SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
+  'parrafos': ['En las organizaciones de servicios, el control administrativo permite verificar que las '
+               'solicitudes recibidas avancen por etapas definidas, cuenten con responsables identificados y '
+               'dispongan de información suficiente para conocer su estado. Cuando ese recorrido depende de '
+               'canales informales o registros no unificados, se incrementa la posibilidad de reprocesos y '
+               'se dificulta responder oportunamente al usuario.']},
+ {'titulo': 'Nivel meso',
+  'parrafos': ['En el sector de telecomunicaciones, las solicitudes pueden involucrar atención al cliente, '
+               'administración, comercialización, soporte y personal técnico. Por ello, la continuidad del '
+               'servicio depende no solo de la ejecución técnica, sino también de que la información '
+               'administrativa se transfiera de manera ordenada entre las áreas involucradas, especialmente '
+               'en afiliaciones, pagos, incidencias y cierres de casos.']},
+ {'titulo': 'Nivel micro',
+  'parrafos': ['En Ingeniería de Telecomunicaciones, C.A. (IDETEL), la rotación realizada durante las '
+               'pasantías permitió observar que las solicitudes de afiliación e incidencias no cuentan con '
+               'un procedimiento único y formalizado de seguimiento desde su recepción hasta el cierre. Se '
+               'identificaron registros no estandarizados, actualización desigual del estatus de los casos y '
+               'dificultades para conocer en un mismo punto la información manejada por Atención al Cliente, '
+               'Administración y las áreas técnicas.',
+               'Las principales manifestaciones se relacionan con demoras en la actualización de casos, '
+               'comunicación fragmentada entre áreas, ausencia de tiempos de referencia por etapa y carencia '
+               'de indicadores básicos de seguimiento. Como consecuencias pueden generarse reprocesos, mayor '
+               'tiempo de respuesta y dificultades para ofrecer al suscriptor información precisa sobre el '
+               'estado de su solicitud.']},
+ {'titulo': 'Técnica empleada para el diagnóstico',
+  'parrafos': ['Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado '
+               'con observación directa, revisión de registros y entrevistas estructuradas al personal. La '
+               'técnica permitió relacionar factores de procedimiento, comunicación, registro y seguimiento '
+               'con las demoras e inconsistencias identificadas.']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -527,4 +535,4 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'Zeithaml, V., Parasuraman, A., y Berry, L. (1993). Calidad total en la gestión de servicios. Díaz de Santos, '
  'España.']
 
-ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, 15.5)]
+ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5})]

@@ -16,9 +16,7 @@ GRAFICOS = [
         'ancho_cm': 4.2,
         'lista': 'Logotipo de la Empresa Mixta Petrolera Venangocupet, S.A.',
         'pagina': '4',
-        'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).',
-        'explicacion': 'El logotipo institucional identifica visualmente a la Empresa Mixta Petrolera Venangocupet, S.A. y representa su vinculación con la actividad petrolera nacional, sirviendo como elemento gráfico de reconocimiento de la organización donde se desarrolló la pasantía profesional.'
-    },
+        'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).',},
     {
         'numero': 2,
         'archivo': 'mapa.png',
@@ -71,7 +69,7 @@ MEMBRETE = ['REPÚBLICA BOLIVARIANA DE VENEZUELA',
  '"ELÍAS CALIXTO POMPA"',
  'EL TIGRE, ESTADO ANZOÁTEGUI']
 
-TITULO_PROYECTO = ('DESARROLLO DE UN PROTOTIPO DE SISTEMA AUTOMATIZADO PARA EL CONTROL, TRAZABILIDAD Y REPORTE DOCUMENTAL EN LA '
+TITULO_PROYECTO = ('DESARROLLO DE UN PROTOTIPO DE SISTEMA PARA EL CONTROL, TRAZABILIDAD Y REPORTE DOCUMENTAL EN LA '
  'PRESIDENCIA DE VENANGOCUPET, S.A.')
 
 AUTOR_DATOS = ['Autor:',
@@ -123,25 +121,21 @@ RESUMEN_TEXTO = ('El presente informe expone las actividades realizadas durante 
 
 PALABRAS_CLAVE = 'sistema automatizado, trazabilidad documental, SQLite, Wails, pasantías'
 
-INTRODUCCION_TEXTO = ['La gestión documental constituye una actividad esencial en las organizaciones porque permite mantener control '
- 'sobre la recepción, revisión, circulación y despacho de información necesaria para el funcionamiento '
- 'administrativo. En áreas de alta dirección, la posibilidad de conocer con rapidez el estado y recorrido de los '
- 'expedientes contribuye a responder oportunamente a los requerimientos de las distintas unidades de la empresa.',
+INTRODUCCION_TEXTO = ['La gestión documental constituye una actividad esencial en las organizaciones, pues permite mantener '
+ 'control sobre la recepción, revisión, circulación y despacho de información necesaria para el '
+ 'funcionamiento administrativo. En áreas de alta dirección, conocer con rapidez el estado y recorrido de '
+ 'los expedientes contribuye a responder oportunamente a los requerimientos de las distintas unidades.',
  'En el Departamento de Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A., el control de los '
- 'movimientos documentales se apoya en hojas de cálculo. Durante las pasantías se observó que, cuando coinciden '
- 'varios expedientes, la transcripción manual y repetitiva de datos puede generar duplicidades, omisiones y '
- 'demoras para elaborar resúmenes solicitados por la directiva. Esta situación hizo pertinente desarrollar una '
- 'herramienta de escritorio que organizara la información sin alterar el flujo real del departamento.',
- 'El propósito de la pasantía fue desarrollar un sistema automatizado para el control, trazabilidad y reporte '
- 'documental. Para sustentar el trabajo se consideraron fundamentos relacionados con sistemas de información, '
- 'gestión documental, bases de datos relacionales, trazabilidad y automatización de procesos administrativos. El '
- 'alcance comprendió el diagnóstico del flujo existente, la definición de requerimientos, el diseño lógico, la '
- 'implementación de un prototipo y su validación funcional.',
- 'El informe se estructura en cinco capítulos. El Capítulo I presenta la realidad organizacional de Venangocupet, '
- 'S.A.; el Capítulo II desarrolla el diagnóstico situacional, los objetivos, la planificación integral y el '
- 'cronograma; el Capítulo III expone los fundamentos teóricos; el Capítulo IV describe las actividades operativas '
- 'y técnicas ejecutadas durante las nueve semanas de pasantía; y el Capítulo V reúne las conclusiones y '
- 'recomendaciones derivadas del trabajo realizado.']
+ 'movimientos documentales se apoya en hojas de cálculo. Durante las pasantías se observó que la '
+ 'transcripción manual y repetitiva de datos puede generar duplicidades, omisiones y demoras para elaborar '
+ 'resúmenes solicitados por la directiva, lo que hizo pertinente desarrollar una herramienta de escritorio '
+ 'para organizar la información sin alterar el flujo real del departamento.',
+ 'El propósito de la pasantía fue desarrollar un sistema automatizado para el control, trazabilidad y '
+ 'reporte documental, sustentado en fundamentos de sistemas de información, gestión documental, bases de '
+ 'datos relacionales y automatización de procesos administrativos. El alcance comprendió diagnóstico, '
+ 'definición de requerimientos, diseño lógico, implementación y validación funcional.',
+ 'El informe se organiza en cinco capítulos: realidad organizacional; diagnóstico, objetivos y '
+ 'planificación; fundamentos teóricos; actividades realizadas; y conclusiones y recomendaciones.']
 
 # ========================================================================
 # 4. CAPÍTULO I — REALIDAD ORGANIZACIONAL
@@ -169,14 +163,38 @@ VALORES = [('Responsabilidad', 'Compromiso inquebrantable con la seguridad opera
  ('Innovación', 'Fomento del uso de tecnologías de punta para optimizar la gestión integral de la empresa.'),
  ('Sentido Social', 'Contribución activa al desarrollo productivo y la sostenibilidad como pilares operativos.')]
 
-OBJETIVOS_ORG = ['Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas.',
- 'Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.',
- 'Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa.']
+OBJETIVOS_ORG = ['Maximizar la recuperación de reservas de hidrocarburos.',
+ 'Minimizar los costos operativos y optimizar el uso de todos los recursos.',
+ 'Impulsar el desarrollo sustentable de las comunidades vecinas mediante el fortalecimiento de las '
+ 'organizaciones de base y la diversificación económica.',
+ 'Cumplir con las políticas, leyes, normas, procedimientos y lineamientos corporativos.',
+ 'Conocer y aplicar las resoluciones, decretos y leyes de la industria del petróleo frente a las operaciones '
+ 'de la empresa en materia laboral.',
+ 'Incentivar buenas relaciones interpersonales y laborales entre todos los trabajadores.',
+ 'Mantener un alto nivel de comunicación y apoyo con el personal e informar acerca de los cambios y/o '
+ 'acciones de interés social y laboral.',
+ 'Apoyar los objetivos y las metas de la organización en armonía con el desarrollo profesional del empleado.',
+ 'Mantener el carácter confidencial de la información operativa y administrativa de la empresa.',
+ 'Brindar los beneficios contractuales y velar por las mejoras de las condiciones laborales y la calidad de '
+ 'vida de los trabajadores.',
+ 'Producir el máximo beneficio posible para sus accionistas, trabajadores, comunidades vecinas y clientes.']
 
-OBJETIVO_GENERAL_EMPRESA = 'Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas.'
+OBJETIVO_GENERAL_EMPRESA = 'Maximizar la recuperación de reservas de hidrocarburos.'
 
-OBJETIVOS_ESPECIFICOS_EMPRESA = ['Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.',
- 'Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa.']
+OBJETIVOS_ESPECIFICOS_EMPRESA = ['Minimizar los costos operativos y optimizar el uso de todos los recursos.',
+ 'Impulsar el desarrollo sustentable de las comunidades vecinas mediante el fortalecimiento de las '
+ 'organizaciones de base y la diversificación económica.',
+ 'Cumplir con las políticas, leyes, normas, procedimientos y lineamientos corporativos.',
+ 'Conocer y aplicar las resoluciones, decretos y leyes de la industria del petróleo frente a las operaciones '
+ 'de la empresa en materia laboral.',
+ 'Incentivar buenas relaciones interpersonales y laborales entre todos los trabajadores.',
+ 'Mantener un alto nivel de comunicación y apoyo con el personal e informar acerca de los cambios y/o '
+ 'acciones de interés social y laboral.',
+ 'Apoyar los objetivos y las metas de la organización en armonía con el desarrollo profesional del empleado.',
+ 'Mantener el carácter confidencial de la información operativa y administrativa de la empresa.',
+ 'Brindar los beneficios contractuales y velar por las mejoras de las condiciones laborales y la calidad de '
+ 'vida de los trabajadores.',
+ 'Producir el máximo beneficio posible para sus accionistas, trabajadores, comunidades vecinas y clientes.']
 
 UBICACION = ('La Empresa Mixta Petrolera Venangocupet, S.A. se ubica en la Avenida Jesús Subero (vía El Tigre - San José de '
  'Guanipa), con prolongación de la Calle 19 Sur, sector San Remo, Centro Comercial San Remo Mall, El Tigre, '
@@ -205,26 +223,40 @@ ORGANIGRAMA_TEXTO = ('La estructura organizativa de Venangocupet, S.A. responde 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
-SITUACION_PROBLEMATICA = ['En las organizaciones que movilizan documentos entre distintas unidades, el control oportuno de cada ingreso, '
- 'revisión, firma y despacho resulta necesario para conservar la continuidad de los procesos administrativos. '
- 'Cuando estos movimientos se registran mediante operaciones manuales repetitivas, aumenta la posibilidad de '
- 'inconsistencias y se requiere mayor tiempo para consolidar información destinada a la toma de decisiones.',
- 'Dentro de la Empresa Mixta Petrolera Venangocupet, S.A., el Departamento de Presidencia funciona como un nodo '
- 'de tránsito y validación de expedientes. El flujo real comprende la recepción externa del documento, revisión '
- 'ortográfica y de formato, registro de ingreso, entrega al Presidente para firma, registro de egreso y despacho '
- 'al departamento de destino. La unidad no genera ni conserva de manera permanente los expedientes que recibe, '
- 'por lo que la trazabilidad depende de la calidad del registro de cada movimiento.',
- 'Actualmente, este control se realiza mediante hojas de cálculo. En períodos de mayor concurrencia documental, '
- 'el copiado y pegado de datos repetitivos ralentiza el procesamiento y puede originar duplicación de información '
- 'u omisión de movimientos. Del mismo modo, cuando la alta dirección solicita un resumen mensual de documentos '
- 'firmados o el estado de expedientes pendientes, el personal debe filtrar y consolidar manualmente los registros '
- 'existentes.',
- 'Como técnica de análisis de la situación se estructuró un árbol del problema a partir de la observación directa '
- 'del flujo documental y de la revisión de los registros utilizados por el departamento. El problema central se '
- 'relaciona con la limitada automatización del control documental; entre sus causas se encuentran la '
- 'transcripción repetitiva, la ausencia de validaciones automáticas y la dispersión del seguimiento en hojas de '
- 'cálculo, mientras que sus efectos se reflejan en demoras de registro, dificultad para obtener reportes '
- 'inmediatos y menor trazabilidad del recorrido de los expedientes.']
+SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
+  'parrafos': ['En las organizaciones que movilizan documentos entre distintas unidades, el control oportuno '
+               'de cada ingreso, revisión, firma y despacho resulta necesario para conservar la continuidad '
+               'de los procesos administrativos. Cuando estos movimientos se registran mediante operaciones '
+               'manuales repetitivas, aumenta la posibilidad de inconsistencias y se requiere mayor tiempo '
+               'para consolidar información destinada a la toma de decisiones.']},
+ {'titulo': 'Nivel meso',
+  'parrafos': ['En las unidades administrativas vinculadas con la alta dirección, la gestión documental '
+               'exige registrar con precisión el recorrido de expedientes que requieren revisión, '
+               'validación, firma y posterior canalización hacia otras dependencias. La ausencia de '
+               'herramientas que centralicen el seguimiento puede dificultar la consulta inmediata del '
+               'estado de cada documento y la preparación de reportes gerenciales cuando coinciden varios '
+               'movimientos en un mismo período.']},
+ {'titulo': 'Nivel micro',
+  'parrafos': ['Dentro de la Empresa Mixta Petrolera Venangocupet, S.A., el Departamento de Presidencia '
+               'funciona como un nodo de tránsito y validación de expedientes. El flujo real comprende la '
+               'recepción externa del documento, revisión ortográfica y de formato, registro de ingreso, '
+               'entrega al Presidente para firma, registro de egreso y despacho al departamento de destino. '
+               'La unidad no genera ni conserva de manera permanente los expedientes que recibe, por lo que '
+               'la trazabilidad depende de la calidad del registro de cada movimiento.',
+               'Actualmente, este control se realiza mediante hojas de cálculo. En períodos de mayor '
+               'concurrencia documental, el copiado y pegado de datos repetitivos ralentiza el procesamiento '
+               'y puede originar duplicación de información u omisión de movimientos. Del mismo modo, cuando '
+               'la alta dirección solicita un resumen mensual de documentos firmados o el estado de '
+               'expedientes pendientes, el personal debe filtrar y consolidar manualmente los registros '
+               'existentes.']},
+ {'titulo': 'Técnica empleada para el diagnóstico',
+  'parrafos': ['Como técnica de análisis de la situación se estructuró un árbol del problema a partir de la '
+               'observación directa del flujo documental y de la revisión de los registros utilizados por el '
+               'departamento. El problema central se relaciona con la limitada automatización del control '
+               'documental; entre sus causas se encuentran la transcripción repetitiva, la ausencia de '
+               'validaciones automáticas y la dispersión del seguimiento en hojas de cálculo, mientras que '
+               'sus efectos se reflejan en demoras de registro, dificultad para obtener reportes inmediatos '
+               'y menor trazabilidad del recorrido de los expedientes.']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -531,5 +563,5 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, 15.5)
+    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5})
 ]
