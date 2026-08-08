@@ -1,0 +1,33 @@
+graph TD
+    %% Efectos
+    E1["Demora en la generación<br>de reportes gerenciales"]
+    E2["Mayor riesgo de errores<br>en el registro documental"]
+    E3["Disminución de la<br>eficiencia administrativa"]
+
+    %% Problema Central
+    PC["<b>PROBLEMA CENTRAL</b><br>El control de movimientos documentales<br>en Presidencia se realiza mediante hojas<br>de cálculo manuales, dificultando la<br>trazabilidad y la elaboración rápida<br>de reportes"]
+
+    %% Causas
+    C1["Registro manual<br>repetitivo"]
+    C2["Ausencia de un<br>sistema automatizado"]
+    C3["Procesos dependientes<br>de Excel"]
+    C4["Falta de reportes<br>automáticos"]
+
+    %% Conexiones
+    E1 --> PC
+    E2 --> PC
+    E3 --> PC
+    PC --> C1
+    PC --> C2
+    PC --> C3
+    PC --> C4
+
+    %% Estilos
+    style PC fill:#ff4444,stroke:#cc0000,color:#fff,stroke-width:3px
+    style E1 fill:#ff9999,stroke:#cc6666,color:#000
+    style E2 fill:#ff9999,stroke:#cc6666,color:#000
+    style E3 fill:#ff9999,stroke:#cc6666,color:#000
+    style C1 fill:#ffcc99,stroke:#cc9966,color:#000
+    style C2 fill:#ffcc99,stroke:#cc9966,color:#000
+    style C3 fill:#ffcc99,stroke:#cc9966,color:#000
+    style C4 fill:#ffcc99,stroke:#cc9966,color:#000

@@ -1134,6 +1134,18 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, b
 #   "estructura" -> tras la sección 1.1.9 Estructura Organizativa
 ANCLAS_VALIDAS = {"ubicacion", "estructura"}
 
+def _resolver_ruta_imagen(carpeta_imagenes, cfg):
+    """Resuelve una imagen por nombre explícito (`archivo`) o por número, manteniendo compatibilidad."""
+    archivo = cfg.get("archivo") if isinstance(cfg, dict) else None
+    if archivo:
+        ruta = os.path.join(carpeta_imagenes, archivo)
+        if os.path.exists(ruta):
+            return ruta
+        print(f"⚠ No se encontró imagen '{archivo}' en {carpeta_imagenes}")
+        return None
+    numero = cfg.get("numero") if isinstance(cfg, dict) else None
+    return buscar_imagen_por_numero(carpeta_imagenes, numero)
+
 def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
     """Inserta todos los gráficos de contenido.py marcados con `tras = ancla`."""
     graficos = getattr(c, 'GRAFICOS', [])
@@ -1143,9 +1155,29 @@ def _insertar_graficos_por_ancla(doc, carpeta_imagenes, ancla):
         numero = g.get("numero")
         titulo = g.get("titulo", f"Gráfico {numero}.")
         ancho = g.get("ancho_cm", 12)
-        ruta = buscar_imagen_por_numero(carpeta_imagenes, numero)
+        ruta = _resolver_ruta_imagen(carpeta_imagenes, g)
         bookmark_id = f"bm_grafico{numero}" if numero else None
-        agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), bookmark_id=bookmark_id)
+        agregar_imagen(doc, ruta, titulo, ancho=Cm(ancho), fuente=g.get("fuente"), bookmark_id=bookmark_id)
+
+def _insertar_logo_empresa(doc, carpeta_imagenes):
+    """Inserta un logotipo empresarial opcional sin tratarlo como gráfico académico."""
+    cfg = getattr(c, 'LOGO_EMPRESA', None)
+    if not cfg:
+        return
+    if isinstance(cfg, str):
+        cfg = {"archivo": cfg}
+    ruta = _resolver_ruta_imagen(carpeta_imagenes, cfg)
+    if not ruta:
+        return
+    ancho = Cm(cfg.get("ancho_cm", 4.0))
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(12)
+    p.paragraph_format.space_after = Pt(12)
+    try:
+        p.add_run().add_picture(ruta, width=ancho)
+    except Exception as e:
+        print(f"❌ Error al agregar logo empresarial {ruta}: {e}")
 
 def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tutor, ci_tutor):
     """Agrega página de aprobación con membrete, título centrado, firma y datos del tutor."""
@@ -1564,7 +1596,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
         # --- REGISTRO DEL INICIO DEL CUERPO ---
         iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
-        agregar_parrafo_normado(doc, getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.'))
+        introduccion = getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.')
+        if isinstance(introduccion, (list, tuple)):
+            for parrafo in introduccion:
+                agregar_parrafo_normado(doc, parrafo)
+        else:
+            agregar_parrafo_normado(doc, introduccion)
 
         # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
         idx_cap1 = len(doc.sections)
@@ -1586,6 +1623,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
     agregar_titulo_nivel2(doc, "Razón social")
     agregar_parrafo_normado(doc, getattr(c, 'RAZON_SOCIAL', 'Razón Social no proporcionada.'), sangria=False)
+    carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
+    _insertar_logo_empresa(doc, carpeta_imagenes)
 
     agregar_titulo_nivel2(doc, "Reseña histórica", bookmark_id="bm_cap1_resena")
     resena_data = getattr(c, 'RESENA_HISTORICA', [])
@@ -1619,7 +1658,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
     agregar_titulo_nivel2(doc, "Ubicación geográfica", bookmark_id="bm_cap1_ubic")
     agregar_parrafo_normado(doc, getattr(c, 'UBICACION', 'Ubicación no proporcionada.'), sangria=False)
 
-    carpeta_imagenes = getattr(c, 'CARPETA_IMAGENES', 'imagenes')
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "ubicacion")
 
     agregar_titulo_nivel2(doc, "Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
@@ -1660,7 +1698,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
                     run.font.bold = True
         p_fuente = doc.add_paragraph()
         p_fuente.paragraph_format.space_before = Pt(6)
-        run_f = p_fuente.add_run("Fuente: Departamento Administrativo de Lubricantes y Equipos Varyna, C.A. (2026).")
+        fuente_poblacion = getattr(c, 'POBLACION_FUENTE', f"Información suministrada por {getattr(c, 'RAZON_SOCIAL', 'la organización')} (2026).")
+        run_f = p_fuente.add_run(f"Fuente: {fuente_poblacion}")
         run_f.font.name = FUENTE
         run_f.font.size = Pt(8)
         run_f.font.italic = True
@@ -1689,8 +1728,23 @@ def construir_cuerpo_documento(doc, modo="completo"):
         if isinstance(situacion_problematica, str):
             agregar_parrafo_normado(doc, situacion_problematica)
         else:
-            for parrafo in situacion_problematica:
-                agregar_parrafo_normado(doc, parrafo)
+            for bloque in situacion_problematica:
+                if isinstance(bloque, dict):
+                    titulo_bloque = bloque.get('titulo')
+                    if titulo_bloque:
+                        agregar_titulo_nivel2(doc, titulo_bloque)
+                    parrafos_bloque = bloque.get('parrafos', [])
+                    if isinstance(parrafos_bloque, str):
+                        parrafos_bloque = [parrafos_bloque]
+                    for parrafo in parrafos_bloque:
+                        agregar_parrafo_normado(doc, parrafo)
+                else:
+                    agregar_parrafo_normado(doc, bloque)
+
+        interrogante = getattr(c, 'INTERROGANTE_PROBLEMA', '')
+        if interrogante:
+            agregar_titulo_nivel2(doc, getattr(c, 'INTERROGANTE_TITULO', 'Interrogante orientadora'))
+            agregar_parrafo_normado(doc, interrogante)
 
         agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
         agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
@@ -1730,7 +1784,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 cita = sub.get('cita_larga')
                 if cita and cita.get('texto'):
                     agregar_cita_larga(doc, cita['texto'], cita.get('autor', ''))
-                    post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
+                    post_cita = sub.get('post_cita', getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF))
                     if post_cita:
                         agregar_parrafo_normado(doc, post_cita, sangria=True)
                 posicion_autor = sub.get('posicion_autor')
@@ -1805,6 +1859,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             cod, desc = anexo[:2]
             numero_imagen = anexo[2] if len(anexo) > 2 else None
             alto_imagen = anexo[3] if len(anexo) > 3 else None
+            contenido_anexo = anexo[4] if len(anexo) > 4 else None
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -1841,6 +1896,11 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         p_imagen.add_run().add_picture(ruta_imagen, height=Cm(alto_imagen))
                     else:
                         p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
+
+            if contenido_anexo:
+                bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]
+                for bloque in bloques:
+                    agregar_parrafo_normado(doc, str(bloque))
 
     return idx_cap1, idx_indice_inicio, idx_indice_fin
 

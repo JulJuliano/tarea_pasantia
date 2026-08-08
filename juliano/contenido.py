@@ -1,342 +1,525 @@
-# 1. Rutas y Carpetas
-CARPETA_IMAGENES = "imagenes"
-# Gráficos del informe: cada uno indica tras qué sección va (anclas: "ubicacion" | "estructura")
-# "lista" = descripción corta para el índice (Lista de Gráficos), "pagina" = página estimada
-GRAFICOS = [
-    { "numero": 1, "tras": "estructura", "titulo": "Gráfico 1. Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.", "ancho_cm": 12, "lista": "Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.", "pagina": "3" },
-    { "numero": 2, "tras": "estructura", "titulo": "Gráfico 2. Organigrama del Departamento de Presidencia.", "ancho_cm": 12, "lista": "Organigrama del Departamento de Presidencia.", "pagina": "4" },
-]
+# -*- coding: utf-8 -*-
+# Archivo revisado para informe de pasantías regulares IUTECP.
 
-# Textos introductorios del Capítulo II
-PLANIFICACION_INTRO_TEXTO = "La planificación establece la relación entre cada objetivo y las actividades técnicas a ejecutar para el desarrollo del proyecto factible:"
-CRONOGRAMA_INTRO_TEXTO = "El cronograma estructura temporalmente las fases de diseño y desarrollo del sistema automatizado, distribuidas a lo largo de las nueve (9) semanas de duración de la pasantía:"
+# ========================================================================
+# 1. RUTAS, IMÁGENES Y CUADROS
+# ========================================================================
+CARPETA_IMAGENES = 'imagenes'
 
-# Título del Cuadro 2 (Cronograma)
-CUADRO_CRONOGRAMA_TITULO = "Cuadro 2. Cronograma de actividades del proyecto factible."
+LOGO_EMPRESA = {'archivo': 'logo.png', 'ancho_cm': 4.0}
 
-# Lista de Cuadros (índice preliminar): (número, descripción, página)
-CUADROS_INDICE = [
-    ("1", "Planificación integral de objetivos específicos", "5"),
-    ("2", "Cronograma de actividades del proyecto factible (9 semanas)", "6"),
-]
+GRAFICOS = [{'numero': 1,
+  'archivo': 'mapa.png',
+  'tras': 'ubicacion',
+  'titulo': 'Gráfico 1. Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, '
+            'S.A.',
+  'ancho_cm': 11,
+  'lista': 'Referencia cartográfica de la ubicación de las oficinas administrativas de Venangocupet, S.A.',
+  'pagina': '4',
+  'fuente': 'Captura cartográfica de Google Maps (2026). La empresa no aparece rotulada de forma independiente; '
+            'se emplea como referencia el Centro Comercial San Remo Mall.'},
+ {'numero': 2,
+  'archivo': '1.png',
+  'tras': 'estructura',
+  'titulo': 'Gráfico 2. Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
+  'ancho_cm': 12,
+  'lista': 'Organigrama estructural y niveles jerárquicos de Venangocupet, S.A.',
+  'pagina': '6',
+  'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'},
+ {'numero': 3,
+  'archivo': '2.png',
+  'tras': 'estructura',
+  'titulo': 'Gráfico 3. Organigrama del Departamento de Presidencia.',
+  'ancho_cm': 12,
+  'lista': 'Organigrama del Departamento de Presidencia',
+  'pagina': '7',
+  'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'}]
 
-# 2. Datos de Portada y Datos Personales
-MEMBRETE = [
-    "REPÚBLICA BOLIVARIANA DE VENEZUELA",
-    "MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN UNIVERSITARIA",
-    "INSTITUTO UNIVERSITARIO DE TECNOLOGÍA",
-    "\"ELÍAS CALIXTO POMPA\"",
-    "EL TIGRE, ESTADO ANZOÁTEGUI"
-]
+PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona cada objetivo específico con las actividades técnicas necesarias para el desarrollo '
+ 'y validación del sistema automatizado:')
 
-TITULO_PROYECTO = "DISEÑO DE UN SISTEMA PARA EL CONTROL, TRAZABILIDAD Y REPORTE DE MOVIMIENTOS DOCUMENTALES EN LA PRESIDENCIA DE LA EMPRESA MIXTA PETROLERA VENANGOCUPET, S.A."
+CRONOGRAMA_INTRO_TEXTO = ('El cronograma organiza las fases de diagnóstico, diseño, implementación y validación del sistema a lo largo de '
+ 'las nueve (9) semanas de pasantía:')
 
-AUTOR_DATOS = [
-    "Autor:",
-    "Cardona, Juliano",
-    "C.I.: 32.281.199",
-    "",
-    "Tutor Industrial:",
-    "Ing. Sabaneta, Yasmin",
-    "C.I.: 14.187.924",
-    "",
-    "Tutor Académico:",
-    "Ing. Mejías, José",
-    "C.I.: 4.273.815"
-]
+CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades del desarrollo del sistema automatizado.'
 
-FECHA_LUGAR = "El Tigre, julio de 2026"
+CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '8'),
+ ('2', 'Cronograma de actividades del desarrollo del sistema automatizado', '9')]
+
+# ========================================================================
+# 2. DATOS DE PORTADA
+# ========================================================================
+MEMBRETE = ['REPÚBLICA BOLIVARIANA DE VENEZUELA',
+ 'MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN UNIVERSITARIA',
+ 'INSTITUTO UNIVERSITARIO DE TECNOLOGÍA',
+ '"ELÍAS CALIXTO POMPA"',
+ 'EL TIGRE, ESTADO ANZOÁTEGUI']
+
+TITULO_PROYECTO = ('DESARROLLO DE UN PROTOTIPO DE SISTEMA AUTOMATIZADO PARA EL CONTROL, TRAZABILIDAD Y REPORTE DOCUMENTAL EN LA '
+ 'PRESIDENCIA DE VENANGOCUPET, S.A.')
+
+AUTOR_DATOS = ['Autor:',
+ 'Cardona, Juliano',
+ 'C.I.: 32.281.199',
+ '',
+ 'Tutor Industrial:',
+ 'Ing. Sabaneta, Yasmin',
+ 'C.I.: 14.187.924',
+ '',
+ 'Tutor Académico:',
+ 'Ing. Mejías, José',
+ 'C.I.: 4.273.815']
+
+FECHA_LUGAR = 'El Tigre, agosto de 2026'
+
 CIUDAD_FECHA = FECHA_LUGAR
-NOMBRE_PASANTE = "Cardona, Juliano"
-CI_PASANTE = "32.281.199"
-ESPECIALIDAD = "Informática"
-RAZON_SOCIAL = "Empresa Mixta Petrolera Venangocupet, S.A."
 
-# 3. Páginas Preliminares
-DEDICATORIA = "A mi familia, por su apoyo incondicional en cada paso de mi formación académica y personal."
+NOMBRE_PASANTE = 'Cardona, Juliano'
 
-AGRADECIMIENTOS = "A la Empresa Mixta Petrolera Venangocupet, S.A., por abrir las puertas de su organización y brindar la oportunidad de desarrollar este proyecto técnico de la mano de excelentes profesionales."
+CI_PASANTE = '32.281.199'
 
-RESUMEN_TEXTO = (
-    "El presente informe describe el diseño de un sistema automatizado para el control, trazabilidad y reporte de movimientos documentales en la Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A. La investigación se enmarca en la modalidad de proyecto factible apoyado en un diagnóstico de campo. Durante el estudio se identificaron demoras operativas derivadas de la transcripción manual en hojas de cálculo y deficiencias en la generación de reportes inmediatos ante altos volúmenes de concurrencia. La solución tecnológica abarca el modelado lógico de datos en SQLite y la construcción de una aplicación de escritorio mediante código HTML empaquetado con el framework Wails, optimizando el registro, búsqueda y auditoría del flujo documental para fortalecer la toma de decisiones gerenciales."
-)
+ESPECIALIDAD = 'Informática'
 
-PALABRAS_CLAVE = "sistema, trazabilidad, automatización, Wails, proyecto factible, pasantías."
+RAZON_SOCIAL = 'Empresa Mixta Petrolera Venangocupet, S.A.'
 
-INTRODUCCION_TEXTO = (
-    "La presente pasantía, desarrollada como requisito para optar al título de Técnico Superior Universitario en Informática, tiene como propósito proponer un sistema automatizado para el control de movimientos documentales en la Presidencia de Venangocupet, S.A. Este desarrollo busca sustituir el registro manual por una herramienta tecnológica de escritorio ágil y moderna, que garantice la trazabilidad de los expedientes, optimizando los tiempos de respuesta y dotando al departamento de un control exacto sobre la entrada y salida de oficios en alta dirección."
-)
+# ========================================================================
+# 3. PÁGINAS PRELIMINARES
+# ========================================================================
+DEDICATORIA = 'A mi familia, por su apoyo incondicional en cada paso de mi formación académica y personal.'
 
-# 4. CAPÍTULO I - Realidad Organizacional
+AGRADECIMIENTOS = ('A la Empresa Mixta Petrolera Venangocupet, S.A., por abrir las puertas de su organización y brindar la '
+ 'oportunidad de desarrollar este proyecto técnico de la mano de excelentes profesionales.')
 
-RESENA_HISTORICA = [
-    "Venangocupet, S.A. fue constituida formalmente el 26 de noviembre de 2012, como parte de la estrategia de alianzas para el desarrollo de la Faja Petrolífera del Orinoco. Inicialmente, su estructura accionaria estaba compuesta por un 60% correspondiente a Petróleos de Venezuela, S.A. (PDVSA), a través de la CVP, y un 40% distribuido entre socios internacionales.",
-    "El 26 de octubre de 2023, se registró un hito corporativo cuando los socios internacionales cedieron sus participaciones accionarias, consolidando el 100% del capital bajo el control de la filial de la CVP. Desde entonces, la empresa enfoca sus esfuerzos en la optimización operativa y la modernización tecnológica en el estado Anzoátegui."
-]
+RESUMEN_TEXTO = ('El presente informe expone las actividades realizadas durante nueve (9) semanas de pasantías profesionales en '
+ 'el Departamento de Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A. La práctica permitió reconocer '
+ 'el flujo real de recepción, revisión, registro, firma y despacho de expedientes, cuyo control se efectúa '
+ 'mediante hojas de cálculo y requiere transcripción repetitiva de datos. Esta dinámica puede generar duplicidad '
+ 'u omisión de registros y dificulta la obtención inmediata de resúmenes sobre documentos ingresados, firmados, '
+ 'pendientes o despachados. En respuesta a esta situación se planteó como objetivo general desarrollar un sistema '
+ 'automatizado para el control, trazabilidad y reporte documental del área. Las actividades comprendieron el '
+ 'diagnóstico del proceso, levantamiento de requerimientos, modelado de una base de datos relacional, diseño de '
+ 'la interfaz, implementación con SQLite, integración de una aplicación de escritorio y pruebas funcionales de '
+ 'los módulos de registro, consulta, historial y reportes. Como resultado se obtuvo un prototipo funcional '
+ 'orientado a reducir tareas repetitivas y mantener un historial verificable del recorrido de los expedientes. Se '
+ 'concluye que la solución desarrollada responde a los requerimientos esenciales identificados en Presidencia. Se '
+ 'recomienda realizar una incorporación progresiva de los registros y establecer respaldos periódicos de la base '
+ 'de datos antes de su utilización continua.')
 
-MISION = (
-    "Realizar actividades primarias de hidrocarburos aplicando estrategias y tecnologías de calidad, con personal competente, motivado y con plena conciencia de seguridad ambiental hacia las personas, los bienes y el entorno. Su propósito es producir el máximo beneficio posible para la nación, en concordancia con el Plan Estratégico Socialista (P.E.S) de PDVSA."
-)
+PALABRAS_CLAVE = 'sistema automatizado, trazabilidad documental, SQLite, Wails, pasantías'
 
-VISION = (
-    "Constituirse como una empresa de referencia por excelencia en el negocio de hidrocarburos, caracterizada por ser productiva, innovadora y oportuna. Aspirar a impulsar el desarrollo sustentable manteniéndose a la vanguardia tecnológica para minimizar costos operativos y maximizar la recuperación de reservas."
-)
+INTRODUCCION_TEXTO = ['La gestión documental constituye una actividad esencial en las organizaciones porque permite mantener control '
+ 'sobre la recepción, revisión, circulación y despacho de información necesaria para el funcionamiento '
+ 'administrativo. En áreas de alta dirección, la posibilidad de conocer con rapidez el estado y recorrido de los '
+ 'expedientes contribuye a responder oportunamente a los requerimientos de las distintas unidades de la empresa.',
+ 'En el Departamento de Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A., el control de los '
+ 'movimientos documentales se apoya en hojas de cálculo. Durante las pasantías se observó que, cuando coinciden '
+ 'varios expedientes, la transcripción manual y repetitiva de datos puede generar duplicidades, omisiones y '
+ 'demoras para elaborar resúmenes solicitados por la directiva. Esta situación hizo pertinente desarrollar una '
+ 'herramienta de escritorio que organizara la información sin alterar el flujo real del departamento.',
+ 'El propósito de la pasantía fue desarrollar un sistema automatizado para el control, trazabilidad y reporte '
+ 'documental. Para sustentar el trabajo se consideraron fundamentos relacionados con sistemas de información, '
+ 'gestión documental, bases de datos relacionales, trazabilidad y automatización de procesos administrativos. El '
+ 'alcance comprendió el diagnóstico del flujo existente, la definición de requerimientos, el diseño lógico, la '
+ 'implementación de un prototipo y su validación funcional.',
+ 'El informe se estructura en cinco capítulos. El Capítulo I presenta la realidad organizacional de Venangocupet, '
+ 'S.A.; el Capítulo II desarrolla el diagnóstico situacional, los objetivos, la planificación integral y el '
+ 'cronograma; el Capítulo III expone los fundamentos teóricos; el Capítulo IV describe las actividades operativas '
+ 'y técnicas ejecutadas durante las nueve semanas de pasantía; y el Capítulo V reúne las conclusiones y '
+ 'recomendaciones derivadas del trabajo realizado.']
 
-VALORES = [
-    ("Responsabilidad", "Compromiso inquebrantable con la seguridad operativa y el bienestar del personal."),
-    ("Excelencia", "Aplicación sistemática de altos estándares de calidad y rigor técnico en cada proceso."),
-    ("Innovación", "Fomento del uso de tecnologías de punta para optimizar la gestión integral de la empresa."),
-    ("Sentido Social", "Contribución activa al desarrollo productivo y la sostenibilidad como pilares operativos.")
-]
+# ========================================================================
+# 4. CAPÍTULO I — REALIDAD ORGANIZACIONAL
+# ========================================================================
+RESENA_HISTORICA = ['Venangocupet, S.A. fue constituida formalmente el 26 de noviembre de 2012, como parte de la estrategia de '
+ 'alianzas para el desarrollo de la Faja Petrolífera del Orinoco. Inicialmente, su estructura accionaria estaba '
+ 'compuesta por un 60% correspondiente a Petróleos de Venezuela, S.A. (PDVSA), a través de la CVP, y un 40% '
+ 'distribuido entre socios internacionales.',
+ 'El 26 de octubre de 2023, se registró un hito corporativo cuando los socios internacionales cedieron sus '
+ 'participaciones accionarias, consolidando el 100% del capital bajo el control de la filial de la CVP. Desde '
+ 'entonces, la empresa enfoca sus esfuerzos en la optimización operativa y la modernización tecnológica en el '
+ 'estado Anzoátegui.']
 
-OBJETIVOS_ORG = [
-    "Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas.",
-    "Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.",
-    "Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa."
-]
+MISION = ('Realizar actividades primarias de hidrocarburos aplicando estrategias y tecnologías de calidad, con personal '
+ 'competente, motivado y con plena conciencia de seguridad ambiental hacia las personas, los bienes y el entorno. '
+ 'Su propósito es producir el máximo beneficio posible para la nación, en concordancia con el Plan Estratégico '
+ 'Socialista (P.E.S) de PDVSA.')
 
-OBJETIVO_GENERAL_EMPRESA = "Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas."
+VISION = ('Constituirse como una empresa de referencia por excelencia en el negocio de hidrocarburos, caracterizada por '
+ 'ser productiva, innovadora y oportuna. Aspirar a impulsar el desarrollo sustentable manteniéndose a la '
+ 'vanguardia tecnológica para minimizar costos operativos y maximizar la recuperación de reservas.')
 
-OBJETIVOS_ESPECIFICOS_EMPRESA = [
-    "Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.",
-    "Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa."
-]
+VALORES = [('Responsabilidad', 'Compromiso inquebrantable con la seguridad operativa y el bienestar del personal.'),
+ ('Excelencia', 'Aplicación sistemática de altos estándares de calidad y rigor técnico en cada proceso.'),
+ ('Innovación', 'Fomento del uso de tecnologías de punta para optimizar la gestión integral de la empresa.'),
+ ('Sentido Social', 'Contribución activa al desarrollo productivo y la sostenibilidad como pilares operativos.')]
 
-UBICACION = (
-    "La Empresa Mixta Petrolera Venangocupet, S.A. se encuentra ubicada en el sur del estado Anzoátegui, operando geográficamente en los bloques asignados dentro de la División Ayacucho, Faja Petrolífera del Orinoco."
-)
+OBJETIVOS_ORG = ['Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas.',
+ 'Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.',
+ 'Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa.']
 
-POBLACION = [
-    "La estructura del talento humano de la organización refleja un equipo multidisciplinario especializado en la gestión administrativa y operativa. La población total del personal directo asciende a 107 trabajadores.",
-    "El Departamento de Presidencia, donde se desarrolló la investigación técnica, actúa como el nodo principal de recepción, revisión y canalización de correspondencia ejecutiva. Su operatividad exige un alto nivel de eficiencia en el control de flujos documentales concurrentes."
-]
+OBJETIVO_GENERAL_EMPRESA = 'Maximizar la recuperación eficiente y segura de las reservas de hidrocarburos asignadas.'
 
-ORGANIGRAMA_TEXTO = (
-    "La arquitectura organizativa de Venangocupet, S.A. se fundamenta en un modelo jerárquico-funcional. La empresa está encabezada por la Junta Directiva y la Presidencia. A continuación, se presenta el organigrama general destacando el Área de Presidencia, contexto en el cual se aplicó el desarrollo tecnológico."
-)
+OBJETIVOS_ESPECIFICOS_EMPRESA = ['Minimizar los costos operativos mediante la optimización de recursos tecnológicos y logísticos.',
+ 'Garantizar la trazabilidad y el reporte oportuno de la información administrativa de la empresa.']
 
-SITUACION_PROBLEMATICA = [
-    "El proceso administrativo en el Departamento de Presidencia funciona estrictamente como un nodo de tránsito y validación. El flujo procedimental consiste en recibir expedientes externos, someterlos a revisión ortográfica y de formato, y registrarlos para su entrega al Presidente de la empresa. Una vez firmados, se registra su salida y se despachan de forma inmediata hacia su departamento de destino, sin retener documentos propios de forma permanente.",
-    "Actualmente, el control de este ciclo se ejecuta mediante hojas de cálculo convencionales. El flujo de expedientes es azaroso, alternando entre volúmenes mínimos y escenarios de ingresos masivos concurrentes. En dichos picos de alta demanda, el registro basado en el copiado y pegado manual de datos repetitivos ralentiza severamente el procesamiento y propicia errores humanos, tales como la duplicación de datos o la omisión de movimientos críticos.",
-    "Adicionalmente, este mecanismo dificulta la generación de reportes inmediatos. Cuando la alta dirección solicita conocer el resumen de documentos firmados en el mes o el estatus de los expedientes pendientes por firma, el personal debe filtrar, interpretar y redactar la información manualmente. Esto retrasa la respuesta operativa del departamento y evidencia la necesidad inminente de un salto tecnológico hacia la automatización."
-]
+UBICACION = ('La Empresa Mixta Petrolera Venangocupet, S.A. se ubica en la Avenida Jesús Subero (vía El Tigre - San José de '
+ 'Guanipa), con prolongación de la Calle 19 Sur, sector San Remo, Centro Comercial San Remo Mall, El Tigre, '
+ 'municipio Simón Rodríguez, estado Anzoátegui. Las oficinas administrativas se encuentran específicamente en la '
+ 'planta baja del centro comercial, identificadas como Local 89-PB. Para la representación cartográfica se '
+ 'utiliza como referencia el Centro Comercial San Remo Mall, debido a que la empresa no aparece rotulada de forma '
+ 'independiente en la plataforma cartográfica consultada.')
 
-OBJETIVO_GENERAL = "Proponer el desarrollo de un sistema automatizado para el control, trazabilidad y reporte de movimientos documentales en la Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A., bajo la modalidad de proyecto factible."
+POBLACION_TABLA = [('Departamento de Presidencia', 'Presidente', 0, 1, 1),
+ ('Departamento de Presidencia', 'Secretaría', 1, 0, 1),
+ ('TOTAL GENERAL', '', 1, 1, 2)]
 
-OBJETIVOS_ESPECIFICOS = [
-    "Diagnosticar la situación actual del flujo procedimental de recepción, firma y derivación de expedientes en el área de Presidencia.",
-    "Determinar los requerimientos técnicos y funcionales necesarios para la base de datos de trazabilidad documental.",
-    "Diseñar la arquitectura lógica del sistema relacional y la interfaz gráfica de usuario para el entorno de escritorio.",
-    "Desarrollar un prototipo funcional del sistema empleando bases de datos y tecnologías de empaquetado para su validación operativa."
-]
+POBLACION_FUENTE = ('Información suministrada por el Departamento de Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A. '
+ '(2026).')
 
-PLANIFICACION_DATOS = [
-    (
-        "Diagnosticar el flujo procedimental actual de los movimientos documentales.",
-        "Flujo procedimental y trazabilidad de los movimientos documentales.",
-        "Observación directa del ciclo de expedientes y análisis de las fallas en las hojas de cálculo existentes.",
-        "Observación directa y análisis documental.",
-        "Cuaderno de notas y registros de Excel."
-    ),
-    (
-        "Determinar los requerimientos técnicos y funcionales del sistema.",
-        "Requerimientos técnicos y funcionales para la trazabilidad documental.",
-        "Levantamiento de metadatos requeridos y definición de reglas de validación mediante entrevista no estructurada.",
-        "Entrevista no estructurada y revisión documental.",
-        "Formatos de requerimientos y diccionario de datos."
-    ),
-    (
-        "Diseñar la arquitectura lógica y la interfaz gráfica de usuario.",
-        "Arquitectura lógica e interfaz gráfica del sistema documental.",
-        "Modelado del diagrama Entidad-Relación y diseño de los módulos visuales mediante análisis documental.",
-        "Modelado de datos y análisis documental.",
-        "Herramientas de modelado y editores de código."
-    ),
-    (
-        "Desarrollar un prototipo funcional del sistema para su validación.",
-        "Prototipo funcional para el control y reporte de movimientos documentales.",
-        "Implementación en SQLite, integración de la interfaz con Wails y ejecución de pruebas de escritorio.",
-        "Desarrollo de software y pruebas funcionales.",
-        "Framework Wails, motor SQLite y equipo informático."
-    )
-]
+POBLACION = ['El Departamento de Presidencia cuenta con una fuerza laboral activa de dos (2) personas: el Presidente, de '
+ 'género masculino, y una persona responsable de Secretaría, de género femenino. Para el momento de las pasantías '
+ 'no se reportaron vacantes en esta unidad. Esta población corresponde al departamento donde se ejecutaron las '
+ 'actividades de pasantía y es la directamente vinculada con el flujo documental analizado.']
 
-# Matriz booleana ajustada a 8 SEMANAS exactas de pasantía
-CRONOGRAMA_DATOS = [
-    # ── ACTIVIDADES DEL PROYECTO (5) ──────────────────────────────────────────────────────────
-    ("Diagnóstico del flujo documental y levantamiento de requerimientos.",    [True,  False, False, False, False, False, False, False, False]),
-    ("Diseño del modelo relacional, normalización y diccionario de datos.",    [False, True,  False, False, False, False, False, False, False]),
-    ("Implementación de la base de datos relacional en SQLite.",               [False, False, True,  False, False, False, False, False, False]),
-    ("Desarrollo de la interfaz gráfica y empaquetado con Wails.",             [False, False, False, True,  True,  False, False, False, False]),
-    ("Integración, pruebas funcionales y consolidación del sistema.",          [False, False, False, False, False, False, True,  True,  True ]),
-    # ── ACTIVIDADES DE OFICINA (4) ────────────────────────────────────────────────────────────
-    ("Inducción institucional y capacitación en seguridad (SIAHO).",           [True,  False, False, True,  False, False, False, False, False]),
-    ("Registro y actualización de expedientes en hoja de cálculo.",            [False, True,  True,  False, False, False, False, False, False]),
-    ("Revisión y canalización de correspondencia presidencial.",               [False, False, False, False, True,  True,  False, False, False]),
-    ("Apoyo en generación de reportes y cierre administrativo.",               [False, False, False, False, False, False, False, True,  True ]),
-]
+ORGANIGRAMA_TEXTO = ('La estructura organizativa de Venangocupet, S.A. responde a un esquema jerárquico-funcional encabezado por la '
+ 'Junta Directiva y la Presidencia. El Departamento de Presidencia constituye el área donde se desarrollaron las '
+ 'pasantías y actúa como punto de recepción, revisión, firma y despacho de correspondencia ejecutiva. A '
+ 'continuación se presentan el organigrama general de la empresa y el organigrama específico del departamento.')
 
-# CAPÍTULO III - Marco Teórico
-# Estructura: lista de subsecciones, cada una con título, párrafos
-# y opcionalmente una cita larga (>40 palabras, bloque aparte).
-# El generador debe iterar sobre BASES_TEORICAS para renderizar
-# cada subsección como un encabezado de Nivel 2 + párrafos.
+# ========================================================================
+# 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
+# ========================================================================
+SITUACION_PROBLEMATICA = ['En las organizaciones que movilizan documentos entre distintas unidades, el control oportuno de cada ingreso, '
+ 'revisión, firma y despacho resulta necesario para conservar la continuidad de los procesos administrativos. '
+ 'Cuando estos movimientos se registran mediante operaciones manuales repetitivas, aumenta la posibilidad de '
+ 'inconsistencias y se requiere mayor tiempo para consolidar información destinada a la toma de decisiones.',
+ 'Dentro de la Empresa Mixta Petrolera Venangocupet, S.A., el Departamento de Presidencia funciona como un nodo '
+ 'de tránsito y validación de expedientes. El flujo real comprende la recepción externa del documento, revisión '
+ 'ortográfica y de formato, registro de ingreso, entrega al Presidente para firma, registro de egreso y despacho '
+ 'al departamento de destino. La unidad no genera ni conserva de manera permanente los expedientes que recibe, '
+ 'por lo que la trazabilidad depende de la calidad del registro de cada movimiento.',
+ 'Actualmente, este control se realiza mediante hojas de cálculo. En períodos de mayor concurrencia documental, '
+ 'el copiado y pegado de datos repetitivos ralentiza el procesamiento y puede originar duplicación de información '
+ 'u omisión de movimientos. Del mismo modo, cuando la alta dirección solicita un resumen mensual de documentos '
+ 'firmados o el estado de expedientes pendientes, el personal debe filtrar y consolidar manualmente los registros '
+ 'existentes.',
+ 'Como técnica de análisis de la situación se estructuró un árbol del problema a partir de la observación directa '
+ 'del flujo documental y de la revisión de los registros utilizados por el departamento. El problema central se '
+ 'relaciona con la limitada automatización del control documental; entre sus causas se encuentran la '
+ 'transcripción repetitiva, la ausencia de validaciones automáticas y la dispersión del seguimiento en hojas de '
+ 'cálculo, mientras que sus efectos se reflejan en demoras de registro, dificultad para obtener reportes '
+ 'inmediatos y menor trazabilidad del recorrido de los expedientes.']
 
-BASES_TEORICAS = [
-    {
-        "titulo": "Sistemas de Información",
-        "posicion_autor": "Desde la perspectiva del investigador, el sistema propuesto debe priorizar información confiable y oportuna para apoyar las decisiones de la Presidencia.",
-        "parrafos": [
-            "Un sistema de información constituye un conjunto organizado de recursos humanos, tecnológicos y procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos con el propósito de apoyar la toma de decisiones dentro de una organización. Laudon y Laudon (2016) distinguen entre sistemas de procesamiento de transacciones, sistemas de soporte a la decisión y sistemas de información gerencial, siendo estos últimos los que transforman datos operativos en reportes consolidados de utilidad directiva.",
-            "En el contexto del presente proyecto, el sistema propuesto se enmarca en la categoría de sistema de información operacional con capacidad de reporte gerencial, dado que registra cada movimiento documental de forma transaccional y provee resúmenes inmediatos al nivel de presidencia. Según Kendall y Kendall (2011), el análisis y diseño de sistemas busca comprender sistemáticamente cómo interactúan los datos y los usuarios para proponer soluciones tecnológicas que mejoren el flujo de trabajo de una organización."
-        ],
-        "cita_larga": {
-            "texto": "Los sistemas de información gerencial proporcionan a los administradores informes sobre el desempeño actual de la organización. Esta información se utiliza para supervisar y controlar el negocio y predecir el desempeño futuro. Los sistemas de información gerencial resumen y reportan las operaciones básicas de la empresa usando datos suministrados por los sistemas de procesamiento de transacciones.",
-            "autor": "(Laudon y Laudon, 2016, p. 46)"
-        }
-    },
-    {
-        "titulo": "Gestión Documental",
-        "posicion_autor": "En Venangocupet, la gestión documental debe reflejar el recorrido real de cada expediente, desde su recepción hasta su despacho, sin agregar pasos que no correspondan al proceso.",
-        "parrafos": [
-            "La gestión documental se define como el conjunto de normas, técnicas y prácticas que regulan el ciclo de vida de los documentos dentro de una organización, desde su creación o recepción hasta su disposición final. Cruz Mundet (2011) señala que una gestión documental eficaz garantiza la autenticidad, integridad, fiabilidad y disponibilidad de la información registrada, constituyendo un pilar fundamental para la transparencia administrativa y la continuidad operativa.",
-            "En el Departamento de Presidencia de Venangocupet, S.A., el flujo documental responde a un ciclo específico: recepción del expediente externo, revisión de forma, registro de ingreso, firma presidencial, registro de egreso y despacho al departamento destinatario. La automatización de este ciclo mediante un sistema digitalizado reduce la propensión al error humano y dota al departamento de un historial auditable de cada movimiento, en concordancia con los principios de gestión documental descritos por Cruz Mundet (2011)."
-        ],
-        "cita_larga": None
-    },
-    {
-        "titulo": "Modelo Relacional de Bases de Datos",
-        "posicion_autor": "A juicio de quien suscribe, el modelo relacional resulta adecuado porque representa la relación entre procesos y documentos sin duplicar la información que se necesita consultar.",
-        "parrafos": [
-            "El modelo relacional, propuesto originalmente por Codd (1970), organiza la información en tablas bidimensionales denominadas relaciones, cuyos atributos representan las propiedades de las entidades y cuyas filas corresponden a instancias individuales de datos. La fortaleza de este modelo radica en la aplicación de reglas de normalización que eliminan la redundancia y preservan la integridad referencial entre tablas relacionadas mediante claves primarias y foráneas.",
-            "Date (2001) establece que un diseño relacional correctamente normalizado garantiza que cada dato se almacene una sola vez, reduciendo la posibilidad de inconsistencias derivadas de actualizaciones parciales. En el sistema propuesto, la relación entre procesos administrativos y documentos sigue una cardinalidad uno a muchos (1:N), permitiendo registrar múltiples expedientes asociados a un mismo proceso contractual o administrativo sin duplicar los datos maestros del proceso."
-        ],
-        "cita_larga": None
-    },
-    {
-        "titulo": "SQLite como Sistema Gestor de Base de Datos",
-        "posicion_autor": "La selección de SQLite se fundamenta en las condiciones reales del entorno de Presidencia, donde se requiere una solución portable y funcional sin depender de una infraestructura de servidor.",
-        "parrafos": [
-            "SQLite es un motor de base de datos relacional de código abierto, autocontenido y sin servidor, cuya arquitectura embebida lo diferencia de sistemas cliente-servidor convencionales como MySQL o PostgreSQL. Su funcionamiento se basa en un único archivo portable que aloja el esquema completo de la base de datos, eliminando la necesidad de procesos de servidor independientes o configuraciones de red. Esta característica lo convierte en la opción técnica idónea para entornos corporativos con restricciones de instalación de software.",
-            "Pressman (2010) señala que la selección de herramientas tecnológicas debe estar guiada por los atributos del entorno de despliegue y no exclusivamente por las capacidades abstractas del instrumento. En el caso particular del Departamento de Presidencia de Venangocupet, S.A., las restricciones de permisos administrativos sobre los equipos de la organización hacen de SQLite la alternativa técnicamente viable para implementar persistencia de datos sin requerir intervención del departamento de tecnología de la empresa."
-        ],
-        "cita_larga": None
-    },
-    {
-        "titulo": "Trazabilidad Documental",
-        "posicion_autor": "Para este proyecto, la trazabilidad es el elemento que permite demostrar qué ocurrió con cada expediente y ofrecer respuestas verificables a la dirección de la empresa.",
-        "parrafos": [
-            "La trazabilidad documental se entiende como la capacidad de reconstruir el historial completo de un documento a lo largo de su ciclo de vida, identificando en cada etapa el responsable, la fecha, la acción ejecutada y el estado resultante. Gómez (2019) señala que la trazabilidad constituye el mecanismo central de auditoría en los sistemas de gestión documental, dado que permite verificar la integridad del proceso y detectar cuellos de botella o irregularidades en el flujo.",
-            "En el ámbito de la alta dirección, la trazabilidad cobra especial relevancia porque los expedientes que transitan por la Presidencia frecuentemente están vinculados a procesos contractuales y decisiones gerenciales de impacto organizacional. El sistema propuesto registra automáticamente cada movimiento de ingreso y egreso del expediente, almacenando la fecha, el estatus y el departamento de origen o destino, lo que permite generar reportes de trazabilidad de forma inmediata ante cualquier requerimiento directivo."
-        ],
-        "cita_larga": {
-            "texto": "Un sistema de información eficaz proporciona a los administradores de la organización datos precisos y oportunos, facilitando la auditoría de cada transacción operativa y mejorando sustancialmente la capacidad de respuesta ante requerimientos gerenciales de alto nivel. La ausencia de este tipo de herramientas obliga al personal a invertir tiempo considerable en la búsqueda y consolidación manual de información que debería estar disponible de forma inmediata.",
-            "autor": "(Gómez, 2019, p. 45)"
-        }
-    },
-    {
-        "titulo": "Automatización de Procesos Administrativos",
-        "posicion_autor": "Desde la posición del investigador, automatizar el registro y los reportes permite que el personal dedique más tiempo a revisar y coordinar los expedientes, en lugar de copiar datos manualmente.",
-        "parrafos": [
-            "La automatización de procesos administrativos consiste en la sustitución de tareas manuales repetitivas por flujos de trabajo controlados por sistemas informáticos, con el objetivo de reducir los tiempos de ejecución, minimizar el error humano y liberar al personal para actividades de mayor valor analítico. Laudon y Laudon (2016) plantean que la automatización de procesos de negocio genera mejoras medibles en la productividad organizacional al estandarizar los procedimientos y centralizar el control de la información.",
-            "En el Departamento de Presidencia de Venangocupet, S.A., la automatización se justifica por la naturaleza del proceso actual: el personal destina un porcentaje significativo de su tiempo operativo al copiado y pegado de datos entre documentos y hojas de cálculo, así como a la redacción manual de resúmenes solicitados por la dirección. La implementación del sistema automatizado propuesto traslada estas tareas al software, permitiendo que el personal se concentre en las funciones de revisión y coordinación propias del departamento."
-        ],
-        "cita_larga": None
-    },
-    {
-        "titulo": "Proyecto Factible como Modalidad de Investigación",
-        "posicion_autor": "La modalidad de proyecto factible se ajusta a este trabajo porque el diagnóstico del flujo documental culmina en un prototipo desarrollado y validado según las necesidades de Presidencia.",
-        "parrafos": [
-            "La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta modalidad exige la comprobación de la viabilidad técnica, económica y operativa de la solución planteada, sustentada en un diagnóstico de campo que evidencie la situación deficitaria que da origen a la propuesta.",
-            "Arias (2012) complementa esta definición señalando que el proyecto factible no se limita a diagnosticar un problema, sino que avanza hasta proponer y en muchos casos desarrollar la solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en esta modalidad al partir de un diagnóstico situacional del flujo documental en Presidencia, proponer una arquitectura tecnológica específica y materializar un prototipo funcional del sistema como evidencia de la viabilidad de la propuesta."
-        ],
-        "cita_larga": None
-    }
-]
+INTERROGANTE_TITULO = 'Interrogante orientadora'
 
-# 7. CAPÍTULO IV - Actividades Realizadas
-ACTIVIDADES_DESCRIPCION = "Durante las nueve (9) semanas de práctica profesional, se ejecutaron fases sucesivas de análisis, diseño y desarrollo de software, integrando la operativa departamental con la investigación técnica:"
+INTERROGANTE_PROBLEMA = ('¿De qué manera puede desarrollarse un sistema automatizado que mejore el control, la trazabilidad y la '
+ 'generación de reportes de los movimientos documentales en el Departamento de Presidencia de Venangocupet, S.A.?')
 
-# Estructura actualizada para separar Operativa e Investigación por semana
-ACTIVIDADES_LISTA = [
-    {
-        "semana": 1,
-        "operativa": "Inducción institucional por la Gerencia de Recursos Humanos, recorrido por las instalaciones del área administrativa, presentación del equipo de trabajo y revisión de protocolos de seguridad, confidencialidad y manejo de información.",
-        "investigacion": "Observación directa y mapeo del ciclo de vida de los documentos en Presidencia, detección de fallas procedimentales en el registro manual y levantamiento de los campos y atributos requeridos para la base de datos de trazabilidad."
-    },
-    {
-        "semana": 2,
-        "operativa": "Transmisión, clasificación y registro manual de expedientes físicos en la hoja de cálculo institucional preexistente, y actualización continua de datos de nuevos documentos recibidos durante el período.",
-        "investigacion": "Validación de requerimientos con el tutor industrial, construcción del diagrama Entidad-Relación, aplicación de las formas normales sobre el esquema propuesto y elaboración formal del diccionario de datos."
-    },
-    {
-        "semana": 3,
-        "operativa": "Procesamiento y actualización del estatus de expedientes en el archivo Excel de la oficina, con apoyo administrativo en el control de documentos recibidos durante la semana.",
-        "investigacion": "Ejecución de la secuencia de comandos estructurales en SQLite, migración de registros históricos validados, construcción de formularios de captura y programación de consultas de trazabilidad con detección de limitaciones técnicas del entorno inicial."
-    },
-    {
-        "semana": 4,
-        "operativa": "Asistencia a la charla técnica sobre Identificación y Notificación de Peligros y Riesgos en Instalaciones y Puestos de Trabajo dictada por el departamento de SIAHO, y carga de expedientes recibidos en la hoja de cálculo.",
-        "investigacion": "Programación del entorno visual de escritorio mediante tecnologías de marcado y estilos, sincronización del código fuente en plataforma de control de versiones y planificación estructural de los esquemas remanentes."
-    },
-    {
-        "semana": 5,
-        "operativa": "Revisión ortográfica y de formato de correspondencia presidencial, y apoyo en la canalización de expedientes hacia su departamento de destino tras la firma presidencial.",
-        "investigacion": "Completación de los módulos visuales de consulta e historial de movimientos, integrando la lógica de visualización dinámica de expedientes por proceso administrativo."
-    },
-    {
-        "semana": 6,
-        "operativa": "Colaboración en la revisión y despacho de correspondencia presidencial y apoyo en el registro de salida de expedientes firmados durante el período.",
-        "investigacion": "Empaquetado de la aplicación de escritorio mediante el framework Wails con integración de WebView2 portable, logrando un ejecutable autónomo sin dependencias de instalación en el equipo corporativo."
-    },
-    {
-        "semana": 7,
-        "operativa": "Apoyo en la elaboración manual de resúmenes de estatus de expedientes solicitados por la alta dirección, aplicando los registros de la hoja de cálculo del departamento.",
-        "investigacion": "Ejecución de pruebas de validación funcional del sistema, depuración de errores y verificación del correcto funcionamiento de los módulos de registro, trazabilidad y generación de reportes sobre datos reales."
-    },
-    {
-        "semana": 8,
-        "operativa": "Participación en las actividades regulares del departamento y apoyo en el cierre administrativo del período, asistiendo en la organización final de expedientes del ciclo.",
-        "investigacion": "Redacción del informe técnico de pasantías, elaboración de los manuales de usuario y estructuración definitiva del código fuente para entrega."
-    },
-    {
-        "semana": 9,
-        "operativa": "Presentación del prototipo funcional ante la tutora industrial para su evaluación, retroalimentación final y firma de la carta de aprobación del tutor industrial.",
-        "investigacion": "Consolidación y revisión final del informe académico, incorporación de observaciones del tutor industrial y preparación de los anexos definitivos para la entrega institucional."
-    }
-]
+OBJETIVO_GENERAL = ('Desarrollar un prototipo de sistema automatizado para el control, trazabilidad y reporte de movimientos '
+ 'documentales en la Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A.')
 
-# 8. CAPÍTULO V - Conclusiones y Recomendaciones
-# Conclusiones actualizadas (una por cada objetivo específico)
-CONCLUSIONES = [
-    "Se diagnosticó que la dependencia del registro manual en hojas de cálculo genera cuellos de botella en escenarios de alta concurrencia documental, propiciando la duplicación de datos y la omisión de movimientos críticos que comprometen la trazabilidad del flujo en Presidencia.",
-    "Se determinó que los requerimientos funcionales del sistema giran en torno a tres módulos esenciales: registro de ingreso y egreso de expedientes, consulta de historial por proceso administrativo y generación automática de reportes gerenciales, todos sustentados en una estructura relacional 1:N entre procesos y documentos.",
-    "Se diseñó una arquitectura lógica basada en el modelo relacional normalizado con SQLite como motor de persistencia y una interfaz gráfica desarrollada en código HTML, logrando una solución técnicamente coherente con las restricciones operativas del entorno corporativo.",
-    "Se desarrolló un prototipo funcional empaquetado con el framework Wails que demostró la viabilidad técnica de la propuesta, validando los flujos de registro, consulta y reporte sobre datos reales del Departamento de Presidencia."
-]
+OBJETIVOS_ESPECIFICOS = ['Diagnosticar la situación actual del flujo procedimental de recepción, revisión, firma y despacho de '
+ 'expedientes en el Departamento de Presidencia.',
+ 'Determinar los requerimientos técnicos y funcionales necesarios para el registro, trazabilidad y generación de '
+ 'reportes de los movimientos documentales.',
+ 'Diseñar la arquitectura lógica de la base de datos y la interfaz gráfica del sistema de acuerdo con el flujo '
+ 'real del Departamento de Presidencia.',
+ 'Implementar y validar el prototipo funcional mediante SQLite y una aplicación de escritorio, comprobando los '
+ 'módulos de registro, consulta, historial y reporte.']
 
-# Recomendaciones actualizadas y ampliadas
-RECOMENDACIONES = [
-    "Ejecutar la migración progresiva de los registros históricos contenidos en las hojas de cálculo hacia la base de datos del nuevo sistema, preservando la trazabilidad de los expedientes anteriores al período de implementación.",
-    "Capacitar al personal administrativo del Departamento de Presidencia en el uso de las interfaces de registro, consulta y generación de reportes del sistema, garantizando la correcta apropiación tecnológica de la herramienta.",
-    "Establecer rutinas periódicas de respaldo del archivo de base de datos (.sqlite) en una unidad de almacenamiento alternativa, con el fin de salvaguardar la integridad del historial documental ante eventuales fallas del equipo.",
-    "Extender el alcance del sistema en fases posteriores para incorporar notificaciones automáticas a los departamentos destinatarios una vez despachado el expediente firmado, optimizando la comunicación interdepartamental."
-]
+PLANIFICACION_DATOS = [('Diagnosticar la situación actual del flujo procedimental de recepción, revisión, firma y despacho de '
+  'expedientes en el Departamento de Presidencia.',
+  'Flujo procedimental y trazabilidad de los movimientos documentales.',
+  'Observar el ciclo real de los expedientes, describir las etapas y analizar los registros existentes.',
+  'Observación directa y análisis documental.',
+  'Cuaderno de notas y registros de la hoja de cálculo utilizada en el departamento.'),
+ ('Determinar los requerimientos técnicos y funcionales necesarios para el registro, trazabilidad y generación de '
+  'reportes de los movimientos documentales.',
+  'Requerimientos técnicos y funcionales del sistema.',
+  'Levantar los datos requeridos, reglas de validación, consultas y reportes necesarios para el control '
+  'documental.',
+  'Entrevista no estructurada y revisión documental.',
+  'Formato de requerimientos, notas de trabajo y diccionario de datos.'),
+ ('Diseñar la arquitectura lógica de la base de datos y la interfaz gráfica del sistema de acuerdo con el flujo '
+  'real del Departamento de Presidencia.',
+  'Arquitectura lógica e interfaz del sistema documental.',
+  'Modelar la relación entre procesos y documentos, normalizar la estructura de datos y diseñar los módulos '
+  'visuales.',
+  'Modelado de datos y diseño de interfaz.',
+  'Herramientas de modelado, editor de código y documentación técnica.'),
+ ('Implementar y validar el prototipo funcional mediante SQLite y una aplicación de escritorio, comprobando los '
+  'módulos de registro, consulta, historial y reporte.',
+  'Prototipo funcional para el control y reporte documental.',
+  'Implementar la base de datos en SQLite, integrar la interfaz de escritorio y ejecutar pruebas funcionales de '
+  'los módulos.',
+  'Desarrollo de software y pruebas funcionales.',
+  'SQLite, Wails, editor de código y equipo informático.')]
 
-# 9. Referencias Bibliográficas (orden alfabético estricto, sangría francesa)
-REFERENCIAS_LISTA = [
-    "Arias, F. (2012). El proyecto de investigación: Introducción a la metodología científica (6ta ed.). Episteme, Venezuela.",
-    "Codd, E. F. (1970). A relational model of data for large shared data banks. Communications of the ACM, 13(6), 377-387.",
-    "Cruz Mundet, J. R. (2011). Administración de documentos y archivos: Textos fundamentales. Coordinadora de Asociaciones de Archiveros, España.",
-    "Date, C. J. (2001). Introducción a los sistemas de bases de datos (7ma ed.). Pearson Educación, México.",
-    "Gómez, R. (2019). Gestión Documental y Sistemas. Editorial Trillas, México.",
-    "Kendall, K., y Kendall, J. (2011). Análisis y diseño de sistemas (8va ed.). Pearson Educación, México.",
-    "Laudon, K., y Laudon, J. (2016). Sistemas de información gerencial (14va ed.). Pearson Educación, México.",
-    "Pressman, R. (2010). Ingeniería de Software: Un enfoque práctico (7ma ed.). McGraw-Hill, México.",
-    "Universidad Pedagógica Experimental Libertador. (2016). Manual de trabajos de grado de especialización y maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela."
-]
+CRONOGRAMA_DATOS = [('Diagnóstico del flujo documental y levantamiento de requerimientos.',
+  [True, False, False, False, False, False, False, False, False]),
+ ('Diseño del modelo relacional, normalización y diccionario de datos.',
+  [False, True, False, False, False, False, False, False, False]),
+ ('Implementación de la base de datos relacional en SQLite.',
+  [False, False, True, False, False, False, False, False, False]),
+ ('Desarrollo de la interfaz gráfica y módulos de consulta e historial.',
+  [False, False, False, True, True, False, False, False, False]),
+ ('Empaquetado de la aplicación de escritorio con Wails.',
+  [False, False, False, False, False, True, False, False, False]),
+ ('Pruebas funcionales y depuración del prototipo.',
+  [False, False, False, False, False, False, True, False, False]),
+ ('Documentación técnica, manual de usuario e informe académico.',
+  [False, False, False, False, False, False, False, True, False]),
+ ('Validación final, ajustes y presentación del prototipo.',
+  [False, False, False, False, False, False, False, False, True]),
+ ('Inducción institucional y capacitación en seguridad (SIAHO).',
+  [True, False, False, True, False, False, False, False, False]),
+ ('Registro y actualización de expedientes en hoja de cálculo.',
+  [False, True, True, False, False, False, False, False, False]),
+ ('Revisión y canalización de correspondencia presidencial.',
+  [False, False, False, False, True, True, False, False, False]),
+ ('Apoyo en generación de reportes y actividades de cierre.',
+  [False, False, False, False, False, False, True, True, True])]
 
-# 10. Anexos
-ANEXOS_LISTA = [
-    ("ANEXO A", "Árbol del problema del control de movimientos documentales", 3)
-]
+# ========================================================================
+# 6. CAPÍTULO III — MARCO TEÓRICO
+# ========================================================================
+BASES_TEORICAS = [{'titulo': 'Sistemas de Información',
+  'posicion_autor': 'Desde la perspectiva del autor, el sistema desarrollado debe priorizar información confiable '
+                    'y oportuna para apoyar el control de los movimientos documentales de Presidencia.',
+  'parrafos': ['Un sistema de información constituye un conjunto organizado de recursos humanos, tecnológicos y '
+               'procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos '
+               'con el propósito de apoyar la toma de decisiones dentro de una organización. Laudon y Laudon '
+               '(2016) distinguen entre sistemas de procesamiento de transacciones, sistemas de soporte a la '
+               'decisión y sistemas de información gerencial, siendo estos últimos los que transforman datos '
+               'operativos en reportes consolidados de utilidad directiva.',
+               'En el contexto del presente proyecto, el sistema propuesto se enmarca en la categoría de sistema '
+               'de información operacional con capacidad de reporte gerencial, dado que registra cada movimiento '
+               'documental de forma transaccional y provee resúmenes inmediatos al nivel de presidencia. Según '
+               'Kendall y Kendall (2011), el análisis y diseño de sistemas busca comprender sistemáticamente cómo '
+               'interactúan los datos y los usuarios para proponer soluciones tecnológicas que mejoren el flujo '
+               'de trabajo de una organización.'],
+  'cita_larga': {'texto': 'Los sistemas de información gerencial proporcionan a los administradores informes '
+                          'sobre el desempeño actual de la organización. Esta información se utiliza para '
+                          'supervisar y controlar el negocio y predecir el desempeño futuro. Los sistemas de '
+                          'información gerencial resumen y reportan las operaciones básicas de la empresa usando '
+                          'datos suministrados por los sistemas de procesamiento de transacciones.',
+                 'autor': '(Laudon y Laudon, 2016, p. 46)'},
+  'post_cita': ''},
+ {'titulo': 'Gestión Documental',
+  'posicion_autor': 'En Venangocupet, la gestión documental debe reflejar el recorrido real de cada expediente, '
+                    'desde su recepción hasta su despacho, sin agregar pasos que no correspondan al proceso.',
+  'parrafos': ['La gestión documental se define como el conjunto de normas, técnicas y prácticas que regulan el '
+               'ciclo de vida de los documentos dentro de una organización, desde su creación o recepción hasta '
+               'su disposición final. Cruz Mundet (2011) señala que una gestión documental eficaz garantiza la '
+               'autenticidad, integridad, fiabilidad y disponibilidad de la información registrada, constituyendo '
+               'un pilar fundamental para la transparencia administrativa y la continuidad operativa.',
+               'En el Departamento de Presidencia de Venangocupet, S.A., el flujo documental responde a un ciclo '
+               'específico: recepción del expediente externo, revisión de forma, registro de ingreso, firma '
+               'presidencial, registro de egreso y despacho al departamento destinatario. La automatización de '
+               'este ciclo mediante un sistema digitalizado reduce la propensión al error humano y dota al '
+               'departamento de un historial auditable de cada movimiento, en concordancia con los principios de '
+               'gestión documental descritos por Cruz Mundet (2011).'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'Modelo Relacional de Bases de Datos',
+  'posicion_autor': 'A juicio de quien suscribe, el modelo relacional resulta adecuado porque representa la '
+                    'relación entre procesos y documentos sin duplicar la información que se necesita consultar.',
+  'parrafos': ['El modelo relacional, propuesto originalmente por Codd (1970), organiza la información en tablas '
+               'bidimensionales denominadas relaciones, cuyos atributos representan las propiedades de las '
+               'entidades y cuyas filas corresponden a instancias individuales de datos. La fortaleza de este '
+               'modelo radica en la aplicación de reglas de normalización que eliminan la redundancia y preservan '
+               'la integridad referencial entre tablas relacionadas mediante claves primarias y foráneas.',
+               'Date (2001) establece que un diseño relacional correctamente normalizado garantiza que cada dato '
+               'se almacene una sola vez, reduciendo la posibilidad de inconsistencias derivadas de '
+               'actualizaciones parciales. En el sistema propuesto, la relación entre procesos administrativos y '
+               'documentos sigue una cardinalidad uno a muchos (1:N), permitiendo registrar múltiples expedientes '
+               'asociados a un mismo proceso contractual o administrativo sin duplicar los datos maestros del '
+               'proceso.'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'SQLite como Sistema Gestor de Base de Datos',
+  'posicion_autor': 'La selección de SQLite se fundamenta en su portabilidad, sencillez de despliegue y capacidad '
+                    'para mantener la información del prototipo en un archivo relacional único, características '
+                    'adecuadas para una aplicación de escritorio de alcance departamental.',
+  'parrafos': ['SQLite es un motor de base de datos relacional de código abierto, autocontenido y sin servidor, '
+               'cuya arquitectura embebida lo diferencia de sistemas cliente-servidor convencionales. Su '
+               'funcionamiento se basa en un único archivo que aloja el esquema y los registros de la base de '
+               'datos, reduciendo la complejidad de administración para aplicaciones locales.',
+               'Pressman (2010) señala que la selección de herramientas tecnológicas debe considerar las '
+               'características del entorno de despliegue y los requerimientos reales de la solución. Para el '
+               'prototipo desarrollado en el Departamento de Presidencia, SQLite permite gestionar las relaciones '
+               'entre procesos y documentos, conservar el historial de movimientos y ejecutar consultas sin '
+               'incorporar una infraestructura adicional de servidor.'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'Trazabilidad Documental',
+  'posicion_autor': 'Para este proyecto, la trazabilidad es el elemento que permite demostrar qué ocurrió con '
+                    'cada expediente y ofrecer respuestas verificables a la dirección de la empresa.',
+  'parrafos': ['La trazabilidad documental se entiende como la capacidad de reconstruir el historial completo de '
+               'un documento a lo largo de su ciclo de vida, identificando en cada etapa el responsable, la '
+               'fecha, la acción ejecutada y el estado resultante. Gómez (2019) señala que la trazabilidad '
+               'constituye el mecanismo central de auditoría en los sistemas de gestión documental, dado que '
+               'permite verificar la integridad del proceso y detectar cuellos de botella o irregularidades en el '
+               'flujo.',
+               'En el ámbito de la alta dirección, la trazabilidad cobra especial relevancia porque los '
+               'expedientes que transitan por la Presidencia frecuentemente están vinculados a procesos '
+               'contractuales y decisiones gerenciales de impacto organizacional. El sistema propuesto registra '
+               'automáticamente cada movimiento de ingreso y egreso del expediente, almacenando la fecha, el '
+               'estatus y el departamento de origen o destino, lo que permite generar reportes de trazabilidad de '
+               'forma inmediata ante cualquier requerimiento directivo.'],
+  'cita_larga': {'texto': 'Un sistema de información eficaz proporciona a los administradores de la organización '
+                          'datos precisos y oportunos, facilitando la auditoría de cada transacción operativa y '
+                          'mejorando sustancialmente la capacidad de respuesta ante requerimientos gerenciales de '
+                          'alto nivel. La ausencia de este tipo de herramientas obliga al personal a invertir '
+                          'tiempo considerable en la búsqueda y consolidación manual de información que debería '
+                          'estar disponible de forma inmediata.',
+                 'autor': '(Gómez, 2019, p. 45)'},
+  'post_cita': ''},
+ {'titulo': 'Automatización de Procesos Administrativos',
+  'posicion_autor': 'Desde la posición del autor, automatizar el registro y los reportes permite disminuir tareas '
+                    'repetitivas y dedicar mayor atención a la revisión y canalización de los expedientes.',
+  'parrafos': ['La automatización de procesos administrativos consiste en la sustitución de tareas manuales '
+               'repetitivas por flujos de trabajo controlados por sistemas informáticos, con el objetivo de '
+               'reducir los tiempos de ejecución, minimizar el error humano y liberar al personal para '
+               'actividades de mayor valor analítico. Laudon y Laudon (2016) plantean que la automatización de '
+               'procesos de negocio genera mejoras medibles en la productividad organizacional al estandarizar '
+               'los procedimientos y centralizar el control de la información.',
+               'En el Departamento de Presidencia de Venangocupet, S.A., la automatización se justifica por la '
+               'naturaleza del proceso actual: el personal destina un porcentaje significativo de su tiempo '
+               'operativo al copiado y pegado de datos entre documentos y hojas de cálculo, así como a la '
+               'redacción manual de resúmenes solicitados por la dirección. La implementación del sistema '
+               'automatizado propuesto traslada estas tareas al software, permitiendo que el personal se '
+               'concentre en las funciones de revisión y coordinación propias del departamento.'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'Proyecto Factible como Modalidad de Investigación',
+  'posicion_autor': 'La modalidad de proyecto factible resulta compatible con el trabajo realizado porque el '
+                    'diagnóstico del flujo documental condujo al diseño, construcción y validación de un '
+                    'prototipo orientado a una necesidad concreta del Departamento de Presidencia.',
+  'parrafos': ['La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como '
+               'la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para '
+               'solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta '
+               'modalidad exige la comprobación de la viabilidad técnica, económica y operativa de la solución '
+               'planteada, sustentada en un diagnóstico de campo que evidencie la situación deficitaria que da '
+               'origen a la propuesta.',
+               'Arias (2012) complementa esta definición señalando que el proyecto factible no se limita a '
+               'diagnosticar un problema, sino que avanza hasta proponer y en muchos casos desarrollar la '
+               'solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en '
+               'esta modalidad al partir de un diagnóstico situacional del flujo documental en Presidencia, '
+               'proponer una arquitectura tecnológica específica y materializar un prototipo funcional del '
+               'sistema como evidencia de la viabilidad de la propuesta.'],
+  'cita_larga': None,
+  'post_cita': ''}]
+
+POST_CITA_TEXTO = ''
+
+# ========================================================================
+# 7. CAPÍTULO IV — ACTIVIDADES REALIZADAS
+# ========================================================================
+ACTIVIDADES_DESCRIPCION = ('Durante las nueve (9) semanas de práctica profesional se ejecutaron actividades operativas propias del '
+ 'Departamento de Presidencia y actividades técnicas vinculadas con el diagnóstico, diseño, implementación y '
+ 'validación del sistema automatizado:')
+
+ACTIVIDADES_LISTA = [{'semana': 1,
+  'operativa': 'Inducción institucional, recorrido por las instalaciones del área administrativa, presentación '
+               'del equipo de trabajo y revisión de los lineamientos generales de funcionamiento del Departamento '
+               'de Presidencia.',
+  'investigacion': 'Observación directa y mapeo del ciclo real de los documentos en Presidencia, identificación '
+                   'de fallas en el registro manual y levantamiento inicial de los datos requeridos para la '
+                   'trazabilidad.'},
+ {'semana': 2,
+  'operativa': 'Clasificación y registro manual de expedientes físicos en la hoja de cálculo utilizada por la '
+               'oficina, con actualización de los movimientos correspondientes a los documentos recibidos durante '
+               'el período.',
+  'investigacion': 'Validación de requerimientos con el tutor industrial, construcción del diagrama '
+                   'Entidad-Relación, normalización del esquema propuesto y elaboración del diccionario de '
+                   'datos.'},
+ {'semana': 3,
+  'operativa': 'Procesamiento y actualización del estatus de expedientes en el archivo de control de la oficina, '
+               'apoyando el seguimiento de los documentos recibidos y despachados durante la semana.',
+  'investigacion': 'Implementación de la estructura relacional en SQLite, carga de registros de prueba, '
+                   'construcción de formularios de captura y programación de consultas de trazabilidad.'},
+ {'semana': 4,
+  'operativa': 'Asistencia a la charla técnica sobre Identificación y Notificación de Peligros y Riesgos en '
+               'Instalaciones y Puestos de Trabajo dictada por el departamento de SIAHO, junto con labores '
+               'regulares de registro documental.',
+  'investigacion': 'Programación del entorno visual de escritorio, estructuración de los módulos de la interfaz y '
+                   'organización del código fuente del prototipo.'},
+ {'semana': 5,
+  'operativa': 'Revisión ortográfica y de formato de correspondencia presidencial, y apoyo en la canalización de '
+               'expedientes hacia su departamento de destino después de la firma presidencial.',
+  'investigacion': 'Desarrollo de los módulos de consulta e historial de movimientos e integración de la '
+                   'visualización de expedientes asociados a cada proceso administrativo.'},
+ {'semana': 6,
+  'operativa': 'Colaboración en la revisión y despacho de correspondencia presidencial y apoyo en el registro de '
+               'salida de expedientes firmados durante el período.',
+  'investigacion': 'Empaquetado de la aplicación de escritorio mediante Wails, integración del entorno visual y '
+                   'generación de un ejecutable autónomo para las pruebas funcionales del prototipo.'},
+ {'semana': 7,
+  'operativa': 'Apoyo en la elaboración manual de resúmenes de estatus de expedientes solicitados por la alta '
+               'dirección a partir de los registros disponibles en la hoja de cálculo.',
+  'investigacion': 'Ejecución de pruebas funcionales, depuración de errores y verificación de los módulos de '
+                   'registro, trazabilidad, consulta e informes utilizando datos de prueba representativos del '
+                   'flujo departamental.'},
+ {'semana': 8,
+  'operativa': 'Participación en las actividades regulares del Departamento de Presidencia y apoyo en la '
+               'organización y seguimiento de los expedientes correspondientes al período.',
+  'investigacion': 'Redacción del informe de pasantías, elaboración del manual de usuario y organización técnica '
+                   'del código fuente y los entregables del prototipo.'},
+ {'semana': 9,
+  'operativa': 'Presentación del prototipo funcional ante la tutora industrial para su evaluación, recepción de '
+               'observaciones y gestión de los recaudos correspondientes al cierre de la pasantía.',
+  'investigacion': 'Consolidación y revisión del informe académico, incorporación de las observaciones recibidas '
+                   'y preparación de los anexos definitivos para la entrega institucional.'}]
+
+# ========================================================================
+# 8. CAPÍTULO V — CONCLUSIONES Y RECOMENDACIONES
+# ========================================================================
+CONCLUSIONES = ['Se diagnosticó que el control manual en hojas de cálculo puede generar cuellos de botella cuando aumenta la '
+ 'concurrencia de expedientes, debido a la repetición de datos y a la ausencia de validaciones automáticas que '
+ 'faciliten el seguimiento del recorrido documental.',
+ 'Se determinaron como requerimientos esenciales del sistema el registro de ingreso y egreso de expedientes, la '
+ 'asociación de múltiples documentos con un mismo proceso, la consulta del historial de movimientos y la '
+ 'generación de reportes resumidos para la Presidencia.',
+ 'Se diseñó una arquitectura relacional normalizada con SQLite y una interfaz de escritorio orientada a conservar '
+ 'una dinámica de uso sencilla, representando la relación uno a muchos entre procesos y documentos sin alterar el '
+ 'flujo operativo del departamento.',
+ 'Se implementó y validó un prototipo funcional que integra los módulos de registro, consulta, historial y '
+ 'reporte, demostrando la viabilidad técnica de automatizar el control documental y reducir la dependencia de '
+ 'operaciones manuales repetitivas.']
+
+RECOMENDACIONES = ['Incorporar progresivamente al sistema los registros históricos que deban conservarse para consulta, verificando '
+ 'previamente la integridad de la información antes de su migración.',
+ 'Capacitar al personal del Departamento de Presidencia en el uso de los módulos de registro, consulta, historial '
+ 'y generación de reportes, utilizando ejemplos del flujo cotidiano de expedientes.',
+ 'Establecer una rutina periódica de respaldo del archivo de base de datos en una ubicación segura y definida por '
+ 'la organización, con el fin de preservar la continuidad del historial documental.',
+ 'Evaluar en fases posteriores la incorporación de nuevas funciones únicamente cuando respondan a necesidades '
+ 'reales del flujo de Presidencia, evitando agregar pasos que compliquen el proceso actual.']
+
+# ========================================================================
+# 9. REFERENCIAS Y ANEXOS
+# ========================================================================
+REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducción a la metodología científica (6ta ed.). Episteme, '
+ 'Venezuela.',
+ 'Codd, E. F. (1970). A relational model of data for large shared data banks. Communications of the ACM, 13(6), '
+ '377-387.',
+ 'Cruz Mundet, J. R. (2011). Administración de documentos y archivos: Textos fundamentales. Coordinadora de '
+ 'Asociaciones de Archiveros, España.',
+ 'Date, C. J. (2001). Introducción a los sistemas de bases de datos (7ma ed.). Pearson Educación, México.',
+ 'Gómez, R. (2019). Gestión Documental y Sistemas. Editorial Trillas, México.',
+ 'Kendall, K., y Kendall, J. (2011). Análisis y diseño de sistemas (8va ed.). Pearson Educación, México.',
+ 'Laudon, K., y Laudon, J. (2016). Sistemas de información gerencial (14va ed.). Pearson Educación, México.',
+ 'Pressman, R. (2010). Ingeniería de Software: Un enfoque práctico (7ma ed.). McGraw-Hill, México.',
+ 'Universidad Pedagógica Experimental Libertador. (2016). Manual de trabajos de grado de especialización y '
+ 'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
+
+ANEXOS_LISTA = [('ANEXO A',
+  'Árbol del problema del control de movimientos documentales',
+  None,
+  None,
+  ['Problema central: control manual y limitada automatización de los movimientos documentales en Presidencia.',
+   'Causas principales: transcripción repetitiva de datos; ausencia de validaciones automáticas; dificultad para '
+   'consolidar el seguimiento en una sola estructura de consulta.',
+   'Efectos principales: duplicidad u omisión de registros; mayor tiempo para elaborar reportes; dificultad para '
+   'conocer de inmediato el estado y recorrido de los expedientes.'])]

@@ -1,0 +1,81 @@
+organigrama departamento:
+
+graph TD
+    SA["Supervisión de Administración, Contabilidad y Tributos"]
+    AC[Analista de Compras y Facturación]
+    ATC[Analista de Atención al Cliente]
+    PA[Pasante Administrativo]
+
+    SA --> AC
+    SA --> ATC
+    AC & ATC --> PA
+
+    classDef destacado fill:#D9E2F3
+    classDef pasante fill:#FFE699,stroke:#000,stroke-width:2px
+
+    class SA,AC,ATC destacado
+    class PA pasante
+
+organigrama organizacional
+graph TD
+    P["Presidencia"]
+    GGO["Gerencia General<br>y Operaciones"]
+    SC["Supervisión<br>Comercial"]
+    AI["Área de<br>Internet"]
+    SNOC["Supervisión<br>NOC"]
+    MR["Mantenimiento<br>Radiocomunicación"]
+    SA["Supervisión de<br>Administración"]
+    SACT["Sup. Administración,<br>Contabilidad y Tributos"]
+    ACF["Analista de Compras<br>y Facturación"]
+    AAC["Analista de<br>Atención al Cliente"]
+
+    P --> GGO
+    GGO --> SC
+    GGO --> AI
+    GGO --> SNOC
+    GGO --> MR
+    GGO --> SA
+    SA --> SACT
+    SA --> ACF
+    SA --> AAC
+
+    style P fill:#1a3a5c,stroke:#0d2137,color:#fff,stroke-width:3px
+    style GGO fill:#1e4d8c,stroke:#143560,color:#fff,stroke-width:2px
+    style SC fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style AI fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style SNOC fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style MR fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style SA fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style SACT fill:#4d8fd6,stroke:#2b6cb0,color:#fff
+    style ACF fill:#4d8fd6,stroke:#2b6cb0,color:#fff
+    style AAC fill:#4d8fd6,stroke:#2b6cb0,color:#fff
+
+
+flujo de proceso:
+
+graph TD
+    C["Cliente"]
+    AC["Atención al<br>Cliente"]
+    RS["Registro de<br>solicitud"]
+    ADM["Administración"]
+    AAT["Asignación al<br>área técnica"]
+    NOC["NOC / Técnicos"]
+    ES["Ejecución del<br>servicio"]
+    CC["Cierre del<br>caso"]
+
+    C --> AC
+    AC --> RS
+    RS --> ADM
+    ADM --> AAT
+    AAT --> NOC
+    NOC --> ES
+    ES --> CC
+
+    style C fill:#0d2137,stroke:#081524,color:#fff,stroke-width:3px
+    style AC fill:#1a3a5c,stroke:#0d2137,color:#fff,stroke-width:2px
+    style RS fill:#1e4d8c,stroke:#143560,color:#fff
+    style ADM fill:#2b6cb0,stroke:#1e4d8c,color:#fff
+    style AAT fill:#3a7bc8,stroke:#2b6cb0,color:#fff
+    style NOC fill:#4d8fd6,stroke:#3a7bc8,color:#fff
+    style ES fill:#6ba3e0,stroke:#4d8fd6,color:#000
+    style CC fill:#89b9e8,stroke:#6ba3e0,color:#000,stroke-width:2px
