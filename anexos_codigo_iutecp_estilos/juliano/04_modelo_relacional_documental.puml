@@ -1,0 +1,57 @@
+@startuml
+' Juliano — Modelo lógico relacional del prototipo
+skinparam defaultFontName Arial
+skinparam defaultFontColor #24171A
+skinparam backgroundColor #FFF7F8
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 35
+skinparam ranksep 35
+skinparam entity {
+  BackgroundColor #FFF7F8
+  BorderColor #8F1D2C
+  FontColor #24171A
+}
+skinparam note {
+  BackgroundColor #F7DDE1
+  BorderColor #C94F5D
+  FontColor #24171A
+}
+hide circle
+
+together {
+entity "PROCESO" as proceso {
+  * proceso_id : identificador
+  --
+  datos_maestros : referencia
+}
+entity "DOCUMENTO" as documento {
+  * documento_id : identificador
+  --
+  * proceso_id : referencia
+  estado : estado actual
+}
+}
+
+entity "MOVIMIENTO" as movimiento {
+  * movimiento_id : identificador
+  --
+  * documento_id : referencia
+  fecha : fecha del movimiento
+  estado : estado resultante
+  origen_destino : unidad relacionada
+}
+
+proceso ||--o{ documento : agrupa
+documento ||--o{ movimiento : registra historial
+
+note bottom of proceso
+Un proceso puede asociar
+múltiples documentos (1:N).
+end note
+
+note bottom of movimiento
+Los nombres finales de campos
+deben coincidir con el esquema SQLite real.
+end note
+@enduml

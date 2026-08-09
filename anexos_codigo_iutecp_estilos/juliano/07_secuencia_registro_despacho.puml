@@ -1,0 +1,51 @@
+@startuml
+' Juliano — Secuencia: registro y despacho de un expediente
+skinparam defaultFontName Arial
+skinparam defaultFontColor #24171A
+skinparam backgroundColor #FFF7F8
+skinparam shadowing false
+<style>
+  sequenceDiagram {
+    participant {
+      Padding 20
+    }
+  }
+</style>
+skinparam BoxPadding 10
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #24171A
+  LifeLineBorderColor #8F1D2C
+  LifeLineBackgroundColor #FFF7F8
+  ParticipantBorderColor #8F1D2C
+  ParticipantBackgroundColor #F7DDE1
+  ParticipantFontColor #24171A
+  ActorBorderColor #8F1D2C
+  ActorFontColor #24171A
+}
+
+actor "Personal de\nPresidencia" as P
+participant "Prototipo" as S
+database "SQLite" as DB
+actor "Presidente" as PR
+participant "Departamento\nde destino" as D
+
+P -> S : Registrar expediente recibido
+S -> S : Validar datos requeridos
+S -> DB : Guardar ingreso y asociación al proceso
+DB --> S : Confirmación
+S --> P : Expediente registrado
+
+P -> PR : Remitir documento para firma
+PR --> P : Devolver documento firmado
+
+P -> S : Actualizar estado y registrar egreso
+S -> DB : Guardar movimiento e historial
+DB --> S : Confirmación
+S --> P : Estado actualizado
+
+P -> D : Despachar expediente
+P -> S : Confirmar despacho
+S -> DB : Registrar movimiento final
+S --> P : Trazabilidad disponible
+@enduml

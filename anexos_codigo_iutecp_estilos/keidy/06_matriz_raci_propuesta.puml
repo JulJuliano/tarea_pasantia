@@ -1,0 +1,28 @@
+@startsalt
+<style>
+  root {
+    FontName Verdana
+    FontColor #1C2B24
+  }
+  table {
+    BackgroundColor #F7FCF9
+    LineColor #68B398
+  }
+  header {
+    BackgroundColor #1F6F5B
+    FontColor #F7FCF9
+    FontStyle bold
+  }
+</style>
+{+
+{# Matriz RACI propuesta | Solicitante | Procura | Administración | Gerencia | Proveedor
+Recibir y validar requisición | R | A | I | I | I
+Solicitar cotizaciones | I | R/A | I | I | C
+Comparar alternativas | C | R | C | A | I
+Autorizar adquisición | I | C | C | R/A | I
+Formalizar orden de compra | I | R | A | I | C
+Seguimiento de la adquisición | I | R/A | C | I | C
+Cierre administrativo | I | R | A | I | I
+}
+}
+@endsalt

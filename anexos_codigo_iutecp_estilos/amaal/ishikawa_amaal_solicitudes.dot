@@ -1,0 +1,85 @@
+graph AMAAL_ISHIKAWA {
+  graph [
+    layout=neato,
+    overlap=false,
+    splines=line,
+    outputorder=edgesfirst,
+    bgcolor="white",
+    margin=0.15,
+    pad=0.20,
+    fontname="Tahoma"
+  ];
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Tahoma",
+    fontsize=10.5,
+    fontcolor="#24182D",
+    color="#5B2A86",
+    fillcolor="#EDE3F7",
+    penwidth=1.15,
+    margin="0.10,0.07"
+  ];
+
+  edge [
+    dir=none,
+    color="#33283B",
+    penwidth=1.3
+  ];
+
+  // Composición vertical por agrupaciones: identidad exclusiva de Amaal
+  cola [shape=plaintext, label="GESTIÓN DE\nSOLICITUDES", fontname="Tahoma Bold", fontcolor="#5B2A86", pos="5.0,9.2!", pin=true];
+  j1 [shape=point, width=0.07, color="#5B2A86", pos="5.0,7.7!", pin=true];
+  j2 [shape=point, width=0.07, color="#5B2A86", pos="5.0,5.9!", pin=true];
+  j3 [shape=point, width=0.07, color="#5B2A86", pos="5.0,4.1!", pin=true];
+  j4 [shape=point, width=0.07, color="#5B2A86", pos="5.0,2.3!", pin=true];
+
+  efecto [
+    shape=box,
+    style="rounded,filled,bold",
+    fontname="Tahoma Bold",
+    fontsize=11,
+    fontcolor="white",
+    color="#5B2A86",
+    fillcolor="#5B2A86",
+    penwidth=1.5,
+    label="DEBILIDADES EN EL CONTROL\nY TRAZABILIDAD DE LAS\nSOLICITUDES DE SERVICIO",
+    pos="5.0,0.35!",
+    pin=true
+  ];
+
+  cola -- j1 -- j2 -- j3 -- j4 -- efecto;
+
+  // Grupo izquierdo superior: procedimiento
+  gp [label="PROCEDIMIENTO", fontname="Tahoma Bold", pos="2.55,7.7!", pin=true];
+  p1 [label="Flujo único\nno formalizado", pos="0.75,8.55!", pin=true];
+  p2 [label="Criterios de cierre\nno unificados", pos="0.75,6.85!", pin=true];
+  p1 -- gp;
+  p2 -- gp;
+  gp -- j1;
+
+  // Grupo derecho superior: comunicación
+  gc [label="COMUNICACIÓN", fontname="Tahoma Bold", pos="7.45,5.9!", pin=true];
+  c1 [label="Transferencia\nfragmentada entre áreas", pos="9.25,6.75!", pin=true];
+  c2 [label="Responsables no\nsiempre visibles", pos="9.25,5.05!", pin=true];
+  c1 -- gc;
+  c2 -- gc;
+  gc -- j2;
+
+  // Grupo izquierdo inferior: registro
+  gr [label="REGISTRO", fontname="Tahoma Bold", pos="2.55,4.1!", pin=true];
+  r1 [label="Formatos no\nestandarizados", pos="0.75,4.95!", pin=true];
+  r2 [label="Actualización desigual\ndel estatus", pos="0.75,3.25!", pin=true];
+  r1 -- gr;
+  r2 -- gr;
+  gr -- j3;
+
+  // Grupo derecho inferior: seguimiento
+  gs [label="SEGUIMIENTO", fontname="Tahoma Bold", pos="7.45,2.3!", pin=true];
+  s1 [label="Ausencia de tiempos\nde referencia", pos="9.25,3.15!", pin=true];
+  s2 [label="Ausencia de\nindicadores básicos", pos="9.25,1.45!", pin=true];
+  s1 -- gs;
+  s2 -- gs;
+  gs -- j4;
+}

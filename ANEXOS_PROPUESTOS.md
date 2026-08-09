@@ -33,6 +33,20 @@
 12. Ficha de indicadores del proceso (fórmula, fuente, frecuencia, responsable) — Python/pandas.
 13. Comparación AS-IS vs TO-BE por número de pasos/responsables/puntos de control — Python; no usar datos de tiempos si no fueron medidos.
 
+### Selección concreta sugerida previamente para Keidy
+
+Esta es la selección corta que se había recomendado como conjunto principal de anexos para demostrar tanto el diagnóstico como los productos de la propuesta. Las letras definitivas deben asignarse solo cuando se cierre el orden institucional de anexos.
+
+1. Diagrama de Ishikawa de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura — GraphViz, PlantUML o Mermaid adaptado.
+2. Flujograma AS-IS del proceso actual de procura — Mermaid, BPMN o PlantUML Activity.
+3. Flujograma TO-BE del proceso simplificado propuesto — Mermaid, BPMN o PlantUML Activity.
+4. Formato estandarizado de requisición / solicitud de compra — HTML/CSS o Python → PDF/PNG.
+5. Formato de orden de compra o de seguimiento de la compra/cotización — HTML/CSS o Python → PDF/PNG, según el producto que realmente haya elaborado Keidy.
+6. Matriz de autorización por monto — Python/pandas → tabla; completar únicamente con niveles y rangos reales aprobados por la empresa.
+7. Ficha o matriz de indicadores básicos de seguimiento — Python/pandas; incluir fórmula, fuente de datos, frecuencia y responsable únicamente cuando esos elementos hayan sido realmente definidos.
+
+> Esta selección corta no reemplaza el inventario amplio anterior. Sirve como conjunto prioritario para evitar que el informe afirme que se formularon productos que después no aparecen demostrados en los anexos.
+
 ## Amaal — Administración / IDETEL
 
 1. Diagrama de Ishikawa del control de solicitudes — PlantUML/GraphViz o Mermaid adaptado.

@@ -1,0 +1,34 @@
+%% Keidy — Flujo TO-BE propuesto para simplificación administrativa
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Verdana, sans-serif","primaryColor":"#E5F3EC","primaryTextColor":"#1C2B24","primaryBorderColor":"#1F6F5B","secondaryColor":"#68B398","secondaryTextColor":"#1C2B24","secondaryBorderColor":"#1F6F5B","lineColor":"#1C2B24"},"flowchart":{"curve":"basis","nodeSpacing":26,"rankSpacing":32}}}%%
+flowchart TB
+    A([Necesidad de compra]) --> B[Requisición en formato estandarizado]
+    B --> C{¿Información completa?}
+    C -- No --> B
+    C -- Sí --> D[Registrar solicitud y responsable]
+    D --> E[Solicitar cotizaciones con formato uniforme]
+    E --> F[Comparar alternativas]
+    F --> G[Aplicar criterio de autorización formalizado]
+    G --> H[Emitir orden de compra estandarizada]
+    H --> I[Actualizar estatus y seguimiento]
+    I --> J[Verificar recepción / cierre]
+    J --> K([Cerrar expediente de compra])
+
+    subgraph CONTROL[Controles incorporados]
+      direction LR
+      C1[Responsables definidos]
+      C2[Formatos uniformes]
+      C3[Seguimiento del estatus]
+      C4[Indicadores básicos]
+    end
+
+    D -.-> C1
+    E -.-> C2
+    I -.-> C3
+    J -.-> C4
+
+    classDef proceso fill:#E5F3EC,stroke:#1F6F5B,color:#1C2B24,stroke-width:1.3px;
+    classDef decision fill:#68B398,stroke:#1F6F5B,color:#1C2B24,stroke-width:1.4px;
+    classDef control fill:#E5F3EC,stroke:#68B398,color:#1C2B24,stroke-width:1px;
+    class A,B,D,E,F,G,H,I,J,K proceso;
+    class C decision;
+    class C1,C2,C3,C4 control;

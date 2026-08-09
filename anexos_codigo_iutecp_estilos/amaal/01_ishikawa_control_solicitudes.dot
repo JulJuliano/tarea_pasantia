@@ -1,0 +1,64 @@
+digraph G {
+  graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.55, margin=0.1, bgcolor="#FAF8FD", fontname="Tahoma"];
+  node [shape=box, style="rounded,filled", fontname="Tahoma", fontsize=10, fontcolor="#24182D", color="#5B2A86", fillcolor="#EDE3F7", penwidth=1.2, margin="0.09,0.06"];
+  edge [color="#24182D", penwidth=1.1, arrowsize=0.7];
+
+  problema [shape=box, style="rounded,filled,bold", fillcolor="#5B2A86", fontcolor="#FAF8FD", color="#5B2A86", label="DEBILIDADES EN EL CONTROL\nY TRAZABILIDAD DE LAS\nSOLICITUDES DE SERVICIO"];
+
+  subgraph cluster_procedimiento {
+    label="PROCEDIMIENTO";
+    style="rounded,filled";
+    color="#9B6BC4";
+    fillcolor="#FAF8FD";
+    fontname="Tahoma";
+    pr1 [shape=note, label="flujo único\nno formalizado"];
+    pr2 [shape=note, label="criterios de cierre\nno unificados"];
+    procedimiento [label="Procedimiento", fillcolor="#EDE3F7", color="#9B6BC4"];
+    pr1 -> procedimiento;
+    pr2 -> procedimiento;
+  }
+
+  subgraph cluster_comunicacion {
+    label="COMUNICACIÓN";
+    style="rounded,filled";
+    color="#9B6BC4";
+    fillcolor="#FAF8FD";
+    fontname="Tahoma";
+    co1 [shape=note, label="transferencia\nfragmentada"];
+    co2 [shape=note, label="responsables no\nsiempre visibles"];
+    comunicacion [label="Comunicación", fillcolor="#EDE3F7", color="#9B6BC4"];
+    co1 -> comunicacion;
+    co2 -> comunicacion;
+  }
+
+  subgraph cluster_registro {
+    label="REGISTRO";
+    style="rounded,filled";
+    color="#9B6BC4";
+    fillcolor="#FAF8FD";
+    fontname="Tahoma";
+    re1 [shape=note, label="formatos no\nestandarizados"];
+    re2 [shape=note, label="estatus actualizado\nde forma desigual"];
+    registro [label="Registro", fillcolor="#EDE3F7", color="#9B6BC4"];
+    re1 -> registro;
+    re2 -> registro;
+  }
+
+  subgraph cluster_seguimiento {
+    label="SEGUIMIENTO";
+    style="rounded,filled";
+    color="#9B6BC4";
+    fillcolor="#FAF8FD";
+    fontname="Tahoma";
+    se1 [shape=note, label="sin tiempos de\nreferencia"];
+    se2 [shape=note, label="sin indicadores\nbásicos"];
+    seguimiento [label="Seguimiento", fillcolor="#EDE3F7", color="#9B6BC4"];
+    se1 -> seguimiento;
+    se2 -> seguimiento;
+  }
+
+  procedimiento -> problema;
+  comunicacion -> problema;
+  registro -> problema;
+  seguimiento -> problema;
+}

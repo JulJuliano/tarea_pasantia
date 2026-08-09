@@ -1,0 +1,34 @@
+%% Amaal — Diagrama de comunicación interdepartamental
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Tahoma, DejaVu Sans, sans-serif","background":"#FAF8FD","primaryColor":"#EDE3F7","primaryTextColor":"#24182D","primaryBorderColor":"#5B2A86","secondaryColor":"#FAF8FD","secondaryTextColor":"#24182D","secondaryBorderColor":"#9B6BC4","lineColor":"#24182D","tertiaryColor":"#FAF8FD"},"flowchart":{"curve":"basis","nodeSpacing":30,"rankSpacing":34}}}%%
+flowchart TB
+    AC[Atención al Cliente]
+    AD[Administración]
+    NOC[NOC / Área técnica]
+    COM[Área comercial / relacionada]
+    CL([Cliente / Suscriptor])
+
+    subgraph NUCLEO[Información mínima compartida]
+      direction LR
+      I1[Identificación del caso]
+      I2[Responsable / área]
+      I3[Estatus actualizado]
+      I4[Criterio de cierre]
+    end
+
+    CL <--> AC
+    AC <--> AD
+    AD <--> NOC
+    AD <--> COM
+    AC <--> NOC
+
+    AC -.-> I1
+    AD -.-> I2
+    NOC -.-> I3
+    AC -.-> I4
+
+    classDef area fill:#EDE3F7,stroke:#5B2A86,color:#24182D,stroke-width:1.3px;
+    classDef dato fill:#FAF8FD,stroke:#9B6BC4,color:#24182D,stroke-width:1px;
+    classDef cliente fill:#EDE3F7,stroke:#5B2A86,color:#24182D,stroke-width:1.4px;
+    class AC,AD,NOC,COM area;
+    class I1,I2,I3,I4 dato;
+    class CL cliente;

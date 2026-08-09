@@ -1,0 +1,46 @@
+@startuml
+' Amaal — Swimlane de gestión de solicitudes de servicio
+skinparam defaultFontName Tahoma
+skinparam defaultFontColor #24182D
+skinparam backgroundColor #FAF8FD
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor #EDE3F7
+  BorderColor #5B2A86
+  FontColor #24182D
+}
+skinparam partition {
+  BackgroundColor #FAF8FD
+  BorderColor #9B6BC4
+  FontColor #24182D
+}
+skinparam ArrowColor #24182D
+
+|Cliente|
+start
+:Presentar afiliación o incidencia;
+
+|Atención al Cliente|
+:Recibir solicitud;
+:Registrar datos iniciales;
+:Clasificar el tipo de caso;
+
+|Administración|
+:Revisar información administrativa;
+:Procesar pago, facturación o documentación cuando corresponda;
+
+|NOC / Técnicos|
+:Atender requerimiento técnico cuando corresponda;
+:Informar resultado de la atención;
+
+|Administración|
+:Actualizar seguimiento administrativo;
+
+|Atención al Cliente|
+:Comunicar estatus / resultado al suscriptor;
+:Confirmar cierre del caso;
+
+|Cliente|
+:Recibir respuesta final;
+stop
+@enduml

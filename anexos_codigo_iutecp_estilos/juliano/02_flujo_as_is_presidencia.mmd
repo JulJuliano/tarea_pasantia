@@ -1,0 +1,32 @@
+%% Juliano — Flujo AS-IS del proceso documental actual de Presidencia
+%% Identidad: técnico, limpio, estructurado. Paleta Venangocupet / software.
+%% Diseño compacto para un render aproximadamente cuadrado.
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#F7DDE1","primaryTextColor":"#24171A","primaryBorderColor":"#8F1D2C","secondaryColor":"#FFF7F8","secondaryTextColor":"#24171A","secondaryBorderColor":"#C94F5D","lineColor":"#24171A","tertiaryColor":"#FFF7F8"},"flowchart":{"curve":"basis","nodeSpacing":28,"rankSpacing":34}}}%%
+flowchart TB
+    A([Recepción del expediente]) --> B[Revisión ortográfica y de formato]
+    B --> C[Registro de ingreso en hoja de cálculo]
+    C --> D[Remisión al Presidente para firma]
+    D --> E[Recepción del documento firmado]
+    E --> F[Registro de egreso en hoja de cálculo]
+    F --> G[Despacho al departamento de destino]
+
+    C -.-> H[Consulta del estado mediante filtros y revisión de registros]
+    F -.-> I[Preparación manual de resúmenes o reportes]
+
+    subgraph RIESGOS[Situaciones observadas]
+      direction LR
+      R1[Transcripción repetitiva]
+      R2[Riesgo de duplicidad u omisión]
+      R3[Mayor tiempo para consolidar información]
+    end
+
+    C -.-> R1
+    H -.-> R2
+    I -.-> R3
+
+    classDef principal fill:#F7DDE1,stroke:#8F1D2C,color:#24171A,stroke-width:1.5px;
+    classDef auxiliar fill:#FFF7F8,stroke:#C94F5D,color:#24171A,stroke-width:1px;
+    classDef riesgo fill:#FFF7F8,stroke:#8F1D2C,color:#24171A,stroke-width:1px,stroke-dasharray:4 3;
+    class A,B,C,D,E,F,G principal;
+    class H,I auxiliar;
+    class R1,R2,R3 riesgo;

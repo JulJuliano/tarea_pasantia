@@ -1,0 +1,86 @@
+graph KEIDY_ISHIKAWA {
+  graph [
+    layout=neato,
+    overlap=false,
+    splines=line,
+    outputorder=edgesfirst,
+    bgcolor="white",
+    margin=0.15,
+    pad=0.20,
+    fontname="Verdana"
+  ];
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Verdana",
+    fontsize=10,
+    fontcolor="#1C2B24",
+    color="#1F6F5B",
+    fillcolor="#E5F3EC",
+    penwidth=1.15,
+    margin="0.10,0.07"
+  ];
+
+  edge [
+    dir=none,
+    color="#26352F",
+    penwidth=1.3
+  ];
+
+  // Espina horizontal continua propia del proceso de procura
+  cola [shape=plaintext, label="FLUJO DE\nPROCURA", fontname="Verdana Bold", fontcolor="#1F6F5B", pos="0.4,1.8!", pin=true];
+  j1 [shape=point, width=0.07, color="#1F6F5B", pos="1.8,1.8!", pin=true];
+  j2 [shape=point, width=0.07, color="#1F6F5B", pos="3.4,1.8!", pin=true];
+  j3 [shape=point, width=0.07, color="#1F6F5B", pos="5.0,1.8!", pin=true];
+  j4 [shape=point, width=0.07, color="#1F6F5B", pos="6.6,1.8!", pin=true];
+  j5 [shape=point, width=0.07, color="#1F6F5B", pos="8.2,1.8!", pin=true];
+
+  efecto [
+    shape=box,
+    style="rounded,filled,bold",
+    fontname="Verdana Bold",
+    fontsize=11,
+    fontcolor="white",
+    color="#1F6F5B",
+    fillcolor="#1F6F5B",
+    penwidth=1.5,
+    label="DEMORAS Y PÉRDIDA DE\nTRAZABILIDAD EN EL\nPROCESO DE PROCURA",
+    pos="10.3,1.8!",
+    pin=true
+  ];
+
+  cola -- j1 -- j2 -- j3 -- j4 -- j5 -- efecto;
+
+  // Las causas se levantan sobre la espina para diferenciar el tratamiento de Keidy
+  c1 [label="RECEPCIÓN", fontname="Verdana Bold", pos="1.25,4.1!", pin=true];
+  n1 [label="Canal de recepción\nno formalizado", pos="0.35,5.25!", pin=true];
+  n2 [label="Requisiciones por\nmedios no uniformes", pos="2.05,5.25!", pin=true];
+  n1 -- c1;
+  n2 -- c1;
+  c1 -- j1;
+
+  c2 [label="DOCUMENTACIÓN", fontname="Verdana Bold", pos="3.25,4.1!", pin=true];
+  d1 [label="Formatos no\nuniformes", pos="2.45,5.25!", pin=true];
+  d2 [label="Expedientes\ndispersos", pos="4.05,5.25!", pin=true];
+  d1 -- c2;
+  d2 -- c2;
+  c2 -- j2;
+
+  c3 [label="AUTORIZACIÓN", fontname="Verdana Bold", pos="5.0,4.1!", pin=true, color="#B76D4A"];
+  a1 [label="Criterios susceptibles\nde formalización", pos="5.0,5.25!", pin=true, color="#B76D4A"];
+  a1 -- c3;
+  c3 -- j3;
+
+  c4 [label="RESPONSABILIDADES", fontname="Verdana Bold", pos="6.8,4.1!", pin=true];
+  rs1 [label="Responsables no\nsiempre visibles", pos="6.8,5.25!", pin=true];
+  rs1 -- c4;
+  c4 -- j4;
+
+  c5 [label="SEGUIMIENTO", fontname="Verdana Bold", pos="8.65,4.1!", pin=true, color="#B76D4A"];
+  sg1 [label="Control manual\ndel estatus", pos="7.8,5.25!", pin=true];
+  sg2 [label="Ausencia de\nindicadores básicos", pos="9.5,5.25!", pin=true];
+  sg1 -- c5;
+  sg2 -- c5;
+  c5 -- j5;
+}

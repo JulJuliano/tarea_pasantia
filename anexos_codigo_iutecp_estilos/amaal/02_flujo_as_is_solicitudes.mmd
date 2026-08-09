@@ -1,0 +1,27 @@
+%% Amaal — Flujo AS-IS de afiliaciones e incidencias
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Tahoma, DejaVu Sans, sans-serif","background":"#FAF8FD","primaryColor":"#EDE3F7","primaryTextColor":"#24182D","primaryBorderColor":"#5B2A86","secondaryColor":"#FAF8FD","secondaryTextColor":"#24182D","secondaryBorderColor":"#9B6BC4","lineColor":"#24182D","tertiaryColor":"#FAF8FD"},"flowchart":{"curve":"basis","nodeSpacing":26,"rankSpacing":32}}}%%
+flowchart TB
+    A([Cliente presenta afiliación o incidencia]) --> B[Atención al Cliente recibe la solicitud]
+    B --> C[Registro inicial con formatos no unificados]
+    C --> D[Remisión de información al área relacionada]
+    D --> E[Administración procesa pagos, facturación o documentación]
+    E --> F[Área técnica / NOC atiende cuando corresponde]
+    F --> G[Actualización del caso por canales y registros separados]
+    G --> H[Consulta del estado por Atención al Cliente]
+    H --> I([Cierre del caso])
+
+    subgraph DEBILIDADES[Debilidades observadas]
+      direction LR
+      D1[Comunicación fragmentada]
+      D2[Estatus no centralizado]
+      D3[Sin tiempos de referencia por etapa]
+    end
+
+    D -.-> D1
+    G -.-> D2
+    H -.-> D3
+
+    classDef servicio fill:#EDE3F7,stroke:#5B2A86,color:#24182D,stroke-width:1.3px;
+    classDef apoyo fill:#FAF8FD,stroke:#9B6BC4,color:#24182D,stroke-width:1px;
+    class A,B,C,D,E,F,G,H,I servicio;
+    class D1,D2,D3 apoyo;

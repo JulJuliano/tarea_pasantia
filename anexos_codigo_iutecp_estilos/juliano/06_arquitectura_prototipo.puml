@@ -1,0 +1,44 @@
+@startuml
+' Juliano — Arquitectura lógica del prototipo
+skinparam defaultFontName Arial
+skinparam defaultFontColor #24171A
+skinparam backgroundColor #FFF7F8
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 30
+skinparam ranksep 30
+skinparam component {
+  BackgroundColor #F7DDE1
+  BorderColor #8F1D2C
+  FontColor #24171A
+}
+skinparam database {
+  BackgroundColor #FFF7F8
+  BorderColor #C94F5D
+  FontColor #24171A
+}
+skinparam rectangle {
+  BackgroundColor #FFF7F8
+  BorderColor #8F1D2C
+}
+left to right direction
+
+actor "Personal de\nPresidencia" as user
+
+rectangle "Aplicación de escritorio" as desktop {
+  component "Interfaz visual\n(WebView2)" as ui
+  component "Aplicación Wails" as wails
+  component "Lógica de registro,\nconsulta e historial" as logic
+  component "Generación de\nreportes/resúmenes" as reports
+}
+
+database "SQLite\nBase de datos local" as db
+
+user --> ui
+ui --> wails
+wails --> logic
+logic --> db
+logic --> reports
+reports --> db
+@enduml

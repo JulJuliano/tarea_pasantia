@@ -1,0 +1,27 @@
+graph G {
+  graph [layout=dot, rankdir=LR, splines=polyline, nodesep=0.38, ranksep=0.55, margin=0.1, bgcolor="#F7FCF9", fontname="Verdana"];
+  node [shape=box, style="rounded,filled", fontname="Verdana", fontsize=10, fontcolor="#1C2B24", color="#1F6F5B", fillcolor="#E5F3EC", penwidth=1.2, margin="0.09,0.06"];
+  edge [dir=none, color="#1C2B24", penwidth=1.2];
+
+  origen [label="FLUJO DE\nPROCURA", fillcolor="#EDF8F2", color="#68B398"];
+  j1 [label="", shape=point, width=0.06, fillcolor="#1F6F5B", color="#1F6F5B"];
+  j2 [label="", shape=point, width=0.06, fillcolor="#1F6F5B", color="#1F6F5B"];
+  j3 [label="", shape=point, width=0.06, fillcolor="#1F6F5B", color="#1F6F5B"];
+  j4 [label="", shape=point, width=0.06, fillcolor="#1F6F5B", color="#1F6F5B"];
+  j5 [label="", shape=point, width=0.06, fillcolor="#1F6F5B", color="#1F6F5B"];
+
+  problema [shape=box, style="rounded,filled,bold", fillcolor="#1F6F5B", fontcolor="#F7FCF9", color="#1F6F5B", label="DEMORAS Y PÉRDIDA DE\nTRAZABILIDAD EN EL\nPROCESO DE PROCURA"];
+  origen -- j1 -- j2 -- j3 -- j4 -- j5 -- problema;
+
+  p1 [label="CANAL DE RECEPCIÓN\n• requisiciones por medios no uniformes"];
+  p2 [label="DOCUMENTACIÓN\n• formatos no uniformes\n• expedientes dispersos"];
+  p3 [label="AUTORIZACIÓN\n• criterios susceptibles de formalización", color="#68B398"];
+  p4 [label="RESPONSABILIDADES\n• responsables no siempre visibles", color="#68B398"];
+  p5 [label="SEGUIMIENTO\n• control manual del estatus\n• ausencia de indicadores básicos", color="#B76D4A"];
+
+  p1 -- j1;
+  p2 -- j2;
+  p3 -- j3;
+  p4 -- j4;
+  p5 -- j5;
+}

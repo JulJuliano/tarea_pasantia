@@ -1,0 +1,27 @@
+%% Keidy — Flujo AS-IS del proceso de procura
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Verdana, sans-serif","primaryColor":"#E5F3EC","primaryTextColor":"#1C2B24","primaryBorderColor":"#1F6F5B","secondaryColor":"#68B398","secondaryTextColor":"#1C2B24","secondaryBorderColor":"#1F6F5B","lineColor":"#1C2B24"},"flowchart":{"curve":"basis","nodeSpacing":26,"rankSpacing":32}}}%%
+flowchart TB
+    A([Necesidad de compra]) --> B[Recepción de requisición por canales no uniformes]
+    B --> C[Revisión de información requerida]
+    C --> D[Solicitud de cotizaciones a proveedores]
+    D --> E[Recepción y comparación de cotizaciones]
+    E --> F[Trámite de aprobación]
+    F --> G[Preparación / emisión de orden de compra]
+    G --> H[Seguimiento de la adquisición]
+    H --> I([Cierre administrativo])
+
+    subgraph PUNTOS[Situaciones observadas]
+      direction LR
+      P1[Formatos no uniformes]
+      P2[Cuellos de botella en aprobaciones]
+      P3[Dificultad para conocer estatus]
+    end
+
+    B -.-> P1
+    F -.-> P2
+    H -.-> P3
+
+    classDef proceso fill:#E5F3EC,stroke:#1F6F5B,color:#1C2B24,stroke-width:1.3px;
+    classDef alerta fill:#68B398,stroke:#B76D4A,color:#1C2B24,stroke-width:1.2px;
+    class A,B,C,D,E,F,G,H,I proceso;
+    class P1,P2,P3 alerta;

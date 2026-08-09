@@ -1,0 +1,26 @@
+%% Juliano — Esquema propuesto de respaldo periódico de SQLite
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#F7DDE1","primaryTextColor":"#24171A","primaryBorderColor":"#8F1D2C","secondaryColor":"#FFF7F8","secondaryTextColor":"#24171A","secondaryBorderColor":"#C94F5D","lineColor":"#24171A"},"flowchart":{"curve":"basis","nodeSpacing":28,"rankSpacing":34}}}%%
+flowchart TB
+    A([Inicio del respaldo periódico]) --> B[Identificar el archivo SQLite activo]
+    B --> C[Verificar que el archivo pueda copiarse de forma íntegra]
+    C --> D[Crear copia de respaldo]
+    D --> E[Guardar en ubicación segura definida por la organización]
+    E --> F[Identificar la copia con fecha de respaldo]
+    F --> G[Verificar que la copia exista y sea accesible]
+    G --> H([Respaldo concluido])
+
+    subgraph CRITERIOS[Criterios de control]
+      direction LR
+      C1[Periodicidad definida]
+      C2[Ubicación segura]
+      C3[Verificación de integridad]
+    end
+
+    A -.-> C1
+    E -.-> C2
+    G -.-> C3
+
+    classDef principal fill:#F7DDE1,stroke:#8F1D2C,color:#24171A,stroke-width:1.5px;
+    classDef criterio fill:#FFF7F8,stroke:#C94F5D,color:#24171A,stroke-width:1px;
+    class A,B,C,D,E,F,G,H principal;
+    class C1,C2,C3 criterio;

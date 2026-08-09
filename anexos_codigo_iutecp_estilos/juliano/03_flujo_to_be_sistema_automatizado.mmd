@@ -1,0 +1,28 @@
+%% Juliano — Flujo TO-BE con apoyo del prototipo automatizado
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#F7DDE1","primaryTextColor":"#24171A","primaryBorderColor":"#8F1D2C","secondaryColor":"#FFF7F8","secondaryTextColor":"#24171A","secondaryBorderColor":"#C94F5D","lineColor":"#24171A"},"flowchart":{"curve":"basis","nodeSpacing":26,"rankSpacing":32}}}%%
+flowchart TB
+    A([Recepción del expediente]) --> B[Revisión ortográfica y de formato]
+    B --> C[Registrar ingreso en el sistema]
+    C --> D[Asociar documento con su proceso]
+    D --> E[Remitir al Presidente para firma]
+    E --> F[Actualizar estado del documento firmado]
+    F --> G[Registrar egreso]
+    G --> H[Despachar al departamento de destino]
+
+    subgraph SISTEMA[Funciones automáticas de apoyo]
+      direction LR
+      S1[Validación de datos]
+      S2[Historial de movimientos]
+      S3[Consulta y trazabilidad]
+      S4[Reportes y resúmenes]
+    end
+
+    C -.-> S1
+    F -.-> S2
+    H -.-> S3
+    S2 --> S4
+
+    classDef principal fill:#F7DDE1,stroke:#8F1D2C,color:#24171A,stroke-width:1.5px;
+    classDef sistema fill:#C94F5D,stroke:#8F1D2C,color:#24171A,stroke-width:1.2px;
+    class A,B,C,D,E,F,G,H principal;
+    class S1,S2,S3,S4 sistema;

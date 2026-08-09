@@ -1,0 +1,37 @@
+%% Juliano — Mapa de módulos de la interfaz
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#F7DDE1","primaryTextColor":"#24171A","primaryBorderColor":"#8F1D2C","secondaryColor":"#C94F5D","secondaryTextColor":"#24171A","secondaryBorderColor":"#8F1D2C","lineColor":"#24171A"},"flowchart":{"curve":"basis","nodeSpacing":28,"rankSpacing":32}}}%%
+flowchart TB
+    INICIO([Aplicación de control documental])
+
+    subgraph MODULOS[Módulos principales]
+      direction LR
+      M1[Registro]
+      M2[Consulta]
+      M3[Historial]
+      M4[Reportes]
+    end
+
+    INICIO --> M1
+    INICIO --> M2
+    INICIO --> M3
+    INICIO --> M4
+
+    subgraph FUNCIONES[Funciones vinculadas]
+      direction LR
+      F1[Ingreso / egreso]
+      F2[Búsqueda por proceso o documento]
+      F3[Movimientos y estados]
+      F4[Resúmenes para Presidencia]
+    end
+
+    M1 --> F1
+    M2 --> F2
+    M3 --> F3
+    M4 --> F4
+
+    classDef raiz fill:#8F1D2C,stroke:#8F1D2C,color:#FFF7F8,stroke-width:1.5px;
+    classDef modulo fill:#F7DDE1,stroke:#C94F5D,color:#24171A,stroke-width:1.2px;
+    classDef funcion fill:#FFF7F8,stroke:#C94F5D,color:#24171A,stroke-width:1px;
+    class INICIO raiz;
+    class M1,M2,M3,M4 modulo;
+    class F1,F2,F3,F4 funcion;

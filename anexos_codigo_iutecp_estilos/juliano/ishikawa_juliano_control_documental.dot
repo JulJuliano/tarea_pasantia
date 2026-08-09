@@ -1,0 +1,86 @@
+graph JULIANO_ISHIKAWA {
+  graph [
+    layout=neato,
+    overlap=false,
+    splines=line,
+    outputorder=edgesfirst,
+    bgcolor="white",
+    margin=0.15,
+    pad=0.20,
+    fontname="Arial"
+  ];
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fixedsize=false,
+    fontname="Arial",
+    fontsize=10.5,
+    fontcolor="#24171A",
+    color="#8F1D2C",
+    fillcolor="#F7DDE1",
+    penwidth=1.2,
+    margin="0.10,0.07"
+  ];
+
+  edge [
+    dir=none,
+    color="#3A3335",
+    penwidth=1.35
+  ];
+
+  // Espina principal técnica y compacta
+  cola [shape=plaintext, label="CONTROL DOCUMENTAL\nEN PRESIDENCIA", fontname="Arial Bold", fontcolor="#8F1D2C", pos="0.4,4.0!", pin=true];
+  j1 [shape=point, width=0.07, color="#8F1D2C", fillcolor="#8F1D2C", pos="2.0,4.0!", pin=true];
+  j2 [shape=point, width=0.07, color="#8F1D2C", fillcolor="#8F1D2C", pos="3.8,4.0!", pin=true];
+  j3 [shape=point, width=0.07, color="#8F1D2C", fillcolor="#8F1D2C", pos="5.6,4.0!", pin=true];
+  j4 [shape=point, width=0.07, color="#8F1D2C", fillcolor="#8F1D2C", pos="7.4,4.0!", pin=true];
+
+  efecto [
+    shape=box,
+    style="rounded,filled,bold",
+    fontname="Arial Bold",
+    fontsize=11,
+    fontcolor="white",
+    color="#8F1D2C",
+    fillcolor="#8F1D2C",
+    penwidth=1.5,
+    label="DIFICULTAD PARA EL CONTROL\nY TRAZABILIDAD DE LOS\nMOVIMIENTOS DOCUMENTALES",
+    pos="9.5,4.0!",
+    pin=true
+  ];
+
+  cola -- j1 -- j2 -- j3 -- j4 -- efecto;
+
+  // Rama superior izquierda: registro manual
+  c_reg [label="REGISTRO MANUAL", fontname="Arial Bold", pos="1.5,6.3!", pin=true];
+  r1 [label="Control mediante\nhoja de cálculo", pos="0.5,7.4!", pin=true];
+  r2 [label="Transcripción\nrepetitiva de datos", pos="2.5,7.4!", pin=true];
+  r1 -- c_reg;
+  r2 -- c_reg;
+  c_reg -- j1;
+
+  // Rama inferior izquierda: integridad del registro
+  c_int [label="INTEGRIDAD DEL REGISTRO", fontname="Arial Bold", pos="3.2,1.8!", pin=true];
+  i1 [label="Riesgo de\nduplicidad", pos="2.2,0.7!", pin=true];
+  i2 [label="Riesgo de\nomisión", pos="4.2,0.7!", pin=true];
+  i1 -- c_int;
+  i2 -- c_int;
+  c_int -- j2;
+
+  // Rama superior derecha: consulta y seguimiento
+  c_seg [label="CONSULTA Y SEGUIMIENTO", fontname="Arial Bold", pos="5.8,6.3!", pin=true];
+  s1 [label="Consulta manual\nmediante filtros", pos="4.8,7.4!", pin=true];
+  s2 [label="Dificultad para verificar\nrápidamente estado y ruta", pos="6.9,7.4!", pin=true];
+  s1 -- c_seg;
+  s2 -- c_seg;
+  c_seg -- j3;
+
+  // Rama inferior derecha: reportes
+  c_rep [label="REPORTES Y RESÚMENES", fontname="Arial Bold", pos="7.2,1.8!", pin=true];
+  p1 [label="Consolidación manual\nde información", pos="6.1,0.7!", pin=true];
+  p2 [label="Mayor tiempo para\npreparar resúmenes", pos="8.3,0.7!", pin=true];
+  p1 -- c_rep;
+  p2 -- c_rep;
+  c_rep -- j4;
+}

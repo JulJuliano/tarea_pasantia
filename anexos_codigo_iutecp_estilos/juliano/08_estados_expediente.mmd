@@ -1,0 +1,18 @@
+%% Juliano — Estados del expediente
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","primaryColor":"#F7DDE1","primaryTextColor":"#24171A","primaryBorderColor":"#8F1D2C","lineColor":"#24171A"},"flowchart":{"curve":"linear","nodeSpacing":30,"rankSpacing":35}}}%%
+flowchart TB
+    subgraph FILA1[ ]
+      direction LR
+      A([Recibido]) --> B[Revisado] --> C[Registrado]
+    end
+    subgraph FILA2[ ]
+      direction LR
+      D[Pendiente de firma] --> E[Firmado] --> F[Egreso registrado]
+    end
+    C --> D
+    F --> G([Despachado])
+
+    classDef estado fill:#F7DDE1,stroke:#8F1D2C,color:#24171A,stroke-width:1.5px;
+    class A,B,C,D,E,F,G estado;
+    style FILA1 fill:none,stroke:none
+    style FILA2 fill:none,stroke:none

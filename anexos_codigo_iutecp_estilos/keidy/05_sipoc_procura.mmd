@@ -1,0 +1,25 @@
+%% Keidy — SIPOC del proceso de procura
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Verdana, sans-serif","primaryColor":"#E5F3EC","primaryTextColor":"#1C2B24","primaryBorderColor":"#1F6F5B","secondaryColor":"#68B398","secondaryTextColor":"#1C2B24","secondaryBorderColor":"#1F6F5B","lineColor":"#1C2B24"},"flowchart":{"curve":"linear","nodeSpacing":30,"rankSpacing":34}}}%%
+flowchart TB
+    subgraph ENTRADA[Origen e insumos]
+      direction LR
+      S[PROVEEDORES / SUPPLIERS<br/>Áreas solicitantes<br/>Proveedores comerciales<br/>Gerencia]
+      I[ENTRADAS / INPUTS<br/>Requisición<br/>Especificaciones<br/>Cotizaciones<br/>Criterio de autorización]
+      S --> I
+    end
+
+    P[PROCESO / PROCESS<br/>1. Recibir y validar requisición<br/>2. Solicitar cotizaciones<br/>3. Comparar y tramitar aprobación<br/>4. Emitir orden de compra<br/>5. Dar seguimiento y cerrar]
+
+    subgraph SALIDA[Resultados y usuarios]
+      direction LR
+      O[SALIDAS / OUTPUTS<br/>Solicitud controlada<br/>Cotizaciones comparadas<br/>Orden de compra<br/>Estatus de seguimiento]
+      C[CLIENTES / CUSTOMERS<br/>Área solicitante<br/>Administración<br/>Gerencia<br/>Operaciones dependientes del suministro]
+      O --> C
+    end
+
+    I --> P --> O
+
+    classDef bloque fill:#E5F3EC,stroke:#1F6F5B,color:#1C2B24,stroke-width:1.2px;
+    classDef proceso fill:#1F6F5B,stroke:#1F6F5B,color:#F7FCF9,stroke-width:1.4px;
+    class S,I,O,C bloque;
+    class P proceso;

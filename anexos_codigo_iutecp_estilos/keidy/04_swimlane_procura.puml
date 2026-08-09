@@ -1,0 +1,60 @@
+@startuml
+' Keidy — Swimlane del proceso propuesto de procura
+skinparam defaultFontName Verdana
+  skinparam defaultFontColor #1C2B24
+  skinparam backgroundColor #F7FCF9
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor #E5F3EC
+  BorderColor #1F6F5B
+  FontColor #1C2B24
+  DiamondBackgroundColor #68B398
+  DiamondBorderColor #1F6F5B
+}
+skinparam partition {
+  BackgroundColor #EDF8F2
+  BorderColor #68B398
+  FontColor #1C2B24
+}
+skinparam ArrowColor #1C2B24
+
+|Solicitante|
+start
+:Preparar requisición estandarizada;
+:Entregar requerimiento;
+
+|Procura|
+:Revisar información;
+if (¿Completa?) then (No)
+  |Solicitante|
+  :Completar datos;
+  |Procura|
+endif
+:Registrar solicitud;
+:Solicitar cotizaciones;
+
+|Proveedor|
+:Remitir cotización;
+
+|Procura|
+:Comparar alternativas;
+:Preparar expediente para aprobación;
+
+|Gerencia|
+:Aplicar criterio de autorización;
+:Autorizar adquisición;
+
+|Administración|
+:Formalizar documentación de compra;
+
+|Procura|
+:Emitir / gestionar orden de compra;
+
+|Proveedor|
+:Atender orden de compra;
+
+|Procura|
+:Actualizar estatus y seguimiento;
+:Completar cierre administrativo;
+stop
+@enduml

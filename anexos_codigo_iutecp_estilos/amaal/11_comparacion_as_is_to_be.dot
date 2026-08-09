@@ -1,0 +1,49 @@
+digraph G {
+  graph [rankdir=TB, ratio=1, size="8,8!", nodesep=0.35, ranksep=0.45, splines=polyline, margin=0.1, bgcolor="#FAF8FD", fontname="Tahoma"];
+  node [shape=box, style="rounded,filled", fontname="Tahoma", fontsize=11, fontcolor="#24182D", color="#5B2A86", fillcolor="#FAF8FD", penwidth=1.2];
+  edge [arrowsize=0.7, color="#24182D", fontname="Tahoma", fontcolor="#24182D"];
+
+  title [shape=plaintext, fontname="Tahoma", fontcolor="#5B2A86", label="COMPARACIÓN DEL CONTROL DE SOLICITUDES"];
+
+  subgraph cluster_as_is {
+    label="AS-IS — Situación observada";
+    color="#9B6BC4";
+    fontname="Tahoma";
+    fontcolor="#24182D";
+    style="rounded";
+    a1 [label="Registros no unificados"];
+    a2 [label="Comunicación fragmentada"];
+    a3 [label="Estatus distribuido entre áreas"];
+    a4 [label="Sin tiempos de referencia por etapa"];
+    a5 [label="Seguimiento e indicadores limitados"];
+    a1 -> a2 -> a3 -> a4 -> a5;
+  }
+
+  subgraph cluster_to_be {
+    label="TO-BE — Mejora procedimental propuesta";
+    color="#5B2A86";
+    fontname="Tahoma";
+    fontcolor="#24182D";
+    style="rounded";
+    b1 [label="Formatos uniformes", fillcolor="#EDE3F7"];
+    b2 [label="Flujo estandarizado", fillcolor="#EDE3F7"];
+    b3 [label="Responsables por etapa", fillcolor="#EDE3F7"];
+    b4 [label="Estatus actualizado y verificable", fillcolor="#EDE3F7"];
+    b5 [label="Indicadores básicos de seguimiento", fillcolor="#EDE3F7"];
+    b1 -> b2 -> b3 -> b4 -> b5;
+  }
+
+  title -> a1 [style=invis];
+  title -> b1 [style=invis];
+  {rank=same; a1; b1}
+  {rank=same; a2; b2}
+  {rank=same; a3; b3}
+  {rank=same; a4; b4}
+  {rank=same; a5; b5}
+
+  a1 -> b1 [style=dashed, color="#9B6BC4", label="estandarizar"];
+  a2 -> b2 [style=dashed, color="#9B6BC4", label="ordenar"];
+  a3 -> b3 [style=dashed, color="#9B6BC4", label="definir"];
+  a4 -> b4 [style=dashed, color="#9B6BC4", label="controlar"];
+  a5 -> b5 [style=dashed, color="#9B6BC4", label="medir"];
+}
