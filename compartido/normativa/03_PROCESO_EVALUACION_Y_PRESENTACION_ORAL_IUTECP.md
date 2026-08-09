@@ -145,7 +145,14 @@ Debe:
 - entregar calificaciones en Coordinación;
 - formar parte del jurado en la exposición del informe.
 
-En modalidad virtual, las asesorías pueden realizarse de forma síncrona o asíncrona según corresponda.
+## Discrepancia sobre las asesorías en modalidad virtual
+
+El reglamento contiene dos formulaciones distintas:
+
+- al describir las responsabilidades del **Tutor Académico** (Artículo 10), indica que la actividad virtual se cumple de forma **asincrónica**;
+- al describir las responsabilidades del **Pasante** (Artículo 12), indica que en modalidad virtual puede ser asesorado de forma **síncrona o asíncrona**.
+
+Se conservan ambas instrucciones como una discrepancia interna del documento.
 
 ---
 
@@ -327,8 +334,9 @@ El formato indica:
 - marcar con una `X`;
 - usar bolígrafo azul o negro;
 - evitar enmiendas y tachaduras;
-- revisar las evaluaciones con el estudiante;
-- firmar y sellar para su validez.
+- revisar las evaluaciones parciales y finales con el estudiante;
+- hacer firmar el instrumento por el supervisor y el pasante;
+- sellarlo para su validez.
 
 ### Anomalía textual
 
@@ -433,7 +441,21 @@ El reglamento establece que la elaboración del informe debe regirse por la:
 
 Las reglas específicas se encuentran consolidadas en:
 
-`01_FORMATO_TRANSCRIPCION_Y_REDACCION.md`
+`01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md`
+
+## 20.1 Omisión de Relaciones Industriales en el Artículo 27
+
+El reglamento define inicialmente su alcance para las carreras de:
+
+- Administración de Empresas;
+- Informática;
+- Contaduría;
+- Relaciones Industriales;
+- Diseño Gráfico.
+
+Sin embargo, el Artículo 27, al indicar qué carreras deben regirse por la normativa interna de transcripción, menciona Administración de Empresas, Contaduría, Diseño Gráfico e Informática y **omite Relaciones Industriales**.
+
+La omisión se registra como una inconsistencia del texto institucional; no se interpreta aquí como exclusión de la carrera del proceso de pasantías.
 
 ---
 

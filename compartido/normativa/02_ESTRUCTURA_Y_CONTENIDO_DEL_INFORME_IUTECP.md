@@ -2,7 +2,7 @@
 
 Este archivo reúne **qué debe contener el informe**, cómo debe desarrollarse cada sección y qué enseñan las plantillas institucionales.
 
-Las reglas puramente tipográficas y de citación están en `01_FORMATO_TRANSCRIPCION_Y_REDACCION.md`.
+Las reglas puramente tipográficas y de citación están en `01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md`.
 
 ---
 
@@ -36,6 +36,23 @@ Las reglas puramente tipográficas y de citación están en `01_FORMATO_TRANSCRI
 
 19. Referencias.
 20. Anexos.
+
+## 1.4 Discrepancias internas del esquema institucional
+
+El Artículo 26 enumera expresamente, entre otros elementos:
+
+- `PORTADA`;
+- `CONTRAPORTADA`;
+- `ACTA DE APROBACIÓN DEL TUTOR INDUSTRIAL`;
+- `ACTA DE APROBACIÓN DEL TUTOR ACADÉMICO`.
+
+Sin embargo, el esquema resumido incluido posteriormente en el **Parágrafo Único** del mismo artículo:
+
+- comienza en `CONTRAPORTADA` y omite `PORTADA`;
+- utiliza `CARTA DE APROBACIÓN DEL TUTOR INDUSTRIAL`;
+- utiliza `CARTA DE APROBACIÓN DEL TUTOR ACADÉMICO`.
+
+La plantilla de trabajo escrito sí presenta **Portada** y **Contraportada**. Por ello, esta guía conserva la Portada dentro de la estructura consolidada y registra la discrepancia, sin asumir que la omisión del esquema resumido elimina el requisito expresado previamente.
 
 ---
 
@@ -181,12 +198,19 @@ La estructura mostrada por las plantillas es:
 - Planificación Integral de los Objetivos
 - Cronograma de actividades
 
+### Discrepancia de denominación del Capítulo II
+
+El esquema general y las plantillas utilizan `DIAGNÓSTICO SITUACIONAL`, mientras que el desarrollo explicativo del Artículo 26 lo denomina `DIAGNOSTICO ORGANIZACIONAL`. Ambas denominaciones aparecen en el material institucional; no se corrige silenciosamente la diferencia.
+
 ## III. MARCO TEÓRICO
 
-Según los documentos aparecen dos denominaciones relacionadas:
+Según los documentos aparecen varias denominaciones relacionadas para su contenido:
 
-- `Conocimientos disciplinares`
-- `Bases teóricas referenciales`
+- `Conocimientos disciplinares`;
+- `Bases teóricas referenciales` (en el desarrollo del Artículo 26 aparece también la forma `Bases teóricos referenciales`);
+- `Conceptos Disciplinares`.
+
+Estas variantes pertenecen a distintas partes de los documentos institucionales y deben conocerse al contrastar el índice, la plantilla y el reglamento.
 
 ## IV. ACTIVIDADES REALIZADAS
 
@@ -430,6 +454,10 @@ Después del organigrama debe describirse el departamento donde se realizó la p
 
 # 16. Capítulo II — Diagnóstico Situacional
 
+## 16.0 Discrepancia de denominación
+
+El esquema del informe utiliza `DIAGNÓSTICO SITUACIONAL`, pero el texto explicativo del Artículo 26 encabeza esta parte como `CAPÍTULO II: DIAGNOSTICO ORGANIZACIONAL`. La presente guía mantiene `Diagnóstico Situacional` como rótulo de organización porque así aparece en el esquema y en la plantilla, dejando registrada la variante institucional.
+
 ## 16.1 Identificación de la situación problemática
 
 Consiste en describir el problema detectado por el pasante desde lo general hacia lo particular.
@@ -557,9 +585,12 @@ La plantilla divide el Gantt por:
 
 Aparecen:
 
-- `MARCO TEÓRICO`
-- `Conocimientos Disciplinares`
-- `Bases teóricas referenciales`
+- `MARCO TEÓRICO`;
+- `Conocimientos Disciplinares`;
+- `Bases teóricas referenciales` / `Bases teóricos referenciales`;
+- `Conceptos Disciplinares`.
+
+La coexistencia de estas expresiones es una inconsistencia terminológica de las plantillas y del reglamento, no una jerarquía de cuatro secciones distintas.
 
 ## 19.2 Contenido
 
@@ -752,7 +783,7 @@ Debe ir:
 
 Las normas de formato, citas y modelos bibliográficos están desarrolladas solamente en:
 
-`01_FORMATO_TRANSCRIPCION_Y_REDACCION.md`
+`01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md`
 
 para evitar duplicación.
 
@@ -925,9 +956,9 @@ Antes de considerar completo el informe, revisar que incluya:
 - [ ] Agradecimiento, si se usa
 - [ ] Dedicatoria, si se usa
 - [ ] Índice
-- [ ] Lista de cuadros, si aplica
-- [ ] Lista de figuras, si aplica
-- [ ] Lista de gráficos, si aplica
+- [ ] Lista de cuadros
+- [ ] Lista de figuras
+- [ ] Lista de gráficos
 - [ ] Lista de anexos
 - [ ] Resumen
 - [ ] Introducción
@@ -942,3 +973,5 @@ Antes de considerar completo el informe, revisar que incluya:
 - [ ] Recomendaciones derivadas de conclusiones
 - [ ] Referencias
 - [ ] Anexos
+
+**Nota sobre listas vacías:** la normativa enumera las listas de cuadros, figuras, gráficos y anexos dentro de la estructura, pero no establece de forma expresa en los documentos revisados que una lista deba omitirse cuando no existan elementos de ese tipo. Por tanto, la expresión “si aplica” no se toma como regla institucional; cualquier omisión de una lista vacía debe confirmarse con el Tutor Académico o la Coordinación de Pasantías.

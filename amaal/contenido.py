@@ -57,6 +57,10 @@ CRONOGRAMA_INTRO_TEXTO = ('El cronograma organiza las actividades operativas y d
 
 CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades de la pasantía.'
 
+CUADRO_PLANIFICACION_FUENTE = 'La autora (2026).'
+
+CUADRO_CRONOGRAMA_FUENTE = 'La autora (2026).'
+
 CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '6'),
  ('2', 'Cronograma de actividades de la pasantía', '7')]
 
@@ -99,25 +103,33 @@ RAZON_SOCIAL = 'Ingeniería de Telecomunicaciones, C.A. (IDETEL / INTELCA)'
 # ========================================================================
 # 3. PÁGINAS PRELIMINARES
 # ========================================================================
-DEDICATORIA = ''
+DEDICATORIA = ('A mi familia, por su apoyo constante, comprensión y motivación durante mi formación académica y en el desarrollo '
+ 'de esta etapa profesional.')
 
-AGRADECIMIENTOS = ''
+AGRADECIMIENTOS = ('Al Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP), por la formación recibida; a Ingeniería '
+ 'de Telecomunicaciones, C.A. (IDETEL), por permitirme desarrollar las pasantías y conocer de manera directa sus '
+ 'procesos de atención y administración; a mis tutores, por sus orientaciones y observaciones durante la elaboración '
+ 'del informe; y al personal de la empresa, por su disposición, acompañamiento y colaboración durante las '
+ 'actividades realizadas.')
 
-RESUMEN_TEXTO = ('El presente informe recoge las actividades desarrolladas durante diez (10) semanas de pasantías profesionales '
- 'en Ingeniería de Telecomunicaciones, C.A. (IDETEL), con una primera etapa de rotación por Atención al Cliente y '
- 'una segunda etapa de apoyo en el área de Administración. Durante la práctica se observó el recorrido de '
- 'solicitudes de afiliación e incidencias, el registro de pagos, la facturación, el seguimiento de casos y la '
- 'elaboración de reportes administrativos. La situación problemática se relaciona con la ausencia de un '
- 'procedimiento formalizado y unificado para controlar las solicitudes desde su recepción hasta el cierre, lo que '
- 'dificulta conocer responsables, tiempos y estatus de cada caso. El objetivo general fue evaluar el control '
- 'administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones para identificar '
- 'debilidades y formular mejoras. Se realizaron observaciones directas, revisión de registros, entrevistas '
- 'estructuradas al personal y un análisis causa-efecto de las fallas detectadas. Posteriormente se diseñó un '
- 'flujo estandarizado, formatos de control y criterios de seguimiento mediante indicadores básicos. Se concluye '
- 'que la principal necesidad consiste en formalizar el recorrido de las solicitudes y centralizar la información '
- 'necesaria para su seguimiento. Se recomienda implementar progresivamente el procedimiento propuesto, asignar '
- 'responsables por etapa y revisar periódicamente los tiempos de respuesta para detectar desviaciones y '
- 'oportunidades de mejora.')
+RESUMEN_TEXTO = ('El presente informe recoge las actividades desarrolladas durante diez (10) semanas de pasantías profesionales en '
+ 'Ingeniería de Telecomunicaciones, C.A. (IDETEL), con una primera etapa de rotación por Atención al Cliente y una '
+ 'segunda etapa de apoyo en el área de Administración. Durante la práctica se observó el recorrido de solicitudes de '
+ 'afiliación e incidencias, el registro de pagos, la facturación, el seguimiento de casos y la elaboración de '
+ 'reportes administrativos. La situación problemática se relaciona con la ausencia de un procedimiento formalizado y '
+ 'unificado para controlar las solicitudes desde su recepción hasta el cierre, lo que dificulta conocer de manera '
+ 'oportuna los responsables, tiempos de respuesta y estatus de cada caso. El objetivo general fue evaluar el control '
+ 'administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones, con el propósito de '
+ 'identificar sus debilidades y formular mejoras procedimentales. Para ello se realizaron observaciones directas, '
+ 'revisión de registros, entrevistas estructuradas al personal y un diagrama de causa-efecto para organizar los '
+ 'factores vinculados con las fallas detectadas. A partir de los hallazgos se formularon mejoras orientadas a '
+ 'establecer un flujo estandarizado, definir responsables por etapa, utilizar formatos uniformes y aplicar '
+ 'indicadores básicos para el seguimiento de las solicitudes. Como resultado, se determinó que la formalización del '
+ 'recorrido y la centralización de la información pueden facilitar la trazabilidad y reducir los reprocesos '
+ 'administrativos. Se concluye que el fortalecimiento del control depende principalmente de establecer criterios '
+ 'comunes de registro, actualización y cierre de los casos. Se recomienda implementar progresivamente el '
+ 'procedimiento propuesto, comunicarlo al personal involucrado y revisar periódicamente los tiempos de respuesta y '
+ 'solicitudes pendientes para detectar desviaciones y oportunidades de mejora.')
 
 PALABRAS_CLAVE = 'control administrativo, solicitudes de servicio, trazabilidad, telecomunicaciones, pasantías'
 
@@ -216,6 +228,13 @@ ORGANIGRAMA_TEXTO = ('La estructura organizativa de Ingeniería de Telecomunicac
  'del NOC (Network Operations Center) y Mantenimiento de Radiocomunicación. Se presenta a continuación el '
  'organigrama general de la empresa y del Departamento de Administración.')
 
+MOSTRAR_NIVELES_DIAGNOSTICO = True
+
+DESCRIPCION_DEPARTAMENTO = ('La pasantía se realizó en la Supervisión de Administración, donde se reconocen las funciones de '
+ 'Supervisión de Administración, Contabilidad y Tributos; Compras y Facturación; y Atención al Cliente. La práctica '
+ 'incluyó una rotación inicial por Atención al Cliente y una etapa posterior de apoyo en Administración, con '
+ 'actividades de registro de pagos, facturación, seguimiento de solicitudes y elaboración de reportes administrativos.')
+
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
@@ -251,48 +270,42 @@ SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
-INTERROGANTE_PROBLEMA = ('¿Qué mejoras pueden proponerse al control administrativo de las solicitudes de servicios de telecomunicaciones '
- 'en IDETEL para fortalecer la trazabilidad, reducir reprocesos y facilitar el seguimiento de cada caso?')
+INTERROGANTE_PROBLEMA = ('¿Cómo puede evaluarse el control administrativo aplicado a la gestión de solicitudes de servicios de '
+ 'telecomunicaciones en IDETEL para identificar sus principales debilidades y formular mejoras procedimentales que '
+ 'fortalezcan la trazabilidad y el seguimiento de los casos?')
 
 OBJETIVO_GENERAL = ('Evaluar el control administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones en '
  'Ingeniería de Telecomunicaciones, C.A. (IDETEL), con el propósito de identificar sus debilidades y formular '
  'mejoras procedimentales.')
 
-OBJETIVOS_ESPECIFICOS = ['Describir el proceso administrativo actual de recepción, registro, seguimiento y cierre de solicitudes de '
- 'afiliación e incidencias en Ingeniería de Telecomunicaciones, C.A.',
- 'Identificar las deficiencias presentes en los mecanismos de control utilizados para el seguimiento de las '
- 'solicitudes de servicio.',
- 'Analizar el impacto de las debilidades detectadas sobre los tiempos de respuesta, la trazabilidad de los casos '
- 'y la calidad de la atención al suscriptor.',
- 'Proponer mejoras al proceso de control administrativo mediante un flujo estandarizado, formatos de registro y '
- 'mecanismos básicos de seguimiento.']
+OBJETIVOS_ESPECIFICOS = ['Diagnosticar el proceso administrativo actual de recepción, registro, seguimiento y cierre de solicitudes de '
+ 'afiliación e incidencias en Ingeniería de Telecomunicaciones, C.A., considerando la transición de la información '
+ 'entre Atención al Cliente, Administración y las áreas relacionadas.',
+ 'Identificar las deficiencias y causas presentes en los mecanismos de control de las solicitudes de servicio, '
+ 'considerando su incidencia en los tiempos de respuesta, la trazabilidad de los casos y la atención al suscriptor.',
+ 'Formular mejoras al control administrativo de las solicitudes mediante un flujo estandarizado, formatos de '
+ 'registro, responsables por etapa e indicadores básicos de seguimiento.']
 
-PLANIFICACION_DATOS = [('Describir el proceso administrativo actual de recepción, registro, seguimiento y cierre de solicitudes de '
-  'afiliación e incidencias en Ingeniería de Telecomunicaciones, C.A.',
+PLANIFICACION_DATOS = [('Diagnosticar el proceso administrativo actual de recepción, registro, seguimiento y cierre de solicitudes de '
+  'afiliación e incidencias en Ingeniería de Telecomunicaciones, C.A., considerando la transición de la información '
+  'entre Atención al Cliente, Administración y las áreas relacionadas.',
   'Proceso administrativo de gestión de solicitudes de servicio.',
   'Observar el recorrido de afiliaciones e incidencias desde Atención al Cliente hasta su seguimiento '
-  'administrativo y revisar la documentación utilizada.',
+  'administrativo, describir las etapas y revisar la documentación utilizada.',
   'Observación directa y análisis documental.',
   'Guía de observación, registros de solicitudes, comprobantes y documentos internos.'),
- ('Identificar las deficiencias presentes en los mecanismos de control utilizados para el seguimiento de las '
-  'solicitudes de servicio.',
-  'Deficiencias del control administrativo de solicitudes.',
-  'Diseñar y aplicar entrevistas estructuradas al personal, revisar casos históricos y elaborar un diagrama de '
-  'Ishikawa con las causas identificadas.',
-  'Entrevista estructurada, análisis documental y diagrama causa-efecto.',
-  'Guía de entrevista, registros históricos, hojas de cálculo y matriz de causas.'),
- ('Analizar el impacto de las debilidades detectadas sobre los tiempos de respuesta, la trazabilidad de los casos '
-  'y la calidad de la atención al suscriptor.',
-  'Impacto de las debilidades sobre la atención y trazabilidad.',
-  'Comparar tiempos de respuesta, revisar incidencias y relacionar las fallas administrativas con reprocesos o '
-  'dificultades de seguimiento.',
-  'Análisis de registros y comparación de tiempos.',
-  'Registros de incidencias, reportes internos y hoja de cálculo.'),
- ('Proponer mejoras al proceso de control administrativo mediante un flujo estandarizado, formatos de registro y '
-  'mecanismos básicos de seguimiento.',
+ ('Identificar las deficiencias y causas presentes en los mecanismos de control de las solicitudes de servicio, '
+  'considerando su incidencia en los tiempos de respuesta, la trazabilidad de los casos y la atención al suscriptor.',
+  'Deficiencias y causas que afectan el control administrativo de solicitudes.',
+  'Aplicar entrevistas estructuradas al personal, revisar casos históricos, comparar tiempos de respuesta y elaborar '
+  'un diagrama de Ishikawa con las causas identificadas.',
+  'Entrevista estructurada, análisis documental, comparación de tiempos y diagrama causa-efecto.',
+  'Guía de entrevista, registros históricos, reportes internos, hoja de cálculo y matriz de causas.'),
+ ('Formular mejoras al control administrativo de las solicitudes mediante un flujo estandarizado, formatos de '
+  'registro, responsables por etapa e indicadores básicos de seguimiento.',
   'Mejoras al control administrativo de solicitudes.',
-  'Diseñar el flujo estandarizado, formatos de registro, responsables por etapa e indicadores básicos; validar la '
-  'propuesta con el tutor industrial.',
+  'Diseñar el flujo estandarizado, formatos de registro, responsables por etapa e indicadores básicos de '
+  'seguimiento; validar la propuesta con el tutor industrial.',
   'Diseño procedimental y validación técnica.',
   'Procesador de textos, herramientas de diagramación, hoja de cálculo y formato de validación.')]
 
@@ -323,43 +336,42 @@ CRONOGRAMA_DATOS = [('Inducción y reconocimiento de Atención al Cliente y del 
 # 6. CAPÍTULO III — MARCO TEÓRICO
 # ========================================================================
 BASES_TEORICAS = [{'titulo': 'Control Administrativo',
-  'posicion_autor': 'Desde la perspectiva de quien desarrolla este informe, el control administrativo en IDETEL '
-                    'debe convertirse en una herramienta de seguimiento continuo y no limitarse a la revisión '
-                    'posterior de los casos.',
-  'parrafos': ['El control administrativo constituye una de las funciones fundamentales del proceso '
-               'administrativo y se define como el mecanismo mediante el cual la organización verifica que las '
-               'actividades ejecutadas se correspondan con lo planificado, detectando desviaciones y aplicando '
-               'las medidas correctivas necesarias. Robbins y Coulter (2010) señalan que el control eficaz no '
-               'solo identifica fallas, sino que proporciona información oportuna para la toma de decisiones '
-               'gerenciales, convirtiéndose en un instrumento de mejora continua y no únicamente de '
-               'fiscalización.',
+  'posicion_autor': 'Desde la perspectiva de quien desarrolla este informe, el control administrativo en IDETEL debe '
+                    'convertirse en una herramienta de seguimiento continuo y no limitarse a la revisión posterior '
+                    'de los casos.',
+  'parrafos': ['El control administrativo constituye una de las funciones fundamentales del proceso administrativo y '
+               'se define como el mecanismo mediante el cual la organización verifica que las actividades ejecutadas '
+               'se correspondan con lo planificado, detectando desviaciones y aplicando las medidas correctivas '
+               'necesarias. Robbins y Coulter (2010) señalan que el control eficaz no solo identifica fallas, sino '
+               'que proporciona información oportuna para la toma de decisiones gerenciales, convirtiéndose en un '
+               'instrumento de mejora continua y no únicamente de fiscalización.',
                'En el contexto del Departamento de Administración de Ingeniería de Telecomunicaciones, C.A., el '
                'control administrativo se aplica sobre el ciclo de gestión de solicitudes de servicio, abarcando '
-               'desde la recepción de la solicitud del suscriptor hasta el cierre definitivo del caso. La '
-               'ausencia de mecanismos formales de control en este ciclo genera inconsistencias entre los '
-               'departamentos involucrados y dificulta la evaluación del desempeño del proceso de atención.'],
-  'cita_larga': {'texto': 'El control es el proceso de monitorear las actividades para asegurarse de que se '
-                          'lleven a cabo según lo planeado y para corregir cualquier desviación significativa. '
-                          'Los gerentes no pueden saber realmente si sus unidades están desempeñándose '
-                          'adecuadamente hasta que evalúan qué actividades se han llevado a cabo y comparan el '
-                          'desempeño real con el estándar deseado.',
+               'desde la recepción de la solicitud del suscriptor hasta el cierre definitivo del caso. La ausencia '
+               'de mecanismos formales de control en este ciclo genera inconsistencias entre los departamentos '
+               'involucrados y dificulta la evaluación del desempeño del proceso de atención.'],
+  'cita_larga': {'texto': 'El control es el proceso de monitorear las actividades para asegurarse de que se lleven a '
+                          'cabo según lo planeado y para corregir cualquier desviación significativa. Los gerentes '
+                          'no pueden saber realmente si sus unidades están desempeñándose adecuadamente hasta que '
+                          'evalúan qué actividades se han llevado a cabo y comparan el desempeño real con el '
+                          'estándar deseado.',
                  'autor': '(Robbins y Coulter, 2010, p. 398)'},
   'post_cita': ''},
  {'titulo': 'Gestión de Solicitudes de Servicio',
-  'posicion_autor': 'En el contexto de IDETEL, la gestión de solicitudes requiere un flujo único que permita '
-                    'conocer el responsable, el estado y el tiempo de atención de cada caso.',
+  'posicion_autor': 'En el contexto de IDETEL, la gestión de solicitudes requiere un flujo único que permita conocer '
+                    'el responsable, el estado y el tiempo de atención de cada caso.',
   'parrafos': ['La gestión de solicitudes de servicio comprende el conjunto de procedimientos administrativos '
-               'orientados a recepcionar, registrar, procesar y dar seguimiento a los requerimientos presentados '
-               'por los clientes o suscriptores de una organización. Zeithaml, Parasuraman y Berry (1993) '
-               'establecen que la calidad del servicio percibida por el cliente está directamente vinculada a la '
-               'capacidad de la organización para gestionar sus solicitudes de forma ágil, transparente y con '
-               'comunicación fluida en cada etapa del proceso.',
+               'orientados a recepcionar, registrar, procesar y dar seguimiento a los requerimientos presentados por '
+               'los clientes o suscriptores de una organización. Zeithaml, Parasuraman y Berry (1993) establecen que '
+               'la calidad del servicio percibida por el cliente está directamente vinculada a la capacidad de la '
+               'organización para gestionar sus solicitudes de forma ágil, transparente y con comunicación fluida en '
+               'cada etapa del proceso.',
                'En empresas de telecomunicaciones como IDETEL, la gestión de solicitudes abarca dos categorías '
                'principales: las solicitudes de afiliación de nuevos suscriptores, que implican la coordinación '
-               'entre las áreas comercial, técnica y administrativa; y las incidencias reportadas por '
-               'suscriptores activos, que requieren diagnóstico, despacho de cuadrillas y cierre verificado del '
-               'caso. La ausencia de un sistema unificado de seguimiento para ambas categorías genera retrasos y '
-               'reprocesos que impactan directamente en la satisfacción del cliente.'],
+               'entre las áreas comercial, técnica y administrativa; y las incidencias reportadas por suscriptores '
+               'activos, que requieren diagnóstico, despacho de cuadrillas y cierre verificado del caso. La ausencia '
+               'de un sistema unificado de seguimiento para ambas categorías genera retrasos y reprocesos que '
+               'impactan directamente en la satisfacción del cliente.'],
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'Procesos Administrativos y Estandarización de Procedimientos',
@@ -368,8 +380,8 @@ BASES_TEORICAS = [{'titulo': 'Control Administrativo',
   'parrafos': ['El proceso administrativo constituye el marco conceptual que rige el funcionamiento de las '
                'organizaciones modernas. Chiavenato (2006) lo describe como el conjunto secuencial e '
                'interrelacionado de funciones de planificación, organización, dirección y control, orientadas al '
-               'logro eficiente de los objetivos organizacionales. La estandarización de los procedimientos '
-               'dentro de este marco garantiza que las actividades se ejecuten de manera uniforme, reduciendo la '
+               'logro eficiente de los objetivos organizacionales. La estandarización de los procedimientos dentro '
+               'de este marco garantiza que las actividades se ejecuten de manera uniforme, reduciendo la '
                'variabilidad y los errores derivados de la discrecionalidad individual.',
                'La formalización de los procedimientos mediante manuales, flujogramas y formatos estandarizados '
                'constituye una herramienta esencial para el control administrativo. Según Harrington (1993), un '
@@ -380,55 +392,73 @@ BASES_TEORICAS = [{'titulo': 'Control Administrativo',
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'Calidad del Servicio en Empresas de Telecomunicaciones',
-  'posicion_autor': 'Para este estudio, la calidad del servicio se relaciona directamente con la capacidad '
-                    'administrativa de IDETEL para responder y dar seguimiento oportuno a las solicitudes del '
-                    'suscriptor.',
+  'posicion_autor': 'En el contexto de estas pasantías, la calidad del servicio se relaciona directamente con la '
+                    'capacidad administrativa de IDETEL para responder y dar seguimiento oportuno a las solicitudes '
+                    'del suscriptor.',
   'parrafos': ['La calidad del servicio se define como el grado en que las características del servicio prestado '
                'satisfacen o superan las expectativas del cliente. Parasuraman, Zeithaml y Berry (1988) '
                'desarrollaron el modelo SERVQUAL, que identifica cinco dimensiones de la calidad del servicio: '
                'fiabilidad, capacidad de respuesta, seguridad, empatía y elementos tangibles. En el sector de '
-               'telecomunicaciones, la fiabilidad y la capacidad de respuesta son las dimensiones con mayor peso '
-               'en la percepción del cliente.',
+               'telecomunicaciones, la fiabilidad y la capacidad de respuesta son las dimensiones con mayor peso en '
+               'la percepción del cliente.',
                'Las deficiencias en el control administrativo del proceso de solicitudes de servicio impactan '
-               'directamente sobre la fiabilidad y la capacidad de respuesta de IDETEL. Cuando una solicitud no '
-               'es gestionada dentro de los tiempos establecidos o su estatus no puede ser verificado en tiempo '
-               'real, el cliente percibe una falla en la calidad del servicio que deteriora su confianza en la '
+               'directamente sobre la fiabilidad y la capacidad de respuesta de IDETEL. Cuando una solicitud no es '
+               'gestionada dentro de los tiempos establecidos o su estatus no puede ser verificado en tiempo real, '
+               'el cliente percibe una falla en la calidad del servicio que deteriora su confianza en la '
                'organización y puede derivar en la cancelación del contrato o en la difusión de experiencias '
                'negativas.'],
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'Sistemas de Información para el Control Administrativo',
-  'posicion_autor': 'Desde la posición del autor, una herramienta de seguimiento centralizada es viable para '
-                    'IDETEL porque permite mejorar la trazabilidad sin modificar la naturaleza de los servicios '
-                    'que presta la empresa.',
+  'posicion_autor': 'Desde la posición del autor, una herramienta de seguimiento centralizada es viable para IDETEL '
+                    'porque permite mejorar la trazabilidad sin modificar la naturaleza de los servicios que presta '
+                    'la empresa.',
   'parrafos': ['Un sistema de información constituye un conjunto organizado de recursos tecnológicos y '
-               'procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos '
-               'con el propósito de apoyar la toma de decisiones. Laudon y Laudon (2016) distinguen los sistemas '
-               'de procesamiento de transacciones como la categoría que registra y gestiona las operaciones '
-               'rutinarias de la organización, siendo esta la tipología más pertinente para el control de '
-               'solicitudes de servicio en una empresa de telecomunicaciones.',
+               'procedimentales orientados a la captura, almacenamiento, procesamiento y distribución de datos con '
+               'el propósito de apoyar la toma de decisiones. Laudon y Laudon (2016) distinguen los sistemas de '
+               'procesamiento de transacciones como la categoría que registra y gestiona las operaciones rutinarias '
+               'de la organización, siendo esta la tipología más pertinente para el control de solicitudes de '
+               'servicio en una empresa de telecomunicaciones.',
                'La implementación de un sistema de tickets o plataforma de seguimiento de solicitudes en IDETEL '
-               'permitiría centralizar el registro de cada caso, asignar responsables, definir tiempos de '
-               'atención y generar alertas ante incumplimientos. Esta herramienta transformaría el control '
-               'administrativo de reactivo a proactivo, dotando a la supervisión de información en tiempo real '
-               'para la toma de decisiones y la evaluación continua del desempeño del proceso.'],
+               'permitiría centralizar el registro de cada caso, asignar responsables, definir tiempos de atención y '
+               'generar alertas ante incumplimientos. Esta herramienta transformaría el control administrativo de '
+               'reactivo a proactivo, dotando a la supervisión de información en tiempo real para la toma de '
+               'decisiones y la evaluación continua del desempeño del proceso.'],
   'cita_larga': None,
   'post_cita': ''},
- {'titulo': 'Proyecto Factible como Modalidad de Investigación',
-  'posicion_autor': 'La elección del proyecto factible responde a la necesidad de transformar el diagnóstico '
-                    'realizado en procedimientos y formatos aplicables a la realidad operativa de IDETEL.',
-  'parrafos': ['La Universidad Pedagógica Experimental Libertador (UPEL, 2016) define el proyecto factible como '
-               'la investigación, elaboración y desarrollo de una propuesta de un modelo operativo viable para '
-               'solucionar problemas, requerimientos o necesidades de organizaciones o grupos sociales. Esta '
-               'modalidad exige un diagnóstico de campo que evidencie la situación deficitaria y la comprobación '
-               'de la viabilidad técnica y operativa de la solución planteada.',
-               'Arias (2012) señala que el proyecto factible avanza hasta proponer y en muchos casos desarrollar '
-               'la solución, demostrando su aplicabilidad en el contexto real. El presente trabajo se enmarca en '
-               'esta modalidad al partir de la evaluación del control administrativo de IDETEL para proponer '
-               'mejoras procedimentales cuya implementación es viable dentro de la estructura organizativa y los '
-               'recursos disponibles de la empresa.'],
-  'cita_larga': None,
-  'post_cita': ''}]
+ {'titulo': 'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
+  'parrafos': ['Como marco general de la actividad económica privada, la Constitución reconoce la iniciativa '
+               'empresarial dentro de los límites establecidos por el ordenamiento jurídico.'],
+  'cita_larga': {'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su '
+                          'preferencia, sin más limitaciones que las previstas en esta Constitución y las que '
+                          'establezcan las leyes, por razones de desarrollo humano, seguridad, sanidad, protección '
+                          'del ambiente u otras de interés social. El Estado promoverá la iniciativa privada, '
+                          'garantizando la creación y justa distribución de la riqueza, así como la producción de '
+                          'bienes y servicios que satisfagan las necesidades de la población, la libertad de '
+                          'trabajo, empresa, comercio, industria, sin perjuicio de su facultad para dictar medidas '
+                          'para planificar, racionalizar y regular la economía e impulsar el desarrollo integral del '
+                          'país.',
+                 'autor': '(Constitución de la República Bolivariana de Venezuela, 1999, art. 112)'},
+  'post_cita': '',
+  'posicion_autor': 'El aporte de este artículo al informe es de carácter general, porque reconoce el ejercicio de '
+                    'la actividad empresarial y permite ubicar la prestación de servicios de IDETEL dentro de una '
+                    'actividad económica sujeta al ordenamiento jurídico. Su relación con el informe se limita a '
+                    'este fundamento general y no establece por sí mismo el procedimiento administrativo de '
+                    'seguimiento de solicitudes.'},
+ {'titulo': 'Base Legal: Código de Comercio — Artículo 32',
+  'parrafos': ['El Código de Comercio establece obligaciones vinculadas con el orden y claridad de los registros de '
+               'los comerciantes, aspecto relacionado con la necesidad de conservar información organizada y '
+               'verificable en los procesos administrativos.'],
+  'cita_larga': {'texto': 'Todo comerciante debe llevar en idioma castellano su contabilidad, la cual comprenderá, '
+                          'obligatoriamente, el libro Diario, el libro Mayor y el de Inventarios. Podrá llevar, '
+                          'además, todos los libros auxiliares que estimara conveniente para el mayor orden y '
+                          'claridad de sus operaciones.',
+                 'autor': '(Código de Comercio, 1955, art. 32)'},
+  'post_cita': '',
+  'posicion_autor': 'La relación con el informe se encuentra en el principio de orden y claridad de las operaciones '
+                    'mercantiles. Los formatos y mecanismos de seguimiento propuestos no sustituyen los libros '
+                    'contables exigidos por la ley, pero complementan el control administrativo al organizar '
+                    'información asociada con solicitudes, pagos, facturación y seguimiento de casos.'}]
 
 POST_CITA_TEXTO = ''
 
@@ -497,18 +527,15 @@ ACTIVIDADES_LISTA = [{'semana': 1,
 # ========================================================================
 # 8. CAPÍTULO V — CONCLUSIONES Y RECOMENDACIONES
 # ========================================================================
-CONCLUSIONES = ['Se describió el proceso actual de gestión de solicitudes de IDETEL, identificando que la información se origina '
- 'en Atención al Cliente y continúa hacia Administración y las áreas técnicas, sin contar con un procedimiento '
- 'único que establezca de forma visible el recorrido completo del caso.',
+CONCLUSIONES = ['Se diagnosticó que la gestión de solicitudes de IDETEL se inicia en Atención al Cliente y continúa hacia '
+ 'Administración y las áreas relacionadas, sin contar con un procedimiento único que establezca de forma visible el '
+ 'recorrido completo, los responsables y los criterios de cierre de cada caso.',
  'Se identificaron como principales deficiencias la falta de formatos uniformes, la actualización no centralizada '
- 'del estatus, la ausencia de tiempos de referencia por etapa y las dificultades de comunicación entre las áreas '
- 'que participan en afiliaciones e incidencias.',
- 'Se determinó que estas debilidades afectan la trazabilidad y pueden prolongar los tiempos de respuesta, debido '
- 'a que el personal debe verificar información en distintos registros antes de informar el estado de una '
- 'solicitud o confirmar su cierre.',
- 'Se formuló una propuesta de mejora que incorpora un flujo estandarizado, responsables por etapa, formatos de '
- 'registro y mecanismos básicos de seguimiento, orientados a facilitar el control administrativo y la continuidad '
- 'de la atención al suscriptor.']
+ 'del estatus, la ausencia de tiempos de referencia por etapa y las dificultades de comunicación entre las áreas; '
+ 'estas condiciones afectan la trazabilidad y pueden prolongar los tiempos de respuesta al suscriptor.',
+ 'Se formularon mejoras al control administrativo mediante un flujo estandarizado, responsables por etapa, formatos '
+ 'de registro e indicadores básicos de seguimiento, orientados a facilitar la continuidad de la información y el '
+ 'control de las solicitudes desde su recepción hasta el cierre.']
 
 RECOMENDACIONES = ['Implementar progresivamente el flujo estandarizado propuesto y verificar su funcionamiento con un grupo '
  'controlado de solicitudes antes de aplicarlo a todos los casos.',
@@ -522,16 +549,15 @@ RECOMENDACIONES = ['Implementar progresivamente el flujo estandarizado propuesto
 # ========================================================================
 # 9. REFERENCIAS Y ANEXOS
 # ========================================================================
-REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducción a la metodología científica (6ta ed.). Episteme, '
- 'Venezuela.',
+REFERENCIAS_LISTA = ['Asamblea Nacional Constituyente. (1999). Constitución de la República Bolivariana de Venezuela. Gaceta Oficial de '
+ 'la República Bolivariana de Venezuela.',
  'Chiavenato, I. (2006). Introducción a la teoría general de la administración (7ma ed.). McGraw-Hill, México.',
+ 'Congreso de la República de Venezuela. (1955). Código de Comercio. Gaceta Oficial Extraordinaria N.º 475.',
  'Harrington, H. J. (1993). Mejoramiento de los procesos de la empresa. McGraw-Hill, Colombia.',
  'Laudon, K., y Laudon, J. (2016). Sistemas de información gerencial (14va ed.). Pearson Educación, México.',
  'Parasuraman, A., Zeithaml, V., y Berry, L. (1988). SERVQUAL: A multiple-item scale for measuring consumer '
  'perceptions of service quality. Journal of Retailing, 64(1), 12-40.',
  'Robbins, S., y Coulter, M. (2010). Administración (10ma ed.). Pearson Educación, México.',
- 'Universidad Pedagógica Experimental Libertador. (2016). Manual de trabajos de grado de especialización y '
- 'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.',
  'Zeithaml, V., Parasuraman, A., y Berry, L. (1993). Calidad total en la gestión de servicios. Díaz de Santos, '
  'España.']
 

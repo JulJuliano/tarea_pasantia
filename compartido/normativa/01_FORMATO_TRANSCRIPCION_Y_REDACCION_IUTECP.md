@@ -340,15 +340,19 @@ El ejemplo institucional presenta:
 
 # 12. Figuras
 
-Las figuras se incluyen en su lista específica y deben conservar:
+La normativa y las plantillas institucionales contemplan una **Lista de Figuras** con estructura equivalente a la lista de cuadros. En esa lista deben indicarse:
 
-- identificación;
+- número de la figura;
 - descripción;
-- página correspondiente;
-- legibilidad;
-- coherencia con el texto.
+- página correspondiente.
 
-El modelo y el reglamento presentan una lista de figuras con estructura equivalente a la lista de cuadros.
+## 12.1 Alcance de la regla institucional
+
+El Artículo 13 de la normativa de transcripción establece de forma expresa reglas de numeración y ubicación del número/título para **cuadros y gráficos**, pero no desarrolla una regla equivalente para las figuras.
+
+Por ello, no debe atribuirse a la normativa una ubicación específica del número, título o fuente de las figuras salvo que exista una instrucción posterior del Tutor Académico o de la Coordinación de Pasantías.
+
+La legibilidad y la coherencia con el texto son criterios prácticos recomendables, pero no se presentan aquí como una regla institucional específica de figuras.
 
 ---
 

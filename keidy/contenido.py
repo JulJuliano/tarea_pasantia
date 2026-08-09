@@ -49,6 +49,12 @@ CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades de la pasantía.
 CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '7'),
  ('2', 'Cronograma de actividades de la pasantía', '8')]
 
+# Configuración particular indicada por la tutora académica (06/08/2026).
+MOSTRAR_NIVELES_DIAGNOSTICO = True
+ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
+CUADRO_PLANIFICACION_FUENTE = 'La autora (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'La autora (2026).'
+
 # ========================================================================
 # 2. DATOS DE PORTADA
 # ========================================================================
@@ -69,7 +75,7 @@ AUTOR_DATOS = ['Autor:',
  'C.I.: 12.208.768',
  '',
  'Tutor Académico:',
- 'Dra. Álvarez, Carmen',
+ 'Dra. Carmen J. Álvarez',
  'C.I.: 14.452.956']
 
 FECHA_LUGAR = 'El Tigre, agosto de 2026'
@@ -85,9 +91,13 @@ ESPECIALIDAD = 'Administración'
 # ========================================================================
 # 3. PÁGINAS PRELIMINARES
 # ========================================================================
-DEDICATORIA = ''
+DEDICATORIA = ('A mi familia, por acompañarme con paciencia, apoyo y motivación durante mi formación académica y en cada etapa de estas pasantías. '
+                'Dedico especialmente este logro a quienes han confiado en mí y me han impulsado a continuar creciendo personal y profesionalmente.')
 
-AGRADECIMIENTOS = ''
+AGRADECIMIENTOS = ('Agradezco al Instituto Universitario de Tecnología "Elías Calixto Pompa" (IUTECP) por los conocimientos y orientaciones brindados durante mi formación; '
+                      'a Lubricantes y Equipos Varyna, C.A., por permitirme realizar las pasantías profesionales en su Departamento Administrativo y conocer de manera directa sus procesos de procura; '
+                      'a mi tutora académica, Dra. Carmen J. Álvarez, y a mi tutora industrial, Martina Rondón, por sus observaciones, acompañamiento y disposición durante el desarrollo del informe; '
+                      'y a todas las personas que colaboraron conmigo durante este período, por su apoyo y por los aprendizajes compartidos.')
 
 RESUMEN_TEXTO = ('El presente informe corresponde a las pasantías profesionales realizadas durante diez (10) semanas en el '
  'Departamento Administrativo de Lubricantes y Equipos Varyna, C.A., con participación directa en actividades '
@@ -134,7 +144,7 @@ INTRODUCCION_TEXTO = ['Las pasantías profesionales permiten vincular los conoci
 # ========================================================================
 RAZON_SOCIAL = 'Lubricantes y Equipos Varyna, C.A.'
 
-RESENA_HISTORICA = ['Lubricantes y Equipos Varyná, C.A. es una empresa venezolana fundada con la visión de responder a las '
+RESENA_HISTORICA = ['Lubricantes y Equipos Varyna, C.A. es una empresa venezolana fundada con la visión de responder a las '
  'crecientes demandas operativas e industriales del país. A lo largo de más de treinta y seis (36) años de '
  'trayectoria ininterrumpida, la organización se ha consolidado en el sector petrolero, industrial y de '
  'construcción, posicionándose como un aliado estratégico de alta confiabilidad en el mercado nacional gracias a '
@@ -147,7 +157,7 @@ RESENA_HISTORICA = ['Lubricantes y Equipos Varyná, C.A. es una empresa venezola
  'Su integración como parte fundamental del Grupo Corporativo VTC marcó un hito en su madurez organizacional, '
  'impulsando un crecimiento sostenido mediante la profesionalización de sus procesos, la adopción de tecnologías '
  'de vanguardia y la consolidación de alianzas comerciales de largo alcance. Hoy en día, Lubricantes y Equipos '
- 'Varyná, C.A. mantiene su compromiso con el desarrollo productivo del país, sustentando su liderazgo en la '
+ 'Varyna, C.A. mantiene su compromiso con el desarrollo productivo del país, sustentando su liderazgo en la '
  'innovación continua, la calidad de servicio y el fortalecimiento constante de su capital humano y capacidad '
  'logística.']
 
@@ -201,9 +211,18 @@ POBLACION = []
 ORGANIGRAMA_TEXTO = ('La estructura organizativa de Lubricantes y Equipos Varyna, C.A. es de tipo jerárquico-funcional y está integrada por '
  'la Gerencia General, Gerencia de Operaciones, Gerencia de Control y Avance, Departamento Administrativo, Gerencia de '
  'Contratación y Administración de Contratos, Recursos Humanos, gerencias técnicas y coordinaciones de SIHO-A y Calidad. '
- 'El Departamento Administrativo, área de pasantía, coordina procesos financieros, logísticos y de procura, incluyendo la '
- 'recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y seguimiento de adquisiciones. A '
- 'continuación, se presentan el organigrama general y las unidades relacionadas con el área de procura.')
+ 'A continuación, se presenta el organigrama general de la organización y las unidades vinculadas con el área donde se '
+ 'desarrollaron las pasantías.')
+
+MOSTRAR_NIVELES_DIAGNOSTICO = True
+
+DESCRIPCION_DEPARTAMENTO = ('El Departamento Administrativo fue el área en la que se desarrollaron las pasantías profesionales. '
+ 'Dentro de esta unidad se realizan actividades relacionadas con administración, control de documentación, logística y procura. '
+ 'En lo relativo al proceso de compras, el departamento recibe requerimientos, gestiona solicitudes de cotización, mantiene '
+ 'comunicación con proveedores, prepara y tramita documentación de compra y realiza seguimiento a las adquisiciones hasta su '
+ 'correspondiente cierre administrativo. La pasantía se concentró especialmente en estas actividades de procura, lo que permitió '
+ 'observar el recorrido de las requisiciones, identificar oportunidades de simplificación y formular una propuesta ajustada a '
+ 'las necesidades operativas del área.')
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
@@ -317,7 +336,19 @@ CRONOGRAMA_DATOS = [('Inducción y reconocimiento del Departamento Administrativ
 # ========================================================================
 # 6. CAPÍTULO III — MARCO TEÓRICO Y LEGAL
 # ========================================================================
+BASES_TEORICAS_TITULOS = [
+    'Procura y Gestión de Compras',
+    'Proceso Administrativo',
+    'Control Interno en los Procesos de Compras',
+    'Simplificación Administrativa de Procesos',
+]
+BASES_LEGALES_TITULOS = [
+    'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
+    'Base Legal: Código de Comercio — Artículo 32',
+]
+
 BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
+  'categoria': 'teorica',
   'parrafos': ['La procura se define como el conjunto de actividades orientadas a la adquisición de bienes, '
                'materiales e insumos necesarios para el funcionamiento continuo de una organización. Monterroso '
                '(2002) establece que la gestión de abastecimiento eficiente no se limita a la ejecución de '
@@ -346,6 +377,7 @@ BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
   'posicion_autor': '',
   'post_cita': ''},
  {'titulo': 'Proceso Administrativo',
+  'categoria': 'teorica',
   'parrafos': ['El proceso administrativo constituye el marco conceptual fundamental que rige el funcionamiento '
                'de las organizaciones modernas. Chiavenato (2006) lo describe como el conjunto secuencial e '
                'interrelacionado de funciones de planificación, organización, dirección y control, orientadas al '
@@ -371,6 +403,7 @@ BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
   'posicion_autor': '',
   'post_cita': ''},
  {'titulo': 'Control Interno en los Procesos de Compras',
+  'categoria': 'teorica',
   'parrafos': ['El control interno se define como el proceso diseñado e implementado por la dirección de una '
                'organización para proporcionar una seguridad razonable sobre la consecución de los objetivos en '
                'las categorías de eficiencia operativa, confiabilidad de la información financiera y cumplimiento '
@@ -396,6 +429,7 @@ BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
   'posicion_autor': '',
   'post_cita': ''},
  {'titulo': 'Simplificación Administrativa de Procesos',
+  'categoria': 'teorica',
   'parrafos': ['La simplificación administrativa consiste en la revisión sistemática y el rediseño de los '
                'procedimientos organizacionales con el propósito de eliminar pasos innecesarios, reducir la '
                'burocracia interna y facilitar la ejecución ágil de las operaciones. Según Harrington (1993), un '
@@ -408,19 +442,18 @@ BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
                'capacidad de la organización para atender sus necesidades de abastecimiento de forma oportuna y '
                'transparente.',
                'Esta definición describe con precisión la situación identificada en Lubricantes y Equipos Varyna, '
-               'C.A.: un proceso que ha crecido en pasos y actores sin que ninguno de esos añadidos haya sido '
-               'diseñado intencionalmente, sino como respuesta improvisada a contingencias operativas. Quien '
-               'elabora este trabajo considera que la simplificación no implica eliminar controles, sino eliminar '
-               'redundancias; no significa reducir responsabilidades, sino clarificarlas. El nuevo flujo '
-               'propuesto en el Capítulo V parte de este principio, identificando los pasos estrictamente '
-               'necesarios para que una requisición se convierta en una orden de compra cerrada sin demoras '
-               'innecesarias. Para que esta propuesta sea metodológicamente válida dentro del ámbito académico, '
-               'debe enmarcarse además en la modalidad de investigación correspondiente, la cual se explica en el '
-               'apartado final de este capítulo.'],
+               'C.A.: un proceso que ha crecido en pasos y actores sin que todos esos añadidos respondan a una '
+               'secuencia formalmente definida. Quien elabora este trabajo considera que la simplificación no '
+               'implica eliminar controles, sino reducir redundancias y clarificar responsabilidades. La propuesta '
+               'formulada durante las pasantías parte de este principio y organiza los pasos necesarios para que '
+               'una requisición avance de manera comprensible desde su recepción hasta el cierre de la orden de '
+               'compra, manteniendo responsables, criterios de autorización y mecanismos de seguimiento que '
+               'favorezcan el control administrativo del proceso.'],
   'cita_larga': None,
   'posicion_autor': '',
   'post_cita': ''},
  {'titulo': 'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
+  'categoria': 'legal',
   'parrafos': ['Como marco general de la actividad económica privada, la Constitución reconoce la iniciativa '
                'empresarial dentro de los límites establecidos por el ordenamiento jurídico.'],
   'cita_larga': {'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su '
@@ -440,6 +473,7 @@ BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
                     'específico de procura, por lo que su función es servir como fundamento constitucional amplio '
                     'y no como regla operativa de compras.'},
  {'titulo': 'Base Legal: Código de Comercio — Artículo 32',
+  'categoria': 'legal',
   'parrafos': ['El Código de Comercio establece obligaciones vinculadas con el orden y claridad de los registros '
                'de los comerciantes, aspecto que guarda relación con la necesidad de mantener información '
                'organizada y verificable en los procesos administrativos.'],
@@ -541,9 +575,7 @@ RECOMENDACIONES = ['Implementar la propuesta de manera gradual, iniciando con la
 # ========================================================================
 # 9. REFERENCIAS Y ANEXOS
 # ========================================================================
-REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducción a la metodología científica (6ta ed.). Episteme, '
- 'Venezuela.',
- 'Asamblea Nacional Constituyente. (1999). Constitución de la República Bolivariana de Venezuela. Gaceta Oficial '
+REFERENCIAS_LISTA = [ 'Asamblea Nacional Constituyente. (1999). Constitución de la República Bolivariana de Venezuela. Gaceta Oficial '
  'de la República Bolivariana de Venezuela.',
  'Chiavenato, I. (2006). Introducción a la teoría general de la administración (7ma ed.). McGraw-Hill, México.',
  'Congreso de la República de Venezuela. (1955). Código de Comercio. Gaceta Oficial Extraordinaria N.º 475.',

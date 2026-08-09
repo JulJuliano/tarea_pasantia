@@ -220,6 +220,14 @@ ORGANIGRAMA_TEXTO = ('La estructura organizativa de Venangocupet, S.A. responde 
  'pasantías y actúa como punto de recepción, revisión, firma y despacho de correspondencia ejecutiva. A '
  'continuación se presentan el organigrama general de la empresa y el organigrama específico del departamento.')
 
+MOSTRAR_NIVELES_DIAGNOSTICO = False
+
+DESCRIPCION_DEPARTAMENTO = ('El Departamento de Presidencia fue el área donde se desarrollaron las pasantías y funciona como punto '
+ 'de recepción, revisión, firma y despacho de correspondencia ejecutiva. El flujo observado comprende la recepción '
+ 'externa del documento, la revisión ortográfica y de formato, el registro de ingreso, la entrega al Presidente para '
+ 'firma, el registro de egreso y el despacho al departamento de destino. La práctica también incluyó el registro y '
+ 'actualización de expedientes, la revisión y canalización de correspondencia y la elaboración de reportes.')
+
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================

@@ -10,11 +10,11 @@ La organización no sigue el orden físico de los PDF. En cambio, agrupa las reg
 
 Se contrastaron las siguientes versiones:
 
-- `Reg transcripción trabajo escrito e informe IUTECP(1).pdf`
-- `Reg de transcripción de trabajos e informes IUTECP (1)(1).docx`
-- `Pasantía modelo de trabajo escrito(1).pdf`
-- `Pasantía modelo de trabajo escrito (1)(1).docx`
-- `Reg Pasantía 5 (1)(1).pdf`
+- `Reg transcripción trabajo escrito e informe IUTECP.pdf`
+- `Reg de transcripción de trabajos e informes IUTECP (1).docx`
+- `Pasantía modelo de trabajo escrito.pdf`
+- `Pasantía modelo de trabajo escrito (1).docx`
+- `Reg Pasantía 5 (1).pdf`
 
 Los dos archivos `.docx` fueron tratados como **versiones editables** de sus respectivos documentos en PDF. Se usaron para comprobar contenido textual y estructura, mientras que los PDF se conservaron como referencia visual para maquetación, imágenes, diagramas y disposición de elementos.
 
@@ -26,7 +26,7 @@ No se incorporan procedimientos, requisitos, estructura de informe ni instrument
 
 ## Organización de los archivos
 
-### `01_FORMATO_TRANSCRIPCION_Y_REDACCION.md`
+### `01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md`
 
 Contiene exclusivamente las reglas de:
 
@@ -48,7 +48,7 @@ Contiene exclusivamente las reglas de:
 - notas al pie;
 - referencias.
 
-### `02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME.md`
+### `02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME_IUTECP.md`
 
 Contiene exclusivamente:
 
@@ -67,7 +67,7 @@ Contiene exclusivamente:
 - ejemplos y criterios extraídos del modelo de trabajo escrito;
 - contradicciones internas relevantes de las plantillas.
 
-### `03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL.md`
+### `03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL_IUTECP.md`
 
 Contiene exclusivamente:
 
@@ -98,6 +98,6 @@ Cuando exista una instrucción posterior y explícita de la Coordinación de Pas
 
 Para redactar o revisar el informe:
 
-1. consultar `02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME.md` para saber **qué debe contener**;
-2. consultar `01_FORMATO_TRANSCRIPCION_Y_REDACCION.md` para saber **cómo debe escribirse y presentarse**;
-3. consultar `03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL.md` para comprobar **cómo se evalúa y cómo se presenta**.
+1. consultar `02_ESTRUCTURA_Y_CONTENIDO_DEL_INFORME_IUTECP.md` para saber **qué debe contener**;
+2. consultar `01_FORMATO_TRANSCRIPCION_Y_REDACCION_IUTECP.md` para saber **cómo debe escribirse y presentarse**;
+3. consultar `03_PROCESO_EVALUACION_Y_PRESENTACION_ORAL_IUTECP.md` para comprobar **cómo se evalúa y cómo se presenta**.

@@ -21,7 +21,8 @@ import contenido as c
 FUENTE = 'Times New Roman'
 TAMANO_BASE = 12           # Pt
 TAMANO_TABLA = 10          # Pt (cuerpo de tablas)
-TAMANO_TABLA_CHICO = 9     # Pt (encabezados compactos Gantt)
+TAMANO_TABLA_CHICO = 10    # Pt (encabezados y celdas compactas Gantt)
+RESUMEN_MAX_PALABRAS = 300
 
 # Página (Art. 6)
 PAG_ANCHO = Cm(21.59)     # Carta
@@ -109,6 +110,28 @@ def agregar_parrafo_normado(doc, texto, cursiva=False, sangria=True):
     run.font.name = FUENTE
     run.font.size = Pt(TAMANO_BASE)
     run.font.italic = cursiva
+    return p
+
+def agregar_parrafo_resumen(doc, texto):
+    """Agrega el cuerpo del resumen con interlineado sencillo y máximo normativo."""
+    palabras = str(texto).split()
+    if len(palabras) > RESUMEN_MAX_PALABRAS:
+        raise ValueError(
+            f"El resumen excede el máximo de {RESUMEN_MAX_PALABRAS} palabras "
+            f"({len(palabras)})."
+        )
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    p_format = p.paragraph_format
+    p_format.line_spacing = 1.0
+    p_format.first_line_indent = SANGRIA_LINEA
+    p_format.space_before = Pt(0)
+    p_format.space_after = Pt(0)
+
+    run = p.add_run(str(texto))
+    run.font.name = FUENTE
+    run.font.size = Pt(TAMANO_BASE)
     return p
 
 def agregar_item_lista(doc, numero, texto, negrita_inicio=""):
@@ -229,13 +252,13 @@ def agregar_titulo_nivel5(doc, texto, texto_parrafo=''):
         run_body.font.size = Pt(12)
     return p
 
-def _config_seccion(sec, sup=None):
-    """Aplica los márgenes IUTECP a una sección (Art. 6). `sup` override del margen superior."""
+def _config_seccion(sec, sup=None, ocultar_primera_pagina=False):
+    """Aplica márgenes y, solo cuando corresponde, oculta el pie de la primera página."""
     sec.top_margin = sup if sup is not None else MARGEN_SUP
     sec.bottom_margin = MARGEN_INF
     sec.left_margin = MARGEN_IZQ
     sec.right_margin = MARGEN_DER
-    sec.different_first_page_header_footer = True
+    sec.different_first_page_header_footer = ocultar_primera_pagina
 
 def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     """
@@ -243,7 +266,7 @@ def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     centrado, negrita, mayúsculas (Art. 9).
     """
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    _config_seccion(sec)
+    _config_seccion(sec, ocultar_primera_pagina=True)
 
     # Título CAPÍTULO X — con espacio extra para simular margen superior de 5cm
     p1 = doc.add_paragraph()
@@ -267,12 +290,12 @@ def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
         _agregar_bookmark(p2, bookmark_id)
 
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    _config_seccion(sec2)
+    _config_seccion(sec2, ocultar_primera_pagina=True)
 
-def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None):
+def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None, ocultar_primera_pagina=False):
     """Para secciones preliminares que inician en página nueva (Art. 9, 12)"""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
-    _config_seccion(sec)
+    _config_seccion(sec, ocultar_primera_pagina=ocultar_primera_pagina)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -286,7 +309,7 @@ def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None):
         _agregar_bookmark(p, bookmark_id)
 
     sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    _config_seccion(sec2)
+    _config_seccion(sec2, ocultar_primera_pagina=ocultar_primera_pagina)
 
 def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     """Construye la página de resumen con membrete, autor y fecha."""
@@ -296,6 +319,7 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     for linea in contenido.MEMBRETE:
         p_membrete = doc.add_paragraph()
         p_membrete.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_membrete.paragraph_format.line_spacing = 1.0
         p_membrete.paragraph_format.space_after = Pt(0)
         run_membrete = p_membrete.add_run(linea)
         run_membrete.font.name = FUENTE
@@ -303,11 +327,13 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
         run_membrete.font.bold = True
 
     p_espacio = doc.add_paragraph()
-    p_espacio.paragraph_format.space_after = Pt(18)
+    p_espacio.paragraph_format.line_spacing = 1.0
+    p_espacio.paragraph_format.space_after = Pt(6)
 
     p_titulo = doc.add_paragraph()
     p_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_titulo.paragraph_format.space_after = ESP_DOBLE
+    p_titulo.paragraph_format.line_spacing = 1.0
+    p_titulo.paragraph_format.space_after = Pt(6)
     run_titulo = p_titulo.add_run(contenido.TITULO_PROYECTO.upper())
     run_titulo.font.name = FUENTE
     run_titulo.font.size = Pt(TAMANO_BASE)
@@ -318,7 +344,8 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     p_autor = doc.add_paragraph()
     p_autor.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p_autor.paragraph_format.left_indent = Cm(0)
-    p_autor.paragraph_format.space_after = ESP_DOBLE
+    p_autor.paragraph_format.line_spacing = 1.0
+    p_autor.paragraph_format.space_after = Pt(6)
     for indice, texto in enumerate((
         "Autor:",
         contenido.NOMBRE_PASANTE,
@@ -335,8 +362,9 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
 
     p_resumen = doc.add_paragraph()
     p_resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_resumen.paragraph_format.space_before = ESP_DOBLE
-    p_resumen.paragraph_format.space_after = ESP_DOBLE
+    p_resumen.paragraph_format.line_spacing = 1.0
+    p_resumen.paragraph_format.space_before = Pt(6)
+    p_resumen.paragraph_format.space_after = Pt(6)
     run_resumen = p_resumen.add_run("RESUMEN")
     run_resumen.font.name = FUENTE
     run_resumen.font.size = Pt(TAMANO_BASE)
@@ -556,16 +584,31 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
     ancho_util_cm = Emu(ancho_util_emu).cm
 
+    meses = [("JUNIO", 4), ("JULIO", 4), ("AGOSTO", 2)]
     COL_SEM_CM = Pt(3 * TAMANO_TABLA_CHICO * 0.55).cm + 0.4
     min_act_cm = 3.0
     max_s_por_col = (ancho_util_cm - min_act_cm) / num_sem if num_sem > 0 else ancho_util_cm
     COL_SEM_CM = min(COL_SEM_CM, max_s_por_col)
-    COL_ACT_CM = ancho_util_cm - num_sem * COL_SEM_CM
+
+    # Reserva ancho suficiente para que el nombre de un mes no se parta cuando
+    # el último mes solo contiene una semana (por ejemplo, en cronogramas de 9 semanas).
+    anchos_semanas = []
+    col_start = 1
+    for nombre, ncols in meses:
+        if col_start > num_sem:
+            break
+        ncols = min(ncols, num_sem - col_start + 1)
+        ancho_grupo = max(ncols * COL_SEM_CM, 2.0)
+        anchos_semanas.extend([ancho_grupo / ncols] * ncols)
+        col_start += ncols
+    while len(anchos_semanas) < num_sem:
+        anchos_semanas.append(COL_SEM_CM)
+    COL_ACT_CM = ancho_util_cm - sum(anchos_semanas)
 
     tabla = doc.add_table(rows=2 + len(semanas), cols=1 + num_sem)
     tabla.style = 'Table Grid'
 
-    anchos_gantt = [COL_ACT_CM] + [COL_SEM_CM] * num_sem
+    anchos_gantt = [COL_ACT_CM] + anchos_semanas
     aplicar_formato_tabla_xml(tabla, anchos_gantt)
 
     # ── Fila 0: meses (JUNIO, JULIO, AGOSTO) ──
@@ -573,7 +616,6 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
     set_cell_shading(cell_label, COLOR_ENCABEZADO)
     _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
 
-    meses = [("JUNIO", 4), ("JULIO", 4), ("AGOSTO", 2)]
     col_start = 1
     for nombre, ncols in meses:
         if col_start > num_sem:
@@ -630,61 +672,61 @@ def _insertar_campo_pagina(run, formato_pagina='PAGE'):
     run.font.name = 'Times New Roman'
     run.font.size = Pt(12)
 
-def agregar_numeracion_pie(doc, idx_inicio_cuerpo=None, idx_indice_inicio=None, idx_indice_fin=None):
+def _establecer_tipo_numeracion_seccion(section, formato, inicio=None):
+    """Configura el formato y, solo cuando corresponde, el inicio de página de una sección."""
+    sect_pr = section._sectPr
+    pg_num_type = sect_pr.find(qn('w:pgNumType'))
+    if pg_num_type is None:
+        pg_num_type = OxmlElement('w:pgNumType')
+        sect_pr.append(pg_num_type)
+
+    pg_num_type.set(qn('w:fmt'), formato)
+    if inicio is None:
+        pg_num_type.attrib.pop(qn('w:start'), None)
+    else:
+        pg_num_type.set(qn('w:start'), str(inicio))
+
+def _limpiar_pie(pie):
+    """Elimina campos heredados del pie y deja un único párrafo vacío."""
+    for parrafo in list(pie.paragraphs):
+        parrafo._element.getparent().remove(parrafo._element)
+    pie.add_paragraph()
+
+def agregar_numeracion_pie(doc, idx_inicio_arabigo):
     """
-    Numeración de páginas según norma IUTECP:
-    - Portada y contraportada (secciones 0 y 1): SIN número.
-    - Preliminares (Dedicatoria..Introducción): Romanos en minúsculas (i, ii, iii...)
-      Se cuentan desde la portada pero no se imprimen en la primera página
-      de cada sección preliminar gracias a different_first_page_header_footer.
-    - Cuerpo (Capítulos I..V, Referencias, Anexos): Arábigos (1, 2, 3...)
-      No se imprime en la primera página de cada capítulo/sección
-      gracias a different_first_page_header_footer.
-    idx_inicio_cuerpo: índice de la sección donde empieza el Capítulo I.
+    Configura la paginación institucional usando propiedades de sección y campos PAGE:
+    - portada y contraportada se cuentan, pero no muestran número;
+    - todas las demás preliminares muestran romanos minúsculos, sin ocultar sus primeras páginas;
+    - Introducción reinicia la secuencia arábiga en 1 y no imprime su primera página;
+    - capítulos y Referencias ocultan únicamente su primera página;
+    - la secuencia arábiga continúa hasta los anexos.
     """
-    # 1. Desactivar numeración en portada y contraportada (secciones 0 y 1)
-    for sec_idx in range(min(2, len(doc.sections))):
-        section = doc.sections[sec_idx]
+    if idx_inicio_arabigo is None or not 0 <= idx_inicio_arabigo < len(doc.sections):
+        raise ValueError("No se encontró una sección válida para iniciar la numeración arábiga.")
+
+    for sec_idx, section in enumerate(doc.sections):
+        formato = 'lowerRoman' if sec_idx < idx_inicio_arabigo else 'decimal'
+        inicio = 1 if sec_idx in (0, idx_inicio_arabigo) else None
+        _establecer_tipo_numeracion_seccion(section, formato, inicio=inicio)
+
         footer = section.footer
         footer.is_linked_to_previous = False
-        # Dejar el pie vacío
+        _limpiar_pie(footer)
 
-    # 2. Si no se proporcionó el índice de inicio del cuerpo, detectarlo
-    #    buscando la primera sección cuyo primer párrafo contenga "CAPÍTULO"
-    if idx_inicio_cuerpo is None:
-        for i, sec in enumerate(doc.sections):
-            # Buscar si algún párrafo del cuerpo de esta sección dice CAPÍTULO
-            body_elem = sec._sectPr.getparent()
-            # Simplemente iteramos las secciones y buscamos
-            pass
-        # Valor por defecto seguro: la Introducción es la última preliminar.
-        # Las preliminares producen 2 secciones cada una (NEW_PAGE + CONTINUOUS).
-        # Contamos: portada(0), contraportada(1), dedicatoria(2,3),
-        # agradecimientos(4,5), resumen(6,7), introducción(8,9) => cap I empieza en 10
-        idx_inicio_cuerpo = 10
+        # Las secciones marcadas como primera página distinta solo tienen pie regular
+        # después de esa página; su pie de primera página debe quedar vacío.
+        if section.different_first_page_header_footer:
+            first_page_footer = section.first_page_footer
+            first_page_footer.is_linked_to_previous = False
+            _limpiar_pie(first_page_footer)
 
-    # 3. Preliminares: romanos en minúsculas (desde sección 2 hasta idx_inicio_cuerpo - 1)
-    #    Se salta el Índice de Contenido (sus secciones no llevan número)
-    for sec_idx in range(2, min(idx_inicio_cuerpo, len(doc.sections))):
-        section = doc.sections[sec_idx]
-        footer = section.footer
-        footer.is_linked_to_previous = False
-        if idx_indice_inicio is not None and idx_indice_inicio <= sec_idx < idx_indice_fin:
+        if sec_idx < 2:
             continue
-        p = footer.paragraphs[0] if footer.paragraphs else footer.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = p.add_run()
-        # PAGE \\* roman → romanos en minúsculas
-        _insertar_campo_pagina(run, ' PAGE \\* roman ')
 
-    # 4. Cuerpo: arábigos (desde idx_inicio_cuerpo en adelante)
-    for sec_idx in range(idx_inicio_cuerpo, len(doc.sections)):
-        section = doc.sections[sec_idx]
-        footer = section.footer
-        footer.is_linked_to_previous = False
-        p = footer.paragraphs[0] if footer.paragraphs else footer.add_paragraph()
+        p = footer.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run()
+        # El formato lowerRoman/decimal lo determina w:pgNumType de la sección.
         _insertar_campo_pagina(run, ' PAGE ')
 
 def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
@@ -703,6 +745,52 @@ def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
             return ruta_completa
     print(f"⚠ No se encontró imagen con número {numero} en {carpeta}")
     return None
+
+def _calcular_tamano_anexo_proporcional(ruta_imagen, configuracion):
+    """Devuelve una sola dimensión para insertar un anexo sin deformarlo."""
+    # python-docx ya incluye lectores de encabezados para los formatos de imagen
+    # que el generador inserta, por lo que no hace falta añadir Pillow.
+    from docx.image.image import Image as DocxImage
+
+    imagen = DocxImage.from_file(ruta_imagen)
+    ancho_real_cm = float(imagen.width.cm)
+    alto_real_cm = float(imagen.height.cm)
+    if ancho_real_cm <= 0 or alto_real_cm <= 0:
+        raise ValueError(f"Dimensiones inválidas para la imagen {ruta_imagen}")
+
+    def limite_positivo_cm(valor):
+        try:
+            valor = float(valor)
+        except (TypeError, ValueError):
+            return None
+        return valor if math.isfinite(valor) and valor > 0 else None
+
+    max_ancho_cm = None
+    max_alto_cm = None
+    if isinstance(configuracion, dict):
+        max_ancho_cm = limite_positivo_cm(configuracion.get('width_cm'))
+        max_alto_cm = limite_positivo_cm(configuracion.get('height_cm'))
+    elif configuracion is not None:
+        # Formato anterior: el cuarto elemento era únicamente el alto máximo.
+        max_alto_cm = limite_positivo_cm(configuracion)
+
+    if max_ancho_cm is None and max_alto_cm is None:
+        # Conserva el ancho histórico por defecto, pero como límite para no
+        # ampliar imágenes que ya caben.
+        max_ancho_cm = 14.0
+
+    factor_ancho = max_ancho_cm / ancho_real_cm if max_ancho_cm is not None else float('inf')
+    factor_alto = max_alto_cm / alto_real_cm if max_alto_cm is not None else float('inf')
+    factor = min(1.0, factor_ancho, factor_alto)
+    ancho_final_cm = ancho_real_cm * factor
+    alto_final_cm = alto_real_cm * factor
+
+    # add_picture conserva la proporción cuando recibe una sola dimensión.
+    # Elegir la dimensión limitante evita confiar en dos valores
+    # independientes dentro del XML del DOCX.
+    if max_alto_cm is not None and (max_ancho_cm is None or factor_alto <= factor_ancho):
+        return {'height': Cm(alto_final_cm)}
+    return {'width': Cm(ancho_final_cm)}
 
 def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark_id=None):
     """
@@ -780,7 +868,7 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
 # ================================================================
 # CONSTRUCCIÓN DEL DOCUMENTO (PORTADA COMPATIBLE LIBREOFFICE)
 # ================================================================
-def construir_portada(doc, solo_autor=False, idx_seccion=0):
+def construir_portada(doc, solo_autor=False, idx_seccion=0, bookmark_id=None):
     """
     Construye la portada distribuyendo los 4 bloques de forma proporcional
     al área útil de la página, sin valores fijos de puntos.
@@ -886,6 +974,8 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0):
         r.font.bold = True
         if i < len(c.MEMBRETE) - 1:
             r.add_break()
+    if bookmark_id:
+        _agregar_bookmark(p_memb, bookmark_id)
 
     # BLOQUE 1.5: LOGO IUTECP (solo portada, debajo del membrete)
     if solo_autor and os.path.exists(logo_path):
@@ -1324,6 +1414,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
     pag_actual_romana = 5  # portada=i, contraportada=ii, aprob_tutor_industrial=iii, aprob_tutor_academico=iv
     romanos = {1: 'i', 2: 'ii', 3: 'iii', 4: 'iv', 5: 'v', 6: 'vi', 7: 'vii', 8: 'viii', 9: 'ix', 10: 'x', 11: 'xi', 12: 'xii'}
+    idx_inicio_arabigo = None
     
     pag_aprob_ind = romanos.get(3, 'iii')  # Siempre presente
     pag_aprob_acad = romanos.get(4, 'iv')  # Siempre presente
@@ -1440,7 +1531,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     
         # --- ÍNDICE DE CONTENIDO ---
         idx_indice_inicio = len(doc.sections)
-        iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO")
+        iniciar_seccion_preliminar(doc, "ÍNDICE DE CONTENIDO", bookmark_id="bm_indice")
         p_header_ind = doc.add_paragraph()
         p_header_ind.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         p_header_ind.paragraph_format.space_after = Pt(12)
@@ -1449,13 +1540,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_h_ind.font.size = Pt(12)
         run_h_ind.font.bold = True
     
+        # El orden de estas entradas reproduce el orden físico de las páginas.
+        agregar_fila_indice_general_nativa(doc, "CONTRAPORTADA", "", bookmark_id="bm_contraportada")
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", "", bookmark_id="bm_aprob_ind")
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", "", bookmark_id="bm_aprob_acad")
         if pag_agradecimientos:
             agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
         if pag_dedicatoria:
             agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
-    
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", "", bookmark_id="bm_aprob_ind")
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", "", bookmark_id="bm_aprob_acad")
     
         agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
         if pag_lista_figuras:
@@ -1487,6 +1579,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
         agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
         agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
+        agregar_fila_indice_general_nativa(doc, "Descripción del departamento donde realizó la pasantía", "", sangria_cm=0.5, bookmark_id="bm_cap1_departamento")
     
         # Capítulo II
         if tiene_cap2:
@@ -1653,16 +1746,29 @@ def construir_cuerpo_documento(doc, modo="completo"):
         # --- RESUMEN ---
         if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
             iniciar_seccion_resumen(doc, c, bookmark_id="bm_resumen")
-            agregar_parrafo_normado(doc, c.RESUMEN_TEXTO)
+            agregar_parrafo_resumen(doc, c.RESUMEN_TEXTO)
             doc.add_paragraph()
             p_kw = doc.add_paragraph()
+            p_kw.paragraph_format.line_spacing = 1.0
             p_kw.paragraph_format.first_line_indent = Cm(1.25)
+            p_kw.paragraph_format.space_before = Pt(0)
+            p_kw.paragraph_format.space_after = Pt(0)
             run_kw_label = p_kw.add_run("Palabras claves: ")
+            run_kw_label.font.name = FUENTE
+            run_kw_label.font.size = Pt(TAMANO_BASE)
             run_kw_label.font.bold = True
-            p_kw.add_run(c.PALABRAS_CLAVE)
+            run_kw = p_kw.add_run(c.PALABRAS_CLAVE)
+            run_kw.font.name = FUENTE
+            run_kw.font.size = Pt(TAMANO_BASE)
 
         # --- REGISTRO DEL INICIO DEL CUERPO ---
-        iniciar_seccion_preliminar(doc, "INTRODUCCIÓN", bookmark_id="bm_introduccion")
+        idx_inicio_arabigo = len(doc.sections)
+        iniciar_seccion_preliminar(
+            doc,
+            "INTRODUCCIÓN",
+            bookmark_id="bm_introduccion",
+            ocultar_primera_pagina=True,
+        )
         introduccion = getattr(c, 'INTRODUCCION_TEXTO', 'Texto de introducción no proporcionado.')
         if isinstance(introduccion, (list, tuple)):
             for parrafo in introduccion:
@@ -1670,7 +1776,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         else:
             agregar_parrafo_normado(doc, introduccion)
 
-        # Retornamos el índice de la sección que se va a crear para el Capítulo I (que es la actual longitud de doc.sections)
+        # Capítulo I continúa la secuencia arábiga iniciada en Introducción.
         idx_cap1 = len(doc.sections)
     else:
         idx_cap1 = len(doc.sections)
@@ -1745,9 +1851,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
             cell.text = ""
             p = cell.paragraphs[0]
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.line_spacing = 1.0
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(2)
             run = p.add_run(h)
             run.font.name = FUENTE
-            run.font.size = Pt(8)
+            run.font.size = Pt(TAMANO_TABLA)
             run.font.bold = True
             shading = OxmlElement('w:shd')
             shading.set(qn('w:fill'), "D9E2F3")
@@ -1759,17 +1868,21 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 cell.text = ""
                 p = cell.paragraphs[0]
                 p.alignment = WD_ALIGN_PARAGRAPH.CENTER if j >= 2 else WD_ALIGN_PARAGRAPH.LEFT
+                p.paragraph_format.line_spacing = 1.0
+                p.paragraph_format.space_before = Pt(2)
+                p.paragraph_format.space_after = Pt(2)
                 run = p.add_run(str(val))
                 run.font.name = FUENTE
-                run.font.size = Pt(8)
+                run.font.size = Pt(TAMANO_TABLA)
                 if j == 0 and dep.startswith("**"):
                     run.font.bold = True
         p_fuente = doc.add_paragraph()
         p_fuente.paragraph_format.space_before = Pt(6)
+        p_fuente.paragraph_format.line_spacing = 1.0
         fuente_poblacion = getattr(c, 'POBLACION_FUENTE', f"Información suministrada por {getattr(c, 'RAZON_SOCIAL', 'la organización')} (2026).")
         run_f = p_fuente.add_run(f"Fuente: {fuente_poblacion}")
         run_f.font.name = FUENTE
-        run_f.font.size = Pt(8)
+        run_f.font.size = Pt(TAMANO_TABLA)
         run_f.font.italic = True
     poblacion_data = getattr(c, 'POBLACION', '')
     if isinstance(poblacion_data, str):
@@ -1788,6 +1901,18 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
     _insertar_graficos_por_ancla(doc, carpeta_imagenes, "estructura")
 
+    agregar_titulo_nivel2(
+        doc,
+        "Descripción del departamento donde realizó la pasantía",
+        bookmark_id="bm_cap1_departamento",
+    )
+    descripcion_departamento = getattr(c, 'DESCRIPCION_DEPARTAMENTO', '')
+    if isinstance(descripcion_departamento, (list, tuple)):
+        for parrafo in descripcion_departamento:
+            agregar_parrafo_normado(doc, parrafo)
+    elif descripcion_departamento:
+        agregar_parrafo_normado(doc, descripcion_departamento)
+
     # --- CAPÍTULO II: DIAGNÓSTICO SITUACIONAL ---
     if tiene_cap2:
         iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL", bookmark_id="bm_cap2")
@@ -1796,10 +1921,19 @@ def construir_cuerpo_documento(doc, modo="completo"):
         if isinstance(situacion_problematica, str):
             agregar_parrafo_normado(doc, situacion_problematica)
         else:
+            mostrar_niveles_diagnostico = bool(
+                getattr(c, 'MOSTRAR_NIVELES_DIAGNOSTICO', False)
+            )
             for bloque in situacion_problematica:
                 if isinstance(bloque, dict):
                     titulo_bloque = bloque.get('titulo')
-                    if titulo_bloque:
+                    titulo_visible = str(titulo_bloque).strip().casefold() if titulo_bloque else ''
+                    es_nivel_diagnostico = titulo_visible in {
+                        'nivel macro',
+                        'nivel meso',
+                        'nivel micro',
+                    }
+                    if titulo_bloque and (mostrar_niveles_diagnostico or not es_nivel_diagnostico):
                         agregar_titulo_nivel2(doc, titulo_bloque)
                     parrafos_bloque = bloque.get('parrafos', [])
                     if isinstance(parrafos_bloque, str):
@@ -1836,7 +1970,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_parrafo_normado(doc, intro_crono)
         titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
         agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
-        doc.add_paragraph()
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     if tiene_cap3:
@@ -1898,7 +2031,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_item_lista(doc, i, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
-    iniciar_seccion_preliminar(doc, "REFERENCIAS", bookmark_id="bm_referencias")
+    iniciar_seccion_preliminar(
+        doc,
+        "REFERENCIAS",
+        bookmark_id="bm_referencias",
+        ocultar_primera_pagina=True,
+    )
     p_sep = doc.add_paragraph()
     p_sep.paragraph_format.space_before = Pt(24)
     p_sep.paragraph_format.space_after = Pt(0)
@@ -1928,13 +2066,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
             numero_imagen = anexo[2] if len(anexo) > 2 else None
             alto_imagen = anexo[3] if len(anexo) > 3 else None
             contenido_anexo = anexo[4] if len(anexo) > 4 else None
-            ancho_img = None
-            alto_img = None
-            if isinstance(alto_imagen, dict):
-                ancho_img = alto_imagen.get('width_cm')
-                alto_img = alto_imagen.get('height_cm')
-            elif alto_imagen is not None:
-                alto_img = alto_imagen
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -1967,21 +2098,20 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 if ruta_imagen:
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                    if ancho_img is not None and alto_img is not None:
-                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(ancho_img), height=Cm(alto_img))
-                    elif alto_img is not None:
-                        p_imagen.add_run().add_picture(ruta_imagen, height=Cm(alto_img))
-                    elif ancho_img is not None:
-                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(ancho_img))
-                    else:
-                        p_imagen.add_run().add_picture(ruta_imagen, width=Cm(14))
+                    try:
+                        tamano_anexo = _calcular_tamano_anexo_proporcional(
+                            ruta_imagen, alto_imagen
+                        )
+                        p_imagen.add_run().add_picture(ruta_imagen, **tamano_anexo)
+                    except Exception as e:
+                        print(f"⚠ No se pudo insertar el anexo {cod} ({ruta_imagen}): {e}")
 
             if contenido_anexo:
                 bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]
                 for bloque in bloques:
                     agregar_parrafo_normado(doc, str(bloque))
 
-    return idx_cap1, idx_indice_inicio, idx_indice_fin
+    return idx_cap1, idx_indice_inicio, idx_indice_fin, idx_inicio_arabigo
 
 # ================================================================
 #  EJECUCIÓN PRINCIPAL
@@ -2000,14 +2130,14 @@ def generar_reporte_completo(modo="completo"):
     sec_contra.bottom_margin = Cm(3)
     sec_contra.left_margin = Cm(4)
     sec_contra.right_margin = Cm(3)
-    sec_contra.different_first_page_header_footer = True
-    construir_portada(doc, idx_seccion=1)
-    
+    sec_contra.different_first_page_header_footer = False
+    construir_portada(doc, idx_seccion=1, bookmark_id="bm_contraportada")
+
     # 3. Cuerpo (Sección 2 o 1 en borrador)
-    idx_cap1, idx_indice_inicio, idx_indice_fin = construir_cuerpo_documento(doc, modo=modo)
-    
-    # Aplicar la numeración de página correcta en base al índice dinámico del Capítulo I
-    agregar_numeracion_pie(doc, idx_inicio_cuerpo=idx_cap1, idx_indice_inicio=idx_indice_inicio, idx_indice_fin=idx_indice_fin)
+    idx_cap1, idx_indice_inicio, idx_indice_fin, idx_inicio_arabigo = construir_cuerpo_documento(doc, modo=modo)
+
+    # La secuencia arábiga comienza en Introducción, no en el Capítulo I.
+    agregar_numeracion_pie(doc, idx_inicio_arabigo=idx_inicio_arabigo)
 
     if modo == "borrador1":
         sufijo = "_BORRADOR1"
