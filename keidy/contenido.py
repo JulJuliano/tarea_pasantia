@@ -198,30 +198,12 @@ POBLACION_FUENTE = 'Información suministrada por Lubricantes y Equipos Varyna, 
 
 POBLACION = []
 
-ORGANIGRAMA_TEXTO = ['A continuación, se presenta la estructura organizativa de la empresa, reflejando las líneas de mando y la '
- 'distribución de los departamentos administrativos y de procura. Los departamentos que conforman la organización '
- 'son los siguientes:',
- 'Gerencia General: Es la máxima autoridad ejecutiva encargada de la dirección estratégica, la toma de decisiones '
- 'corporativas y el cumplimiento de los objetivos globales de la organización.',
- 'Gerencia de Operaciones: Coordina y supervisa la ejecución técnica y operativa de los proyectos, garantizando '
- 'la eficiencia en el uso de recursos e infraestructura en campo.',
- 'Gerencia de Control y Avance (y Operaciones Morichal): Responsable de monitorear el rendimiento, cumplimiento '
- 'de metas de avance físico de obras y la logística operativa regional en el área de Morichal.',
- 'Departamento Administrativo (Área de Pasantía): Unidad encargada de la gestión financiera, presupuestaria, '
- 'logística interna, control contable e inventarios. En este departamento se desenvuelve la pasante en el rol de '
- 'Asistente Administrativo, brindando apoyo operativo y de control, con énfasis en el área de Procura (Compras y '
- 'Logística) mediante la recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y '
- 'seguimiento a la adquisición oportuna de bienes, materiales y servicios esenciales.',
- 'Gerencia de Contratación y Administración de Contratos: Encargada del análisis de costos, estimaciones '
- 'presupuestarias, planificación y control legal y operativo de las licitaciones y contratos vigentes.',
- 'Gerencia de Recursos Humanos y Relaciones Laborales: Dirige el reclutamiento, selección, administración de '
- 'personal, nómina y la gestión del clima laboral de la empresa.',
- 'Gerencias Técnicas (Proyectos, Optimización, Servicios Eléctricos y Metalmecánico): Áreas especializadas '
- 'dedicadas al diseño, mantenimiento, ejecución de estructuras metálicas y optimización de servicios de '
- 'ingeniería en campo.',
- 'Coordinaciones de SIHO-A y Calidad: Unidades orientadas a garantizar la Seguridad Industrial, Higiene '
- 'Ocupacional y Ambiente, asegurando el cumplimiento de normas de prevención de riesgos y estándares de calidad '
- 'en las operaciones.']
+ORGANIGRAMA_TEXTO = ('La estructura organizativa de Lubricantes y Equipos Varyna, C.A. es de tipo jerárquico-funcional y está integrada por '
+ 'la Gerencia General, Gerencia de Operaciones, Gerencia de Control y Avance, Departamento Administrativo, Gerencia de '
+ 'Contratación y Administración de Contratos, Recursos Humanos, gerencias técnicas y coordinaciones de SIHO-A y Calidad. '
+ 'El Departamento Administrativo, área de pasantía, coordina procesos financieros, logísticos y de procura, incluyendo la '
+ 'recepción de requerimientos, solicitud de cotizaciones, selección de proveedores y seguimiento de adquisiciones. A '
+ 'continuación, se presentan el organigrama general y las unidades relacionadas con el área de procura.')
 
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
