@@ -571,5 +571,13 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5})
+    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5}),
+    ('ANEXO B', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO C', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO D', 'Modelo relacional documental del prototipo', '04_modelo_relacional_documental.png', {'width_cm': 13.0, 'height_cm': 10.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO E', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO F', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO G', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO H', 'Mapa de módulos de la interfaz', '11_mapa_modulos_interfaz.png', {'width_cm': 8.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO I', 'Proceso de respaldo periódico de SQLite', '12_proceso_respaldo_sqlite.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).'])
 ]

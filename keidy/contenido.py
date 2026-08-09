@@ -584,13 +584,12 @@ REFERENCIAS_LISTA = [ 'Asamblea Nacional Constituyente. (1999). Constitución de
  'Monterroso, E. (2002). El proceso de abastecimiento: El aprovisionamiento. Universidad Nacional de Luján, '
  'Argentina.']
 
-ANEXOS_LISTA = [('ANEXO A',
-  'Diagrama de Ishikawa de las causas asociadas a las demoras del proceso de procura',
-  None,
-  None,
-  ['Problema analizado: demoras y pérdida de trazabilidad en el proceso de procura.',
-   'Procedimientos: ausencia de un canal único de recepción y recorrido no estandarizado de las requisiciones.',
-   'Documentación: formatos no uniformes para solicitudes, cotizaciones, órdenes y seguimiento.',
-   'Responsabilidades y autorización: criterios de aprobación y niveles de autorización susceptibles de '
-   'formalización.',
-   'Seguimiento: control manual del estatus de cotizaciones y ausencia de indicadores básicos de gestión.'])]
+ANEXOS_LISTA = [
+    ('ANEXO A', 'Diagrama de Ishikawa de las causas asociadas a las demoras del proceso de procura', '01_ishikawa_demoras_procura.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO B', 'Flujograma AS-IS del proceso actual de procura', '02_flujo_as_is_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO C', 'Flujograma TO-BE del proceso simplificado propuesto', '03_flujo_to_be_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO D', 'Swimlane del proceso propuesto de procura', '04_swimlane_procura.png', {'width_cm': 14.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO E', 'SIPOC del proceso de procura', '05_sipoc_procura.png', {'width_cm': 13.0, 'height_cm': 14.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO F', 'Matriz RACI propuesta del proceso de procura', '06_matriz_raci_propuesta.png', {'width_cm': 14.0, 'height_cm': 5.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO G', 'Diagrama de Ishikawa definitivo de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura', 'ishikawa_keidy_procura.png', {'width_cm': 14.0, 'height_cm': 6.0}, ['Fuente: Elaboración propia (2026).'])
+]

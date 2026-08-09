@@ -746,6 +746,17 @@ def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
     print(f"⚠ No se encontró imagen con número {numero} en {carpeta}")
     return None
 
+def buscar_imagen_por_referencia(carpeta, referencia, extensiones=None):
+    """Busca un anexo por nombre de archivo o conserva la búsqueda numérica."""
+    if isinstance(referencia, str) and os.path.splitext(referencia)[1]:
+        ruta = os.path.join(carpeta, referencia)
+        if os.path.isfile(ruta):
+            print(f"✓ Imagen encontrada: {ruta}")
+            return ruta
+        print(f"⚠ No se encontró el archivo de anexo '{referencia}' en {carpeta}")
+        return None
+    return buscar_imagen_por_numero(carpeta, referencia, extensiones=extensiones)
+
 def _calcular_tamano_anexo_proporcional(ruta_imagen, configuracion):
     """Devuelve una sola dimensión para insertar un anexo sin deformarlo."""
     # python-docx ya incluye lectores de encabezados para los formatos de imagen
@@ -2094,7 +2105,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             run_desc.font.bold = True
             
             if numero_imagen is not None:
-                ruta_imagen = buscar_imagen_por_numero(carpeta_imagenes, numero_imagen)
+                ruta_imagen = buscar_imagen_por_referencia(carpeta_imagenes, numero_imagen)
                 if ruta_imagen:
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER

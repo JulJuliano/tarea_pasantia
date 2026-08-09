@@ -561,4 +561,13 @@ REFERENCIAS_LISTA = ['Asamblea Nacional Constituyente. (1999). Constitución de 
  'Zeithaml, V., Parasuraman, A., y Berry, L. (1993). Calidad total en la gestión de servicios. Díaz de Santos, '
  'España.']
 
-ANEXOS_LISTA = [('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5})]
+ANEXOS_LISTA = [
+    ('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5}),
+    ('ANEXO B', 'Diagrama de Ishikawa del control de solicitudes', '01_ishikawa_control_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO C', 'Flujograma AS-IS de afiliaciones e incidencias', '02_flujo_as_is_solicitudes.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO D', 'Swimlane interdepartamental de gestión de solicitudes', '04_swimlane_gestion_solicitudes.png', {'width_cm': 14.0, 'height_cm': 10.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO E', 'Estados de una solicitud de servicio', '05_estados_solicitud.png', {'width_cm': 13.0, 'height_cm': 8.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO F', 'Comunicación interdepartamental', '10_comunicacion_interdepartamental.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO G', 'Comparación AS-IS y TO-BE del control de solicitudes', '11_comparacion_as_is_to_be.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO H', 'Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio', 'ishikawa_amaal_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).'])
+]
