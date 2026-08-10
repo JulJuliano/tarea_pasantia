@@ -335,34 +335,43 @@ reportes_pasantias = [
             ("5", "Redacción del informe de pruebas funcionales", "Consolidación de los resultados de las pruebas en un informe técnico que documenta los casos ejecutados, los errores corregidos y la validación final de los módulos del sistema.", "Computador, editor de texto")
         ]
     },
-    # ── SEMANA 8 ────────────────────────────────────────────────
-    {
-        "num_semana": "8",
-        "periodo": "Del 3 al 7 de agosto de 2026",
-        "objetivo": "Redactar el informe técnico de pasantías, elaborar los manuales de usuario del sistema y estructurar definitivamente el código fuente para la entrega institucional, participando en las actividades regulares de cierre administrativo del período.",
-        "entregables": "Informe técnico de pasantías completo en su versión preliminar, manual de usuario del sistema y código fuente estructurado y comentado en el repositorio de control de versiones.",
-        "actividades": [
-            ("1", "Redacción del informe técnico de pasantías", "Desarrollo de los capítulos I al V del informe académico: realidad organizacional, planificación, marco teórico, actividades realizadas, conclusiones y recomendaciones, siguiendo las normas del IUTECP.", "Computador, editor de texto, normativas institucionales"),
-            ("2", "Organización documental", "Apoyo en el registro de expedientes en la hoja de cálculo y actividades regulares de soporte.", "Expedientes físicos, hoja de cálculo"),
-            ("3", "Elaboración del manual de usuario del sistema", "Redacción del manual de usuario que describe paso a paso el uso de los módulos de registro, consulta, historial y generación de reportes, con capturas de pantalla de la interfaz.", "Sistema ejecutable, editor de texto, capturas de pantalla"),
-            ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.\n\n", "Editor de código fuente, repositorio GitHub"),
-            ("5", "Revisión preliminar del informe con el tutor académico", "Envío de la versión preliminar del informe al tutor académico para su revisión, recepción de observaciones iniciales e incorporación de las correcciones formales indicadas.", "Informe preliminar, medios de comunicación institucional")
-        ]
-    },
-    # ── SEMANA 9 (FINAL) ────────────────────────────────────────
-    {
-        "num_semana": "9",
-        "periodo": "Del 10 al 14 de agosto de 2026",
-        "objetivo": "Consolidar y revisar el informe académico en su versión final, incorporar las observaciones del tutor industrial, presentar el prototipo funcional ante la tutora industrial para su evaluación y preparar los anexos definitivos para la entrega institucional.",
-        "entregables": "Informe técnico de pasantías en versión final con todos los anexos, carta de aprobación del tutor industrial firmada y prototipo funcional del sistema debidamente validado y entregado.",
-        "actividades": [
-            ("1", "Incorporación de observaciones del tutor industrial", "Revisión de las correcciones y sugerencias indicadas por la tutora industrial sobre el borrador del informe y el funcionamiento del sistema, e incorporación de los ajustes pertinentes.", "Borrador del informe, observaciones escritas de la tutora"),
-            ("2", "Presentación del prototipo funcional ante la tutora industrial", "Demostración formal del sistema ante la Ing. Yasmin Sabaneta, recorriendo los módulos de registro, consulta, historial y generación de reportes con expedientes reales del departamento.", "Sistema ejecutable, equipo informático de la oficina"),
-            ("3", "Preparación de los anexos definitivos", "Organización y presentación formal de los anexos del informe: diagrama Entidad-Relación y capturas de la interfaz del sistema.", "Archivos de imagen, editor de texto"),
-            ("4", "Revisión y consolidación final del informe académico", "Corrección ortográfica y de formato del informe completo, verificación del cumplimiento de las normas del IUTECP, numeración de páginas, índices y lista de referencias bibliográficas.\n", "Informe completo, normativas del IUTECP, computador"),
-            ("5", "Entrega institucional y firma de carta de aprobación", "Presentación oficial del informe técnico final ante las autoridades académicas e institucionales correspondientes y obtención de la firma de aprobación de la tutora industrial para su entrega al IUTECP.", "Informe impreso y encuadernado, carta de aprobación")
-        ]
-    },
+# ── SEMANA 8 ────────────────────────────────────────────────
+{
+    "num_semana": "8",
+    "periodo": "Del 3 al 7 de agosto de 2026",
+    "objetivo": "Redactar el informe técnico de pasantías, diseñar y elaborar el manual de usuario del sistema y estructurar definitivamente el código fuente para la entrega institucional, participando en las actividades regulares de cierre administrativo del período.",
+    "entregables": "Informe técnico de pasantías completo en su versión preliminar, manual de usuario del sistema y código fuente estructurado y comentado en el repositorio de control de versiones.",
+    "actividades": [
+        ("1", "Redacción del informe técnico de pasantías", "Desarrollo de los capítulos I al V del informe académico: realidad organizacional, planificación, marco teórico, actividades realizadas, conclusiones y recomendaciones, siguiendo las normas del IUTECP.", "Computador, editor de texto, normativas institucionales"),
+
+        ("2", "Organización documental", "Apoyo en el registro de expedientes en la hoja de cálculo y actividades regulares de soporte.", "Expedientes físicos, hoja de cálculo"),
+
+        ("3", "Diseño y elaboración del manual de usuario del sistema", "Estructuración y desarrollo del manual de usuario, organizando las instrucciones de uso de los módulos de registro, consulta, historial y generación de reportes, e incorporando capturas de pantalla de la interfaz para facilitar la comprensión de cada procedimiento.", "Sistema ejecutable, editor de texto, capturas de pantalla"),
+
+        ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.", "Editor de código fuente, repositorio GitHub"),
+
+        ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones iniciales, participando paralelamente en el registro y actualización de expedientes recibidos por el Departamento de Presidencia en la hoja de cálculo institucional.", "Informe preliminar, medios de comunicación institucional, expedientes físicos, hoja de cálculo")
+    ]
+},
+
+# ── SEMANA 9 (FINAL) ────────────────────────────────────────
+{
+    "num_semana": "9",
+    "periodo": "Del 10 al 14 de agosto de 2026",
+    "objetivo": "Consolidar y revisar el informe académico en su versión final, presentar el prototipo funcional ante la tutora industrial para su evaluación, participar en las labores regulares de registro documental del Departamento de Presidencia y preparar los anexos definitivos para la entrega institucional.",
+    "entregables": "Informe técnico de pasantías en versión final con todos los anexos, carta de aprobación del tutor industrial firmada y prototipo funcional del sistema debidamente validado y entregado.",
+    "actividades": [
+        ("1", "Presentación del prototipo funcional ante la tutora industrial", "Demostración del sistema ante la Ing. Yasmin Sabaneta, recorriendo los módulos de registro, consulta, historial y generación de reportes con expedientes del departamento.", "Sistema ejecutable, equipo informático de la oficina"),
+
+        ("2", "Registro documental de expedientes", "Apoyo en las labores regulares del Departamento de Presidencia mediante el registro y actualización de los expedientes recibidos y despachados durante el período, manteniendo al día la información correspondiente en la hoja de cálculo institucional.", "Expedientes físicos, hoja de cálculo institucional"),
+
+        ("3", "Preparación de los anexos definitivos", "Organización y presentación formal de los anexos del informe, incluyendo los diagramas técnicos, evidencias del desarrollo y capturas de la interfaz del sistema correspondientes a las actividades realizadas durante la pasantía.", "Archivos de diagramas, capturas de pantalla, editor de texto"),
+
+        ("4", "Revisión y consolidación final del informe académico", "Corrección ortográfica y de formato del informe completo, verificación del cumplimiento de las normas del IUTECP, numeración de páginas, índices y lista de referencias bibliográficas.", "Informe completo, normativas del IUTECP, computador"),
+
+        ("5", "Entrega institucional y firma de carta de aprobación", "Presentación oficial del informe técnico final ante las autoridades académicas e institucionales correspondientes y obtención de la firma de aprobación de la tutora industrial para su entrega al IUTECP.", "Informe impreso y encuadernado, carta de aprobación")
+    ]
+},
 ]
 
 # ================================================================
