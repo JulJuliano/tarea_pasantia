@@ -350,7 +350,7 @@ reportes_pasantias = [
 
         ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.", "Editor de código fuente, repositorio GitHub"),
 
-        ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones iniciales, participando paralelamente en el registro y actualización de expedientes recibidos por el Departamento de Presidencia en la hoja de cálculo institucional.", "Informe preliminar, medios de comunicación institucional, expedientes físicos, hoja de cálculo")
+        ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones iniciales, participando paralelamente en el registro de expedientes recibidos por el departamento en la hoja de cálculo.", "Informe preliminar, expedientes físicos, hoja de cálculo")
     ]
 },
 
@@ -363,7 +363,7 @@ reportes_pasantias = [
     "actividades": [
         ("1", "Presentación del prototipo funcional ante la tutora industrial", "Demostración del sistema ante la Ing. Yasmin Sabaneta, recorriendo los módulos de registro, consulta, historial y generación de reportes con expedientes del departamento.", "Sistema ejecutable, equipo informático de la oficina"),
 
-        ("2", "Registro documental de expedientes", "Apoyo en las labores regulares del Departamento de Presidencia mediante el registro y actualización de los expedientes recibidos y despachados durante el período, manteniendo al día la información correspondiente en la hoja de cálculo institucional.", "Expedientes físicos, hoja de cálculo institucional"),
+        ("2", "Registro documental de expedientes", "Apoyo en las labores regulares mediante el registro de los expedientes recibidos y despachados durante el período, manteniendo al día la información correspondiente en la hoja de cálculo.", "Expedientes físicos, hoja de cálculo"),
 
         ("3", "Preparación de los anexos definitivos", "Organización y presentación formal de los anexos del informe, incluyendo los diagramas técnicos, evidencias del desarrollo y capturas de la interfaz del sistema correspondientes a las actividades realizadas durante la pasantía.", "Archivos de diagramas, capturas de pantalla, editor de texto"),
 
