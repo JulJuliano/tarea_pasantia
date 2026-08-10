@@ -342,15 +342,15 @@ reportes_pasantias = [
     "objetivo": "Redactar el informe técnico de pasantías, diseñar y elaborar el manual de usuario del sistema y estructurar definitivamente el código fuente para la entrega institucional, participando en las actividades regulares de cierre administrativo del período.",
     "entregables": "Informe técnico de pasantías completo en su versión preliminar, manual de usuario del sistema y código fuente estructurado y comentado en el repositorio de control de versiones.",
     "actividades": [
-        ("1", "Redacción del informe técnico de pasantías", "Desarrollo de los capítulos I al V del informe académico: realidad organizacional, planificación, marco teórico, actividades realizadas, conclusiones y recomendaciones, siguiendo las normas del IUTECP.", "Computador, editor de texto, normativas institucionales"),
+        ("1", "Redacción del informe técnico de pasantías", "Desarrollo de los capítulos I al V del informe académico: realidad organizacional, planificación, marco teórico, actividades realizadas, entre otros, siguiendo las normas del IUTECP.", "Computador, editor de texto, normativas institucionales"),
 
-        ("2", "Organización documental", "Apoyo en el registro de expedientes en la hoja de cálculo y actividades regulares de soporte.", "Expedientes físicos, hoja de cálculo"),
+        ("2", "Organización documental", "Apoyo en el registro de expedientes en la hoja de cálculo y actividades regulares.", "Expedientes físicos, hoja de cálculo"),
 
         ("3", "Diseño y elaboración del manual de usuario del sistema", "Estructuración y desarrollo del manual de usuario, organizando las instrucciones de uso de los módulos de registro, consulta, historial y generación de reportes, e incorporando capturas de pantalla de la interfaz para facilitar la comprensión de cada procedimiento.", "Sistema ejecutable, editor de texto, capturas de pantalla"),
 
         ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.", "Editor de código fuente, repositorio GitHub"),
 
-        ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones iniciales, participando paralelamente en el registro de expedientes recibidos por el departamento en la hoja de cálculo.", "Informe preliminar, expedientes físicos, hoja de cálculo")
+        ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones, participando paralelamente en el registro de expedientes recibidos por el departamento en la hoja de cálculo.", "Informe preliminar, expedientes físicos, hoja de cálculo")
     ]
 },
 
@@ -369,7 +369,7 @@ reportes_pasantias = [
 
         ("4", "Revisión y consolidación final del informe académico", "Corrección ortográfica y de formato del informe completo, verificación del cumplimiento de las normas del IUTECP, numeración de páginas, índices y lista de referencias bibliográficas.", "Informe completo, normativas del IUTECP, computador"),
 
-        ("5", "Entrega institucional y firma de carta de aprobación", "Presentación oficial del informe técnico final ante las autoridades académicas e institucionales correspondientes y obtención de la firma de aprobación de la tutora industrial para su entrega al IUTECP.", "Informe impreso y encuadernado, carta de aprobación")
+        ("5", "Entrega institucional y firma de carta de aprobación", "Presentación oficial del informe técnico final ante las autoridades académicas e institucionales correspondientes y obtención de la firma de aprobación de la tutora industrial para su entrega al IUTECP.", "Informe en formato digital")
     ]
 },
 ]
