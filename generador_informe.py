@@ -1187,8 +1187,7 @@ def _agregar_bookmark(parrafo, bookmark_id):
     p_elem.append(end)
 
 def _agregar_campo_pageref(parrafo, bookmark_id, negrita=False):
-    """Inserta un campo PAGEREF en el párrafo que Word/LibreOffice evalúa
-    al actualizar campos, mostrando la página real del bookmark indicado."""
+    """Inserta un campo PAGEREF que Word/LibreOffice evalúa al actualizar campos."""
     run = parrafo.add_run()
     run.font.name = 'Times New Roman'
     run.font.size = Pt(12)
@@ -1427,6 +1426,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
     romanos = {1: 'i', 2: 'ii', 3: 'iii', 4: 'iv', 5: 'v', 6: 'vi', 7: 'vii', 8: 'viii', 9: 'ix', 10: 'x', 11: 'xi', 12: 'xii'}
     idx_inicio_arabigo = None
     
+    pag_contraportada = romanos.get(2, 'ii')
     pag_aprob_ind = romanos.get(3, 'iii')  # Siempre presente
     pag_aprob_acad = romanos.get(4, 'iv')  # Siempre presente
     pag_agradecimientos = ""
@@ -1442,7 +1442,8 @@ def construir_cuerpo_documento(doc, modo="completo"):
         pag_actual_romana += 1
         
     pag_indice = romanos.get(pag_actual_romana, str(pag_actual_romana))
-    pag_actual_romana += 1
+    # En los informes completos, el índice general ocupa dos páginas.
+    pag_actual_romana += 2 if modo == "completo" else 1
     
     pag_lista_cuadros = romanos.get(pag_actual_romana, str(pag_actual_romana))
     pag_actual_romana += 1
@@ -1552,22 +1553,24 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_h_ind.font.bold = True
     
         # El orden de estas entradas reproduce el orden físico de las páginas.
-        agregar_fila_indice_general_nativa(doc, "CONTRAPORTADA", "", bookmark_id="bm_contraportada")
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", "", bookmark_id="bm_aprob_ind")
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", "", bookmark_id="bm_aprob_acad")
+        # LibreOffice no aplica formato romano a PAGEREF; las preliminares
+        # usan los valores calculados arriba y el cuerpo conserva referencias dinámicas.
+        agregar_fila_indice_general_nativa(doc, "CONTRAPORTADA", pag_contraportada)
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", pag_aprob_ind)
+        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", pag_aprob_acad)
         if pag_agradecimientos:
-            agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", "", bookmark_id="bm_agradecimientos")
+            agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", pag_agradecimientos)
         if pag_dedicatoria:
-            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", "", bookmark_id="bm_dedicatoria")
+            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", pag_dedicatoria)
     
-        agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", "", bookmark_id="bm_lista_cuadros")
+        agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", pag_lista_cuadros)
         if pag_lista_figuras:
-            agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", "", bookmark_id="bm_lista_figuras")
-        agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", "", bookmark_id="bm_lista_graficos")
+            agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", pag_lista_figuras)
+        agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", pag_lista_graficos)
         if pag_lista_anexos:
-            agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", "", bookmark_id="bm_lista_anexos")
+            agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", pag_lista_anexos)
         if pag_resumen:
-            agregar_fila_indice_general_nativa(doc, "RESUMEN", "", bookmark_id="bm_resumen")
+            agregar_fila_indice_general_nativa(doc, "RESUMEN", pag_resumen)
     
         agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
 
