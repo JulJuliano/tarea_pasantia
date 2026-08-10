@@ -348,7 +348,7 @@ reportes_pasantias = [
 
         ("3", "Diseño y elaboración del manual de usuario del sistema", "Estructuración y desarrollo del manual de usuario, organizando las instrucciones de uso de los módulos de registro, consulta, historial y generación de reportes, e incorporando capturas de pantalla de la interfaz para facilitar la comprensión de cada procedimiento.", "Sistema ejecutable, editor de texto, capturas de pantalla"),
 
-        ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.", "Editor de código fuente, repositorio GitHub"),
+        ("4", "Estructuración y comentado del código fuente", "Revisión integral del código fuente, incorporación de comentarios explicativos en las funciones críticas, organización de los archivos del proyecto y sincronización de la versión final en el repositorio.\n\n", "Editor de código fuente, repositorio GitHub"),
 
         ("5", "Revisión preliminar del informe y apoyo en el control documental", "Envío de la versión preliminar del informe al tutor académico para su revisión y recepción de observaciones, participando paralelamente en el registro de expedientes recibidos por el departamento en la hoja de cálculo.", "Informe preliminar, expedientes físicos, hoja de cálculo")
     ]
@@ -361,7 +361,7 @@ reportes_pasantias = [
     "objetivo": "Consolidar y revisar el informe académico en su versión final, presentar el prototipo funcional ante la tutora industrial para su evaluación, participar en las labores regulares de registro documental del Departamento de Presidencia y preparar los anexos definitivos para la entrega institucional.",
     "entregables": "Informe técnico de pasantías en versión final con todos los anexos, carta de aprobación del tutor industrial firmada y prototipo funcional del sistema debidamente validado y entregado.",
     "actividades": [
-        ("1", "Presentación del prototipo funcional ante la tutora industrial", "Demostración del sistema ante la Ing. Yasmin Sabaneta, recorriendo los módulos de registro, consulta, historial y generación de reportes con expedientes del departamento.", "Sistema ejecutable, equipo informático de la oficina"),
+        ("1", "Presentación del prototipo funcional ante la tutora industrial", "Demostración del sistema recorriendo los módulos con expedientes del departamento.", "Sistema ejecutable, equipo informático de la oficina"),
 
         ("2", "Registro documental de expedientes", "Apoyo en las labores regulares mediante el registro de los expedientes recibidos y despachados durante el período, manteniendo al día la información correspondiente en la hoja de cálculo.", "Expedientes físicos, hoja de cálculo"),
 
