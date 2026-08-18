@@ -70,7 +70,7 @@ MEMBRETE = ['REPÚBLICA BOLIVARIANA DE VENEZUELA',
  'EL TIGRE, ESTADO ANZOÁTEGUI']
 
 TITULO_PROYECTO = ('DESARROLLO DE UN PROTOTIPO DE SISTEMA PARA EL CONTROL, TRAZABILIDAD Y REPORTE DOCUMENTAL EN LA '
- 'PRESIDENCIA DE VENANGOCUPET, S.A.')
+ 'PRESIDENCIA DE LA EMPRESA MIXTA PETROLERA VENANGOCUPET, S.A.')
 
 AUTOR_DATOS = ['Autor:',
  'Cardona, Juliano',
@@ -299,8 +299,8 @@ PLANIFICACION_DATOS = [('Diagnosticar la situación actual del flujo procediment
  ('Diseñar la arquitectura lógica de la base de datos y la interfaz gráfica del sistema de acuerdo con el flujo '
   'real del Departamento de Presidencia.',
   'Arquitectura lógica e interfaz del sistema documental.',
-  'Modelar la relación entre procesos y documentos, normalizar la estructura de datos y diseñar los módulos '
-  'visuales.',
+  'Modelar los expedientes, catálogos, documentos asociados e historial de movimientos; normalizar la estructura '
+  'de datos y diseñar los módulos visuales.',
   'Modelado de datos y diseño de interfaz.',
   'Herramientas de modelado, editor de código y documentación técnica.'),
  ('Implementar y validar el prototipo funcional mediante SQLite y una aplicación de escritorio, comprobando los '
@@ -378,8 +378,8 @@ BASES_TEORICAS = [{'titulo': 'Sistemas de Información',
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'Modelo Relacional de Bases de Datos',
-  'posicion_autor': 'A juicio de quien suscribe, el modelo relacional resulta adecuado porque representa la '
-                    'relación entre procesos y documentos sin duplicar la información que se necesita consultar.',
+  'posicion_autor': 'A juicio de quien suscribe, el modelo relacional resulta adecuado porque separa los datos '
+                    'maestros de los registros operativos y conserva la trazabilidad de cada expediente.',
   'parrafos': ['El modelo relacional, propuesto originalmente por Codd (1970), organiza la información en tablas '
                'bidimensionales denominadas relaciones, cuyos atributos representan las propiedades de las '
                'entidades y cuyas filas corresponden a instancias individuales de datos. La fortaleza de este '
@@ -387,10 +387,11 @@ BASES_TEORICAS = [{'titulo': 'Sistemas de Información',
                'la integridad referencial entre tablas relacionadas mediante claves primarias y foráneas.',
                'Date (2001) establece que un diseño relacional correctamente normalizado garantiza que cada dato '
                'se almacene una sola vez, reduciendo la posibilidad de inconsistencias derivadas de '
-               'actualizaciones parciales. En el sistema propuesto, la relación entre procesos administrativos y '
-               'documentos sigue una cardinalidad uno a muchos (1:N), permitiendo registrar múltiples expedientes '
-               'asociados a un mismo proceso contractual o administrativo sin duplicar los datos maestros del '
-               'proceso.'],
+               'actualizaciones parciales. En el sistema implementado, la tabla expedientes se relaciona mediante '
+               'claves foráneas con los catálogos de gerencia, superintendencia, responsables, modalidad, estatus, '
+               'resultado y empresa. Los documentos se asocian mediante una tabla intermedia, mientras que los '
+               'frentes adicionales y el historial de movimientos mantienen relaciones uno a muchos (1:N) con '
+               'cada expediente.'],
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'SQLite como Sistema Gestor de Base de Datos',
@@ -404,7 +405,7 @@ BASES_TEORICAS = [{'titulo': 'Sistemas de Información',
                'Pressman (2010) señala que la selección de herramientas tecnológicas debe considerar las '
                'características del entorno de despliegue y los requerimientos reales de la solución. Para el '
                'prototipo desarrollado en el Departamento de Presidencia, SQLite permite gestionar las relaciones '
-               'entre procesos y documentos, conservar el historial de movimientos y ejecutar consultas sin '
+               'entre expedientes, catálogos y documentos, conservar el historial de movimientos y ejecutar consultas sin '
                'incorporar una infraestructura adicional de servidor.'],
   'cita_larga': None,
   'post_cita': ''},
@@ -538,8 +539,8 @@ CONCLUSIONES = ['Se diagnosticó que el control manual en hojas de cálculo pued
  'asociación de múltiples documentos con un mismo proceso, la consulta del historial de movimientos y la '
  'generación de reportes resumidos para la Presidencia.',
  'Se diseñó una arquitectura relacional normalizada con SQLite y una interfaz de escritorio orientada a conservar '
- 'una dinámica de uso sencilla, representando la relación uno a muchos entre procesos y documentos sin alterar el '
- 'flujo operativo del departamento.',
+ 'una dinámica de uso sencilla, relacionando expedientes con sus catálogos, documentos, frentes adicionales e '
+ 'historial de movimientos sin alterar el flujo operativo del departamento.',
  'Se implementó y validó un prototipo funcional que integra los módulos de registro, consulta, historial y '
  'reporte, demostrando la viabilidad técnica de automatizar el control documental y reducir la dependencia de '
  'operaciones manuales repetitivas.']
@@ -574,7 +575,7 @@ ANEXOS_LISTA = [
     ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5}),
     ('ANEXO B', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO C', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO D', 'Modelo relacional documental del prototipo', '04_modelo_relacional_documental.png', {'width_cm': 13.0, 'height_cm': 10.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO D', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia a partir de expedientes_schema.sql (2026).']),
     ('ANEXO E', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO F', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO G', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Elaboración propia (2026).']),

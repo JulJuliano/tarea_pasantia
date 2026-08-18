@@ -1,12 +1,15 @@
 @startuml
-' Juliano — Modelo lógico relacional del prototipo
+' DER del modulo de expedientes derivado de juliano/varios/expedientes_schema.sql
+top to bottom direction
+skinparam dpi 180
 skinparam defaultFontName Arial
+skinparam defaultFontSize 12
 skinparam defaultFontColor #24171A
 skinparam backgroundColor #FFF7F8
 skinparam shadowing false
 skinparam linetype ortho
-skinparam nodesep 35
-skinparam ranksep 35
+skinparam nodesep 18
+skinparam ranksep 42
 skinparam entity {
   BackgroundColor #FFF7F8
   BorderColor #8F1D2C
@@ -19,39 +22,138 @@ skinparam note {
 }
 hide circle
 
-together {
-entity "PROCESO" as proceso {
-  * proceso_id : identificador
-  --
-  datos_maestros : referencia
-}
-entity "DOCUMENTO" as documento {
-  * documento_id : identificador
-  --
-  * proceso_id : referencia
-  estado : estado actual
-}
+package "CATALOGOS" #FFF0F2 {
+  entity "cat_gerencia" as gerencia {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_superintendencia" as superintendencia {
+    * id <<PK>>
+    --
+    nombre
+    id_gerencia <<FK>>
+  }
+  entity "cat_responsables" as responsables {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_plan_contratacion" as plan {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_modalidad" as modalidad {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_art" as art {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_tipo_contrato" as tipo_contrato {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_estatus_detalle" as estatus {
+    * id <<PK>>
+    --
+    nombre
+    visualizacion
+  }
+  entity "cat_resultado_proceso" as resultado {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_empresas" as empresas {
+    * id <<PK>>
+    --
+    nombre
+  }
+  entity "cat_documento" as documento {
+    * id <<PK>>
+    --
+    nombre
+    modulo
+  }
+  gerencia -[hidden]right- superintendencia
+  superintendencia -[hidden]right- responsables
+  responsables -[hidden]right- plan
+  plan -[hidden]right- modalidad
+  modalidad -[hidden]right- art
+
+  tipo_contrato -[hidden]right- estatus
+  estatus -[hidden]right- resultado
+  resultado -[hidden]right- empresas
+  empresas -[hidden]right- documento
+  gerencia -[hidden]down- tipo_contrato
 }
 
-entity "MOVIMIENTO" as movimiento {
-  * movimiento_id : identificador
-  --
-  * documento_id : referencia
-  fecha : fecha del movimiento
-  estado : estado resultante
-  origen_destino : unidad relacionada
+package "NUCLEO DE EXPEDIENTES" #F7DDE1 {
+  entity "expedientes" as expedientes {
+    * id_expediente <<PK>>
+    --
+    solped
+    descripcion_proceso
+    nro_proceso
+    fecha_recibido
+    fecha_devuelto
+    fecha_firma_contrato
+    presupuesto_base_usd
+    monto_adjudicado_usd
+  }
+
+  entity "expediente_documentos" as expediente_documentos {
+    * id_expediente <<PK, FK>>
+    * id_documento <<PK, FK>>
+  }
+
+  entity "expediente_frentes_adicionales" as frentes {
+    * id_frente <<PK>>
+    --
+    id_expediente <<FK>>
+    orden
+    id_empresa <<FK>>
+    monto_adjudicado_bs
+    monto_adjudicado_usd
+  }
+
+  entity "historial_movimientos" as historial {
+    * id_movimiento <<PK>>
+    --
+    id_expediente <<FK>>
+    fecha_creacion
+    id_estatus <<FK>>
+    documentos
+    observaciones
+    notas
+  }
+
+  expedientes -[hidden]right- expediente_documentos
+  expediente_documentos -[hidden]right- frentes
+  frentes -[hidden]right- historial
 }
 
-proceso ||--o{ documento : agrupa
-documento ||--o{ movimiento : registra historial
+gerencia ||--o{ superintendencia
+gerencia ||--o{ expedientes
+superintendencia ||--o{ expedientes
+responsables ||--o{ expedientes
+plan ||--o{ expedientes
+modalidad ||--o{ expedientes
+art ||--o{ expedientes
+tipo_contrato ||--o{ expedientes
+estatus ||--o{ expedientes
+resultado ||--o{ expedientes
+empresas ||--o{ expedientes
 
-note bottom of proceso
-Un proceso puede asociar
-múltiples documentos (1:N).
-end note
-
-note bottom of movimiento
-Los nombres finales de campos
-deben coincidir con el esquema SQLite real.
-end note
+expedientes ||--o{ expediente_documentos
+documento ||--o{ expediente_documentos
+expedientes ||--o{ frentes
+empresas ||--o{ frentes
+expedientes ||--o{ historial
 @enduml
