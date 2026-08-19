@@ -28,7 +28,8 @@ GRAFICOS = [
         'titulo': 'Gráfico 2. Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.',
         'ancho_cm': 5,
         'lista': 'Representación cartográfica y ubicación espacial de Ingeniería de Telecomunicaciones, C.A.',
-        'pagina': '4'
+        'pagina': '4',
+        'fuente': 'Google Maps (2026).'
     },
     {
         'numero': 3,
@@ -37,7 +38,8 @@ GRAFICOS = [
         'titulo': 'Gráfico 3. Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
         'ancho_cm': 12,
         'lista': 'Organigrama estructural y niveles jerárquicos de Ingeniería de Telecomunicaciones, C.A.',
-        'pagina': '5'
+        'pagina': '5',
+        'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).'
     },
     {
         'numero': 4,
@@ -46,9 +48,12 @@ GRAFICOS = [
         'titulo': 'Gráfico 4. Organigrama del Departamento de Administración.',
         'ancho_cm': 12,
         'lista': 'Organigrama del Departamento de Administración.',
-        'pagina': '6'
+        'pagina': '6',
+        'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).'
     }
 ]
+
+FIGURAS = []
 
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona cada objetivo específico con las actividades de observación, diagnóstico, análisis y '
  'formulación de mejoras al control administrativo:')
@@ -57,14 +62,15 @@ CRONOGRAMA_INTRO_TEXTO = ('El cronograma organiza las actividades operativas y d
  'considerando la rotación inicial por Atención al Cliente y la posterior incorporación al área de '
  'Administración:')
 
-CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades de la pasantía.'
+CUADRO_POBLACION_TITULO = 'Cuadro 1. Población de los trabajadores de la empresa.'
+CUADRO_PLANIFICACION_TITULO = 'Cuadro 2. Planificación integral de objetivos específicos.'
+CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.'
 
-CUADRO_PLANIFICACION_FUENTE = 'La autora (2026).'
+CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
 
-CUADRO_CRONOGRAMA_FUENTE = 'La autora (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
 
-CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '6'),
- ('2', 'Cronograma de actividades de la pasantía', '7')]
+ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
 
 # ========================================================================
 # 2. DATOS DE PORTADA
@@ -212,6 +218,13 @@ OBJETIVOS_ESPECIFICOS_EMPRESA = ['Prestar servicios de importación, manufactura
 UBICACION = ('La sede administrativa y operativa de Ingeniería de Telecomunicaciones, C.A. se encuentra ubicada en la Calle '
  'Bolívar, Edificio La Suiza, Piso 1, Oficina Nro. 28, ciudad de El Tigre, Municipio Simón Rodríguez, estado '
  'Anzoátegui, Venezuela.')
+
+POBLACION_TABLA = [
+ ('Empresa', 'Personal activo en los cargos de la estructura organizativa', '-', '-', 8),
+ ('TOTAL GENERAL', '', '-', '-', 8),
+]
+
+POBLACION_FUENTE = 'Información suministrada por Ingeniería de Telecomunicaciones, C.A. (2026).'
 
 POBLACION = ['Ingeniería de Telecomunicaciones, C.A. cuenta con una población total de ocho (8) trabajadores. Debido a '
  'ajustes recientes de personal, varias funciones se concentran en una estructura reducida y algunos puestos '
@@ -565,7 +578,7 @@ REFERENCIAS_LISTA = ['Asamblea Nacional Constituyente. (1999). Constitución de 
  'España.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5}),
+    ('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO B', 'Diagrama de Ishikawa del control de solicitudes', '01_ishikawa_control_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO C', 'Flujograma AS-IS de afiliaciones e incidencias', '02_flujo_as_is_solicitudes.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO D', 'Swimlane interdepartamental de gestión de solicitudes', '04_swimlane_gestion_solicitudes.png', {'width_cm': 14.0, 'height_cm': 10.0}, ['Fuente: Elaboración propia (2026).']),

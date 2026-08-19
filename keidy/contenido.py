@@ -28,7 +28,8 @@ GRAFICOS = [
         'titulo': 'Gráfico 2. Representación cartográfica y ubicación espacial de la empresa.',
         'ancho_cm': 5,
         'lista': 'Representación cartográfica y ubicación espacial de la empresa',
-        'pagina': '4'
+        'pagina': '4',
+        'fuente': 'Google Maps (2026).'
     },
     {
         'numero': 3,
@@ -37,9 +38,12 @@ GRAFICOS = [
         'titulo': 'Gráfico 3. Organigrama estructural y niveles jerárquicos de la organización.',
         'ancho_cm': 12,
         'lista': 'Organigrama estructural y niveles jerárquicos de la organización',
-        'pagina': '5'
+        'pagina': '5',
+        'fuente': 'Lubricantes y Equipos Varyna, C.A. (2026).'
     }
 ]
+
+FIGURAS = []
 
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona los tres objetivos específicos con las actividades, técnicas e instrumentos '
  'necesarios para diagnosticar el proceso, identificar sus deficiencias y formular la propuesta de simplificación '
@@ -48,16 +52,15 @@ PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona los tres objetivos esp
 CRONOGRAMA_INTRO_TEXTO = ('El cronograma distribuye las actividades operativas y de análisis durante las diez (10) semanas de pasantía, '
  'manteniendo correspondencia con los objetivos específicos:')
 
-CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades de la pasantía.'
-
-CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '7'),
- ('2', 'Cronograma de actividades de la pasantía', '8')]
+CUADRO_POBLACION_TITULO = 'Cuadro 1. Población de los trabajadores de la empresa.'
+CUADRO_PLANIFICACION_TITULO = 'Cuadro 2. Planificación integral de objetivos específicos.'
+CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.'
 
 # Configuración particular indicada por la tutora académica (06/08/2026).
 MOSTRAR_NIVELES_DIAGNOSTICO = True
 ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
-CUADRO_PLANIFICACION_FUENTE = 'La autora (2026).'
-CUADRO_CRONOGRAMA_FUENTE = 'La autora (2026).'
+CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
 
 # ========================================================================
 # 2. DATOS DE PORTADA

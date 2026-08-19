@@ -49,16 +49,21 @@ GRAFICOS = [
     }
 ]
 
+FIGURAS = []
+
 PLANIFICACION_INTRO_TEXTO = ('La planificación relaciona cada objetivo específico con las actividades técnicas necesarias para el desarrollo '
  'y validación del sistema automatizado:')
 
 CRONOGRAMA_INTRO_TEXTO = ('El cronograma organiza las fases de diagnóstico, diseño, implementación y validación del sistema a lo largo de '
  'las nueve (9) semanas de pasantía:')
 
-CUADRO_CRONOGRAMA_TITULO = 'Cuadro 2. Cronograma de actividades del desarrollo del sistema automatizado.'
+CUADRO_POBLACION_TITULO = 'Cuadro 1. Población de los trabajadores del Departamento de Presidencia.'
+CUADRO_PLANIFICACION_TITULO = 'Cuadro 2. Planificación integral de objetivos específicos.'
+CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades del desarrollo del sistema automatizado.'
 
-CUADROS_INDICE = [('1', 'Planificación integral de objetivos específicos', '8'),
- ('2', 'Cronograma de actividades del desarrollo del sistema automatizado', '9')]
+ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
+CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
 
 # ========================================================================
 # 2. DATOS DE PORTADA
@@ -572,7 +577,7 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5}),
+    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO B', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO C', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO D', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia a partir de expedientes_schema.sql (2026).']),

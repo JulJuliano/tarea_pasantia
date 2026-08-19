@@ -1,5 +1,6 @@
 import os
 import math
+import re
 import subprocess
 import platform
 from docx import Document
@@ -7,11 +8,14 @@ from docx.shared import Cm, Pt, Emu, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_TAB_LEADER
 from docx.enum.section import WD_SECTION_START
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
+from docx.enum.style import WD_STYLE_TYPE
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 # Importamos el contenido
 import contenido as c
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ================================================================
 #  CONSTANTES DE FORMATO (NORMATIVA IUTECP)
@@ -58,13 +62,19 @@ COLOR_TEXTO_OSCURO = '000000'
 DOCX_SALIDA = "Informe_Pasantia_IUTECP.docx"
 PDF_SALIDA  = "Informe_Pasantia_IUTECP.pdf"
 
-# Espaciado de la portadilla de ANEXOS (Art. 26)
-ESP_PORTADILLA_ANEXOS = Pt(237)  # 180pt + 57pt (compensa cambio de 5cm a 3cm)
-TAMANO_PORTADILLA_ANEXOS = 16  # Pt, un poco más grande para portadilla
+# Tamaño de la portadilla de ANEXOS (Art. 26)
+TAMANO_PORTADILLA_ANEXOS = 12
 
 # Títulos por defecto de Cuadros y Gráficos (configurables desde contenido.py)
-CUADRO_PLANIFICACION_TITULO_DEF = "Cuadro 1. Planificación integral de objetivos específicos."
-CUADRO_CRONOGRAMA_TITULO_DEF = "Cuadro 2. Cronograma de actividades administrativas."
+CUADRO_POBLACION_TITULO_DEF = "Cuadro 1. Población de los trabajadores de la empresa."
+CUADRO_PLANIFICACION_TITULO_DEF = "Cuadro 2. Planificación integral de objetivos específicos."
+CUADRO_CRONOGRAMA_TITULO_DEF = "Cuadro 3. Cronograma de actividades administrativas."
+
+ESTILO_CAPITULO = 'IUTECP Capítulo'
+ESTILO_PRELIMINAR = 'IUTECP Preliminar'
+ESTILO_TITULO_NIVEL2 = 'IUTECP Título 2'
+ESTILO_TITULO_NIVEL3 = 'IUTECP Título 3'
+ESTILO_SUBTITULO_CENTRADO = 'IUTECP Subtítulo centrado'
 
 # Parágrafo posterior a la cita (configurable desde contenido.py)
 POST_CITA_TEXTO_DEF = (
@@ -94,7 +104,84 @@ def setup_iutecp_document():
     style.paragraph_format.line_spacing = INTERLINEADO
     style.paragraph_format.space_after = Pt(0)
 
+    estilos_titulo = (
+        (ESTILO_CAPITULO, WD_ALIGN_PARAGRAPH.CENTER, 0),
+        (ESTILO_PRELIMINAR, WD_ALIGN_PARAGRAPH.CENTER, 0),
+        (ESTILO_TITULO_NIVEL2, WD_ALIGN_PARAGRAPH.LEFT, 1),
+        (ESTILO_TITULO_NIVEL3, WD_ALIGN_PARAGRAPH.LEFT, 2),
+        (ESTILO_SUBTITULO_CENTRADO, WD_ALIGN_PARAGRAPH.CENTER, 1),
+    )
+    for nombre, alineacion, nivel_esquema in estilos_titulo:
+        estilo = doc.styles.add_style(nombre, WD_STYLE_TYPE.PARAGRAPH)
+        estilo.base_style = style
+        estilo.font.name = FUENTE
+        estilo.font.size = Pt(TAMANO_BASE)
+        estilo.font.bold = True
+        estilo.paragraph_format.alignment = alineacion
+        estilo.paragraph_format.keep_with_next = True
+        estilo.paragraph_format.keep_together = True
+        p_pr = estilo.element.get_or_add_pPr()
+        outline = p_pr.find(qn('w:outlineLvl'))
+        if outline is None:
+            outline = OxmlElement('w:outlineLvl')
+            p_pr.append(outline)
+        outline.set(qn('w:val'), str(nivel_esquema))
+
+    update_fields = doc.settings.element.find(qn('w:updateFields'))
+    if update_fields is None:
+        update_fields = OxmlElement('w:updateFields')
+        doc.settings.element.append(update_fields)
+    update_fields.set(qn('w:val'), 'true')
+
     return doc
+
+def _ruta_desde_generador(ruta):
+    """Resuelve rutas configuradas sin depender del directorio de ejecución."""
+    if not ruta or os.path.isabs(ruta):
+        return ruta
+    return os.path.join(BASE_DIR, ruta)
+
+def _numero_romano(numero):
+    valores = (
+        (1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'),
+        (100, 'c'), (90, 'xc'), (50, 'l'), (40, 'xl'),
+        (10, 'x'), (9, 'ix'), (5, 'v'), (4, 'iv'), (1, 'i'),
+    )
+    resultado = []
+    for valor, simbolo in valores:
+        while numero >= valor:
+            resultado.append(simbolo)
+            numero -= valor
+    return ''.join(resultado)
+
+def _mantener_con_siguiente(parrafo):
+    parrafo.paragraph_format.keep_with_next = True
+    parrafo.paragraph_format.keep_together = True
+    return parrafo
+
+def _repetir_encabezado(fila):
+    """Marca una fila para repetirla cuando una tabla continúa en otra página."""
+    tr_pr = fila._tr.get_or_add_trPr()
+    if tr_pr.find(qn('w:tblHeader')) is None:
+        tr_pr.append(OxmlElement('w:tblHeader'))
+
+def _agregar_fuente(doc, fuente, centrada=False):
+    if not str(fuente or '').strip():
+        raise ValueError("Todo cuadro, gráfico o anexo debe declarar una fuente.")
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER if centrada else WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.line_spacing = 1.0
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(12)
+    etiqueta = p.add_run('Fuente: ')
+    etiqueta.font.name = FUENTE
+    etiqueta.font.size = Pt(TAMANO_TABLA)
+    etiqueta.font.italic = True
+    texto = p.add_run(str(fuente).removeprefix('Fuente: ').strip())
+    texto.font.name = FUENTE
+    texto.font.size = Pt(TAMANO_TABLA)
+    return p
 
 def agregar_parrafo_normado(doc, texto, cursiva=False, sangria=True):
     """Párrafo justificado, 1.5 interlineado, sangría 1.25cm (Art. 7, 8)"""
@@ -159,11 +246,12 @@ def agregar_item_lista(doc, numero, texto, negrita_inicio=""):
 
 def agregar_titulo_nivel2(doc, texto, bookmark_id=None):
     """Nivel 2: Alineado a la izquierda, Negrita (Art. 9 - IUTECP)"""
-    p = doc.add_paragraph()
+    p = doc.add_paragraph(style=ESTILO_TITULO_NIVEL2)
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p.paragraph_format.space_before = ESP_DOBLE
     p.paragraph_format.space_after = ESP_DOBLE
     p.paragraph_format.line_spacing = INTERLINEADO
+    _mantener_con_siguiente(p)
 
     run = p.add_run(texto)
     run.font.name = FUENTE
@@ -175,12 +263,13 @@ def agregar_titulo_nivel2(doc, texto, bookmark_id=None):
 
 def agregar_titulo_nivel3(doc, texto, bookmark_id=None):
     """Nivel 3: Alineado a la izquierda, Negrita y Cursiva (Art. 9 - IUTECP)"""
-    p = doc.add_paragraph()
+    p = doc.add_paragraph(style=ESTILO_TITULO_NIVEL3)
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
     p.paragraph_format.space_before = ESP_SENCILLO
     p.paragraph_format.space_after = ESP_SENCILLO
     p.paragraph_format.line_spacing = INTERLINEADO
     p.paragraph_format.first_line_indent = SANGRIA_LINEA
+    _mantener_con_siguiente(p)
 
     run = p.add_run(texto)
     run.font.name = FUENTE
@@ -259,6 +348,9 @@ def _config_seccion(sec, sup=None, ocultar_primera_pagina=False):
     sec.left_margin = MARGEN_IZQ
     sec.right_margin = MARGEN_DER
     sec.different_first_page_header_footer = ocultar_primera_pagina
+    v_align = sec._sectPr.find(qn('w:vAlign'))
+    if v_align is not None:
+        sec._sectPr.remove(v_align)
 
 def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     """
@@ -273,13 +365,14 @@ def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     p1.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p1.paragraph_format.space_before = Pt(57)
     p1.paragraph_format.space_after = ESP_DOBLE
+    _mantener_con_siguiente(p1)
     r1 = p1.add_run(f"CAPÍTULO {numero_romano}")
     r1.font.name = FUENTE
     r1.font.size = Pt(TAMANO_BASE)
     r1.font.bold = True
 
     # Título del Capítulo
-    p2 = doc.add_paragraph()
+    p2 = doc.add_paragraph(style=ESTILO_CAPITULO)
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p2.paragraph_format.space_before = ESP_DOBLE
     r2 = p2.add_run(titulo.upper())
@@ -289,27 +382,22 @@ def iniciar_capitulo(doc, numero_romano, titulo, bookmark_id=None):
     if bookmark_id:
         _agregar_bookmark(p2, bookmark_id)
 
-    sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    _config_seccion(sec2, ocultar_primera_pagina=True)
-
 def iniciar_seccion_preliminar(doc, titulo, bookmark_id=None, ocultar_primera_pagina=False):
     """Para secciones preliminares que inician en página nueva (Art. 9, 12)"""
     sec = doc.add_section(WD_SECTION_START.NEW_PAGE)
     _config_seccion(sec, ocultar_primera_pagina=ocultar_primera_pagina)
 
-    p = doc.add_paragraph()
+    p = doc.add_paragraph(style=ESTILO_PRELIMINAR)
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(57)
     p.paragraph_format.space_after = ESP_DOBLE
+    _mantener_con_siguiente(p)
     r = p.add_run(titulo.upper())
     r.font.name = FUENTE
     r.font.size = Pt(TAMANO_BASE)
     r.font.bold = True
     if bookmark_id:
         _agregar_bookmark(p, bookmark_id)
-
-    sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    _config_seccion(sec2, ocultar_primera_pagina=ocultar_primera_pagina)
 
 def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     """Construye la página de resumen con membrete, autor y fecha."""
@@ -325,10 +413,6 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
         run_membrete.font.name = FUENTE
         run_membrete.font.size = Pt(TAMANO_BASE)
         run_membrete.font.bold = True
-
-    p_espacio = doc.add_paragraph()
-    p_espacio.paragraph_format.line_spacing = 1.0
-    p_espacio.paragraph_format.space_after = Pt(6)
 
     p_titulo = doc.add_paragraph()
     p_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -347,8 +431,7 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     p_autor.paragraph_format.line_spacing = 1.0
     p_autor.paragraph_format.space_after = Pt(6)
     for indice, texto in enumerate((
-        "Autor:",
-        contenido.NOMBRE_PASANTE,
+        f"Autor: {contenido.NOMBRE_PASANTE}",
         f"C.I.: {contenido.CI_PASANTE}",
         fecha_resumen,
     )):
@@ -357,7 +440,7 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
         run_autor.font.size = Pt(TAMANO_BASE)
         if indice == 0:
             run_autor.font.bold = True
-        if indice < 3:
+        if indice < 2:
             run_autor.add_break()
 
     p_resumen = doc.add_paragraph()
@@ -371,9 +454,6 @@ def iniciar_seccion_resumen(doc, contenido, bookmark_id=None):
     run_resumen.font.bold = True
     if bookmark_id:
         _agregar_bookmark(p_resumen, bookmark_id)
-
-    sec2 = doc.add_section(WD_SECTION_START.CONTINUOUS)
-    _config_seccion(sec2)
 
 def agregar_cita_larga(doc, texto, cita):
     """
@@ -397,7 +477,7 @@ def agregar_cita_larga(doc, texto, cita):
     run_c.font.name = FUENTE
     run_c.font.size = Pt(TAMANO_BASE)
 
-def agregar_referencia(doc, texto):
+def agregar_referencia(doc, referencia):
     """
     Entrada en referencias bibliográficas (Art. 7, 25 IUTECP):
     - Interlineado sencillo dentro de cada entrada.
@@ -413,9 +493,33 @@ def agregar_referencia(doc, texto):
     p.paragraph_format.space_after = ESP_DOBLE
     p.paragraph_format.space_before = Pt(0)
 
-    run = p.add_run(texto)
-    run.font.name = FUENTE
-    run.font.size = Pt(TAMANO_BASE)
+    if isinstance(referencia, dict):
+        partes = (
+            (referencia.get('titulo', ''), True),
+            (referencia.get('texto', referencia.get('detalle', '')), False),
+        )
+    elif isinstance(referencia, (list, tuple)):
+        partes = [(str(parte), indice == 0) for indice, parte in enumerate(referencia)]
+    else:
+        texto_referencia = str(referencia)
+        coincidencia = re.match(
+            r'^(.*?\(\d{4}[a-z]?\)\.\s+)(.+?)(\.\s+.+)$',
+            texto_referencia,
+        )
+        if coincidencia:
+            partes = [
+                (coincidencia.group(1), False),
+                (coincidencia.group(2), True),
+                (coincidencia.group(3), False),
+            ]
+        else:
+            partes = [(texto_referencia, False)]
+    for texto, negrita in partes:
+        run = p.add_run(texto)
+        run.font.name = FUENTE
+        run.font.size = Pt(TAMANO_BASE)
+        run.font.bold = negrita
+    return p
 
 def set_cell_border(cell, **kwargs):
     """Permite definir bordes de celda personalizados mediante XML"""
@@ -523,6 +627,7 @@ def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
     p.paragraph_format.space_before = ESP_DOBLE
     p.paragraph_format.space_after = ESP_SENCILLO
     p.paragraph_format.line_spacing = INTERLINEADO
+    _mantener_con_siguiente(p)
 
     # Separar 'Cuadro X' de la descripción para aplicar formatos distintos
     partes = texto.split('. ', 1)
@@ -530,22 +635,22 @@ def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
         # "Cuadro X" en negrita
         run_num = p.add_run(partes[0] + '. ')
         run_num.font.name = FUENTE
-        run_num.font.size = Pt(TAMANO_BASE)
+        run_num.font.size = Pt(TAMANO_TABLA)
         run_num.font.bold = True
         # Descripción en cursiva (Art. 6)
         run_desc = p.add_run(partes[1])
         run_desc.font.name = FUENTE
-        run_desc.font.size = Pt(TAMANO_BASE)
+        run_desc.font.size = Pt(TAMANO_TABLA)
         run_desc.font.italic = True
     else:
         run = p.add_run(texto)
         run.font.name = FUENTE
-        run.font.size = Pt(TAMANO_BASE)
+        run.font.size = Pt(TAMANO_TABLA)
         run.font.bold = True
     if bookmark_id:
         _agregar_bookmark(p, bookmark_id)
 
-def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None):
+def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None, fuente=None):
     """Genera la tabla de planificación de objetivos con 5 columnas"""
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
@@ -556,6 +661,7 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None
     tabla = doc.add_table(rows=1 + len(datos), cols=5)
     tabla.style = 'Table Grid'
     aplicar_formato_tabla_xml(tabla, ANCHOS_CM)
+    _repetir_encabezado(tabla.rows[0])
 
     for col, enc in enumerate(ENCABEZADOS):
         cell = tabla.cell(0, col)
@@ -572,8 +678,9 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None
             cell = tabla.cell(fila, col)
             set_cell_shading(cell, fondo)
             _celda(cell, texto, tamaño=Pt(TAMANO_TABLA))
+    _agregar_fuente(doc, fuente)
 
-def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
+def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=None):
     """Genera la tabla Gantt con 2 filas de encabezado (meses y semanas)"""
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
@@ -610,6 +717,8 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
 
     anchos_gantt = [COL_ACT_CM] + anchos_semanas
     aplicar_formato_tabla_xml(tabla, anchos_gantt)
+    _repetir_encabezado(tabla.rows[0])
+    _repetir_encabezado(tabla.rows[1])
 
     # ── Fila 0: meses (JUNIO, JULIO, AGOSTO) ──
     cell_label = tabla.cell(0, 0)
@@ -656,6 +765,7 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None):
             activa = activas[s] if s < len(activas) else False
             set_cell_shading(cell_s, COLOR_GANTT_VERDE if activa else fondo_fila)
             _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO)
+    _agregar_fuente(doc, fuente)
 
 def _insertar_campo_pagina(run, formato_pagina='PAGE'):
     """Inserta un campo de número de página con el formato especificado en un run."""
@@ -695,7 +805,7 @@ def _limpiar_pie(pie):
 def agregar_numeracion_pie(doc, idx_inicio_arabigo):
     """
     Configura la paginación institucional usando propiedades de sección y campos PAGE:
-    - portada y contraportada se cuentan, pero no muestran número;
+    - la portada se cuenta sin mostrar número y la contraportada muestra ii;
     - todas las demás preliminares muestran romanos minúsculos, sin ocultar sus primeras páginas;
     - Introducción reinicia la secuencia arábiga en 1 y no imprime su primera página;
     - capítulos y Referencias ocultan únicamente su primera página;
@@ -720,7 +830,7 @@ def agregar_numeracion_pie(doc, idx_inicio_arabigo):
             first_page_footer.is_linked_to_previous = False
             _limpiar_pie(first_page_footer)
 
-        if sec_idx < 2:
+        if sec_idx == 0:
             continue
 
         p = footer.paragraphs[0]
@@ -733,6 +843,7 @@ def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
     """Busca una imagen por su nombre numérico en una carpeta específica"""
     if extensiones is None:
         extensiones = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff', 'webp']
+    carpeta = _ruta_desde_generador(carpeta)
     if not os.path.exists(carpeta):
         print(f"⚠ Advertencia: La carpeta '{carpeta}' no existe")
         return None
@@ -749,7 +860,7 @@ def buscar_imagen_por_numero(carpeta, numero, extensiones=None):
 def buscar_imagen_por_referencia(carpeta, referencia, extensiones=None):
     """Busca un anexo por nombre de archivo o conserva la búsqueda numérica."""
     if isinstance(referencia, str) and os.path.splitext(referencia)[1]:
-        ruta = os.path.join(carpeta, referencia)
+        ruta = os.path.join(_ruta_desde_generador(carpeta), referencia)
         if os.path.isfile(ruta):
             print(f"✓ Imagen encontrada: {ruta}")
             return ruta
@@ -828,6 +939,7 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(24)
+    _mantener_con_siguiente(p)
     run = p.add_run()
     try:
         run.add_picture(ruta_imagen, width=ancho)
@@ -840,6 +952,7 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
     p_titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_titulo.paragraph_format.space_before = Pt(6)
     p_titulo.paragraph_format.space_after = Pt(24)
+    _mantener_con_siguiente(p_titulo)
 
     # Separar 'Gráfico X' de la descripción para formatos distintos
     partes = titulo.split('. ', 1)
@@ -847,34 +960,22 @@ def agregar_imagen(doc, ruta_imagen, titulo, ancho=Cm(12), fuente=None, bookmark
         # "Gráfico X." en cursiva
         run_num = p_titulo.add_run(partes[0] + '. ')
         run_num.font.name = 'Times New Roman'
-        run_num.font.size = Pt(12)
+        run_num.font.size = Pt(TAMANO_TABLA)
         run_num.font.italic = True
         # Descripción en negrita
         run_desc = p_titulo.add_run(partes[1])
         run_desc.font.name = 'Times New Roman'
-        run_desc.font.size = Pt(12)
+        run_desc.font.size = Pt(TAMANO_TABLA)
         run_desc.font.bold = True
     else:
         run_titulo = p_titulo.add_run(titulo)
         run_titulo.font.name = 'Times New Roman'
-        run_titulo.font.size = Pt(12)
+        run_titulo.font.size = Pt(TAMANO_TABLA)
         run_titulo.font.bold = True
     if bookmark_id:
         _agregar_bookmark(p_titulo, bookmark_id)
 
-    # Línea de Fuente opcional (Art. 13)
-    if fuente:
-        p_fuente = doc.add_paragraph()
-        p_fuente.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_fuente.paragraph_format.space_before = Pt(0)
-        p_fuente.paragraph_format.space_after = Pt(12)
-        run_f_label = p_fuente.add_run('Fuente: ')
-        run_f_label.font.name = 'Times New Roman'
-        run_f_label.font.size = Pt(12)
-        run_f_label.font.italic = True
-        run_f_text = p_fuente.add_run(fuente)
-        run_f_text.font.name = 'Times New Roman'
-        run_f_text.font.size = Pt(12)
+    _agregar_fuente(doc, fuente, centrada=True)
 
 # ================================================================
 # CONSTRUCCIÓN DEL DOCUMENTO (PORTADA COMPATIBLE LIBREOFFICE)
@@ -940,7 +1041,7 @@ def construir_portada(doc, solo_autor=False, idx_seccion=0, bookmark_id=None):
     h_fecha    = LINE_PT
 
     # Logo height estimate (solo portada, 3cm de ancho ≈ 80pt de alto)
-    logo_path = os.path.join("compartido", "iutecp.png")
+    logo_path = _ruta_desde_generador(os.path.join("compartido", "iutecp.png"))
     tiene_logo = solo_autor and os.path.exists(logo_path)
     h_logo = 80.0 if tiene_logo else 0
 
@@ -1138,7 +1239,9 @@ def agregar_tabulacion_derecha(parrafo, pos_tab_pag_emu):
         alignment=WD_TAB_ALIGNMENT.RIGHT
     )
 
-def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrita=False, bookmark_id=None):
+def agregar_fila_indice_general_nativa(
+    doc, titulo, pagina='', sangria_cm=0.0, negrita=False, bookmark_id=None,
+):
     """Agrega una línea del índice general usando tabulaciones nativas de Word para alinear al extremo derecho de forma absoluta.
 
     Si se pasa `bookmark_id`, en lugar del número `pagina` se inserta un campo
@@ -1150,6 +1253,7 @@ def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrit
     p.paragraph_format.space_before = Pt(0)
     p.paragraph_format.space_after = Pt(4)
     p.paragraph_format.left_indent = Cm(sangria_cm)
+    p.paragraph_format.keep_together = True
     
     section = doc.sections[-1]
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
@@ -1162,7 +1266,11 @@ def agregar_fila_indice_general_nativa(doc, titulo, pagina, sangria_cm=0, negrit
     run_desc.font.bold = negrita
     
     if bookmark_id:
-        _agregar_campo_pageref(p, bookmark_id, negrita=negrita)
+        _agregar_campo_pageref(
+            p,
+            bookmark_id,
+            negrita=negrita,
+        )
     else:
         run_pag = p.add_run(pagina)
         run_pag.font.name = 'Times New Roman'
@@ -1177,11 +1285,16 @@ def _agregar_bookmark(parrafo, bookmark_id):
     PAGEREF del índice apunte a la página real donde cae este párrafo.
     """
     p_elem = parrafo._element
+    ids_existentes = p_elem.getroottree().xpath(
+        '//*[local-name()="bookmarkStart"]/@*[local-name()="id"]'
+    )
+    ids_numericos = [int(valor) for valor in ids_existentes if str(valor).isdigit()]
+    bookmark_num = str(max(ids_numericos, default=-1) + 1)
     start = OxmlElement('w:bookmarkStart')
-    start.set(qn('w:id'), bookmark_id)
+    start.set(qn('w:id'), bookmark_num)
     start.set(qn('w:name'), bookmark_id)
     end = OxmlElement('w:bookmarkEnd')
-    end.set(qn('w:id'), bookmark_id)
+    end.set(qn('w:id'), bookmark_num)
     # Insertar al inicio y al final del párrafo para rodear todo su contenido
     p_elem.insert(0, start)
     p_elem.append(end)
@@ -1228,6 +1341,7 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, b
     p.paragraph_format.space_after = Pt(4)
     p.paragraph_format.left_indent = Cm(1.8)
     p.paragraph_format.first_line_indent = Cm(-1.8)
+    p.paragraph_format.keep_together = True
 
     section = doc.sections[-1]
     ancho_util_emu = section.page_width - section.left_margin - section.right_margin
@@ -1253,13 +1367,13 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, b
 # Anclas válidas donde pueden insertarse gráficos:
 #   "ubicacion"  -> tras la sección 1.1.7 Ubicación geográfica
 #   "estructura" -> tras la sección 1.1.9 Estructura Organizativa
-ANCLAS_VALIDAS = {"ubicacion", "estructura"}
+ANCLAS_VALIDAS = {"logo_empresa", "ubicacion", "estructura"}
 
 def _resolver_ruta_imagen(carpeta_imagenes, cfg):
     """Resuelve una imagen por nombre explícito (`archivo`) o por número, manteniendo compatibilidad."""
     archivo = cfg.get("archivo") if isinstance(cfg, dict) else None
     if archivo:
-        ruta = os.path.join(carpeta_imagenes, archivo)
+        ruta = os.path.join(_ruta_desde_generador(carpeta_imagenes), archivo)
         if os.path.exists(ruta):
             return ruta
         print(f"⚠ No se encontró imagen '{archivo}' en {carpeta_imagenes}")
@@ -1316,6 +1430,193 @@ def _insertar_logo_empresa(doc, carpeta_imagenes):
         p.add_run().add_picture(ruta, width=ancho)
     except Exception as e:
         print(f"❌ Error al agregar logo empresarial {ruta}: {e}")
+
+def _texto_referencia(referencia):
+    if isinstance(referencia, dict):
+        return f"{referencia.get('titulo', '')}{referencia.get('texto', referencia.get('detalle', ''))}"
+    if isinstance(referencia, (list, tuple)):
+        return ''.join(str(parte) for parte in referencia)
+    return str(referencia)
+
+def _registro_cuadros(incluir_capitulo2=True):
+    """Única fuente para títulos, numeración, marcadores y lista de cuadros."""
+    titulos = [
+        getattr(c, 'CUADRO_POBLACION_TITULO', CUADRO_POBLACION_TITULO_DEF),
+    ]
+    if incluir_capitulo2:
+        titulos.extend((
+            getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF),
+            getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF),
+        ))
+    return [
+        {
+            'numero': numero,
+            'titulo': titulo,
+            'descripcion': str(titulo).split('. ', 1)[-1].rstrip('.'),
+            'bookmark': f'bm_cuadro{numero}',
+        }
+        for numero, titulo in enumerate(titulos, 1)
+    ]
+
+def _iterar_textos(valor):
+    if isinstance(valor, str):
+        yield valor
+    elif isinstance(valor, dict):
+        for contenido in valor.values():
+            yield from _iterar_textos(contenido)
+    elif isinstance(valor, (list, tuple)):
+        for contenido in valor:
+            yield from _iterar_textos(contenido)
+
+def _normalizar_busqueda(texto):
+    import unicodedata
+
+    texto = unicodedata.normalize('NFKD', str(texto).casefold())
+    texto = ''.join(caracter for caracter in texto if not unicodedata.combining(caracter))
+    return re.sub(r'[^a-z0-9]+', ' ', texto).strip()
+
+def _datos_referencia(referencia):
+    texto = _texto_referencia(referencia).strip()
+    coincidencia = re.match(r'^(.*?)\s+\((\d{4})\)\.\s+(.+?)(?:\.\s+|$)', texto)
+    if not coincidencia:
+        return None
+    autor, ano, titulo = coincidencia.groups()
+    autor_norm = _normalizar_busqueda(autor)
+    titulo_norm = _normalizar_busqueda(titulo)
+    claves = {titulo_norm}
+    if ',' in autor:
+        claves.update(
+            _normalizar_busqueda(apellido)
+            for apellido in re.findall(r'(?:^|\by\s+)([^,]+),', autor)
+        )
+    else:
+        claves.add(autor_norm)
+        sigla = ''.join(
+            palabra[0]
+            for palabra in autor.split()
+            if palabra and palabra[0].isupper()
+        ).casefold()
+        if len(sigla) >= 2:
+            claves.add(sigla)
+    claves.update(titulo_norm.split()[:1])
+    return {'texto': texto, 'ano': ano, 'claves': {clave for clave in claves if len(clave) >= 3}}
+
+def _validar_correspondencia_citas(referencias):
+    """Valida citas explícitas de los bloques teóricos sin interpretar años narrativos."""
+    bloques = [
+        getattr(c, 'BASES_TEORICAS', []),
+        getattr(c, 'BASES_TEORICAS_PARRAFOS', []),
+        getattr(c, 'CITA_LARGA_TEXTO', ''),
+        getattr(c, 'CITA_LARGA_AUTOR', ''),
+    ]
+    corpus = ' '.join(texto for bloque in bloques for texto in _iterar_textos(bloque))
+    datos = [dato for referencia in referencias if (dato := _datos_referencia(referencia))]
+    citadas = set()
+    citas_sin_referencia = []
+    for coincidencia in re.finditer(r'\([^()]*?\b((?:19|20)\d{2})\b[^()]*?\)', corpus):
+        ano = coincidencia.group(1)
+        inicio = max(0, coincidencia.start() - 120)
+        contexto = _normalizar_busqueda(corpus[inicio:coincidencia.end()])
+        candidatas = [dato for dato in datos if dato['ano'] == ano]
+        emparejadas = [
+            dato for dato in candidatas
+            if any(clave in contexto for clave in dato['claves'])
+        ]
+        if emparejadas:
+            citadas.update(dato['texto'] for dato in emparejadas)
+        else:
+            cita = corpus[coincidencia.start():coincidencia.end()]
+            citas_sin_referencia.append(cita)
+    no_citadas = [dato['texto'] for dato in datos if dato['texto'] not in citadas]
+    return no_citadas, list(dict.fromkeys(citas_sin_referencia))
+
+def validar_contenido():
+    """Falla antes de construir el DOCX si el contenido estructural es inconsistente."""
+    errores = []
+    resumen = str(getattr(c, 'RESUMEN_TEXTO', ''))
+    if len(resumen.split()) > RESUMEN_MAX_PALABRAS:
+        errores.append(f"el resumen tiene {len(resumen.split())} palabras (máximo {RESUMEN_MAX_PALABRAS})")
+
+    carpeta_imagenes = _ruta_desde_generador(getattr(c, 'CARPETA_IMAGENES', 'imagenes'))
+    graficos = getattr(c, 'GRAFICOS', [])
+    numeros_graficos = [g.get('numero') for g in graficos]
+    if numeros_graficos != list(range(1, len(graficos) + 1)):
+        errores.append("los gráficos deben estar numerados correlativamente desde 1")
+    for grafico in graficos:
+        numero = grafico.get('numero')
+        if grafico.get('tras') not in ANCLAS_VALIDAS:
+            errores.append(f"el gráfico {numero} tiene un ancla de inserción inválida")
+        if not str(grafico.get('titulo', '')).startswith(f"Gráfico {numero}."):
+            errores.append(f"el título del gráfico {numero} no coincide con su número")
+        if not str(grafico.get('lista', '')).strip():
+            errores.append(f"el gráfico {numero} no tiene descripción para la lista")
+        if not str(grafico.get('fuente', '')).strip():
+            errores.append(f"el gráfico {numero} no tiene fuente")
+        if not _resolver_ruta_imagen(carpeta_imagenes, grafico):
+            errores.append(f"no existe la imagen del gráfico {numero}")
+
+    figuras = getattr(c, 'FIGURAS', None)
+    if figuras is None:
+        errores.append("falta la configuración explícita FIGURAS (use [] cuando no aplique)")
+    elif figuras:
+        errores.append(
+            "FIGURAS contiene elementos, pero el generador no tiene un punto de inserción "
+            "para crear sus marcadores; use GRAFICOS o implemente primero su ancla física"
+        )
+
+    for cuadro in _registro_cuadros():
+        numero = cuadro['numero']
+        titulo = cuadro['titulo']
+        if not str(titulo).startswith(f"Cuadro {numero}."):
+            errores.append(f"el título del cuadro {numero} no coincide con su número")
+    for atributo in ('POBLACION_TABLA', 'POBLACION_FUENTE', 'CUADRO_PLANIFICACION_FUENTE', 'CUADRO_CRONOGRAMA_FUENTE'):
+        if not getattr(c, atributo, None):
+            errores.append(f"falta {atributo}")
+    for fila in getattr(c, 'POBLACION_TABLA', []):
+        if len(fila) != 5:
+            errores.append("cada fila de POBLACION_TABLA debe tener cinco columnas")
+    for fila in getattr(c, 'PLANIFICACION_DATOS', []):
+        if len(fila) != 5:
+            errores.append("cada fila de PLANIFICACION_DATOS debe tener cinco columnas")
+    longitudes_cronograma = {len(fila[1]) for fila in getattr(c, 'CRONOGRAMA_DATOS', []) if len(fila) == 2}
+    if len(longitudes_cronograma) > 1 or any(len(fila) != 2 for fila in getattr(c, 'CRONOGRAMA_DATOS', [])):
+        errores.append("CRONOGRAMA_DATOS tiene filas o cantidades de semanas inconsistentes")
+
+    referencias = getattr(c, 'REFERENCIAS_LISTA', [])
+    textos_referencias = [_texto_referencia(ref).strip() for ref in referencias]
+    normalizadas = [re.sub(r'\s+', ' ', texto).casefold() for texto in textos_referencias]
+    if not all(textos_referencias):
+        errores.append("hay referencias vacías")
+    if len(normalizadas) != len(set(normalizadas)):
+        errores.append("hay referencias duplicadas")
+    if normalizadas != sorted(normalizadas):
+        errores.append("las referencias no están en orden alfabético")
+    referencias_no_citadas, citas_sin_referencia = _validar_correspondencia_citas(referencias)
+    for referencia in referencias_no_citadas:
+        errores.append(f"referencia no citada en las bases teóricas: {referencia}")
+    for cita in citas_sin_referencia:
+        errores.append(f"cita sin referencia reconocible: {cita}")
+
+    anexos = getattr(c, 'ANEXOS_LISTA', [])
+    codigos_anexos = [anexo[0] for anexo in anexos if anexo]
+    codigos_esperados = [f"ANEXO {chr(65 + indice)}" for indice in range(len(anexos))]
+    if codigos_anexos != codigos_esperados:
+        errores.append("los anexos deben estar identificados correlativamente desde ANEXO A")
+    for anexo in anexos:
+        codigo = anexo[0] if anexo else "sin código"
+        referencia = anexo[2] if len(anexo) > 2 else None
+        fuente = anexo[4] if len(anexo) > 4 else None
+        if not fuente:
+            errores.append(f"{codigo} no tiene fuente propia")
+        referencias_imagen = referencia if isinstance(referencia, (list, tuple)) else [referencia]
+        for imagen in referencias_imagen:
+            imagen_ref = imagen.get('archivo', imagen.get('referencia')) if isinstance(imagen, dict) else imagen
+            if imagen_ref is not None and not buscar_imagen_por_referencia(carpeta_imagenes, imagen_ref):
+                errores.append(f"no existe la imagen {imagen_ref!r} de {codigo}")
+
+    if errores:
+        raise ValueError("Validación previa fallida:\n- " + "\n- ".join(errores))
+    print("✔ Validación previa de contenido completada.")
 
 def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tutor, ci_tutor):
     """Agrega página de aprobación con membrete, título centrado, firma y datos del tutor."""
@@ -1375,7 +1676,7 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
 
     ruta_firma = None
     if firma_img:
-        ruta_firma = os.path.join(getattr(c, 'CARPETA_IMAGENES', 'imagenes'), firma_img)
+        ruta_firma = os.path.join(_ruta_desde_generador(getattr(c, 'CARPETA_IMAGENES', 'imagenes')), firma_img)
         if not os.path.exists(ruta_firma):
             ruta_firma = None
 
@@ -1421,49 +1722,33 @@ def construir_cuerpo_documento(doc, modo="completo"):
     tiene_cap4 = modo in ("completo", "borrador4")
     tiene_cap5 = modo == "completo"
 
-    # --- CÁLCULO DINÁMICO DE PÁGINAS PRELIMINARES ---
-    pag_actual_romana = 5  # portada=i, contraportada=ii, aprob_tutor_industrial=iii, aprob_tutor_academico=iv
-    romanos = {1: 'i', 2: 'ii', 3: 'iii', 4: 'iv', 5: 'v', 6: 'vi', 7: 'vii', 8: 'viii', 9: 'ix', 10: 'x', 11: 'xi', 12: 'xii'}
+    # LibreOffice 26.2 ignora el modificador romano de PAGEREF y devuelve
+    # arábigos. Solo estas entradas preliminares conservan cálculo estático;
+    # todos los destinos del cuerpo y listas usan PAGEREF real.
+    pagina_romana = 5
+    paginas_preliminares = {
+        'bm_contraportada': 'ii',
+        'bm_aprob_ind': 'iii',
+        'bm_aprob_acad': 'iv',
+    }
+
+    def registrar_preliminar(bookmark_id, presente=True, paginas=1):
+        nonlocal pagina_romana
+        if not presente:
+            return
+        paginas_preliminares[bookmark_id] = _numero_romano(pagina_romana)
+        pagina_romana += paginas
+
+    registrar_preliminar('bm_agradecimientos', bool(getattr(c, 'AGRADECIMIENTOS', None)))
+    registrar_preliminar('bm_dedicatoria', bool(getattr(c, 'DEDICATORIA', None)))
+    pagina_romana += 2 if modo == 'completo' else 1  # índice de contenido
+    registrar_preliminar('bm_lista_cuadros')
+    registrar_preliminar('bm_lista_figuras', bool(getattr(c, 'FIGURAS', [])))
+    registrar_preliminar('bm_lista_graficos', bool(getattr(c, 'GRAFICOS', [])))
+    registrar_preliminar('bm_lista_anexos', bool(getattr(c, 'ANEXOS_LISTA', [])))
+    registrar_preliminar('bm_resumen', bool(getattr(c, 'RESUMEN_TEXTO', None)))
+
     idx_inicio_arabigo = None
-    
-    pag_contraportada = romanos.get(2, 'ii')
-    pag_aprob_ind = romanos.get(3, 'iii')  # Siempre presente
-    pag_aprob_acad = romanos.get(4, 'iv')  # Siempre presente
-    pag_agradecimientos = ""
-    pag_dedicatoria = ""
-    pag_resumen = ""
-    
-    if hasattr(c, 'AGRADECIMIENTOS') and c.AGRADECIMIENTOS:
-        pag_agradecimientos = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
-        
-    if hasattr(c, 'DEDICATORIA') and c.DEDICATORIA:
-        pag_dedicatoria = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
-        
-    pag_indice = romanos.get(pag_actual_romana, str(pag_actual_romana))
-    # En los informes completos, el índice general ocupa dos páginas.
-    pag_actual_romana += 2 if modo == "completo" else 1
-    
-    pag_lista_cuadros = romanos.get(pag_actual_romana, str(pag_actual_romana))
-    pag_actual_romana += 1
-
-    pag_lista_figuras = ""
-    if getattr(c, 'FIGURAS', []):
-        pag_lista_figuras = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
-    
-    pag_lista_graficos = romanos.get(pag_actual_romana, str(pag_actual_romana))
-    pag_actual_romana += 1
-    
-    pag_lista_anexos = ""
-    if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA:
-        pag_lista_anexos = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
-
-    if hasattr(c, 'RESUMEN_TEXTO') and c.RESUMEN_TEXTO:
-        pag_resumen = romanos.get(pag_actual_romana, str(pag_actual_romana))
-        pag_actual_romana += 1
 
     if True:
         # --- APROBACIÓN DEL TUTOR INDUSTRIAL ---
@@ -1515,8 +1800,13 @@ def construir_cuerpo_documento(doc, modo="completo"):
         fecha_aprobacion_ind = getattr(
             c,
             'TEXTO_FECHA_APROBACION_TUTOR_INDUSTRIAL',
-            'a los ___ días del mes de _______ de 2026',
+            'a los ___ días del mes de _______',
         )
+        coincidencia_ano = re.search(r'\b(\d{4})\b', getattr(c, 'FECHA_LUGAR', ''))
+        ano_aprobacion = coincidencia_ano.group(1) if coincidencia_ano else '____'
+        fecha_aprobacion_ind = re.sub(r'\b\d{4}\b', ano_aprobacion, fecha_aprobacion_ind)
+        if ano_aprobacion not in fecha_aprobacion_ind:
+            fecha_aprobacion_ind = f"{fecha_aprobacion_ind.rstrip()} de {ano_aprobacion}"
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", texto_base,
             f"En la Ciudad de {ciudad}, {fecha_aprobacion_ind}",
             tut_ind_nom, f"C.I.: {tut_ind_ci}" if tut_ind_ci else "")
@@ -1534,7 +1824,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             f"evaluado por el jurado que se decida designar a tal fin."
         )
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", texto_base_acad,
-            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026",
+            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de {ano_aprobacion}",
             tut_acad_nom, f"C.I.: {tut_acad_ci}" if tut_acad_ci else "")
 
         # --- PÁGINAS PRELIMINARES ---
@@ -1557,25 +1847,30 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_h_ind.font.size = Pt(12)
         run_h_ind.font.bold = True
     
-        # El orden de estas entradas reproduce el orden físico de las páginas.
-        # LibreOffice no aplica formato romano a PAGEREF; las preliminares
-        # usan los valores calculados arriba y el cuerpo conserva referencias dinámicas.
-        agregar_fila_indice_general_nativa(doc, "CONTRAPORTADA", pag_contraportada)
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", pag_aprob_ind)
-        agregar_fila_indice_general_nativa(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", pag_aprob_acad)
-        if pag_agradecimientos:
-            agregar_fila_indice_general_nativa(doc, "AGRADECIMIENTOS", pag_agradecimientos)
-        if pag_dedicatoria:
-            agregar_fila_indice_general_nativa(doc, "DEDICATORIA", pag_dedicatoria)
-    
-        agregar_fila_indice_general_nativa(doc, "LISTA DE CUADROS", pag_lista_cuadros)
-        if pag_lista_figuras:
-            agregar_fila_indice_general_nativa(doc, "LISTA DE FIGURAS", pag_lista_figuras)
-        agregar_fila_indice_general_nativa(doc, "LISTA DE GRÁFICOS", pag_lista_graficos)
-        if pag_lista_anexos:
-            agregar_fila_indice_general_nativa(doc, "LISTA DE ANEXOS", pag_lista_anexos)
-        if pag_resumen:
-            agregar_fila_indice_general_nativa(doc, "RESUMEN", pag_resumen)
+        preliminares_indice = [
+            ("CONTRAPORTADA", "bm_contraportada"),
+            ("APROBACIÓN DEL TUTOR INDUSTRIAL", "bm_aprob_ind"),
+            ("APROBACIÓN DEL TUTOR ACADÉMICO", "bm_aprob_acad"),
+        ]
+        if getattr(c, 'AGRADECIMIENTOS', None):
+            preliminares_indice.append(("AGRADECIMIENTOS", "bm_agradecimientos"))
+        if getattr(c, 'DEDICATORIA', None):
+            preliminares_indice.append(("DEDICATORIA", "bm_dedicatoria"))
+        preliminares_indice.append(("LISTA DE CUADROS", "bm_lista_cuadros"))
+        if getattr(c, 'FIGURAS', []):
+            preliminares_indice.append(("LISTA DE FIGURAS", "bm_lista_figuras"))
+        if getattr(c, 'GRAFICOS', []):
+            preliminares_indice.append(("LISTA DE GRÁFICOS", "bm_lista_graficos"))
+        if getattr(c, 'ANEXOS_LISTA', []):
+            preliminares_indice.append(("LISTA DE ANEXOS", "bm_lista_anexos"))
+        if getattr(c, 'RESUMEN_TEXTO', None):
+            preliminares_indice.append(("RESUMEN", "bm_resumen"))
+        for titulo_preliminar, bookmark_preliminar in preliminares_indice:
+            agregar_fila_indice_general_nativa(
+                doc,
+                titulo_preliminar,
+                pagina=paginas_preliminares[bookmark_preliminar],
+            )
     
         agregar_fila_indice_general_nativa(doc, "INTRODUCCIÓN", "", bookmark_id="bm_introduccion")
 
@@ -1585,6 +1880,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         p_cap_lbl = doc.add_paragraph()
         p_cap_lbl.paragraph_format.space_before = Pt(12)
         p_cap_lbl.paragraph_format.space_after = Pt(6)
+        _mantener_con_siguiente(p_cap_lbl)
         p_cap_lbl.add_run("CAPÍTULOS").font.bold = True
     
         # Capítulo I
@@ -1634,6 +1930,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         p_header_c = doc.add_paragraph()
         p_header_c.paragraph_format.space_before = Pt(12)
         p_header_c.paragraph_format.space_after = Pt(12)
+        _mantener_con_siguiente(p_header_c)
     
         section_c = doc.sections[-1]
         ancho_c_emu = section_c.page_width - section_c.left_margin - section_c.right_margin
@@ -1651,16 +1948,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_pp_c.font.size = Pt(TAMANO_BASE)
         run_pp_c.font.bold = True
     
-        # Lista de Cuadros: data-driven desde contenido.py (CUADROS_INDICE) o defaults
-        cuadros_indice_def = [
-            ("1", "Planificación integral de objetivos específicos", "5"),
-            ("2", "Cronograma de actividades administrativas", "6"),
-        ]
-        cuadros_indice = getattr(c, 'CUADROS_INDICE', cuadros_indice_def)
-        if tiene_cap2:
-            for num, desc, pag in cuadros_indice:
-                bookmark_id = f"bm_cuadro{num}" if num else None
-                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
+        for cuadro in _registro_cuadros(incluir_capitulo2=tiene_cap2):
+            agregar_fila_lista_preliminar_nativa(
+                doc,
+                str(cuadro['numero']),
+                cuadro['descripcion'],
+                '',
+                bookmark_id=cuadro['bookmark'],
+            )
     
         # --- LISTA DE FIGURAS ---
         figuras_cfg = getattr(c, 'FIGURAS', [])
@@ -1669,6 +1964,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             p_header_f = doc.add_paragraph()
             p_header_f.paragraph_format.space_before = Pt(12)
             p_header_f.paragraph_format.space_after = Pt(12)
+            _mantener_con_siguiente(p_header_f)
 
             section_f = doc.sections[-1]
             ancho_f_emu = section_f.page_width - section_f.left_margin - section_f.right_margin
@@ -1692,51 +1988,41 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
 
         # --- LISTA DE GRÁFICOS ---
-        iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
-        p_header_g = doc.add_paragraph()
-        p_header_g.paragraph_format.space_before = Pt(12)
-        p_header_g.paragraph_format.space_after = Pt(12)
-    
-        section_g = doc.sections[-1]
-        ancho_g_emu = section_g.page_width - section_g.left_margin - section_g.right_margin
-        agregar_tabulacion_derecha(p_header_g, ancho_g_emu)
-    
-        run_g_lbl = p_header_g.add_run("GRÁFICO")
-        run_g_lbl.font.name = FUENTE
-        run_g_lbl.font.size = Pt(TAMANO_BASE)
-        run_g_lbl.font.bold = True
-    
-        p_header_g.add_run("\t")  # Salto de tabulador explícito para OXML
-    
-        run_pp_g = p_header_g.add_run("pp.")
-        run_pp_g.font.name = FUENTE
-        run_pp_g.font.size = Pt(TAMANO_BASE)
-        run_pp_g.font.bold = True
-    
-        # Lista de Gráficos: data-driven desde contenido.py (GRAFICOS con campos "lista" y "pagina")
-        graficos_def = [
-            ("1", "Representación cartográfica y ubicación espacial de la empresa", "3"),
-            ("2", "Organigrama estructural y niveles jerárquicos de la organización", "4"),
-        ]
         graficos_cfg = getattr(c, 'GRAFICOS', [])
         if graficos_cfg:
+            iniciar_seccion_preliminar(doc, "LISTA DE GRÁFICOS", bookmark_id="bm_lista_graficos")
+            p_header_g = doc.add_paragraph()
+            p_header_g.paragraph_format.space_before = Pt(12)
+            p_header_g.paragraph_format.space_after = Pt(12)
+            _mantener_con_siguiente(p_header_g)
+
+            section_g = doc.sections[-1]
+            ancho_g_emu = section_g.page_width - section_g.left_margin - section_g.right_margin
+            agregar_tabulacion_derecha(p_header_g, ancho_g_emu)
+
+            run_g_lbl = p_header_g.add_run("GRÁFICO")
+            run_g_lbl.font.name = FUENTE
+            run_g_lbl.font.size = Pt(TAMANO_BASE)
+            run_g_lbl.font.bold = True
+            p_header_g.add_run("\t")
+            run_pp_g = p_header_g.add_run("pp.")
+            run_pp_g.font.name = FUENTE
+            run_pp_g.font.size = Pt(TAMANO_BASE)
+            run_pp_g.font.bold = True
+
             for g in graficos_cfg:
                 num = str(g.get("numero", ""))
                 desc = g.get("lista", g.get("titulo", "").split('. ', 1)[-1] if '. ' in g.get("titulo", "") else "")
-                pag = str(g.get("pagina", ""))
                 bookmark_id = f"bm_grafico{num}" if num else None
-                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
-        else:
-            for num, desc, pag in graficos_def:
-                bookmark_id = f"bm_grafico{num}" if num else None
-                agregar_fila_lista_preliminar_nativa(doc, num, desc, pag, bookmark_id=bookmark_id)
+                agregar_fila_lista_preliminar_nativa(doc, num, desc, '', bookmark_id=bookmark_id)
     
         # --- LISTA DE ANEXOS ---
-        if hasattr(c, 'ANEXOS_LISTA') and c.ANEXOS_LISTA is not None:
+        if getattr(c, 'ANEXOS_LISTA', []):
             iniciar_seccion_preliminar(doc, "LISTA DE ANEXOS", bookmark_id="bm_lista_anexos")
             p_header_a = doc.add_paragraph()
             p_header_a.paragraph_format.space_before = Pt(12)
             p_header_a.paragraph_format.space_after = Pt(12)
+            _mantener_con_siguiente(p_header_a)
         
             section_a = doc.sections[-1]
             ancho_a_emu = section_a.page_width - section_a.left_margin - section_a.right_margin
@@ -1802,7 +2088,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
 # --- CAPÍTULO I: REALIDAD ORGANIZACIONAL ---
     iniciar_capitulo(doc, "I", "REALIDAD ORGANIZACIONAL", bookmark_id="bm_cap1")
-    p_ident = doc.add_paragraph()
+    p_ident = doc.add_paragraph(style=ESTILO_SUBTITULO_CENTRADO)
     p_ident.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_ident.paragraph_format.space_before = ESP_DOBLE
     p_ident.paragraph_format.space_after = ESP_DOBLE
@@ -1856,14 +2142,19 @@ def construir_cuerpo_documento(doc, modo="completo"):
     agregar_titulo_nivel2(doc, "Población de los trabajadores de la empresa", bookmark_id="bm_cap1_pobla")
     poblacion_tabla = getattr(c, 'POBLACION_TABLA', None)
     if poblacion_tabla:
-        p_ant = doc.add_paragraph()
-        p_ant.paragraph_format.space_after = Pt(6)
+        cuadro_poblacion = _registro_cuadros()[0]
+        agregar_titulo_cuadro(
+            doc,
+            cuadro_poblacion['titulo'],
+            bookmark_id=cuadro_poblacion['bookmark'],
+        )
         table = doc.add_table(rows=1, cols=5)
         table.style = 'Table Grid'
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
         table.allow_autofit = False
         anchos = [3.5, 5.09, 2, 2, 2]
         aplicar_formato_tabla_xml(table, anchos)
+        _repetir_encabezado(table.rows[0])
         headers = ["Departamento / Área", "Cargo", "Femenino", "Masculino", "Total"]
         for i, h in enumerate(headers):
             cell = table.rows[0].cells[i]
@@ -1895,14 +2186,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 run.font.size = Pt(TAMANO_TABLA)
                 if j == 0 and dep.startswith("**"):
                     run.font.bold = True
-        p_fuente = doc.add_paragraph()
-        p_fuente.paragraph_format.space_before = Pt(6)
-        p_fuente.paragraph_format.line_spacing = 1.0
-        fuente_poblacion = getattr(c, 'POBLACION_FUENTE', f"Información suministrada por {getattr(c, 'RAZON_SOCIAL', 'la organización')} (2026).")
-        run_f = p_fuente.add_run(f"Fuente: {fuente_poblacion}")
-        run_f.font.name = FUENTE
-        run_f.font.size = Pt(TAMANO_TABLA)
-        run_f.font.italic = True
+        _agregar_fuente(doc, getattr(c, 'POBLACION_FUENTE', None))
     poblacion_data = getattr(c, 'POBLACION', '')
     if isinstance(poblacion_data, str):
         agregar_parrafo_normado(doc, poblacion_data)
@@ -1979,16 +2263,28 @@ def construir_cuerpo_documento(doc, modo="completo"):
         intro_planif = getattr(c, 'PLANIFICACION_INTRO_TEXTO',
             "La planificación establece la relación entre cada objetivo y las actividades administrativas a ejecutar:")
         agregar_parrafo_normado(doc, intro_planif)
-        titulo_planif = getattr(c, 'CUADRO_PLANIFICACION_TITULO', CUADRO_PLANIFICACION_TITULO_DEF)
-        agregar_tabla_planificacion(doc, getattr(c, 'PLANIFICACION_DATOS', []), titulo_cuadro=titulo_planif, bookmark_id="bm_cuadro1")
+        cuadro_planificacion = _registro_cuadros()[1]
+        agregar_tabla_planificacion(
+            doc,
+            getattr(c, 'PLANIFICACION_DATOS', []),
+            titulo_cuadro=cuadro_planificacion['titulo'],
+            bookmark_id=cuadro_planificacion['bookmark'],
+            fuente=getattr(c, 'CUADRO_PLANIFICACION_FUENTE', None),
+        )
         doc.add_paragraph()
 
         agregar_titulo_nivel2(doc, "Cronograma de actividades", bookmark_id="bm_cap2_crono")
         intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
             "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
         agregar_parrafo_normado(doc, intro_crono)
-        titulo_crono = getattr(c, 'CUADRO_CRONOGRAMA_TITULO', CUADRO_CRONOGRAMA_TITULO_DEF)
-        agregar_gantt(doc, getattr(c, 'CRONOGRAMA_DATOS', []), titulo_cuadro=titulo_crono, bookmark_id="bm_cuadro2")
+        cuadro_cronograma = _registro_cuadros()[2]
+        agregar_gantt(
+            doc,
+            getattr(c, 'CRONOGRAMA_DATOS', []),
+            titulo_cuadro=cuadro_cronograma['titulo'],
+            bookmark_id=cuadro_cronograma['bookmark'],
+            fuente=getattr(c, 'CUADRO_CRONOGRAMA_FUENTE', None),
+        )
 
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     if tiene_cap3:
@@ -2032,7 +2328,12 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 if actividad.get('operativa'):
                     agregar_item_lista(doc, 1, actividad['operativa'], negrita_inicio="Actividad operativa")
                 if actividad.get('investigacion'):
-                    agregar_item_lista(doc, 2, actividad['investigacion'], negrita_inicio="Actividad de investigación")
+                    agregar_item_lista(
+                        doc,
+                        2,
+                        actividad['investigacion'],
+                        negrita_inicio=getattr(c, 'ETIQUETA_ACTIVIDAD_ANALISIS', 'Actividad de investigación'),
+                    )
             else:
                 agregar_item_lista(doc, i, actividad)
 
@@ -2071,8 +2372,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
         
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        # Empujar hacia el centro vertical aproximado de la página
-        p.paragraph_format.space_before = ESP_PORTADILLA_ANEXOS
+        alto_util_pt = (
+            sec_portadilla.page_height
+            - sec_portadilla.top_margin
+            - sec_portadilla.bottom_margin
+        ) / 12700
+        p.paragraph_format.space_before = Pt(
+            max(0, (alto_util_pt - TAMANO_PORTADILLA_ANEXOS * 1.2) / 2)
+        )
         run_anexos_tit = p.add_run("ANEXOS")
         run_anexos_tit.font.name = FUENTE
         _agregar_bookmark(p, "bm_anexos")
@@ -2092,13 +2399,14 @@ def construir_cuerpo_documento(doc, modo="completo"):
             p_anexo.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p_anexo.paragraph_format.space_before = Pt(0)
             p_anexo.paragraph_format.space_after = ESP_DOBLE
+            _mantener_con_siguiente(p_anexo)
             letra_anexo = cod.split(" ")[-1].upper()
             _agregar_bookmark(p_anexo, f"bm_anexo{letra_anexo}")
             
             # Nombre del Anexo (ej: ANEXO A)
             run_cod = p_anexo.add_run(cod.upper())
             run_cod.font.name = FUENTE
-            run_cod.font.size = Pt(TAMANO_BASE)
+            run_cod.font.size = Pt(TAMANO_TABLA)
             run_cod.font.bold = True
             
             # Subtítulo del contenido centrado entre corchetes [ ]
@@ -2106,10 +2414,11 @@ def construir_cuerpo_documento(doc, modo="completo"):
             p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p_sub.paragraph_format.space_before = ESP_SENCILLO
             p_sub.paragraph_format.space_after = ESP_DOBLE
+            _mantener_con_siguiente(p_sub)
             
             run_desc = p_sub.add_run(f"[{desc}]")
             run_desc.font.name = FUENTE
-            run_desc.font.size = Pt(TAMANO_BASE)
+            run_desc.font.size = Pt(TAMANO_TABLA)
             run_desc.font.bold = True
             
             if numero_imagen is not None:
@@ -2128,8 +2437,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         p_cont.paragraph_format.space_after = ESP_DOBLE
                         run_cont = p_cont.add_run(f"{cod.upper()} (CONT.)")
                         run_cont.font.name = FUENTE
-                        run_cont.font.size = Pt(TAMANO_BASE)
+                        run_cont.font.size = Pt(TAMANO_TABLA)
                         run_cont.font.bold = True
+                        _mantener_con_siguiente(p_cont)
 
                     if isinstance(imagen_cfg, dict):
                         referencia = imagen_cfg.get('archivo', imagen_cfg.get('referencia'))
@@ -2146,6 +2456,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    _mantener_con_siguiente(p_imagen)
                     try:
                         tamano_anexo = _calcular_tamano_anexo_proporcional(
                             ruta_imagen, configuracion
@@ -2160,6 +2471,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         p_foto.alignment = WD_ALIGN_PARAGRAPH.CENTER
                         p_foto.paragraph_format.space_before = Pt(6)
                         p_foto.paragraph_format.space_after = Pt(12)
+                        _mantener_con_siguiente(p_foto)
                         run_foto = p_foto.add_run(titulo_fotografia)
                         run_foto.font.name = FUENTE
                         run_foto.font.size = Pt(TAMANO_TABLA)
@@ -2168,7 +2480,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             if contenido_anexo:
                 bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]
                 for bloque in bloques:
-                    agregar_parrafo_normado(doc, str(bloque))
+                    _agregar_fuente(doc, bloque, centrada=True)
 
     return idx_cap1, idx_indice_inicio, idx_indice_fin, idx_inicio_arabigo
 
@@ -2177,6 +2489,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
 # ================================================================
 
 def generar_reporte_completo(modo="completo"):
+    modos_validos = {"completo", "borrador1", "borrador2", "borrador3", "borrador4"}
+    if modo not in modos_validos:
+        raise ValueError(f"Modo de generación inválido: {modo!r}")
+    validar_contenido()
     print("» Inicializando documento...")
     doc = setup_iutecp_document()
     
@@ -2208,12 +2524,12 @@ def generar_reporte_completo(modo="completo"):
         sufijo = "_BORRADOR4"
     else:
         sufijo = ""
-    docx_output = f"Informe_Pasantia_IUTECP{sufijo}.docx"
+    docx_output = os.path.join(BASE_DIR, f"Informe_Pasantia_IUTECP{sufijo}.docx")
     doc.save(docx_output)
     print(f"✔ Archivo Word generado: {docx_output}")
 
     print("» Renderizando PDF usando LibreOffice...")
-    pdf_output = f"Informe_Pasantia_IUTECP{sufijo}.pdf"
+    pdf_output = os.path.join(BASE_DIR, f"Informe_Pasantia_IUTECP{sufijo}.pdf")
     soffice_cmd = 'libreoffice'
     if platform.system() == 'Windows':
         possible_paths = [
@@ -2226,12 +2542,20 @@ def generar_reporte_completo(modo="completo"):
                 break
 
     try:
-        subprocess.run([soffice_cmd, '--headless', '--convert-to', 'pdf', docx_output], check=True, stdout=subprocess.DEVNULL)
-        print("✔ ¡PDF generado con éxito!")
+        if os.path.exists(pdf_output):
+            os.remove(pdf_output)
+        subprocess.run(
+            [soffice_cmd, '--headless', '--convert-to', 'pdf', '--outdir', BASE_DIR, docx_output],
+            check=True,
+            stdout=subprocess.DEVNULL,
+        )
+        if not os.path.isfile(pdf_output) or os.path.getsize(pdf_output) == 0:
+            raise RuntimeError(f"LibreOffice no produjo el PDF esperado: {pdf_output}")
+        print(f"✔ PDF generado y verificado: {pdf_output}")
     except FileNotFoundError:
-        print("❌ Error: LibreOffice no está instalado o no se encontró en el PATH.")
+        raise RuntimeError("LibreOffice no está instalado o no se encontró en el PATH.")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error en la conversión a PDF: {e}")
+        raise RuntimeError(f"Error en la conversión a PDF: {e}") from e
 
 if __name__ == "__main__":
     import sys
