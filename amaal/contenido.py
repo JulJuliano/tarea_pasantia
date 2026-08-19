@@ -466,7 +466,8 @@ POST_CITA_TEXTO = ''
 # 7. CAPÍTULO IV — ACTIVIDADES REALIZADAS
 # ========================================================================
 ACTIVIDADES_DESCRIPCION = ('Durante las diez (10) semanas de pasantías se desarrollaron actividades operativas y de análisis mediante una '
- 'rotación inicial por Atención al Cliente y una segunda etapa de apoyo en Administración:')
+  'rotación inicial por Atención al Cliente y una segunda etapa de apoyo en Administración. Algunas actividades y espacios observados '
+  'se documentan en la memoria fotográfica incorporada como Anexo I:')
 
 ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Inducción institucional y rotación inicial por Atención al Cliente, reconocimiento de los tipos '
@@ -569,5 +570,53 @@ ANEXOS_LISTA = [
     ('ANEXO E', 'Estados de una solicitud de servicio', '05_estados_solicitud.png', {'width_cm': 13.0, 'height_cm': 8.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO F', 'Comunicación interdepartamental', '10_comunicacion_interdepartamental.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO G', 'Comparación AS-IS y TO-BE del control de solicitudes', '11_comparacion_as_is_to_be.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO H', 'Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio', 'ishikawa_amaal_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).'])
+    ('ANEXO H', 'Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio', 'ishikawa_amaal_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    (
+        'ANEXO I',
+        'Memoria fotográfica de las actividades realizadas',
+        [
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0007.jpg',
+                'titulo': 'Fotografía 1. Registro de actividades administrativas frente al equipo de trabajo.',
+                'configuracion': {'width_cm': 13.5, 'height_cm': 10.5},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0008.jpg',
+                'titulo': 'Fotografía 2. Vista general del espacio de trabajo del área administrativa.',
+                'configuracion': {'width_cm': 13.5, 'height_cm': 10.5},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0009.jpg',
+                'titulo': 'Fotografía 3. Verificación de información en los registros administrativos del área.',
+                'configuracion': {'width_cm': 10.5, 'height_cm': 15.0},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0010.jpg',
+                'titulo': 'Fotografía 4. Puesto de trabajo utilizado para la gestión de información administrativa.',
+                'configuracion': {'width_cm': 13.5, 'height_cm': 10.5},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0011.jpg',
+                'titulo': 'Fotografía 5. Revisión de registros y documentos desde el puesto de trabajo.',
+                'configuracion': {'width_cm': 10.5, 'height_cm': 15.0},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0012.jpg',
+                'titulo': 'Fotografía 6. Revisión de información de pagos y soportes documentales.',
+                'configuracion': {'width_cm': 10.5, 'height_cm': 15.0},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0015.jpg',
+                'titulo': 'Fotografía 7. Puesto de trabajo del área administrativa.',
+                'configuracion': {'width_cm': 10.5, 'height_cm': 15.0},
+            },
+            {
+                'archivo': 'adjuntos/IMG-20260818-WA0016.jpg',
+                'titulo': 'Fotografía 8. Puesto de trabajo y equipo utilizado durante la pasantía.',
+                'configuracion': {'width_cm': 10.5, 'height_cm': 15.0},
+            },
+        ],
+        None,
+        ['Fuente: Registro fotográfico suministrado por la autora (2026).'],
+    ),
 ]

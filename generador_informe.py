@@ -2074,7 +2074,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         run_anexos_tit.font.size = Pt(TAMANO_PORTADILLA_ANEXOS)
         run_anexos_tit.font.bold = True
 
-    # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
+        # Anexos individuales (Art. 15: cada uno en página nueva, arriba y centrado, subtítulo entre corchetes)
         for anexo in c.ANEXOS_LISTA:
             cod, desc = anexo[:2]
             numero_imagen = anexo[2] if len(anexo) > 2 else None
@@ -2108,17 +2108,57 @@ def construir_cuerpo_documento(doc, modo="completo"):
             run_desc.font.bold = True
             
             if numero_imagen is not None:
-                ruta_imagen = buscar_imagen_por_referencia(carpeta_imagenes, numero_imagen)
-                if ruta_imagen:
+                if isinstance(numero_imagen, (list, tuple)):
+                    imagenes = numero_imagen
+                else:
+                    imagenes = [numero_imagen]
+
+                for indice_imagen, imagen_cfg in enumerate(imagenes):
+                    if indice_imagen:
+                        # Cada fotografía ocupa una página propia para conservar
+                        # la legibilidad y mantener la memoria como un solo anexo.
+                        doc.add_page_break()
+                        p_cont = doc.add_paragraph()
+                        p_cont.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        p_cont.paragraph_format.space_after = ESP_DOBLE
+                        run_cont = p_cont.add_run(f"{cod.upper()} (CONT.)")
+                        run_cont.font.name = FUENTE
+                        run_cont.font.size = Pt(TAMANO_BASE)
+                        run_cont.font.bold = True
+
+                    if isinstance(imagen_cfg, dict):
+                        referencia = imagen_cfg.get('archivo', imagen_cfg.get('referencia'))
+                        configuracion = imagen_cfg.get('configuracion', imagen_cfg.get('config', alto_imagen))
+                        titulo_fotografia = imagen_cfg.get('titulo')
+                    else:
+                        referencia = imagen_cfg
+                        configuracion = alto_imagen
+                        titulo_fotografia = None
+
+                    ruta_imagen = buscar_imagen_por_referencia(carpeta_imagenes, referencia)
+                    if not ruta_imagen:
+                        continue
+
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
                     try:
                         tamano_anexo = _calcular_tamano_anexo_proporcional(
-                            ruta_imagen, alto_imagen
+                            ruta_imagen, configuracion
                         )
                         p_imagen.add_run().add_picture(ruta_imagen, **tamano_anexo)
                     except Exception as e:
                         print(f"⚠ No se pudo insertar el anexo {cod} ({ruta_imagen}): {e}")
+                        continue
+
+                    if titulo_fotografia:
+                        p_foto = doc.add_paragraph()
+                        p_foto.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        p_foto.paragraph_format.space_before = Pt(6)
+                        p_foto.paragraph_format.space_after = Pt(12)
+                        run_foto = p_foto.add_run(titulo_fotografia)
+                        run_foto.font.name = FUENTE
+                        run_foto.font.size = Pt(TAMANO_TABLA)
+                        run_foto.font.bold = True
 
             if contenido_anexo:
                 bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]

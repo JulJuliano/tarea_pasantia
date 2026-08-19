@@ -7,6 +7,8 @@ import shutil
 import glob
 import subprocess
 import argparse
+import socket
+import tempfile
 
 # Intentamos importar módulos de terminal interactiva (solo Linux/Unix)
 try:
@@ -71,7 +73,8 @@ ACCIONES = [
     {"id": "borrador2", "nombre": "Compilar Borrador 2 (Cap I + II)", "def": False},
     {"id": "borrador3", "nombre": "Compilar Borrador 3 (Cap I + II + III)", "def": False},
     {"id": "borrador4", "nombre": "Compilar Borrador 4 (Cap I + II + III + IV)", "def": False},
-    {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True}
+    {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True},
+    {"id": "combinar_documentos", "nombre": "Combinar informe + 10 cronogramas (.docx y .pdf) [Keidy/Amaal]", "def": False}
 ]
 
 # Códigos de escape ANSI para colores y formato
@@ -152,6 +155,8 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
             status_lbl += f" {RED}(Sin contenido.py){RESET}"
         if not has_crono and sel_acciones[idx_accion.get("cronogramas", -1)]:
             status_lbl += f" {RED}(Sin cronograma.py){RESET}"
+        if sel_acciones[idx_accion.get("combinar_documentos", -1)] and est["id"] not in ("keidy", "amaal"):
+            status_lbl += f" {GRAY}(Combinación disponible para Keidy y Amaal){RESET}"
 
         nombre_color = f"{BOLD}{GREEN if sel_estudiantes[i] else RESET}{est['nombre']}{RESET}"
         print(f"{cursor}{check} {nombre_color}{status_lbl}")
@@ -336,11 +341,199 @@ def compilar_cronogramas_estudiante(est):
         print(f"{RED}⚠ Error ejecutando cronogramas: {e}{RESET}")
         return False
 
+def _buscar_python_con_uno():
+    """Busca un Python del sistema con el puente UNO de LibreOffice."""
+    candidatos = ["/usr/bin/python3", shutil.which("python3"), sys.executable]
+    revisados = set()
+    for candidato in candidatos:
+        if not candidato or candidato in revisados or not os.path.exists(candidato):
+            continue
+        revisados.add(candidato)
+        prueba = subprocess.run(
+            [candidato, "-c", "import uno"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        if prueba.returncode == 0:
+            return candidato
+    return None
+
+def combinar_informe_cronogramas(est):
+    """Combina el informe y diez cronogramas de Keidy o Amaal en DOCX y PDF."""
+    configuraciones = {
+        "keidy": "Cronograma_Procura_Semana{semana}_IUTECP.docx",
+        "amaal": "Cronograma_Administracion_Semana{semana}_IUTECP.docx",
+    }
+    patron_cronograma = configuraciones.get(est["id"])
+    if patron_cronograma is None:
+        print(f"{GRAY}» Combinación omitida para {est['nombre']}: solo disponible para Keidy y Amaal.{RESET}")
+        return None
+
+    informe = os.path.join(est["dir"], CARPETA_REPORTES, NOMBRE_DOCX_SALIDA)
+    cronogramas = [
+        os.path.join(
+            est["dir"],
+            CARPETA_CRONOGRAMAS,
+            patron_cronograma.format(semana=semana),
+        )
+        for semana in range(1, 11)
+    ]
+    fuentes = [informe, *cronogramas]
+    faltantes = [ruta for ruta in fuentes if not os.path.isfile(ruta)]
+    if faltantes:
+        print(f"{RED}⚠ No se puede crear el Word combinado. Faltan estos archivos:{RESET}")
+        for ruta in faltantes:
+            print(f"  {ruta}")
+        return False
+
+    python_uno = _buscar_python_con_uno()
+    soffice = shutil.which("libreoffice") or shutil.which("soffice")
+    if not python_uno or not soffice:
+        print(f"{RED}⚠ Se requiere LibreOffice y un Python del sistema con el módulo UNO.{RESET}")
+        return False
+
+    salida_docx = os.path.join(
+        est["dir"],
+        CARPETA_REPORTES,
+        "Informe_Pasantia_IUTECP_con_Cronogramas.docx",
+    )
+    salida_pdf = os.path.join(
+        est["dir"],
+        CARPETA_REPORTES,
+        "Informe_Pasantia_IUTECP_con_Cronogramas.pdf",
+    )
+
+    with socket.socket() as servidor:
+        servidor.bind(("127.0.0.1", 0))
+        puerto = servidor.getsockname()[1]
+
+    perfil = tempfile.mkdtemp(prefix="selector_libreoffice_")
+    perfil_url = "file://" + perfil
+    office_proc = subprocess.Popen(
+        [
+            soffice,
+            "--headless",
+            "--nologo",
+            "--nodefault",
+            "--nofirststartwizard",
+            "--norestore",
+            f"-env:UserInstallation={perfil_url}",
+            f"--accept=socket,host=127.0.0.1,port={puerto};urp;StarOffice.ComponentContext",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    script_uno = r'''
+import os
+import sys
+import time
+import uno
+from com.sun.star.beans import PropertyValue
+from com.sun.star.style.BreakType import PAGE_BEFORE
+from com.sun.star.text.ControlCharacter import PARAGRAPH_BREAK
+
+def propiedad(nombre, valor):
+    prop = PropertyValue()
+    prop.Name = nombre
+    prop.Value = valor
+    return prop
+
+puerto = int(sys.argv[1])
+salida_docx = os.path.abspath(sys.argv[2])
+salida_pdf = os.path.abspath(sys.argv[3])
+fuentes = [os.path.abspath(ruta) for ruta in sys.argv[4:]]
+contexto_local = uno.getComponentContext()
+resolver = contexto_local.ServiceManager.createInstanceWithContext(
+    "com.sun.star.bridge.UnoUrlResolver", contexto_local
+)
+
+contexto = None
+for _ in range(60):
+    try:
+        contexto = resolver.resolve(
+            f"uno:socket,host=127.0.0.1,port={puerto};urp;StarOffice.ComponentContext"
+        )
+        break
+    except Exception:
+        time.sleep(0.25)
+if contexto is None:
+    raise RuntimeError("No se pudo conectar con LibreOffice.")
+
+desktop = contexto.ServiceManager.createInstanceWithContext(
+    "com.sun.star.frame.Desktop", contexto
+)
+documento = desktop.loadComponentFromURL(
+    uno.systemPathToFileUrl(fuentes[0]),
+    "_blank",
+    0,
+    (propiedad("Hidden", True),),
+)
+if documento is None:
+    raise RuntimeError("No se pudo abrir el informe del estudiante.")
+
+try:
+    texto = documento.Text
+    for fuente in fuentes[1:]:
+        cursor = texto.createTextCursor()
+        cursor.gotoEnd(False)
+        texto.insertControlCharacter(cursor, PARAGRAPH_BREAK, False)
+        cursor.gotoEnd(False)
+        cursor.BreakType = PAGE_BEFORE
+        cursor.insertDocumentFromURL(uno.systemPathToFileUrl(fuente), ())
+
+    documento.storeAsURL(
+        uno.systemPathToFileUrl(salida_docx),
+        (
+            propiedad("FilterName", "Office Open XML Text"),
+            propiedad("Overwrite", True),
+        ),
+    )
+    documento.storeToURL(
+        uno.systemPathToFileUrl(salida_pdf),
+        (
+            propiedad("FilterName", "writer_pdf_Export"),
+            propiedad("Overwrite", True),
+        ),
+    )
+finally:
+    documento.close(True)
+'''
+
+    print(f"\n{BOLD}{CYAN}» Combinando informe y cronogramas de {est['nombre']}...{RESET}")
+    try:
+        resultado = subprocess.run(
+            [python_uno, "-c", script_uno, str(puerto), salida_docx, salida_pdf, *fuentes],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=240,
+        )
+        if resultado.returncode != 0 or not os.path.isfile(salida_docx) or not os.path.isfile(salida_pdf):
+            detalle = resultado.stdout.strip()
+            print(f"{RED}⚠ No se pudieron crear los documentos combinados.{RESET}")
+            if detalle:
+                print(f"  {detalle}")
+            return False
+        print(f"{GREEN}✔ Word combinado guardado en: {salida_docx}{RESET}")
+        print(f"{GREEN}✔ PDF combinado guardado en: {salida_pdf}{RESET}")
+        return True
+    except subprocess.TimeoutExpired:
+        print(f"{RED}⚠ LibreOffice excedió el tiempo límite al combinar los documentos.{RESET}")
+        return False
+    finally:
+        office_proc.terminate()
+        try:
+            office_proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            office_proc.kill()
+        shutil.rmtree(perfil, ignore_errors=True)
+
 def main():
     # Procesamiento de argumentos
     parser = argparse.ArgumentParser(description="Selector y compilador de informes IUTECP.")
     parser.add_argument("--estudiantes", type=str, help="Estudiantes a procesar separados por comas (juliano, keidy, amaal, all)")
-    parser.add_argument("--acciones", type=str, help="Acciones a realizar separadas por comas (informe, cronogramas, all)")
+    parser.add_argument("--acciones", type=str, help="Acciones separadas por comas (informe, cronogramas, combinar_documentos, all)")
     args = parser.parse_args()
 
     # Determinar si usamos modo interactivo o directo
@@ -436,6 +629,14 @@ def main():
             if compilar_cronogramas_estudiante(est):
                 exito_total += 1
             else:
+                errores_totales += 1
+
+        # 4. Combinar informe y diez cronogramas de Keidy o Amaal si aplica
+        if "combinar_documentos" in acciones_a_ejecutar:
+            resultado_combinacion = combinar_informe_cronogramas(est)
+            if resultado_combinacion is True:
+                exito_total += 1
+            elif resultado_combinacion is False:
                 errores_totales += 1
 
     print(f"\n{BOLD}{BLUE}================================================================{RESET}")
