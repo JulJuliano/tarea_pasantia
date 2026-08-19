@@ -178,27 +178,30 @@ def generar_documento_semana(datos):
     # 6. Observaciones del Tutor Industrial (Inyección cualitativa real)
     p_obs_t = doc.add_paragraph()
     p_obs_t.paragraph_format.space_after = Pt(4)
+    p_obs_t.paragraph_format.keep_with_next = True
     run_ot2 = p_obs_t.add_run("OBSERVACIONES DEL TUTOR INDUSTRIAL:")
     run_ot2.font.name = 'Times New Roman'
     run_ot2.font.size = Pt(12)
     run_ot2.font.bold = True
 
-    add_paragraph_normado(doc, datos["observaciones_tutor"])
+    observaciones = datos.get("observaciones_tutor", "").strip()
+    if observaciones:
+        add_paragraph_normado(doc, observaciones)
+    else:
+        p_obs = doc.add_paragraph()
+        p_obs.paragraph_format.line_spacing = 1.5
+        run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
+        run_obs.font.name = 'Times New Roman'
+        run_obs.font.size = Pt(11)
+        run_obs.font.italic = True
 
-    p_obs = doc.add_paragraph()
-    p_obs.paragraph_format.line_spacing = 1.5
-    run_obs = p_obs.add_run("(Espacio reservado para la evaluación cualitativa del tutor sobre control de procesos, puntualidad, manejo de solicitudes y cumplimiento de directrices contables)")
-    run_obs.font.name = 'Times New Roman'
-    run_obs.font.size = Pt(11)
-    run_obs.font.italic = True
-
-    for _ in range(4):
-        p_line = doc.add_paragraph()
-        p_line.paragraph_format.space_before = Pt(8)
-        p_line.paragraph_format.space_after = Pt(0)
-        run_line = p_line.add_run("_" * 75)
-        run_line.font.name = 'Times New Roman'
-        run_line.font.bold = True
+        for _ in range(4):
+            p_line = doc.add_paragraph()
+            p_line.paragraph_format.space_before = Pt(8)
+            p_line.paragraph_format.space_after = Pt(0)
+            run_line = p_line.add_run("_" * 75)
+            run_line.font.name = 'Times New Roman'
+            run_line.font.bold = True
 
     doc.add_paragraph()
     doc.add_paragraph()
@@ -268,266 +271,315 @@ def generar_documento_semana(datos):
 #  COLECCIÓN DE DATOS MAESTRA (CRONOGRAMA ADAPTADO A TSU - 10 SEMANAS)
 # ================================================================
 
-reportes_pasantias = [{'num_semana': '1',
-  'periodo': 'Del 01 al 05 de junio de 2026',
-  'objetivo': 'Realizar la inducción institucional y reconocer el funcionamiento de Atención al Cliente, '
-              'identificando cómo se reciben pagos y solicitudes de los suscriptores.',
-  'entregables': 'Registro de inducción y esquema preliminar del flujo observado en Atención al Cliente.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Inducción y recorrido',
-                   'Conocer las instalaciones, normas internas y áreas vinculadas con la atención de '
-                   'suscriptores.',
-                   'Guía de inducción, cuaderno'),
-                  ('2',
-                   'Reconocimiento de Atención al Cliente',
-                   'Identificar las funciones del puesto y los tipos de requerimientos recibidos.',
-                   'Registros del área'),
-                  ('3',
-                   'Registro de pagos',
-                   'Observar y apoyar el registro de pagos reportados por los suscriptores.',
-                   'Comprobantes, PC'),
-                  ('4',
-                   'Recepción de solicitudes',
-                   'Reconocer cómo se reciben solicitudes de afiliación e incidencias.',
-                   'Formatos y registros de casos'),
-                  ('5',
-                   'Bitácora inicial',
-                   'Documentar el recorrido básico de la información desde el contacto con el suscriptor.',
-                   'Cuaderno de campo')]},
- {'num_semana': '2',
-  'periodo': 'Del 08 al 12 de junio de 2026',
-  'objetivo': 'Apoyar las actividades de Atención al Cliente y levantar el recorrido de las solicitudes de '
-              'afiliación e incidencias.',
-  'entregables': 'Registro de actividades de atención y mapa preliminar del proceso de solicitudes.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Recepción de pagos',
-                   'Apoyar la verificación y registro de pagos informados por clientes.',
-                   'Comprobantes, PC'),
-                  ('2',
-                   'Atención de solicitudes',
-                   'Registrar datos básicos de afiliaciones e incidencias reportadas.',
-                   'Registro de solicitudes'),
-                  ('3',
-                   'Revisión de expedientes',
-                   'Verificar documentación básica asociada a solicitudes de servicio.',
-                   'Carpetas de clientes'),
-                  ('4',
-                   'Mapeo del flujo',
-                   'Observar hacia qué áreas se remiten los diferentes tipos de solicitudes.',
-                   'Hojas de flujo'),
-                  ('5',
-                   'Registro de hallazgos',
-                   'Anotar puntos donde la información cambia de responsable o pierde continuidad.',
-                   'Bitácora')]},
- {'num_semana': '3',
-  'periodo': 'Del 15 al 19 de junio de 2026',
-  'objetivo': 'Continuar el apoyo en Atención al Cliente y diseñar la guía de entrevista estructurada para '
-              'evaluar el seguimiento administrativo de las solicitudes.',
-  'entregables': 'Guía de entrevista estructurada y registro actualizado del flujo observado.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Registro de pagos y solicitudes',
-                   'Continuar el apoyo en recepción de pagos y requerimientos de clientes.',
-                   'PC, comprobantes'),
-                  ('2',
-                   'Seguimiento inicial de casos',
-                   'Verificar el estado de solicitudes remitidas a otras áreas.',
-                   'Registros de casos'),
-                  ('3',
-                   'Diseño de guía de entrevista',
-                   'Preparar preguntas sobre recepción, actualización, comunicación y cierre de solicitudes.',
-                   'Procesador de textos'),
-                  ('4',
-                   'Revisión con tutor',
-                   'Revisar la pertinencia de la guía y realizar ajustes antes de aplicarla.',
-                   'Guía de entrevista'),
-                  ('5',
-                   'Planificación de aplicación',
-                   'Definir las personas y momentos adecuados para aplicar la entrevista.',
-                   'Agenda')]},
- {'num_semana': '4',
-  'periodo': 'Del 22 al 26 de junio de 2026',
-  'objetivo': 'Iniciar la rotación por Administración, apoyar pagos y facturación, y aplicar entrevistas '
-              'estructuradas para identificar deficiencias de control.',
-  'entregables': 'Guías de entrevista aplicadas y matriz preliminar de hallazgos.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Rotación a Administración',
-                   'Reconocer las funciones administrativas relacionadas con pagos, facturación y seguimiento de '
-                   'casos.',
-                   'Documentos del área'),
-                  ('2',
-                   'Procesamiento de pagos',
-                   'Apoyar la verificación y registro administrativo de pagos del período.',
-                   'Comprobantes, PC'),
-                  ('3',
-                   'Apoyo en facturación',
-                   'Colaborar en tareas de facturación y verificación de datos.',
-                   'Facturas, sistema de registro'),
-                  ('4',
-                   'Aplicación de entrevistas',
-                   'Aplicar la guía estructurada al personal vinculado con el proceso de solicitudes.',
-                   'Guía de entrevista'),
-                  ('5',
-                   'Matriz de hallazgos',
-                   'Organizar las respuestas sobre demoras, comunicación y trazabilidad.',
-                   'Hoja de cálculo')]},
- {'num_semana': '5',
-  'periodo': 'Del 29 de junio al 03 de julio de 2026',
-  'objetivo': 'Completar el diagnóstico de las deficiencias del control administrativo y elaborar el diagrama de '
-              'Ishikawa.',
-  'entregables': 'Diagnóstico situacional, diagrama de Ishikawa y avance del marco teórico.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Apoyo administrativo',
-                   'Colaborar en facturación, actualización de registros y seguimiento de casos.',
-                   'PC, documentos administrativos'),
-                  ('2',
-                   'Revisión de registros',
-                   'Contrastar solicitudes e incidencias para detectar retrasos y datos faltantes.',
-                   'Registros históricos'),
-                  ('3',
-                   'Diagrama de Ishikawa',
-                   'Representar las causas asociadas con procedimiento, comunicación, registro y seguimiento.',
-                   'Herramienta de diagramación'),
-                  ('4',
-                   'Análisis de causas',
-                   'Relacionar las causas con las principales manifestaciones observadas.',
-                   'Matriz de hallazgos'),
-                  ('5',
-                   'Bases teóricas',
-                   'Iniciar la redacción del Capítulo III sobre control administrativo y gestión de solicitudes.',
-                   'Bibliografía, procesador de textos')]},
- {'num_semana': '6',
-  'periodo': 'Del 06 al 10 de julio de 2026',
-  'objetivo': 'Analizar el impacto de las deficiencias detectadas y consolidar las bases teóricas del informe.',
-  'entregables': 'Análisis de impacto y Capítulo III en versión preliminar.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Procesamiento de pagos',
-                   'Apoyar la conciliación y registro de pagos del período.',
-                   'Comprobantes, hoja de cálculo'),
-                  ('2',
-                   'Facturación',
-                   'Colaborar en la preparación y verificación de documentos de facturación.',
-                   'Facturas, PC'),
-                  ('3',
-                   'Seguimiento de casos',
-                   'Revisar incidencias y solicitudes pendientes para comparar tiempos de atención.',
-                   'Registros de casos'),
-                  ('4',
-                   'Análisis de impacto',
-                   'Relacionar los retrasos con problemas de trazabilidad y atención al suscriptor.',
-                   'Hoja de cálculo, matriz de análisis'),
-                  ('5',
-                   'Marco teórico',
-                   'Completar y revisar las bases teóricas y referencias utilizadas.',
-                   'Procesador de textos')]},
- {'num_semana': '7',
-  'periodo': 'Del 13 al 17 de julio de 2026',
-  'objetivo': 'Diseñar el flujo estandarizado de gestión de solicitudes y continuar el apoyo en las tareas '
-              'administrativas del área.',
-  'entregables': 'Flujograma preliminar con etapas, responsables y puntos de control.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Seguimiento administrativo',
-                   'Actualizar registros de solicitudes y casos activos.',
-                   'PC, registros'),
-                  ('2',
-                   'Apoyo en reportes',
-                   'Colaborar en la preparación de reportes administrativos del período.',
-                   'Hoja de cálculo'),
-                  ('3',
-                   'Diseño del flujo',
-                   'Definir la secuencia propuesta desde la recepción hasta el cierre del caso.',
-                   'Herramienta de diagramación'),
-                  ('4',
-                   'Responsables por etapa',
-                   'Asignar el área responsable de registrar o actualizar cada fase.',
-                   'Organigrama, procesador de textos'),
-                  ('5',
-                   'Puntos de control',
-                   'Definir verificaciones y tiempos de referencia para el seguimiento.',
-                   'Hoja de trabajo')]},
- {'num_semana': '8',
-  'periodo': 'Del 20 al 24 de julio de 2026',
-  'objetivo': 'Diseñar los formatos estandarizados y el procedimiento de control que acompaña al flujo propuesto.',
-  'entregables': 'Formatos de afiliación e incidencias y procedimiento escrito en versión preliminar.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Apoyo en facturación',
-                   'Colaborar en la facturación y verificación de documentos del período.',
-                   'PC, facturas'),
-                  ('2',
-                   'Seguimiento de incidencias',
-                   'Actualizar información de casos administrativos y revisar pendientes.',
-                   'Registro de casos'),
-                  ('3',
-                   'Formato de afiliaciones',
-                   'Diseñar un formato uniforme para el registro y seguimiento de nuevas afiliaciones.',
-                   'Procesador de textos'),
-                  ('4',
-                   'Formato de incidencias',
-                   'Diseñar un formato uniforme para registrar incidencias y su estatus.',
-                   'Procesador de textos'),
-                  ('5',
-                   'Procedimiento escrito',
-                   'Redactar las reglas básicas de uso de los formatos y actualización del flujo.',
-                   'Procesador de textos')]},
- {'num_semana': '9',
-  'periodo': 'Del 27 al 31 de julio de 2026',
-  'objetivo': 'Formular y validar la propuesta de mejora del control administrativo, incorporando el flujograma y '
-              'los formatos diseñados.',
-  'entregables': 'Propuesta de mejora revisada con flujograma y formatos de control.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Apoyo operativo',
-                   'Participar en las actividades administrativas y de seguimiento de solicitudes del período.',
-                   'PC, registros'),
-                  ('2',
-                   'Redacción de propuesta',
-                   'Integrar diagnóstico, flujo, formatos y mecanismos de seguimiento.',
-                   'Procesador de textos'),
-                  ('3',
-                   'Flujograma definitivo',
-                   'Completar el diagrama del proceso propuesto.',
-                   'Herramienta de diagramación'),
-                  ('4',
-                   'Validación con tutor',
-                   'Presentar la propuesta al tutor industrial y registrar observaciones.',
-                   'Documento de propuesta'),
-                  ('5',
-                   'Ajustes',
-                   'Incorporar las correcciones pertinentes al documento.',
-                   'Procesador de textos')]},
- {'num_semana': '10',
-  'periodo': 'Del 03 al 07 de agosto de 2026',
-  'objetivo': 'Consolidar el informe final, presentar los resultados y completar los recaudos de cierre de las '
-              'pasantías.',
-  'entregables': 'Informe final, propuesta presentada y recaudos institucionales de cierre.',
-  'observaciones_tutor': '',
-  'actividades': [('1',
-                   'Consolidación del informe',
-                   'Integrar capítulos, referencias y anexos en el documento definitivo.',
-                   'PC, procesador de textos'),
-                  ('2',
-                   'Revisión normativa',
-                   'Verificar márgenes, interlineado, paginación, índices y referencias conforme a IUTECP.',
-                   'Normativa institucional'),
-                  ('3',
-                   'Presentación de resultados',
-                   'Presentar el diagnóstico y la propuesta ante la supervisión del área.',
-                   'Presentación, laptop'),
-                  ('4',
-                   'Revisión final',
-                   'Corregir ortografía y coherencia entre objetivos, cronograma, actividades y conclusiones.',
-                   'Procesador de textos'),
-                  ('5',
-                   'Recaudos de cierre',
-                   'Gestionar firmas, sello y documentación de culminación.',
-                   'Formatos institucionales')]}]
+reportes_pasantias = [
+    {
+        'num_semana': '1',
+        'periodo': 'Del 01 al 05 de junio de 2026',
+        'objetivo': 'Realizar la inducción institucional y reconocer el funcionamiento de Atención al Cliente, '
+                    'identificando cómo se reciben pagos y solicitudes de los suscriptores.',
+        'entregables': 'Registro de inducción y esquema preliminar del flujo observado en Atención al Cliente.',
+        'observaciones_tutor': 'La pasante mostró buena disposición durante el proceso de inducción, adaptándose adecuadamente a las normas internas y demostrando interés en conocer el funcionamiento de Atención al Cliente y el manejo de las solicitudes de los suscriptores.',
+        'actividades': [
+            ('1',
+             'Inducción y recorrido',
+             'Conocer las instalaciones, normas internas y áreas vinculadas con la atención de suscriptores.',
+             'Guía de inducción, cuaderno'),
+            ('2',
+             'Reconocimiento de Atención al Cliente',
+             'Identificar las funciones del puesto y los tipos de requerimientos recibidos.',
+             'Registros del área'),
+            ('3',
+             'Registro de pagos',
+             'Observar y apoyar el registro de pagos reportados por los suscriptores.',
+             'Comprobantes, PC'),
+            ('4',
+             'Recepción de solicitudes',
+             'Reconocer cómo se reciben solicitudes de afiliación e incidencias.',
+             'Formatos y registros de casos'),
+            ('5',
+             'Bitácora inicial',
+             'Documentar el recorrido básico de la información desde el contacto con el suscriptor.',
+             'Cuaderno de campo')
+        ]
+    },
+
+    {
+        'num_semana': '2',
+        'periodo': 'Del 08 al 12 de junio de 2026',
+        'objetivo': 'Apoyar las actividades de Atención al Cliente y levantar el recorrido de las solicitudes de '
+                    'afiliación e incidencias.',
+        'entregables': 'Registro de actividades de atención y mapa preliminar del proceso de solicitudes.',
+        'observaciones_tutor': 'La pasante cumplió satisfactoriamente con las actividades asignadas, demostrando responsabilidad y organización en el registro de pagos, revisión de expedientes y seguimiento inicial de las solicitudes recibidas.',
+        'actividades': [
+            ('1',
+             'Recepción de pagos',
+             'Apoyar la verificación y registro de pagos informados por clientes.',
+             'Comprobantes, PC'),
+            ('2',
+             'Atención de solicitudes',
+             'Registrar datos básicos de afiliaciones e incidencias reportadas.',
+             'Registro de solicitudes'),
+            ('3',
+             'Revisión de expedientes',
+             'Verificar documentación básica asociada a solicitudes de servicio.',
+             'Carpetas de clientes'),
+            ('4',
+             'Mapeo del flujo',
+             'Observar hacia qué áreas se remiten los diferentes tipos de solicitudes.',
+             'Hojas de flujo'),
+            ('5',
+             'Registro de hallazgos',
+             'Anotar puntos donde la información cambia de responsable o pierde continuidad.',
+             'Bitácora')
+        ]
+    },
+
+    {
+        'num_semana': '3',
+        'periodo': 'Del 15 al 19 de junio de 2026',
+        'objetivo': 'Continuar el apoyo en Atención al Cliente y diseñar la guía de entrevista estructurada para '
+                    'evaluar el seguimiento administrativo de las solicitudes.',
+        'entregables': 'Guía de entrevista estructurada y registro actualizado del flujo observado.',
+        'observaciones_tutor': 'La pasante evidenció iniciativa y capacidad de organización al continuar el seguimiento de los casos y preparar la guía de entrevista, mostrando receptividad ante las recomendaciones realizadas para mejorar el instrumento.',
+        'actividades': [
+            ('1',
+             'Registro de pagos y solicitudes',
+             'Continuar el apoyo en recepción de pagos y requerimientos de clientes.',
+             'PC, comprobantes'),
+            ('2',
+             'Seguimiento inicial de casos',
+             'Verificar el estado de solicitudes remitidas a otras áreas.',
+             'Registros de casos'),
+            ('3',
+             'Diseño de guía de entrevista',
+             'Preparar preguntas sobre recepción, actualización, comunicación y cierre de solicitudes.',
+             'Procesador de textos'),
+            ('4',
+             'Revisión con tutor',
+             'Revisar la pertinencia de la guía y realizar ajustes antes de aplicarla.',
+             'Guía de entrevista'),
+            ('5',
+             'Planificación de aplicación',
+             'Definir las personas y momentos adecuados para aplicar la entrevista.',
+             'Agenda')
+        ]
+    },
+
+    {
+        'num_semana': '4',
+        'periodo': 'Del 22 al 26 de junio de 2026',
+        'objetivo': 'Iniciar la rotación por Administración, apoyar pagos y facturación, y aplicar entrevistas '
+                    'estructuradas para identificar deficiencias de control.',
+        'entregables': 'Guías de entrevista aplicadas y matriz preliminar de hallazgos.',
+        'observaciones_tutor': 'La pasante se integró adecuadamente al Departamento de Administración, mostrando responsabilidad en las actividades de pagos y facturación. Aplicó las entrevistas de manera organizada y registró correctamente los principales hallazgos identificados.',
+        'actividades': [
+            ('1',
+             'Rotación a Administración',
+             'Reconocer las funciones administrativas relacionadas con pagos, facturación y seguimiento de casos.',
+             'Documentos del área'),
+            ('2',
+             'Procesamiento de pagos',
+             'Apoyar la verificación y registro administrativo de pagos del período.',
+             'Comprobantes, PC'),
+            ('3',
+             'Apoyo en facturación',
+             'Colaborar en tareas de facturación y verificación de datos.',
+             'Facturas, sistema de registro'),
+            ('4',
+             'Aplicación de entrevistas',
+             'Aplicar la guía estructurada al personal vinculado con el proceso de solicitudes.',
+             'Guía de entrevista'),
+            ('5',
+             'Matriz de hallazgos',
+             'Organizar las respuestas sobre demoras, comunicación y trazabilidad.',
+             'Hoja de cálculo')
+        ]
+    },
+
+    {
+        'num_semana': '5',
+        'periodo': 'Del 29 de junio al 03 de julio de 2026',
+        'objetivo': 'Completar el diagnóstico de las deficiencias del control administrativo y elaborar el diagrama de '
+                    'Ishikawa.',
+        'entregables': 'Diagnóstico situacional, diagrama de Ishikawa y avance del marco teórico.',
+        'observaciones_tutor': 'La pasante demostró capacidad de análisis al identificar y organizar las causas asociadas con las deficiencias del control administrativo, desarrollando de forma adecuada el diagrama de Ishikawa y relacionándolo con los hallazgos obtenidos.',
+        'actividades': [
+            ('1',
+             'Apoyo administrativo',
+             'Colaborar en facturación, actualización de registros y seguimiento de casos.',
+             'PC, documentos administrativos'),
+            ('2',
+             'Revisión de registros',
+             'Contrastar solicitudes e incidencias para detectar retrasos y datos faltantes.',
+             'Registros históricos'),
+            ('3',
+             'Diagrama de Ishikawa',
+             'Representar las causas asociadas con procedimiento, comunicación, registro y seguimiento.',
+             'Herramienta de diagramación'),
+            ('4',
+             'Análisis de causas',
+             'Relacionar las causas con las principales manifestaciones observadas.',
+             'Matriz de hallazgos'),
+            ('5',
+             'Bases teóricas',
+             'Iniciar la redacción del Capítulo III sobre control administrativo y gestión de solicitudes.',
+             'Bibliografía, procesador de textos')
+        ]
+    },
+
+    {
+        'num_semana': '6',
+        'periodo': 'Del 06 al 10 de julio de 2026',
+        'objetivo': 'Analizar el impacto de las deficiencias detectadas y consolidar las bases teóricas del informe.',
+        'entregables': 'Análisis de impacto y Capítulo III en versión preliminar.',
+        'observaciones_tutor': 'La pasante desarrolló las actividades asignadas con responsabilidad, mostrando capacidad para relacionar las deficiencias identificadas con sus efectos sobre la trazabilidad y atención de las solicitudes, manteniendo además un buen desempeño en las labores administrativas.',
+        'actividades': [
+            ('1',
+             'Procesamiento de pagos',
+             'Apoyar la conciliación y registro de pagos del período.',
+             'Comprobantes, hoja de cálculo'),
+            ('2',
+             'Facturación',
+             'Colaborar en la preparación y verificación de documentos de facturación.',
+             'Facturas, PC'),
+            ('3',
+             'Seguimiento de casos',
+             'Revisar incidencias y solicitudes pendientes para comparar tiempos de atención.',
+             'Registros de casos'),
+            ('4',
+             'Análisis de impacto',
+             'Relacionar los retrasos con problemas de trazabilidad y atención al suscriptor.',
+             'Hoja de cálculo, matriz de análisis'),
+            ('5',
+             'Marco teórico',
+             'Completar y revisar las bases teóricas y referencias utilizadas.',
+             'Procesador de textos')
+        ]
+    },
+
+    {
+        'num_semana': '7',
+        'periodo': 'Del 13 al 17 de julio de 2026',
+        'objetivo': 'Diseñar el flujo estandarizado de gestión de solicitudes y continuar el apoyo en las tareas '
+                    'administrativas del área.',
+        'entregables': 'Flujograma preliminar con etapas, responsables y puntos de control.',
+        'observaciones_tutor': 'La pasante mostró iniciativa en el diseño del flujo estandarizado, identificando de manera coherente las etapas, responsables y puntos de control necesarios. Asimismo, mantuvo una participación constante en las actividades administrativas del departamento.',
+        'actividades': [
+            ('1',
+             'Seguimiento administrativo',
+             'Actualizar registros de solicitudes y casos activos.',
+             'PC, registros'),
+            ('2',
+             'Apoyo en reportes',
+             'Colaborar en la preparación de reportes administrativos del período.',
+             'Hoja de cálculo'),
+            ('3',
+             'Diseño del flujo',
+             'Definir la secuencia propuesta desde la recepción hasta el cierre del caso.',
+             'Herramienta de diagramación'),
+            ('4',
+             'Responsables por etapa',
+             'Asignar el área responsable de registrar o actualizar cada fase.',
+             'Organigrama, procesador de textos'),
+            ('5',
+             'Puntos de control',
+             'Definir verificaciones y tiempos de referencia para el seguimiento.',
+             'Hoja de trabajo')
+        ]
+    },
+
+    {
+        'num_semana': '8',
+        'periodo': 'Del 20 al 24 de julio de 2026',
+        'objetivo': 'Diseñar los formatos estandarizados y el procedimiento de control que acompaña al flujo propuesto.',
+        'entregables': 'Formatos de afiliación e incidencias y procedimiento escrito en versión preliminar.',
+        'observaciones_tutor': 'La pasante desarrolló adecuadamente los formatos de afiliación e incidencias, demostrando orden y criterio administrativo en la selección de los datos necesarios para facilitar el registro, actualización y seguimiento de las solicitudes.',
+        'actividades': [
+            ('1',
+             'Apoyo en facturación',
+             'Colaborar en la facturación y verificación de documentos del período.',
+             'PC, facturas'),
+            ('2',
+             'Seguimiento de incidencias',
+             'Actualizar información de casos administrativos y revisar pendientes.',
+             'Registro de casos'),
+            ('3',
+             'Formato de afiliaciones',
+             'Diseñar un formato uniforme para el registro y seguimiento de nuevas afiliaciones.',
+             'Procesador de textos'),
+            ('4',
+             'Formato de incidencias',
+             'Diseñar un formato uniforme para registrar incidencias y su estatus.',
+             'Procesador de textos'),
+            ('5',
+             'Procedimiento escrito',
+             'Redactar las reglas básicas de uso de los formatos y actualización del flujo.',
+             'Procesador de textos')
+        ]
+    },
+
+    {
+        'num_semana': '9',
+        'periodo': 'Del 27 al 31 de julio de 2026',
+        'objetivo': 'Formular y validar la propuesta de mejora del control administrativo, incorporando el flujograma y '
+                    'los formatos diseñados.',
+        'entregables': 'Propuesta de mejora revisada con flujograma y formatos de control.',
+        'observaciones_tutor': 'La pasante presentó la propuesta de mejora de manera organizada, demostrando dominio de los aspectos trabajados durante las pasantías. Recibió las observaciones realizadas con actitud receptiva e incorporó las correcciones pertinentes al documento.',
+        'actividades': [
+            ('1',
+             'Apoyo operativo',
+             'Participar en las actividades administrativas y de seguimiento de solicitudes del período.',
+             'PC, registros'),
+            ('2',
+             'Redacción de propuesta',
+             'Integrar diagnóstico, flujo, formatos y mecanismos de seguimiento.',
+             'Procesador de textos'),
+            ('3',
+             'Flujograma definitivo',
+             'Completar el diagrama del proceso propuesto.',
+             'Herramienta de diagramación'),
+            ('4',
+             'Validación con tutor',
+             'Presentar la propuesta al tutor industrial y registrar observaciones.',
+             'Documento de propuesta'),
+            ('5',
+             'Ajustes',
+             'Incorporar las correcciones pertinentes al documento.',
+             'Procesador de textos')
+        ]
+    },
+
+    {
+        'num_semana': '10',
+        'periodo': 'Del 03 al 07 de agosto de 2026',
+        'objetivo': 'Consolidar el informe final, presentar los resultados y completar los recaudos de cierre de las '
+                    'pasantías.',
+        'entregables': 'Informe final, propuesta presentada y recaudos institucionales de cierre.',
+        'observaciones_tutor': 'La pasante culminó satisfactoriamente su período de pasantías, demostrando responsabilidad, puntualidad, disposición para recibir orientaciones y cumplimiento de las actividades asignadas. Se evidenció un progreso favorable en el manejo de los procesos administrativos y en la formulación de propuestas de mejora.',
+        'actividades': [
+            ('1',
+             'Consolidación del informe',
+             'Integrar capítulos, referencias y anexos en el documento definitivo.',
+             'PC, procesador de textos'),
+            ('2',
+             'Revisión normativa',
+             'Verificar márgenes, interlineado, paginación, índices y referencias conforme a IUTECP.',
+             'Normativa institucional'),
+            ('3',
+             'Presentación de resultados',
+             'Presentar el diagnóstico y la propuesta ante la supervisión del área.',
+             'Presentación, laptop'),
+            ('4',
+             'Revisión final',
+             'Corregir ortografía y coherencia entre objetivos, cronograma, actividades y conclusiones.',
+             'Procesador de textos'),
+            ('5',
+             'Recaudos de cierre',
+             'Gestionar firmas, sello y documentación de culminación.',
+             'Formatos institucionales')
+        ]
+    }
+]
 
 # ================================================================
 #  EJECUCIÓN GENERAL
