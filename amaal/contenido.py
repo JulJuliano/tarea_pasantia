@@ -7,6 +7,8 @@
 CARPETA_IMAGENES = 'imagenes'
 
 FIRMA_TUTOR_INDUSTRIAL = 'firma_tutor_amaal.png'
+FIRMA_TUTOR_ACADEMICO = 'firma_tutor_academico.png'
+TEXTO_FECHA_APROBACION_TUTOR_INDUSTRIAL = 'a los 14 días del mes de agosto de 2026'
 
 
 GRAFICOS = [

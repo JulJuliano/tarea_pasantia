@@ -1512,8 +1512,13 @@ def construir_cuerpo_documento(doc, modo="completo"):
                 elif prev == tut_acad_nom:
                     tut_acad_ci = linea.split(":", 1)[1].strip()
 
+        fecha_aprobacion_ind = getattr(
+            c,
+            'TEXTO_FECHA_APROBACION_TUTOR_INDUSTRIAL',
+            'a los ___ días del mes de _______ de 2026',
+        )
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR INDUSTRIAL", texto_base,
-            f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de 2026",
+            f"En la Ciudad de {ciudad}, {fecha_aprobacion_ind}",
             tut_ind_nom, f"C.I.: {tut_ind_ci}" if tut_ind_ci else "")
 
         # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
