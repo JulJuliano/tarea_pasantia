@@ -1651,9 +1651,21 @@ def agregar_pagina_aprobacion(doc, titulo, texto_parrafo, pie_firma, nombre_tuto
     p_ap.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     p_ap.paragraph_format.line_spacing = 1.5
     p_ap.paragraph_format.first_line_indent = Cm(0)
-    run_ap = p_ap.add_run(texto_parrafo)
-    run_ap.font.name = FUENTE
-    run_ap.font.size = Pt(12)
+    fragmentos = texto_parrafo if isinstance(texto_parrafo, (list, tuple)) else [(texto_parrafo, False)]
+    for fragmento in fragmentos:
+        if isinstance(fragmento, dict):
+            texto_fragmento = fragmento.get('texto', '')
+            negrita = bool(fragmento.get('negrita', False))
+        elif isinstance(fragmento, (list, tuple)):
+            texto_fragmento = fragmento[0] if fragmento else ''
+            negrita = bool(fragmento[1]) if len(fragmento) > 1 else False
+        else:
+            texto_fragmento = fragmento
+            negrita = False
+        run_ap = p_ap.add_run(str(texto_fragmento))
+        run_ap.font.name = FUENTE
+        run_ap.font.size = Pt(12)
+        run_ap.font.bold = negrita
     
     doc.add_paragraph()
     doc.add_paragraph()
@@ -1721,6 +1733,16 @@ def construir_cuerpo_documento(doc, modo="completo"):
     tiene_cap3 = modo in ("completo", "borrador3", "borrador4")
     tiene_cap4 = modo in ("completo", "borrador4")
     tiene_cap5 = modo == "completo"
+    titulo_estructura = getattr(
+        c,
+        'ESTRUCTURA_ORGANIZATIVA_TITULO',
+        'Estructura organizacional de la empresa (organigrama)',
+    )
+    titulo_cronograma_seccion = getattr(
+        c,
+        'CRONOGRAMA_SECCION_TITULO',
+        'Cronograma de actividades',
+    )
 
     # LibreOffice 26.2 ignora el modificador romano de PAGEREF y devuelve
     # arábigos. Solo estas entradas preliminares conservan cálculo estático;
@@ -1758,15 +1780,35 @@ def construir_cuerpo_documento(doc, modo="completo"):
         tit_proy = getattr(c, 'TITULO_PROYECTO', '[Título del Proyecto]')
         ciudad = getattr(c, 'CIUDAD_FECHA', 'El Tigre').split(",")[0] if "," in getattr(c, 'CIUDAD_FECHA', 'El Tigre') else 'El Tigre'
         
-        texto_base = (
-            f"En mi car\u00e1cter de tutor industrial del informe de pasant\u00edas presentado por: "
-            f"{nom_pas}, de C\u00e9dula de Identidad V-{ci_pas}; para optar al grado de "
-            f"T\u00e9cnico Superior Universitario en la especialidad de: {esp}, cuyo t\u00edtulo es; "
-            f"\u201c{tit_proy}\u201d, manifiesto que cumple con los requisitos exigidos por el "
-            f"Instituto Universitario de Tecnolog\u00eda \u201cEl\u00edas Calixto Pompa\u201d (IUTECP); "
-            f"y que, por lo tanto, considero que re\u00fane los m\u00e9ritos suficientes para ser "
-            f"evaluado por el jurado que se decida designar a tal fin."
+        formato_aprobacion_destacado = bool(
+            getattr(c, 'FORMATO_APROBACION_DESTACADO', False)
         )
+
+        def texto_aprobacion(tipo_tutor):
+            inicio = f"En mi carácter de tutor {tipo_tutor} del informe de pasantías presentado por: "
+            instituto = 'INSTITUTO UNIVERSITARIO DE TECNOLOGÍA “ELÍAS CALIXTO POMPA” (IUTECP)'
+            if formato_aprobacion_destacado:
+                return [
+                    (inicio, False),
+                    (nom_pas.upper(), True),
+                    (f", de Cédula de Identidad V-{ci_pas}; para optar al grado de "
+                     f"Técnico Superior Universitario en la especialidad de: {esp}, cuyo título es; “", False),
+                    (tit_proy, True),
+                    ("”, manifiesto que cumple con los requisitos exigidos por el ", False),
+                    (instituto, True),
+                    ("; y que, por lo tanto, considero que reúne los méritos suficientes para ser "
+                     "evaluado por el jurado que se decida designar a tal fin.", False),
+                ]
+            return (
+                f"{inicio}{nom_pas}, de Cédula de Identidad V-{ci_pas}; para optar al grado de "
+                f"Técnico Superior Universitario en la especialidad de: {esp}, cuyo título es; "
+                f"“{tit_proy}”, manifiesto que cumple con los requisitos exigidos por el "
+                f"Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP); "
+                f"y que, por lo tanto, considero que reúne los méritos suficientes para ser "
+                f"evaluado por el jurado que se decida designar a tal fin."
+            )
+
+        texto_base = texto_aprobacion('industrial')
         # Extraer nombres y CIs de tutores desde AUTOR_DATOS
         autor_datos = getattr(c, 'AUTOR_DATOS', [])
         tut_ind_nom = ""
@@ -1814,15 +1856,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
 
         # --- APROBACIÓN DEL TUTOR ACADÉMICO ---
-        texto_base_acad = (
-            f"En mi car\u00e1cter de tutor acad\u00e9mico del informe de pasant\u00edas presentado por: "
-            f"{nom_pas}, de C\u00e9dula de Identidad V-{ci_pas}; para optar al grado de "
-            f"T\u00e9cnico Superior Universitario en la especialidad de: {esp}, cuyo t\u00edtulo es; "
-            f"\u201c{tit_proy}\u201d, manifiesto que cumple con los requisitos exigidos por el "
-            f"Instituto Universitario de Tecnolog\u00eda \u201cEl\u00edas Calixto Pompa\u201d (IUTECP); "
-            f"y que, por lo tanto, considero que re\u00fane los m\u00e9ritos suficientes para ser "
-            f"evaluado por el jurado que se decida designar a tal fin."
-        )
+        texto_base_acad = texto_aprobacion('académico')
         agregar_pagina_aprobacion(doc, "APROBACIÓN DEL TUTOR ACADÉMICO", texto_base_acad,
             f"En la Ciudad de {ciudad}, a los ___ días del mes de _______ de {ano_aprobacion}",
             tut_acad_nom, f"C.I.: {tut_acad_ci}" if tut_acad_ci else "")
@@ -1893,7 +1927,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_fila_indice_general_nativa(doc, "Objetivos Organizacionales", "", sangria_cm=0.5, bookmark_id="bm_cap1_obj")
         agregar_fila_indice_general_nativa(doc, "Ubicación geográfica", "", sangria_cm=0.5, bookmark_id="bm_cap1_ubic")
         agregar_fila_indice_general_nativa(doc, "Población de los trabajadores de la empresa", "", sangria_cm=0.5, bookmark_id="bm_cap1_pobla")
-        agregar_fila_indice_general_nativa(doc, "Estructura organizacional de la empresa (organigrama)", "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
+        agregar_fila_indice_general_nativa(doc, titulo_estructura, "", sangria_cm=0.5, bookmark_id="bm_cap1_estruct")
         agregar_fila_indice_general_nativa(doc, "Descripción del departamento donde realizó la pasantía", "", sangria_cm=0.5, bookmark_id="bm_cap1_departamento")
     
         # Capítulo II
@@ -1903,7 +1937,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             agregar_fila_indice_general_nativa(doc, "Objetivo General", "", sangria_cm=0.5, bookmark_id="bm_cap2_objg")
             agregar_fila_indice_general_nativa(doc, "Objetivos Específicos", "", sangria_cm=0.5, bookmark_id="bm_cap2_obje")
             agregar_fila_indice_general_nativa(doc, "Planificación integral de objetivos", "", sangria_cm=0.5, bookmark_id="bm_cap2_planif")
-            agregar_fila_indice_general_nativa(doc, "Cronograma de actividades", "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
+            agregar_fila_indice_general_nativa(doc, titulo_cronograma_seccion, "", sangria_cm=0.5, bookmark_id="bm_cap2_crono")
     
         # Capítulo III
         if tiene_cap3:
@@ -2194,7 +2228,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         for parrafo in poblacion_data:
             agregar_parrafo_normado(doc, parrafo)
 
-    agregar_titulo_nivel2(doc, "Estructura Organizativa", bookmark_id="bm_cap1_estruct")
+    agregar_titulo_nivel2(doc, titulo_estructura, bookmark_id="bm_cap1_estruct")
     org_texto = getattr(c, 'ORGANIGRAMA_TEXTO', 'Estructura organizativa.')
     if isinstance(org_texto, list):
         for parrafo in org_texto:
@@ -2273,7 +2307,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
         )
         doc.add_paragraph()
 
-        agregar_titulo_nivel2(doc, "Cronograma de actividades", bookmark_id="bm_cap2_crono")
+        agregar_titulo_nivel2(doc, titulo_cronograma_seccion, bookmark_id="bm_cap2_crono")
         intro_crono = getattr(c, 'CRONOGRAMA_INTRO_TEXTO',
             "El cronograma estructura temporalmente las tareas administrativas garantizando el cumplimiento del manual documental propuesto:")
         agregar_parrafo_normado(doc, intro_crono)
@@ -2293,7 +2327,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
             primer_sub = True
             for sub in c.BASES_TEORICAS:
                 bm = "bm_cap3_bases" if primer_sub else None
-                agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
+                p_titulo_base = agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
+                if sub.get('espaciado_titulo_compacto'):
+                    p_titulo_base.paragraph_format.space_before = ESP_SENCILLO
+                    p_titulo_base.paragraph_format.space_after = ESP_SENCILLO
                 primer_sub = False
                 for p in sub.get('parrafos', []):
                     agregar_parrafo_normado(doc, p)
@@ -2348,7 +2385,21 @@ def construir_cuerpo_documento(doc, modo="completo"):
         agregar_titulo_nivel2(doc, "Recomendaciones", bookmark_id="bm_cap5_recom")
         recomendaciones = getattr(c, 'RECOMENDACIONES', [])
         for i, recomendacion in enumerate(recomendaciones, 1):
-            agregar_item_lista(doc, i, recomendacion)
+            if isinstance(recomendacion, dict):
+                destinatario = recomendacion.get('destinatario', '')
+                if destinatario:
+                    p_destinatario = doc.add_paragraph()
+                    p_destinatario.paragraph_format.space_before = ESP_SENCILLO
+                    p_destinatario.paragraph_format.space_after = Pt(0)
+                    p_destinatario.paragraph_format.keep_with_next = True
+                    run_destinatario = p_destinatario.add_run(destinatario)
+                    run_destinatario.font.name = FUENTE
+                    run_destinatario.font.size = Pt(TAMANO_BASE)
+                    run_destinatario.font.bold = True
+                for numero, texto in enumerate(recomendacion.get('recomendaciones', []), 1):
+                    agregar_item_lista(doc, numero, texto)
+            else:
+                agregar_item_lista(doc, i, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
     iniciar_seccion_preliminar(

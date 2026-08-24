@@ -7,6 +7,8 @@ from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
+FUENTE_CUADRO_SEMANAL = "Guzmán K. (2026)."
+
 # ================================================================
 #  FUNCIONES DE CONFIGURACIÓN Y FORMATO (ESTÁTICAS - NORMA IUTECP)
 # ================================================================
@@ -46,6 +48,21 @@ def add_label_value(doc, label, value):
     run_v = p.add_run(value)
     run_v.font.name = 'Times New Roman'
     run_v.font.size = Pt(12)
+    return p
+
+def add_fuente(doc, fuente):
+    p = doc.add_paragraph()
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.line_spacing = 1.0
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(6)
+    etiqueta = p.add_run("Fuente: ")
+    etiqueta.font.name = 'Times New Roman'
+    etiqueta.font.size = Pt(10)
+    etiqueta.font.italic = True
+    texto = p.add_run(fuente)
+    texto.font.name = 'Times New Roman'
+    texto.font.size = Pt(10)
     return p
 
 def set_cell_format(cell, text, bold=False, size=10, align=WD_ALIGN_PARAGRAPH.LEFT):
@@ -155,7 +172,7 @@ def generar_documento_semana(datos):
         for idx, width in enumerate(widths):
             row.cells[idx].width = width
 
-    doc.add_paragraph()
+    add_fuente(doc, FUENTE_CUADRO_SEMANAL)
 
     # 5. Entregables
     p_ent_t = doc.add_paragraph()

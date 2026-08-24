@@ -59,8 +59,12 @@ CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.
 # Configuración particular indicada por la tutora académica (06/08/2026).
 MOSTRAR_NIVELES_DIAGNOSTICO = True
 ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
-CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
+CUADRO_PLANIFICACION_FUENTE = 'Guzmán K. (2026).'
 CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
+
+FORMATO_APROBACION_DESTACADO = True
+ESTRUCTURA_ORGANIZATIVA_TITULO = 'Estructura organizativa de la empresa (Organigrama)'
+CRONOGRAMA_SECCION_TITULO = 'CRONOGRAMA DE ACTIVIDADES (DIAGRAMA DE GANTT)'
 
 # ========================================================================
 # 2. DATOS DE PORTADA
@@ -234,7 +238,13 @@ DESCRIPCION_DEPARTAMENTO = ('El Departamento Administrativo fue el área en la q
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
-SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
+SITUACION_PROBLEMATICA = [{'parrafos': ['La identificación de la situación problemática permite analizar las condiciones que afectan el '
+                                        'proceso administrativo de procura en el Departamento Administrativo de Lubricantes y Equipos '
+                                        'Varyna, C.A. Para comprender la problemática de manera progresiva, se consideran aspectos '
+                                        'generales relacionados con la gestión de compras en las organizaciones, las exigencias propias '
+                                        'del sector industrial y, finalmente, las condiciones observadas directamente en la empresa '
+                                        'durante el período de pasantías.']},
+ {'titulo': 'Nivel macro',
   'parrafos': ['En las organizaciones, los procesos de procura requieren coordinación entre las unidades que '
                'solicitan bienes o servicios, el personal encargado de compras, los responsables de autorización '
                'y los proveedores. Cuando las etapas no están claramente definidas, pueden presentarse '
@@ -273,8 +283,7 @@ SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
                'administrativa que organice el recorrido de las requisiciones, defina responsables, estandarice '
                'documentos y establezca mecanismos de seguimiento compatibles con el control interno del '
                'departamento.']},
- {'titulo': 'Técnica empleada para el diagnóstico',
-  'parrafos': ['Para organizar las causas de la problemática se utilizó el diagrama de causa-efecto o diagrama de '
+ {'parrafos': ['Para organizar las causas de la problemática se utilizó el diagrama de causa-efecto o diagrama de '
                'Ishikawa, complementado con observación directa del flujo de procura, entrevistas estructuradas '
                'al personal y revisión de expedientes de compras. La técnica permitió agrupar factores asociados '
                'a procedimientos, responsabilidades, documentación y seguimiento, facilitando la identificación '
@@ -570,14 +579,24 @@ CONCLUSIONES = ['Se diagnosticó que el proceso de procura presenta un recorrido
  'definidos, formatos estandarizados, una matriz de autorización por monto e indicadores de seguimiento, '
  'orientados a mejorar la trazabilidad y facilitar el control interno del proceso de procura.']
 
-RECOMENDACIONES = ['Implementar la propuesta de manera gradual, iniciando con la formalización del canal de recepción de '
- 'requisiciones y la utilización uniforme de los formatos diseñados.',
- 'Socializar el flujo simplificado, los responsables y los criterios de autorización con el personal involucrado '
- 'en la procura antes de su aplicación general.',
- 'Registrar mensualmente indicadores básicos, como tiempo promedio del ciclo de compra, solicitudes pendientes y '
- 'requisiciones tramitadas dentro del plazo definido, para valorar los resultados de la simplificación.',
- 'Revisar periódicamente el procedimiento y los formatos con el personal del Departamento Administrativo, '
- 'incorporando ajustes cuando cambien las necesidades operativas de la empresa.']
+RECOMENDACIONES = [
+ {'destinatario': 'A la empresa Lubricantes y Equipos Varyna, C.A.',
+  'recomendaciones': ['Implementar la propuesta de manera gradual, iniciando con la formalización del canal de recepción de '
+                      'requisiciones y la utilización uniforme de los formatos diseñados.',
+                      'Socializar el flujo simplificado, los responsables y los criterios de autorización con el personal involucrado '
+                      'en la procura antes de su aplicación general.',
+                      'Registrar mensualmente indicadores básicos, como tiempo promedio del ciclo de compra, solicitudes pendientes y '
+                      'requisiciones tramitadas dentro del plazo definido, para valorar los resultados de la simplificación.',
+                      'Revisar periódicamente el procedimiento y los formatos con el personal del Departamento Administrativo, '
+                      'incorporando ajustes cuando cambien las necesidades operativas de la empresa.']},
+ {'destinatario': 'Al Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP).',
+  'recomendaciones': ['Continuar fortaleciendo el acompañamiento académico durante las pasantías y la articulación entre los '
+                      'conocimientos adquiridos en la carrera y las situaciones administrativas observadas en las empresas.']},
+ {'destinatario': 'A futuros pasantes.',
+  'recomendaciones': ['Llevar un registro sistemático de las actividades desde las primeras semanas, observar los procesos '
+                      'administrativos, conservar las evidencias pertinentes y relacionar las tareas realizadas con los objetivos '
+                      'establecidos en el informe.']}
+]
 
 # ========================================================================
 # 9. REFERENCIAS Y ANEXOS

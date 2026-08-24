@@ -12,6 +12,9 @@ from docx.oxml.ns import qn
 # ================================================================
 PASANTE_NOMBRE = "Alrifaaie Amaal"
 PASANTE_CI = "31.985.792"
+TUTOR_INDUSTRIAL = "Lic. Lenny Mata"
+TUTOR_INDUSTRIAL_CI = "8969750"
+FUENTE_CUADRO_SEMANAL = "Alrifaai A. (2026)."
 
 # ================================================================
 #  FUNCIONES DE CONFIGURACIÓN Y FORMATO (ESTÁTICAS - NORMA IUTECP)
@@ -52,6 +55,21 @@ def add_label_value(doc, label, value):
     run_v = p.add_run(value)
     run_v.font.name = 'Times New Roman'
     run_v.font.size = Pt(12)
+    return p
+
+def add_fuente(doc, fuente):
+    p = doc.add_paragraph()
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.line_spacing = 1.0
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(6)
+    etiqueta = p.add_run("Fuente: ")
+    etiqueta.font.name = 'Times New Roman'
+    etiqueta.font.size = Pt(10)
+    etiqueta.font.italic = True
+    texto = p.add_run(fuente)
+    texto.font.name = 'Times New Roman'
+    texto.font.size = Pt(10)
     return p
 
 def set_cell_format(cell, text, bold=False, size=10, align=WD_ALIGN_PARAGRAPH.LEFT):
@@ -103,7 +121,7 @@ def generar_documento_semana(datos):
     add_label_value(doc, "SEMANA N°: ", datos["num_semana"])
     add_label_value(doc, "PERÍODO: ", datos["periodo"])
     add_label_value(doc, "PASANTE: ", f"{PASANTE_NOMBRE} |  C.I.: {PASANTE_CI}")
-    add_label_value(doc, "TUTOR INDUSTRIAL: ", "Lenny Mata  |  C.I.: 8969750")
+    add_label_value(doc, "TUTOR INDUSTRIAL: ", f"{TUTOR_INDUSTRIAL}  |  C.I.: {TUTOR_INDUSTRIAL_CI}")
 
     doc.add_paragraph()
 
@@ -161,7 +179,7 @@ def generar_documento_semana(datos):
         for idx, width in enumerate(widths):
             row.cells[idx].width = width
 
-    doc.add_paragraph()
+    add_fuente(doc, FUENTE_CUADRO_SEMANAL)
 
     # 5. Entregables
     p_ent_t = doc.add_paragraph()
@@ -236,7 +254,7 @@ def generar_documento_semana(datos):
         set_cell_format(sign_table.rows[0].cells[1], "_________________________", size=12, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     set_cell_format(sign_table.rows[1].cells[0], f"Firma del Pasante:\n{PASANTE_NOMBRE} |  C.I.: {PASANTE_CI}", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
-    set_cell_format(sign_table.rows[1].cells[1], "Firma del Tutor Industrial:\nLenny Mata  |  C.I.: 8969750", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
+    set_cell_format(sign_table.rows[1].cells[1], f"Firma del Tutor Industrial:\n{TUTOR_INDUSTRIAL}  |  C.I.: {TUTOR_INDUSTRIAL_CI}", size=9, align=WD_ALIGN_PARAGRAPH.CENTER)
 
     doc.add_paragraph()
 

@@ -66,9 +66,13 @@ CUADRO_POBLACION_TITULO = 'Cuadro 1. Población de los trabajadores de la empres
 CUADRO_PLANIFICACION_TITULO = 'Cuadro 2. Planificación integral de objetivos específicos.'
 CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.'
 
-CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
+CUADRO_PLANIFICACION_FUENTE = 'Alrifaai A. (2026).'
 
 CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
+
+FORMATO_APROBACION_DESTACADO = True
+ESTRUCTURA_ORGANIZATIVA_TITULO = 'Estructura organizativa de la empresa (Organigrama)'
+CRONOGRAMA_SECCION_TITULO = 'CRONOGRAMA DE ACTIVIDADES (DIAGRAMA DE GANTT)'
 
 ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
 
@@ -89,7 +93,7 @@ AUTOR_DATOS = ['Autor:',
  'C.I.: 31.985.792',
  '',
  'Tutor Industrial:',
- 'Mata, Lenny',
+ 'Lic. Lenny Mata',
  'C.I.: 8969750',
  '',
  'Tutor Académico:',
@@ -253,7 +257,13 @@ DESCRIPCION_DEPARTAMENTO = ('La pasantía se realizó en la Supervisión de Admi
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
-SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
+SITUACION_PROBLEMATICA = [{'parrafos': ['La identificación de la situación problemática permite analizar las condiciones que afectan el '
+                                        'control administrativo aplicado a la gestión de solicitudes de servicios en Ingeniería de '
+                                        'Telecomunicaciones, C.A. Para comprender la problemática de manera progresiva, se consideran '
+                                        'aspectos generales relacionados con las organizaciones de servicio, las características propias '
+                                        'del sector de telecomunicaciones y, finalmente, las condiciones observadas directamente en la '
+                                        'empresa durante el período de pasantías.']},
+ {'titulo': 'Nivel macro',
   'parrafos': ['En las organizaciones de servicios, el control administrativo permite verificar que las '
                'solicitudes recibidas avancen por etapas definidas, cuenten con responsables identificados y '
                'dispongan de información suficiente para conocer su estado. Cuando ese recorrido depende de '
@@ -277,8 +287,7 @@ SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
                'de indicadores básicos de seguimiento. Como consecuencias pueden generarse reprocesos, mayor '
                'tiempo de respuesta y dificultades para ofrecer al suscriptor información precisa sobre el '
                'estado de su solicitud.']},
- {'titulo': 'Técnica empleada para el diagnóstico',
-  'parrafos': ['Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado '
+ {'parrafos': ['Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado '
                'con observación directa, revisión de registros y entrevistas estructuradas al personal. La '
                'técnica permitió relacionar factores de procedimiento, comunicación, registro y seguimiento '
                'con las demoras e inconsistencias identificadas.']}]
@@ -442,6 +451,7 @@ BASES_TEORICAS = [{'titulo': 'Control Administrativo',
   'cita_larga': None,
   'post_cita': ''},
  {'titulo': 'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
+  'espaciado_titulo_compacto': True,
   'parrafos': ['Como marco general de la actividad económica privada, la Constitución reconoce la iniciativa '
                'empresarial dentro de los límites establecidos por el ordenamiento jurídico.'],
   'cita_larga': {'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su '
@@ -461,6 +471,7 @@ BASES_TEORICAS = [{'titulo': 'Control Administrativo',
                     'este fundamento general y no establece por sí mismo el procedimiento administrativo de '
                     'seguimiento de solicitudes.'},
  {'titulo': 'Base Legal: Código de Comercio — Artículo 32',
+  'espaciado_titulo_compacto': True,
   'parrafos': ['El Código de Comercio establece obligaciones vinculadas con el orden y claridad de los registros de '
                'los comerciantes, aspecto relacionado con la necesidad de conservar información organizada y '
                'verificable en los procesos administrativos.'],
@@ -553,14 +564,24 @@ CONCLUSIONES = ['Se diagnosticó que la gestión de solicitudes de IDETEL se ini
  'de registro e indicadores básicos de seguimiento, orientados a facilitar la continuidad de la información y el '
  'control de las solicitudes desde su recepción hasta el cierre.']
 
-RECOMENDACIONES = ['Implementar progresivamente el flujo estandarizado propuesto y verificar su funcionamiento con un grupo '
- 'controlado de solicitudes antes de aplicarlo a todos los casos.',
- 'Utilizar de manera uniforme los formatos de registro de afiliaciones e incidencias y definir claramente el '
- 'responsable de actualizar el estatus en cada etapa.',
- 'Registrar y revisar periódicamente tiempos de respuesta, solicitudes pendientes y casos cerrados para '
- 'identificar retrasos recurrentes y aplicar acciones correctivas.',
- 'Evaluar posteriormente una herramienta digital centralizada de seguimiento cuando el procedimiento '
- 'administrativo ya se encuentre formalizado y validado por las áreas involucradas.']
+RECOMENDACIONES = [
+ {'destinatario': 'A la empresa Ingeniería de Telecomunicaciones, C.A.',
+  'recomendaciones': ['Implementar progresivamente el flujo estandarizado propuesto y verificar su funcionamiento con un grupo '
+                      'controlado de solicitudes antes de aplicarlo a todos los casos.',
+                      'Utilizar de manera uniforme los formatos de registro de afiliaciones e incidencias y definir claramente el '
+                      'responsable de actualizar el estatus en cada etapa.',
+                      'Registrar y revisar periódicamente tiempos de respuesta, solicitudes pendientes y casos cerrados para '
+                      'identificar retrasos recurrentes y aplicar acciones correctivas.',
+                      'Evaluar posteriormente una herramienta digital centralizada de seguimiento cuando el procedimiento '
+                      'administrativo ya se encuentre formalizado y validado por las áreas involucradas.']},
+ {'destinatario': 'Al Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP).',
+  'recomendaciones': ['Continuar fortaleciendo el acompañamiento académico durante las pasantías y la articulación entre los '
+                      'conocimientos adquiridos en la carrera y las situaciones administrativas observadas en las empresas.']},
+ {'destinatario': 'A futuros pasantes.',
+  'recomendaciones': ['Llevar un registro sistemático de las actividades desde las primeras semanas, observar los procesos '
+                      'administrativos, conservar las evidencias pertinentes y relacionar las tareas realizadas con los objetivos '
+                      'establecidos en el informe.']}
+]
 
 # ========================================================================
 # 9. REFERENCIAS Y ANEXOS
