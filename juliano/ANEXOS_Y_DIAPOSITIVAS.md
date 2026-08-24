@@ -267,50 +267,53 @@ Comprobar manualmente:
 
 ## Preparación de Diapositivas
 
-Los anexos se convierten en una presentación de 13 diapositivas:
+La presentación oral se implementa como un deck de **20 diapositivas** en
+`juliano/presentacion/index.html`. El generador de referencia es
+`juliano/presentacion/generar_presentacion.py`.
 
-1. Portada y problema documental.
-2. Contexto del Departamento de Presidencia.
-3. Proceso AS-IS.
-4. Objetivo y proceso TO-BE.
-5. Arquitectura Wails + SQLite.
-6. Pseudocódigo general de BaseAccess.
-7. Interfaz y formulario principal.
-8. Múltiples frentes, catálogos y trazabilidad.
-9. Ruta y exportación.
-10. Pruebas, depuración y control de versiones.
-11. Validación del prototipo.
-12. Resultado: prototipo y beneficios esperados.
-13. Conclusiones y recomendaciones.
+El deck cumple estas decisiones de alcance:
 
-Para las diapositivas se reutilizarán las siete capturas claras, el diagrama de
-arquitectura, el flujo TO-BE y una versión resumida del pseudocódigo. Las seis
-fotografías externas deben usarse como evidencia de proceso, no como
-decoración repetida.
+- no contiene barra lateral, rail ni navegación visual lateral;
+- no utiliza encabezado, pie, numeración, barra de progreso, controles visuales
+  ni metadata ornamental;
+- construye rutas, flujos, tarjetas, matrices, expediente, arquitectura e
+  interfaz mediante HTML y CSS nativos;
+- no contiene etiquetas `<img>` ni depende de las imágenes de los anexos para
+  regenerarse;
+- conserva Reveal.js, controles de teclado, notas del expositor con `S` y
+  `prefers-reduced-motion`;
+- mantiene una diapositiva de pausa titulada **“Demostración del prototipo”**
+  para cambiar al portátil.
 
 ## Guion Exacto de la Presentación
 
 La fuente ejecutable del guion es
 `juliano/presentacion/generar_presentacion.py`; el archivo generado es
-`juliano/presentacion/index.html`. La presentación actual tiene 13 diapositivas
-y usa un rail lateral que marca cuatro etapas: `OBSERVAR`, `MODELAR`,
-`IMPLEMENTAR` y `VALIDAR`.
+`juliano/presentacion/index.html`. Cada sección incluye una nota concisa de
+25–40 segundos, con lenguaje académico y sin métricas inventadas.
 
-| Nº | Etapa | Título o idea central | Visual principal | Idea oral |
-|---|---|---|---|---|
-| 1 | Observar | Del expediente al dato trazable | Sello visual “La ruta” | Presentar la transformación del flujo manual en un recorrido registrable. |
-| 2 | Observar | Una pregunta sencilla no tenía una respuesta inmediata | Preguntas “¿Recibido?, ¿Firmado?, ¿Despachado?” | Explicar que el problema era reconstruir el recorrido, no solo guardar filas. |
-| 3 | Observar | El documento se mueve; el control se fragmenta | `02_flujo_as_is_presidencia.png` | Señalar transcripción repetitiva, riesgo de omisión y dificultad para resumir. |
-| 4 | Modelar | El mismo proceso, con memoria | `03_flujo_to_be_sistema_automatizado.png` | Mostrar que el prototipo conserva el proceso y añade validación, historial y reportes. |
-| 5 | Implementar | La interfaz convierte el flujo en decisiones visibles | `captura-registro-nuevo-contexto.png` | Explicar módulos, hojas activas, registros y acciones en contexto. |
-| 6 | Implementar | Una aplicación pequeña para un problema concreto | `06_arquitectura_prototipo.png` | Relacionar interfaz WebView2, Wails/Go, lógica y SQLite local. |
-| 7 | Implementar | El sistema decide en un orden que se puede explicar | `05_pseudocodigo_general_baseaccess.png` | Resumir apertura, validación, transacción, historial, consulta, exportación y cierre. |
-| 8 | Implementar | La pantalla cambia cuando cambia el expediente | Tres capturas: formulario, frentes y catálogos | Mostrar reglas de negocio visibles sin enumerar todos los módulos. |
-| 9 | Validar | Registrar es el inicio; seguir y reportar es el resultado | Ruta de procesos + exportación | Explicar selección de actividades, filtros y salida XLSX. |
-| 10 | Validar | El prototipo también tiene una historia de construcción | Portátil, GitHub y OpenCode | Presentar diseño, desarrollo, control de versiones y asistencia técnica como evidencia. |
-| 11 | Validar | La prueba no termina en “abre” | Tres bloques: registro, historial y salida | Conectar las semanas 7–9 con pruebas funcionales, depuración y ajustes. |
-| 12 | Validar | El expediente deja de ser una fila aislada | Sello “Prototipo funcional” | Enunciar el aporte: registrar, seguir y reportar una historia documental. |
-| 13 | Validar | Del control manual a una trazabilidad defendible | Cierre tipográfico y recomendaciones | Cerrar con adopción en el flujo real, capacitación y respaldo de la información. |
+| Nº | Título o idea central | Visual nativo | Idea oral |
+|---|---|---|---|
+| 1 | Del expediente al dato trazable | Ruta `registrar / seguir / reportar` | Presentar la transformación del flujo documental en un recorrido visible. |
+| 2 | Presidencia funciona como un nodo de tránsito documental. | Nodo central con origen y destino | Explicar la posición intermedia de Presidencia en el movimiento de expedientes. |
+| 3 | Cada expediente atraviesa seis movimientos. | Secuencia CSS de seis pasos | Recorrer recepción, revisión, ingreso, firma, egreso y despacho. |
+| 4 | ¿Cómo mejorar el control, la trazabilidad y los reportes documentales? | Pregunta central y tres necesidades | Introducir la interrogante que ordena el diagnóstico y la solución. |
+| 5 | El control se apoyaba en hojas de cálculo. | Hoja conceptual con registros dispersos | Explicar la transcripción manual necesaria para registrar y resumir. |
+| 6 | El problema no era almacenar datos. | Fila aislada frente a secuencia conectada | Diferenciar una fila informativa de un recorrido reconstruible. |
+| 7 | Tres efectos operativos. | Repetición conectada con tres impactos | Presentar duplicidad, omisión y demora en reportes como riesgos operativos. |
+| 8 | Trazabilidad es poder demostrar qué ocurrió. | Expediente con cuatro evidencias | Relacionar responsable, fecha, acción y estado con Gómez (2019). |
+| 9 | Objetivo general | Tipografía que destaca controlar, trazar y reportar | Exponer el alcance del prototipo sin prometer resultados medidos. |
+| 10 | El proyecto avanzó del diagnóstico a una solución viable. | Camino de cuatro etapas | Ubicar el trabajo como proyecto factible: diagnosticar, determinar, diseñar, implementar y validar. |
+| 11 | La solución debía responder a tres necesidades. | Módulos de registro, historial y reporte | Vincular el alcance con las necesidades identificadas. |
+| 12 | El proceso se conserva; la información se estructura. | Flujo real y flujo estructurado | Mostrar que la propuesta conserva la secuencia y organiza sus datos. |
+| 13 | El expediente es la unidad central del modelo. | Expediente conectado con cuatro entidades | Explicar relaciones con catálogos, documentos, frentes e historial. |
+| 14 | Tres capas, una responsabilidad por nivel. | WebView2, Wails/Go y SQLite | Presentar la arquitectura por responsabilidad, no como inventario tecnológico. |
+| 15 | Cada cambio se procesa como una transacción. | Flujo de validación con COMMIT/ROLLBACK | Explicar cómo se protege la consistencia del registro y su historial. |
+| 16 | La interfaz traduce el modelo al trabajo cotidiano. | Ventana nativa con navegación, formulario y tabla | Mostrar cómo el modelo se convierte en acciones concretas. |
+| 17 | La información registrada vuelve como seguimiento y reporte. | Consulta, historial y exportación XLSX | Conectar el registro con las salidas que puede utilizar el área. |
+| 18 | La validación comprobó el recorrido completo. | Matriz de cuatro pruebas funcionales | Relacionar registro, consulta, historial y reporte con datos representativos. |
+| 19 | Demostración del prototipo | Ruta de tres acciones para la demostración | Cambiar al portátil y ejecutar registrar, consultar historial y exportar reporte. |
+| 20 | Resultado: un prototipo funcional y técnicamente viable. | Expediente final con sello `TRAZABLE` | Cerrar con adopción progresiva, capacitación y respaldos periódicos. |
 
 ### Regla de exposición
 
@@ -319,32 +322,21 @@ capturas ni explicar cada función. La secuencia oral es:
 
 `problema observado → proceso modelado → solución construida → evidencia validada → aporte y siguiente paso`.
 
-### Recursos por diapositiva
-
-- Diapositivas 3–4: diagramas AS-IS y TO-BE de los anexos B y C.
-- Diapositiva 5: captura `captura-registro-nuevo-contexto.png`.
-- Diapositiva 6: diagrama del anexo E.
-- Diapositiva 7: diagrama del anexo H.
-- Diapositiva 8: capturas `captura-formulario-general.png`,
-  `captura-expedientes-frentes.png` y `captura-catalogos-validaciones.png`.
-- Diapositiva 9: capturas `captura-ruta-seleccion-multiple.png` y
-  `captura-exportacion-filtros-columnas.png`.
-- Diapositiva 10: `foto-desarrollo-opencode-laptop.jpg`,
-  `foto-github-repositorio.png` y `foto-opencode.png`.
-- Diapositivas 11–13: no requieren imágenes nuevas.
-
 ### Diseño de la presentación
 
 - Paleta: rojo vino `#8F1D2C`, vino profundo `#54131D`, rosa claro
-  `#F7DDE1`, blanco cálido `#FFFDFB`, texto ciruela `#24171A` y dorado
-  auxiliar `#D9A84D`.
-- Tipografía: Arial/Liberation Sans para asegurar disponibilidad local.
-- Firma visual: rail lateral de expediente con etapas reales del proyecto.
-- Fondos: alternancia controlada entre blanco cálido, vino y ciruela oscuro;
-  evitar fondos oscuros cuando una captura pierda legibilidad.
-- Movimiento: transiciones suaves y fragmentos solo para revelar ideas; se
-  respeta `prefers-reduced-motion`.
-- Formato de exposición: 1280×720 en escritorio y 390×844 en móvil.
+  `#F3D6D8`, papel cálido `#F7F0E7`, texto ciruela `#24191B`, dorado
+  auxiliar `#D6A252` y verde sobrio para estados verificados.
+- Tipografía: Georgia/Times New Roman para tesis y títulos; Arial/Liberation
+  Sans para datos y etiquetas estrictamente necesarias.
+- Firma visual: expediente, líneas de recorrido y sello final `TRAZABLE`,
+  integrados como bloques CSS y no como anexos pegados.
+- Composición: lienzo completo, sin sidebar, header, footer, numeración,
+  controles visibles ni elementos de relleno fuera del argumento de cada
+  diapositiva.
+- Movimiento: transiciones suaves de Reveal.js y desactivación efectiva cuando
+  el usuario solicita `prefers-reduced-motion`.
+- Formato de exposición: 1280x720 en escritorio y 390x844 en móvil.
 
 ### Regeneración y presentación
 
@@ -357,6 +349,41 @@ python3 -m http.server 8000
 Abrir `http://localhost:8000/juliano/presentacion/`. Las notas del expositor
 están dentro de cada diapositiva y se abren con `S`; `F` activa pantalla
 completa y las flechas cambian de diapositiva.
+
+### Publicación en GitHub Pages
+
+El workflow `.github/workflows/deploy-pages.yml` publica el HTML generado en
+cada push a `main`, sin copiar las imágenes de los anexos. La URL esperada es:
+
+`https://juljuliano.github.io/tarea_pasantia/`
+
+### Comprobaciones de Aceptación
+
+Desde `/home/user/Documentos/tarea_pasantia`:
+
+```bash
+python3 -m py_compile juliano/presentacion/generar_presentacion.py
+python3 juliano/presentacion/generar_presentacion.py
+python3 - <<'PY'
+from pathlib import Path
+
+html = Path("juliano/presentacion/index.html").read_text(encoding="utf-8")
+assert html.count("<section ") == 20
+assert html.count('<aside class="notes">') == 20
+assert html.count("<img") == 0
+assert "../imagenes" not in html
+assert "dossier-rail" not in html
+assert "rail-step" not in html
+assert "meta-line" not in html
+assert "progress-line" not in html
+PY
+git diff --check
+```
+
+La revisión visual debe confirmar que el deck carga en 1280x720 y 390x844 sin
+desplazamiento horizontal, que no aparece una barra lateral, que el texto
+principal conserva legibilidad y que la diapositiva 19 deja una pausa clara
+para la demostración en vivo.
 
 ## Pendientes Posteriores
 

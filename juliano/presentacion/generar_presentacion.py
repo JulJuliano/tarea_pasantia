@@ -7,284 +7,449 @@ from textwrap import dedent
 
 
 CARPETA = Path(__file__).resolve().parent
-CARPETA_IMAGENES = CARPETA.parent / "imagenes"
 SALIDA = CARPETA / "index.html"
-
-ETAPAS = (
-    ("01", "OBSERVAR"),
-    ("02", "MODELAR"),
-    ("03", "IMPLEMENTAR"),
-    ("04", "VALIDAR"),
-)
+TOTAL_DIAPOSITIVAS = 20
 
 
-def imagen(nombre, alt, clase=""):
-    """Devuelve una imagen local con una ruta relativa al HTML generado."""
-    ruta = Path("../imagenes") / nombre
-    clase_html = f' class="{escape(clase)}"' if clase else ""
-    return (
-        f'<img src="{escape(ruta.as_posix())}" alt="{escape(alt)}"'
-        f'{clase_html} loading="eager">'
-    )
-
-
-def ruta_expediente(etapa):
-    """Crea la línea lateral que representa las fases reales del proyecto."""
-    pasos = []
-    for codigo, nombre in ETAPAS:
-        activo = " is-active" if nombre.lower() == etapa else ""
-        pasos.append(f'<span class="rail-step{activo}"><b>{codigo}</b>{nombre}</span>')
+def diapositiva(numero, cuerpo, notas, clase="paper", transicion="fade"):
+    """Construye una sección Reveal completa, incluida su nota del expositor."""
     return dedent(
         f"""
-        <aside class="dossier-rail" aria-label="Fases del proyecto">
-          <div class="rail-brand">BASE<br><span>ACCESS</span></div>
-          <div class="rail-rule"></div>
-          <div class="rail-steps">{''.join(pasos)}</div>
-          <div class="rail-foot">INFORME<br>JULIANO<br><span>2026</span></div>
-        </aside>
+        <section data-transition="{escape(transicion)}" class="{escape(clase)}">
+          <div class="slide-frame {escape(clase)}">
+            <main class="slide-main">
+        {cuerpo}
+            </main>
+          </div>
+          <aside class="notes">{escape(notas)}</aside>
+        </section>
         """
     )
 
 
-def diapositiva(cuerpo, notas="", clase="", transicion="fade", etapa="observar"):
-    atributos = [f'data-transition="{escape(transicion)}"']
-    if clase:
-        atributos.append(f'class="{escape(clase)}"')
-    notas_html = f'<aside class="notes">{escape(notas)}</aside>' if notas else ""
-    return (
-        f'<section {" ".join(atributos)}>'
-        f'<div class="slide-shell">{ruta_expediente(etapa)}'
-        f'<div class="slide-body">{cuerpo}</div></div>{notas_html}</section>'
-    )
-
-
 def construir_diapositivas():
+    """Devuelve las veinte diapositivas de la defensa, en orden narrativo."""
     return [
         diapositiva(
+            1,
             dedent(
                 """
-                <div class="title-layout">
-                  <div class="title-copy">
-                    <div class="kicker">INFORME DE PASANTÍA · 2026</div>
-                    <h1>Del expediente<br><span>al dato trazable</span></h1>
-                    <p class="title-subtitle">Prototipo de sistema para el control, trazabilidad y reporte documental en la Presidencia de Venangocupet, S.A.</p>
-                    <div class="author-line"><strong>JULIANO CARDONA</strong><span>INFORMÁTICA</span><span>9 SEMANAS</span></div>
-                  </div>
-                  <div class="hero-seal" aria-label="La ruta del expediente">
-                    <span class="seal-label">LA RUTA</span>
-                    <div class="seal-track"><i></i><i></i><i></i><i></i></div>
-                    <strong>REGISTRAR<br>SEGUIR<br>REPORTAR</strong>
-                    <small>Un recorrido visible<br>de principio a fin.</small>
-                  </div>
-                </div>
-                """
-            ),
-            "Abrir con la tesis: el proyecto toma un flujo documental manual y lo convierte en un recorrido que puede registrarse, seguirse y reportarse.",
-            clase="title-slide",
-            transicion="zoom",
-            etapa="observar",
-        ),
-        diapositiva(
-            dedent(
-                """
-                <div class="kicker">EL PROBLEMA OPERATIVO</div>
-                <div class="claim-layout">
-                  <div class="claim-index">01</div>
-                  <div>
-                    <h2>Una pregunta sencilla no tenía una respuesta inmediata.</h2>
-                    <p class="lead">¿Dónde está cada expediente y qué ocurrió con él?</p>
-                    <div class="question-strip">
-                      <span>¿RECIBIDO?</span><span>¿FIRMADO?</span><span>¿DESPACHADO?</span>
+                 <div class="title-grid">
+                   <div class="title-copy">
+                     <h1>Del expediente<br><em>al dato trazable</em></h1>
+                     <p class="slide-deck">Prototipo para el control, trazabilidad y reporte documental.</p>
+                   </div>
+                  <div class="route-hero" aria-label="Ruta con registrar, seguir y reportar">
+                    <span class="route-label">UN RECORRIDO VISIBLE</span>
+                    <div class="route-steps">
+                      <div class="route-stop"><span>01</span><b>REGISTRAR</b><small>dejar constancia</small></div>
+                      <div class="route-stop"><span>02</span><b>SEGUIR</b><small>conservar contexto</small></div>
+                      <div class="route-stop"><span>03</span><b>REPORTAR</b><small>volver a encontrar</small></div>
                     </div>
                   </div>
                 </div>
-                <div class="bottom-note"><b>Observación de campo</b><span>La información estaba distribuida entre hojas, transcripciones y revisiones manuales.</span></div>
                 """
             ),
-            "En Presidencia, responder sobre el estado de un documento exigía revisar registros y consolidar información repetitiva. La dificultad no era solo guardar datos: era conservar el recorrido.",
-            clase="paper-slide",
-            transicion="fade",
-            etapa="observar",
+            "Esta presentación parte de una idea central: un expediente no debe quedar reducido a una fila aislada. El prototipo propone convertir el recorrido documental en información que pueda registrarse, seguirse y reportarse. La ruta resume el aporte esperado sin presentar métricas de reducción: se trata de una solución orientada a ordenar el control y hacer explicable cada movimiento.",
+            clase="title-slide",
+            transicion="zoom",
         ),
         diapositiva(
+            2,
             dedent(
-                f"""
-                <div class="kicker light-kicker">ANTES · FLUJO OBSERVADO</div>
-                <div class="visual-heading"><h2>El documento se mueve;<br><em>el control se fragmenta.</em></h2><span class="visual-code">AS-IS / PRESIDENCIA</span></div>
-                <div class="large-diagram">{imagen("02_flujo_as_is_presidencia.png", "Flujo actual de recepción, firma y despacho de expedientes")}</div>
-                <div class="three-labels"><span>TRANSCRIBIR</span><span>CONFIRMAR</span><span>RESUMIR</span></div>
                 """
-            ),
-            "Explicar el flujo real sin dramatizarlo: recepción, revisión, registro, firma y despacho dependían de controles dispersos. El costo aparecía cuando había que reconstruir la historia.",
-            clase="dark-slide",
-            transicion="slide",
-            etapa="observar",
-        ),
-        diapositiva(
-            dedent(
-                f"""
-                <div class="kicker light-kicker">DESPUÉS · PROPUESTA</div>
-                <div class="visual-heading"><h2>El mismo proceso,<br><em>con memoria.</em></h2><span class="visual-code">TO-BE / PROTOTIPO</span></div>
-                <div class="large-diagram solution-diagram">{imagen("03_flujo_to_be_sistema_automatizado.png", "Flujo propuesto con el prototipo BaseAccess")}</div>
-                <div class="promise-row"><span><b>VALIDAR</b> datos antes de guardar</span><span><b>RASTREAR</b> movimientos e historial</span><span><b>REPORTAR</b> sin transcribir de nuevo</span></div>
-                """
-            ),
-            "La propuesta no cambia las responsabilidades del departamento. Agrega una capa de registro estructurado, validación, historial, consulta y reportes.",
-            clase="wine-slide",
-            transicion="slide",
-            etapa="modelar",
-        ),
-        diapositiva(
-            dedent(
-                f"""
-                <div class="kicker">EL PROTOTIPO EN UNA MIRADA</div>
-                <div class="visual-heading paper-heading"><h2>La interfaz convierte el flujo<br>en decisiones visibles.</h2><span class="visual-code">BASEACCESS / UI</span></div>
-                <div class="interface-layout">
-                  <div class="interface-shot">{imagen("captura-registro-nuevo-contexto.png", "Vista general de BaseAccess con navegación modular y registros")}</div>
-                  <div class="proof-list">
-                    <div><b>01</b><span>Navegar por módulos y hojas activas.</span></div>
-                    <div><b>02</b><span>Registrar documentos, estatus y relaciones.</span></div>
-                    <div><b>03</b><span>Consultar el recorrido sin abandonar la vista.</span></div>
+                 <h2>Presidencia funciona como un nodo de tránsito documental.</h2>
+                <p class="slide-deck">Recibe, revisa, firma y despacha expedientes.</p>
+                <div class="node-map" aria-label="Origen, Presidencia y destino documental">
+                  <div class="map-side map-origin">
+                    <span>ORIGEN</span><b>Unidades<br>remitentes</b><small>documento recibido</small>
+                  </div>
+                  <div class="map-core">
+                    <span>NODO DE CONTROL</span><strong>PRESIDENCIA</strong><small>recibe / revisa / firma / despacha</small>
+                  </div>
+                  <div class="map-side map-destination">
+                    <span>DESTINO</span><b>Departamentos<br>receptores</b><small>documento canalizado</small>
                   </div>
                 </div>
                 """
             ),
-            "Aquí se muestra el resultado visible del modelado: una interfaz de escritorio que concentra módulos, registros, hojas y acciones sin perder el contexto del usuario.",
-            clase="paper-slide interface-slide",
-            transicion="fade",
-            etapa="implementar",
+            "El área de Presidencia actúa como un punto de tránsito y validación. Allí confluyen documentos provenientes de otras unidades, se revisan sus condiciones, se gestionan la firma y el egreso, y finalmente se canalizan hacia un destino. Esta posición intermedia explica por qué el control de cada movimiento es más importante que una simple lista de documentos recibidos.",
+            clase="paper",
         ),
         diapositiva(
+            3,
             dedent(
-                f"""
-                <div class="kicker light-kicker">CÓMO SE CONSTRUYÓ</div>
-                <div class="visual-heading"><h2>Una aplicación pequeña<br>para un problema concreto.</h2><span class="visual-code">WAILS / SQLITE</span></div>
-                <div class="architecture-layout">
-                  <div class="architecture-shot">{imagen("06_arquitectura_prototipo.png", "Arquitectura del prototipo: interfaz, Wails, lógica y SQLite")}</div>
-                  <div class="layer-stack"><span><b>INTERFAZ</b> WebView2</span><span><b>APLICACIÓN</b> Wails + Go</span><span><b>DATOS</b> SQLite local</span></div>
+                """
+                 <h2>Cada expediente atraviesa seis movimientos.</h2>
+                <div class="movement-caption"><span>SECUENCIA OBSERVADA</span><i></i><span>DEL INGRESO A LA SALIDA</span></div>
+                <ol class="movement-grid" aria-label="Seis movimientos del expediente">
+                  <li><span>01</span><b>RECEPCIÓN</b><small>llega el documento</small></li>
+                  <li><span>02</span><b>REVISIÓN</b><small>se verifica la forma</small></li>
+                  <li><span>03</span><b>INGRESO</b><small>se registra la entrada</small></li>
+                  <li><span>04</span><b>FIRMA</b><small>pasa a Presidencia</small></li>
+                  <li><span>05</span><b>EGRESO</b><small>se registra la salida</small></li>
+                  <li><span>06</span><b>DESPACHO</b><small>llega a su destino</small></li>
+                </ol>
+                """
+            ),
+            "El flujo observado puede describirse con seis movimientos concretos: recepción, revisión, ingreso, firma, egreso y despacho. La secuencia no se reemplaza en la propuesta. Lo que cambia es la forma de conservar información sobre ella, para que el expediente pueda ser consultado desde su entrada hasta la entrega al departamento destinatario.",
+            clase="rose",
+        ),
+        diapositiva(
+            4,
+            dedent(
+                """
+                 <h2>¿Cómo mejorar el control, la trazabilidad y los reportes documentales?</h2>
+                <div class="question-ring" aria-label="Tres necesidades alrededor de la interrogante">
+                  <div class="question-core"><span>UNA SOLA PREGUNTA</span><strong>Hacer visible<br>el recorrido</strong></div>
+                  <div class="question-chip chip-control"><b>CONTROL</b><span>¿Qué se registró?</span></div>
+                  <div class="question-chip chip-trace"><b>TRAZABILIDAD</b><span>¿Qué ocurrió?</span></div>
+                  <div class="question-chip chip-report"><b>REPORTE</b><span>¿Cómo se resume?</span></div>
                 </div>
-                <p class="dark-caption">Las capas se separan para que el registro, la consulta y el historial puedan evolucionar sin perder el modelo documental.</p>
                 """
             ),
-            "No presentar la arquitectura como una lista de tecnologías. Explicar qué responsabilidad queda en cada capa y por qué SQLite encaja con un prototipo de escritorio local.",
-            clase="dark-slide architecture-slide",
-            transicion="fade",
-            etapa="implementar",
+            "La interrogante organiza el proyecto en tres necesidades relacionadas. Primero, controlar los movimientos que ocurren. Segundo, conservar evidencia suficiente para reconstruirlos. Tercero, obtener reportes sin iniciar una búsqueda manual desde cero. La solución se evalúa con esa pregunta, no por la cantidad de pantallas o por la tecnología utilizada.",
+            clase="paper question-slide",
         ),
         diapositiva(
+            5,
             dedent(
-                f"""
-                <div class="kicker">LA LÓGICA ANTES DEL CÓDIGO</div>
-                <div class="visual-heading paper-heading"><h2>El sistema decide en un orden<br>que se puede explicar.</h2><span class="visual-code">ANEXO H</span></div>
-                <div class="pseudo-layout">
-                  <div class="pseudo-shot">{imagen("05_pseudocodigo_general_baseaccess.png", "Pseudocódigo general de operación de BaseAccess")}</div>
-                  <div class="pseudo-note"><b>Entrada</b><span>Archivo SQLite, formulario y acción del usuario.</span><b>Control</b><span>Validación, transacción, historial y filtros.</span><b>Salida</b><span>Registro trazable, consulta y XLSX.</span></div>
+                """
+                 <h2>El control se apoyaba en hojas de cálculo.</h2>
+                <p class="slide-deck">Registrar y resumir exigía transcripción manual.</p>
+                <div class="spreadsheet-scene" aria-label="Hoja conceptual con registros repetidos">
+                  <div class="sheet-card">
+                    <div class="sheet-top"><b>CONTROL_DOCUMENTAL</b><span>hoja activa</span></div>
+                    <table class="spreadsheet">
+                      <thead><tr><th>EXP.</th><th>ESTADO</th><th>FECHA</th><th>DESTINO</th></tr></thead>
+                      <tbody>
+                        <tr><td>024</td><td>INGRESO</td><td>04/06</td><td>COMPRAS</td></tr>
+                        <tr><td>024</td><td>FIRMA</td><td>05/06</td><td>COMPRAS</td></tr>
+                        <tr><td>024</td><td>EGRESO</td><td>06/06</td><td>COMPRAS</td></tr>
+                        <tr><td>025</td><td>INGRESO</td><td>06/06</td><td>LEGAL</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <span class="sheet-tag tag-one">COPIA 01</span>
+                  <span class="sheet-tag tag-two">COPIA 02</span>
+                  <span class="sheet-tag tag-three">RESUMEN</span>
                 </div>
                 """
             ),
-            "El pseudocódigo resume la operación completa: abrir y validar la base, cargar el contexto, procesar una acción con validaciones y transacción, consultar o exportar y cerrar con respaldo.",
-            clase="paper-slide pseudo-slide",
-            transicion="fade",
-            etapa="implementar",
+            "El registro se apoyaba en hojas de cálculo y, para resumir la información, era necesario transcribir o reorganizar datos. La tabla es conceptual: no pretende reproducir un archivo real, sino mostrar cómo un mismo expediente puede aparecer en distintas líneas y contextos. La dificultad operativa surge cuando se necesita conectar esas líneas en una sola historia.",
+            clase="paper spreadsheet-slide",
         ),
         diapositiva(
+            6,
             dedent(
-                f"""
-                <div class="kicker">REGLAS DE NEGOCIO VISIBLES</div>
-                <div class="visual-heading paper-heading"><h2>La pantalla cambia cuando<br>cambia el expediente.</h2><span class="visual-code">EVIDENCIA / INTERFAZ</span></div>
-                <div class="evidence-grid">
-                  <figure>{imagen("captura-formulario-general.png", "Formulario general de registro documental")}<figcaption>Captura estructurada</figcaption></figure>
-                  <figure>{imagen("captura-expedientes-frentes.png", "Formulario de expedientes con múltiples frentes")}<figcaption>Frentes dinámicos</figcaption></figure>
-                  <figure>{imagen("captura-catalogos-validaciones.png", "Gestión de catálogos y validaciones")}<figcaption>Datos maestros</figcaption></figure>
+                """
+                 <h2>El problema no era almacenar datos.</h2>
+                <p class="slide-deck">Era reconstruir el recorrido completo.</p>
+                <div class="contrast-grid">
+                  <div class="contrast-panel isolated-panel">
+                    <span class="panel-label">FILA AISLADA</span>
+                    <div class="single-record"><b>EXP. 024</b><span>06/06 · EGRESO</span><small>¿Qué ocurrió antes?</small></div>
+                    <p>Un dato suelto conserva un momento, pero no necesariamente su contexto.</p>
+                  </div>
+                  <div class="contrast-bridge"><span>+</span><b>CONTEXTO</b><i></i><span>&rarr;</span></div>
+                  <div class="contrast-panel connected-panel">
+                    <span class="panel-label">SECUENCIA DOCUMENTAL</span>
+                    <div class="record-chain"><span>RECEPCIÓN</span><i></i><span>FIRMA</span><i></i><span>EGRESO</span></div>
+                    <p>La relación entre movimientos permite explicar el recorrido del expediente.</p>
+                  </div>
                 </div>
-                <p class="micro-caption">La configuración se expresa en la interfaz; la validación protege el dato antes de la transacción.</p>
                 """
             ),
-            "Usar tres ejemplos concretos: el formulario común, la generación de frentes adicionales y la administración de catálogos. No enumerar todos los módulos.",
-            clase="paper-slide evidence-slide",
-            transicion="slide",
-            etapa="implementar",
+            "El hallazgo central fue distinguir almacenamiento de trazabilidad. Puede existir una fila con fecha y estado, pero todavía faltar la relación con el ingreso, la firma y el despacho. Por eso el modelo propuesto toma el expediente como unidad de referencia y conserva sus movimientos en secuencia, con datos que permitan explicar cada paso.",
+            clase="dark",
         ),
         diapositiva(
+            7,
             dedent(
-                f"""
-                <div class="kicker light-kicker">USAR LA INFORMACIÓN</div>
-                <div class="visual-heading"><h2>Registrar es el inicio.<br><em>Seguir y reportar es el resultado.</em></h2><span class="visual-code">OPERACIÓN / SALIDA</span></div>
-                <div class="operations-layout">
-                  <figure class="operation-shot wide-shot">{imagen("captura-ruta-seleccion-multiple.png", "Ruta de procesos con selección múltiple")}</figure>
-                  <figure class="operation-shot">{imagen("captura-exportacion-filtros-columnas.png", "Exportación de información con filtros y columnas")}</figure>
+                """
+                 <h2>Tres efectos operativos.</h2>
+                <p class="slide-deck light-deck">Duplicidad · Omisión · Demora en reportes.</p>
+                <div class="impact-layout">
+                  <div class="repeat-column">
+                    <span>TRANSCRIPCIÓN REPETIDA</span>
+                    <div class="repeat-row"><b>01</b><i></i><b>02</b><i></i><b>03</b></div>
+                    <strong>COPIAR<br>PEGAR<br>RESUMIR</strong>
+                    <small>mismo expediente<br>en distintos momentos</small>
+                  </div>
+                  <div class="impact-grid">
+                    <div class="impact-card"><span>01</span><b>DUPLICIDAD</b><small>un movimiento puede repetirse al consolidar</small></div>
+                    <div class="impact-card"><span>02</span><b>OMISIÓN</b><small>un paso puede quedar fuera del resumen</small></div>
+                    <div class="impact-card"><span>03</span><b>DEMORA</b><small>el reporte requiere revisión manual</small></div>
+                  </div>
                 </div>
-                <div class="operations-footer"><span>PLANIFICAR ACTIVIDADES</span><span>EXPORTAR INFORMACIÓN</span></div>
                 """
             ),
-            "La trazabilidad se vuelve útil cuando permite actuar: seleccionar actividades en una ruta, aplicar filtros y exportar una salida para revisión.",
-            clase="wine-slide operations-slide",
-            transicion="slide",
-            etapa="validar",
+            "Los efectos operativos se agrupan en tres categorías: duplicidad, omisión y demora en la preparación de reportes. Se presentan como riesgos del modo de trabajo observado, no como mediciones cuantificadas. La repetición de transcripciones hace más difícil asegurar que cada movimiento conserve el mismo contexto y que una solicitud de información pueda responderse con confianza.",
+            clase="wine",
         ),
         diapositiva(
+            8,
             dedent(
-                f"""
-                <div class="kicker">EVIDENCIA DEL PROCESO</div>
-                <div class="visual-heading paper-heading"><h2>El prototipo también tiene<br>una historia de construcción.</h2><span class="visual-code">ANEXO I</span></div>
-                <div class="workbench-layout">
-                  <div class="workbench-main">{imagen("foto-desarrollo-opencode-laptop.jpg", "Desarrollo del prototipo desde un portátil")}</div>
-                  <div class="workbench-side"><figure>{imagen("foto-github-repositorio.png", "Repositorio de BaseAccess en GitHub")}<figcaption>Control de versiones</figcaption></figure><figure>{imagen("foto-opencode.png", "Uso de OpenCode durante el desarrollo")}<figcaption>Asistencia técnica</figcaption></figure></div>
+                """
+                 <h2>Trazabilidad es poder demostrar qué ocurrió.</h2>
+                <p class="slide-deck">Responsable · Fecha · Acción · Estado.</p>
+                <div class="evidence-layout">
+                  <div class="dossier-card">
+                    <div class="dossier-head"><span>EXPEDIENTE</span><b>024</b></div>
+                    <div class="dossier-status"><span>ESTADO ACTUAL</span><strong>DESPACHADO</strong></div>
+                    <div class="dossier-line"><i></i><span>06 JUN 2026</span><b>EGRESO</b></div>
+                    <div class="dossier-line"><i></i><span>05 JUN 2026</span><b>FIRMA</b></div>
+                    <div class="dossier-line"><i></i><span>04 JUN 2026</span><b>INGRESO</b></div>
+                  </div>
+                  <div class="evidence-chips">
+                    <div><b>RESPONSABLE</b><span>quién actuó</span></div>
+                    <div><b>FECHA</b><span>cuándo ocurrió</span></div>
+                    <div><b>ACCIÓN</b><span>qué se hizo</span></div>
+                    <div><b>ESTADO</b><span>cómo quedó</span></div>
+                  </div>
                 </div>
-                <p class="micro-caption">Diseñar · implementar · probar · corregir · documentar</p>
+                <small class="citation">Concepto aplicado a la gestión documental · Gómez, 2019.</small>
                 """
             ),
-            "Las fotografías funcionan como evidencia de proceso, no como decoración: diseño inicial, trabajo de desarrollo, repositorio y herramientas utilizadas.",
-            clase="paper-slide workbench-slide",
-            transicion="fade",
-            etapa="validar",
+            "En términos académicos, la trazabilidad permite reconstruir el historial de un documento e identificar responsable, fecha, acción y estado. El expediente central funciona como un dossier que reúne esas evidencias. La referencia a Gómez, 2019, se incorpora de forma discreta porque el concepto guía el diseño: no basta con mostrar un estado final, también debe conservarse la explicación de cómo se llegó a él.",
+            clase="paper evidence-slide",
         ),
         diapositiva(
+            9,
             dedent(
-                f"""
-                <div class="kicker light-kicker">VALIDACIÓN DEL PROTOTIPO</div>
-                <div class="claim-layout validation-claim">
-                  <div class="claim-index">04</div>
-                  <div><h2>La prueba no termina en “abre”.</h2><p class="lead light-lead">Termina cuando el dato puede registrarse, consultarse y volver a encontrarse.</p></div>
+                """
+                 <h2>Objetivo general</h2>
+                <p class="objective-statement">Desarrollar un prototipo para el <mark>control</mark>, <mark>trazabilidad</mark> y <mark>reporte</mark> de movimientos documentales en Presidencia.</p>
+                <div class="objective-words">
+                  <div><b>CONTROLAR</b><span>registrar el movimiento</span></div>
+                  <div><b>TRAZAR</b><span>conservar la secuencia</span></div>
+                  <div><b>REPORTAR</b><span>consultar y resumir</span></div>
                 </div>
-                <div class="validation-grid"><div><b>REGISTRO</b><span>Campos y catálogos controlados.</span></div><div><b>HISTORIAL</b><span>Movimientos conservados.</span></div><div><b>SALIDA</b><span>Filtros y reportes exportables.</span></div></div>
-                <div class="validation-line"><span>PRUEBAS FUNCIONALES</span><i></i><span>AJUSTES</span><i></i><span>PRESENTACIÓN</span></div>
                 """
             ),
-            "En la defensa, conectar la validación con las actividades de las semanas 7 a 9: pruebas funcionales, depuración, ajustes, manual y presentación del prototipo.",
-            clase="dark-slide validation-slide",
-            transicion="fade",
-            etapa="validar",
+            "El objetivo general resume el alcance del trabajo: desarrollar un prototipo para el control, la trazabilidad y el reporte de movimientos documentales en Presidencia. La composición separa tres verbos de trabajo para hacer visible la relación entre ellos. El prototipo no se presenta como una sustitución total del proceso, sino como una base técnica orientada a estructurar su información.",
+            clase="wine objective-slide",
         ),
         diapositiva(
+            10,
             dedent(
-                f"""
-                <div class="kicker">RESULTADO</div>
-                <div class="result-layout"><div><h2>El expediente deja de ser<br><span>una fila aislada.</span></h2><p class="lead">Se convierte en una historia que la oficina puede consultar y explicar.</p></div><div class="result-stamp"><strong>BASE<br>ACCESS</strong><span>PROTOTIPO<br>FUNCIONAL</span></div></div>
-                <div class="result-grid"><div><b>REGISTRAR</b><span>Ingreso y egreso.</span></div><div><b>SEGUIR</b><span>Estados e historial.</span></div><div><b>REPORTAR</b><span>Resúmenes verificables.</span></div></div>
-                <p class="closing-line">Una solución orientada a reducir tareas repetitivas y conservar el recorrido documental.</p>
+                """
+                 <h2>El proyecto avanzó del diagnóstico a una solución viable.</h2>
+                <p class="slide-deck">Modalidad: proyecto factible.</p>
+                <ol class="method-path" aria-label="Etapas del proyecto">
+                  <li><span>01</span><b>DIAGNOSTICAR</b><small>observar el flujo</small></li>
+                  <li><span>02</span><b>DETERMINAR</b><small>levantar necesidades</small></li>
+                  <li><span>03</span><b>DISEÑAR</b><small>modelar la solución</small></li>
+                  <li><span>04</span><b>IMPLEMENTAR<br>Y VALIDAR</b><small>probar el prototipo</small></li>
+                </ol>
                 """
             ),
-            "Cerrar la parte técnica con el aporte principal. No prometer una transformación total: presentar el prototipo como una solución viable y orientada a una necesidad concreta.",
-            clase="paper-slide result-slide",
+            "La modalidad de proyecto factible permite recorrer una cadena completa: diagnosticar la situación, determinar los requerimientos, diseñar una respuesta e implementar y validar un prototipo. En esta presentación la palabra viable se usa en sentido técnico y operativo, como una solución que pudo construirse y probarse con el alcance definido, sin afirmar todavía una adopción institucional definitiva.",
+            clase="paper method-slide",
+        ),
+        diapositiva(
+            11,
+            dedent(
+                """
+                 <h2>La solución debía responder a tres necesidades.</h2>
+                <div class="module-grid">
+                  <article class="module-card">
+                    <span class="module-glyph glyph-record"></span>
+                    <b>REGISTRO</b>
+                    <p>Capturar movimientos con campos y catálogos controlados.</p>
+                  </article>
+                  <article class="module-card">
+                    <span class="module-glyph glyph-history"></span>
+                    <b>HISTORIAL</b>
+                    <p>Conservar la secuencia asociada a cada expediente.</p>
+                  </article>
+                  <article class="module-card">
+                    <span class="module-glyph glyph-report"></span>
+                    <b>REPORTE</b>
+                    <p>Consultar resultados y preparar salidas verificables.</p>
+                  </article>
+                </div>
+                """
+            ),
+            "Los requerimientos esenciales se concentran en tres necesidades y no en una lista extensa de funciones. Registro para capturar datos con reglas claras; historial para mantener el recorrido del expediente; y reporte para devolver la información en una forma útil para consulta. Esta selección mantiene bajo el alcance del prototipo y lo conecta directamente con el problema diagnosticado.",
+            clase="rose",
+        ),
+        diapositiva(
+            12,
+            dedent(
+                """
+                 <h2>El proceso se conserva; la información se estructura.</h2>
+                <div class="flow-legend"><span>SECUENCIA REAL</span><i></i><span>RESPUESTA DEL PROTOTIPO</span></div>
+                <div class="observed-flow" aria-label="Secuencia real conservada">
+                  <span>RECEPCIÓN</span><i></i><span>REVISIÓN</span><i></i><span>INGRESO</span><i></i><span>FIRMA</span><i></i><span>EGRESO</span><i></i><span>DESPACHO</span>
+                </div>
+                <div class="structured-flow" aria-label="Flujo estructurado del prototipo">
+                  <div><span>01</span><b>REGISTRAR</b><small>capturar el movimiento</small></div>
+                  <i>&rarr;</i>
+                  <div><span>02</span><b>VALIDAR</b><small>proteger el dato</small></div>
+                  <i>&rarr;</i>
+                  <div><span>03</span><b>CONSERVAR HISTORIAL</b><small>mantener contexto</small></div>
+                  <i>&rarr;</i>
+                  <div><span>04</span><b>CONSULTAR</b><small>volver a encontrar</small></div>
+                </div>
+                """
+            ),
+            "El diseño TO-BE conserva los seis movimientos del proceso real. La estructura adicional aparece alrededor de la información: registrar, validar, conservar el historial y consultar. De esta manera, la herramienta no obliga a inventar un circuito paralelo; organiza los datos que ya necesita el trabajo cotidiano y los deja disponibles para seguimiento y reporte.",
+            clase="dark flow-slide",
+        ),
+        diapositiva(
+            13,
+            dedent(
+                """
+                 <h2>El expediente es la unidad central del modelo.</h2>
+                <div class="entity-map" aria-label="Expediente conectado con entidades de apoyo">
+                  <div class="entity-link link-top"></div><div class="entity-link link-left"></div><div class="entity-link link-right"></div><div class="entity-link link-bottom"></div>
+                  <div class="entity-core"><span>UNIDAD CENTRAL</span><b>EXPEDIENTE</b><small>un recorrido, una referencia</small></div>
+                  <div class="entity-node entity-catalogs"><b>CATÁLOGOS</b><small>valores controlados</small></div>
+                  <div class="entity-node entity-documents"><b>DOCUMENTOS</b><small>soportes asociados</small></div>
+                  <div class="entity-node entity-fronts"><b>FRENTES</b><small>alcances adicionales</small></div>
+                  <div class="entity-node entity-history"><b>HISTORIAL</b><small>movimientos conservados</small></div>
+                </div>
+                """
+            ),
+            "El modelo coloca al expediente en el centro porque es la referencia que permite unir información operativa y evidencia histórica. Los catálogos controlan valores; los documentos representan soportes asociados; los frentes permiten ampliar un proceso cuando corresponde; y el historial conserva sus movimientos. Las relaciones evitan que cada vista tenga que reconstruir el contexto por separado.",
+            clase="paper entity-slide",
+        ),
+        diapositiva(
+            14,
+            dedent(
+                """
+                 <h2>Tres capas, una responsabilidad por nivel.</h2>
+                <div class="layer-map" aria-label="Capas tecnológicas del prototipo">
+                  <div class="layer-card layer-ui"><span>01 / INTERFAZ</span><strong>WebView2</strong><small>traduce el trabajo a formularios y consultas</small></div>
+                  <div class="layer-arrow">&rarr;</div>
+                  <div class="layer-card layer-app"><span>02 / APLICACIÓN</span><strong>Wails / Go</strong><small>coordina reglas, acciones y transacciones</small></div>
+                  <div class="layer-arrow">&rarr;</div>
+                  <div class="layer-card layer-data"><span>03 / DATOS</span><strong>SQLite</strong><small>conserva registros y relaciones locales</small></div>
+                </div>
+                <p class="architecture-note">Separar responsabilidades permite explicar el sistema sin confundir interfaz con información.</p>
+                """
+            ),
+            "La arquitectura se presenta por responsabilidades. WebView2 ofrece la superficie visual; Wails y Go coordinan las reglas de la aplicación; SQLite conserva los datos relacionales en un archivo local. Esta separación no se expone como una acumulación de tecnologías, sino como una forma de mantener claro dónde se captura, dónde se procesa y dónde se conserva cada cambio.",
+            clase="dark architecture-slide",
+        ),
+        diapositiva(
+            15,
+            dedent(
+                """
+                 <h2>Cada cambio se procesa como una transacción.</h2>
+                <div class="transaction-flow" aria-label="Flujo de una transacción">
+                  <div><span>01</span><b>VALIDAR</b><small>campos y reglas</small></div><i>&rarr;</i>
+                  <div><span>02</span><b>GUARDAR</b><small>registro consistente</small></div><i>&rarr;</i>
+                  <div><span>03</span><b>CONSERVAR HISTORIAL</b><small>evidencia del cambio</small></div><i>&rarr;</i>
+                  <div><span>04</span><b>ACTUALIZAR CONSULTA</b><small>vista disponible</small></div>
+                </div>
+                <div class="transaction-outcome">
+                  <span class="outcome-label">RESULTADO DE LA OPERACIÓN</span>
+                  <div class="outcome commit"><b>COMMIT</b><small>si la operación es válida</small></div>
+                  <div class="outcome rollback"><b>ROLLBACK</b><small>si debe protegerse la integridad</small></div>
+                </div>
+                """
+            ),
+            "La transacción expresa una regla de integridad: validar antes de guardar, conservar el historial del cambio y actualizar la consulta solo cuando la operación es consistente. Si la operación puede confirmarse, se realiza un COMMIT; si una regla impide continuar, el ROLLBACK evita conservar un estado incompleto. La explicación se mantiene conceptual y no atribuye resultados de rendimiento.",
+            clase="rose transaction-slide",
+        ),
+        diapositiva(
+            16,
+            dedent(
+                """
+                 <h2>La interfaz traduce el modelo al trabajo cotidiano.</h2>
+                <p class="slide-deck">Módulos, formularios y catálogos controlados.</p>
+                <div class="app-window" aria-label="Interfaz nativa simplificada del prototipo">
+                  <div class="app-topbar"><b>BASEACCESS</b><nav><span class="active">EXPEDIENTES</span><span>HISTORIAL</span><span>REPORTES</span></nav><small>Presidencia</small></div>
+                  <div class="app-workspace">
+                    <div class="app-context"><span>EXPEDIENTE / NUEVO MOVIMIENTO</span><b>Registro de ingreso</b><small>Los campos se validan antes de guardar.</small></div>
+                    <div class="app-panels">
+                      <div class="form-card"><span class="ui-label">FORMULARIO</span><label>Identificador <b>024</b></label><label>Estado <b>Ingreso</b></label><label>Destino <b>Compras</b></label><button>GUARDAR MOVIMIENTO</button></div>
+                      <div class="table-card"><span class="ui-label">CONSULTA ACTIVA</span><div class="table-row table-head"><b>EXP.</b><b>ACCIÓN</b><b>ESTADO</b></div><div class="table-row"><span>024</span><span>Registro</span><span class="status">VALIDADO</span></div><div class="table-row"><span>023</span><span>Despacho</span><span>FINALIZADO</span></div><div class="table-row"><span>022</span><span>Firma</span><span>PENDIENTE</span></div></div>
+                    </div>
+                  </div>
+                </div>
+                """
+            ),
+            "La interfaz lleva el modelo a una escena de trabajo concreta. Una navegación superior permite cambiar entre expedientes, historial y reportes; el formulario captura un movimiento; y la tabla devuelve una consulta contextual. El ejemplo es deliberadamente simplificado: la defensa debe explicar la traducción de responsabilidades, no leer cada etiqueta de la pantalla.",
+            clase="paper interface-slide",
+        ),
+        diapositiva(
+            17,
+            dedent(
+                """
+                 <h2>La información registrada vuelve como seguimiento y reporte.</h2>
+                <div class="return-grid">
+                  <article class="return-card"><span class="return-icon icon-query"></span><b>CONSULTA</b><small>filtrar expedientes y estados</small><strong>024 / DESPACHADO</strong></article>
+                  <article class="return-card"><span class="return-icon icon-history"></span><b>HISTORIAL</b><small>leer la secuencia de acciones</small><strong>INGRESO &rarr; FIRMA &rarr; EGRESO</strong></article>
+                  <article class="return-card"><span class="return-icon icon-export"></span><b>EXPORTACIÓN XLSX</b><small>llevar resultados a un reporte</small><strong>REPORTE_2026.xlsx</strong></article>
+                </div>
+                """
+            ),
+            "El valor del registro aparece cuando la información vuelve al usuario como una respuesta. La consulta permite localizar expedientes y estados; el historial hace visible la secuencia de acciones; y la exportación XLSX ofrece una salida para revisión o reporte. Estas capacidades pueden facilitar el trabajo posterior, pero no se presentan como una reducción medida ni como un resultado automático en cualquier contexto.",
+            clase="wine return-slide",
+        ),
+        diapositiva(
+            18,
+            dedent(
+                """
+                 <h2>La validación comprobó el recorrido completo.</h2>
+                <p class="slide-deck">Registro · Consulta · Historial · Reporte.</p>
+                <div class="verification-head"><span>datos de prueba representativos</span><b>RECORRIDO COMPLETO</b></div>
+                <div class="verification-grid" role="table" aria-label="Matriz de verificación funcional">
+                  <div class="verification-cell" role="row"><span>01</span><b>REGISTRO</b><small>crear un movimiento válido</small><strong>VERIFICADO</strong></div>
+                  <div class="verification-cell" role="row"><span>02</span><b>CONSULTA</b><small>localizar el expediente</small><strong>VERIFICADO</strong></div>
+                  <div class="verification-cell" role="row"><span>03</span><b>HISTORIAL</b><small>revisar la secuencia</small><strong>VERIFICADO</strong></div>
+                  <div class="verification-cell" role="row"><span>04</span><b>REPORTE</b><small>exportar el resultado</small><strong>VERIFICADO</strong></div>
+                </div>
+                <p class="verification-foot">Pruebas funcionales orientadas a comprobar el flujo de extremo a extremo.</p>
+                """
+            ),
+            "La validación se organizó alrededor del recorrido completo y utilizó datos de prueba representativos del flujo documental. Se comprobó el registro, la consulta, la lectura del historial y la salida de reporte. El término verificado se refiere a la ejecución funcional de esos pasos en el prototipo; no implica una medición de productividad ni una evaluación estadística de usuarios.",
+            clase="paper verification-slide",
+        ),
+        diapositiva(
+            19,
+            dedent(
+                """
+                <div class="demo-pause">
+                   <h2>Demostración del prototipo</h2>
+                  <p class="slide-deck light-deck">Registrar &rarr; consultar historial &rarr; exportar reporte.</p>
+                  <div class="demo-route" aria-label="Ruta de la demostración en vivo">
+                    <div><span>01</span><b>REGISTRAR</b><small>un movimiento</small></div><i>&rarr;</i>
+                    <div><span>02</span><b>CONSULTAR HISTORIAL</b><small>seguir el expediente</small></div><i>&rarr;</i>
+                    <div><span>03</span><b>EXPORTAR REPORTE</b><small>mostrar la salida</small></div>
+                  </div>
+                  <div class="demo-prompt">CAMBIAR AL PORTÁTIL</div>
+                </div>
+                """
+            ),
+            "Esta diapositiva marca una pausa intencional. En este punto se puede cambiar al portátil y mostrar el recorrido del prototipo: registrar un movimiento, consultar el historial asociado y exportar un reporte. La ruta funciona como guía de la demostración en vivo. No es necesario recorrer todos los módulos; basta con evidenciar la continuidad entre entrada, seguimiento y salida.",
+            clase="wine demo-slide",
             transicion="zoom",
-            etapa="validar",
         ),
         diapositiva(
+            20,
             dedent(
                 """
-                <div class="closing-layout">
-                  <div class="kicker">CIERRE</div>
-                  <h2>Del control manual<br><span>a una trazabilidad defendible.</span></h2>
-                  <p class="closing-copy">El siguiente paso no es agregar más pantallas: es llevar el prototipo al flujo cotidiano, capacitar al personal y proteger la información con respaldos.</p>
-                  <div class="closing-signature"><strong>JULIANO CARDONA</strong><span>Desarrollo de un prototipo de sistema para el control, trazabilidad y reporte documental</span></div>
+                 <div class="closing-grid">
+                  <div class="closing-copy">
+                    <h2>Resultado: un prototipo funcional y técnicamente viable.</h2>
+                    <p class="slide-deck">Adopción progresiva · capacitación · respaldos periódicos.</p>
+                    <div class="closing-line"><span>UN SIGUIENTE PASO PRUDENTE</span><b>llevar la solución al flujo cotidiano y continuar validándola.</b></div>
+                  </div>
+                  <div class="final-dossier" aria-label="Expediente final con sello trazable">
+                    <div class="final-dossier-head"><span>BASEACCESS / EXPEDIENTE FINAL</span><b>20</b></div>
+                    <div class="final-dossier-body"><span>CONTROL DOCUMENTAL</span><strong>REGISTRO<br>HISTORIAL<br>REPORTE</strong></div>
+                    <div class="final-stamp">TRAZABLE</div>
+                  </div>
                 </div>
                 """
             ),
-            "Agradecer y dejar tres ideas: el problema fue observado, la solución fue construida y el prototipo queda listo para seguir validándose en el contexto real.",
-            clase="title-slide closing-slide",
+            "El resultado es un prototipo funcional que demuestra viabilidad técnica para registrar, consultar, conservar historial y reportar movimientos documentales. El cierre propone una adopción progresiva, capacitación del personal y respaldos periódicos como condiciones de continuidad. Son recomendaciones de implementación, no afirmaciones de impacto ya medido. La contribución principal es dejar una base explicable para seguir validando en el contexto real.",
+            clase="paper closing-slide",
             transicion="zoom",
-            etapa="validar",
         ),
     ]
 
@@ -294,225 +459,747 @@ CSS = dedent(
     :root {
       --wine: #8f1d2c;
       --wine-deep: #54131d;
-      --rose: #f7dde1;
-      --rose-soft: #fff7f8;
-      --ink: #24171a;
-      --paper: #fffdfb;
-      --muted: #715d61;
-      --gold: #d9a84d;
+      --wine-dark: #32141a;
+      --paper: #f7f0e7;
+      --paper-bright: #fffaf3;
+      --rose: #f3d6d8;
+      --rose-deep: #e7adb5;
+      --ink: #24191b;
+      --muted: #735d60;
+      --gold: #d6a252;
+      --sage: #778d81;
       --line: rgba(143, 29, 44, .24);
+      --dark-line: rgba(255, 247, 248, .24);
     }
 
-    html, body { background: var(--paper); margin: 0; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      background: var(--paper);
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+    body { font-family: Arial, "Liberation Sans", sans-serif; }
     .reveal {
       background: var(--paper);
       color: var(--ink);
       font-family: Arial, "Liberation Sans", sans-serif;
       font-size: 30px;
     }
-    .reveal .slides section { box-sizing: border-box; height: 100%; text-align: left; }
-    .slide-shell { display: grid; grid-template-columns: 7.4rem 1fr; height: 100%; min-height: 100%; }
-    .slide-body { min-width: 0; overflow: hidden; padding: 5.7vh 6vw 5vh 5.2vw; position: relative; }
-    .dossier-rail {
-      background: var(--wine-deep);
+    .reveal .slides { text-align: left; }
+    .reveal .slides section {
+      box-sizing: border-box;
+      height: 100%;
+      text-align: left;
+    }
+    .slide-frame {
+      background: var(--paper);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      padding: 6.5vh 6.5vw;
+      position: relative;
+      width: 100%;
+    }
+    .slide-frame.dark, .slide-frame.wine {
+      color: #fff7f8;
+    }
+    .slide-frame.dark { background: var(--wine-dark); }
+    .slide-frame.wine { background: var(--wine); }
+    .slide-frame.rose { background: var(--rose); }
+    .slide-frame.title-slide {
+      background: radial-gradient(circle at 88% 16%, rgba(214, 162, 82, .24), transparent 20%), var(--paper-bright);
+    }
+    .slide-frame.demo-slide {
+      background: radial-gradient(circle at 80% 78%, rgba(231, 173, 181, .15), transparent 27%), var(--wine-deep);
+    }
+    .slide-main {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+      padding: 0;
+      position: relative;
+    }
+    h1, h2, p { margin: 0; }
+    h1, h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      letter-spacing: -.055em;
+      line-height: .98;
+    }
+    h1 { font-size: 3.55em; max-width: 10em; }
+    h2 { font-size: 1.92em; max-width: 28em; }
+    h1 em, h2 em { color: var(--wine); font-style: italic; }
+    .dark h2 em, .wine h2 em { color: var(--rose-deep); }
+    .slide-deck {
+      color: var(--muted);
+      font-size: .72em;
+      line-height: 1.32;
+      margin-top: 1.1em;
+      max-width: 28em;
+    }
+    .light-deck { color: rgba(255, 247, 248, .77); }
+    .title-grid {
+      align-items: center;
+      display: grid;
+      gap: 5vw;
+      grid-template-columns: minmax(0, 1.12fr) minmax(18rem, .88fr);
+    }
+    .title-copy { min-width: 0; }
+    .title-copy .slide-deck { max-width: 25em; }
+    .route-hero {
+      border: 1px solid var(--wine);
+      min-height: 15rem;
+      padding: 1.3rem 1.15rem;
+      position: relative;
+    }
+    .route-hero::before, .route-hero::after {
+      border: 1px solid var(--wine);
+      content: "";
+      inset: .45rem;
+      pointer-events: none;
+      position: absolute;
+    }
+    .route-hero::after { inset: .72rem; opacity: .2; }
+    .route-label, .panel-label, .route-stop span {
+      color: var(--wine);
+      font-size: .34em;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+    .route-steps {
+      display: grid;
+      gap: .6em;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 2.15rem;
+      position: relative;
+    }
+    .route-steps::before {
+      border-top: 1px solid var(--wine);
+      content: "";
+      left: .65rem;
+      opacity: .55;
+      position: absolute;
+      right: .65rem;
+      top: .42rem;
+    }
+    .route-stop { min-width: 0; position: relative; }
+    .route-stop::before {
+      background: var(--paper-bright);
+      border: 2px solid var(--wine);
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: .82rem;
+      margin-bottom: .72rem;
+      position: relative;
+      width: .82rem;
+      z-index: 1;
+    }
+    .route-stop b {
+      color: var(--wine);
+      display: block;
+      font-size: .49em;
+      letter-spacing: .08em;
+      line-height: 1.1;
+    }
+    .route-stop small {
+      color: var(--muted);
+      display: block;
+      font-size: .37em;
+      line-height: 1.25;
+      margin-top: .48em;
+    }
+    .node-map {
+      align-items: center;
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: minmax(0, 1fr) minmax(13rem, 1.25fr) minmax(0, 1fr);
+      margin-top: 4.2rem;
+    }
+    .map-side, .map-core { min-width: 0; position: relative; text-align: center; }
+    .map-side { border-top: 1px solid var(--line); padding-top: 1rem; }
+    .map-side::after {
+      border-bottom: 1px solid var(--wine);
+      border-right: 1px solid var(--wine);
+      content: "";
+      height: .5rem;
+      position: absolute;
+      top: -.3rem;
+      width: .5rem;
+    }
+    .map-origin::after { right: -.9rem; transform: rotate(-45deg); }
+    .map-destination::after { left: -.9rem; transform: rotate(135deg); }
+    .map-side > span {
+      color: var(--wine);
+      display: block;
+      font-size: .34em;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+    .map-side b { display: block; font-family: Georgia, "Times New Roman", serif; font-size: .75em; line-height: 1.05; margin-top: .45em; }
+    .map-side small, .map-core small { color: var(--muted); display: block; font-size: .38em; line-height: 1.3; margin-top: .75em; }
+    .map-core {
+      background: var(--wine);
+      color: #fff7f8;
+      min-height: 8rem;
+      padding: 1.7rem 1rem;
+    }
+    .map-core::before { border: 1px solid rgba(255, 247, 248, .5); content: ""; inset: .5rem; position: absolute; }
+    .map-core span { color: var(--rose-deep); display: block; font-size: .34em; font-weight: 900; letter-spacing: .17em; position: relative; }
+    .map-core strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.3em; letter-spacing: -.04em; margin-top: .5em; position: relative; }
+    .map-core small { color: rgba(255, 247, 248, .72); position: relative; }
+    .movement-caption, .flow-legend {
+      align-items: center;
+      color: var(--wine);
+      display: flex;
+      font-size: .34em;
+      font-weight: 900;
+      gap: 1em;
+      letter-spacing: .14em;
+      margin-top: 2.4rem;
+      text-transform: uppercase;
+    }
+    .movement-caption i, .flow-legend i { background: currentColor; display: block; height: 1px; width: 4rem; }
+    .movement-grid {
+      display: grid;
+      gap: .7rem;
+      grid-template-columns: repeat(6, 1fr);
+      list-style: none;
+      margin: 1.2rem 0 0;
+      padding: 0;
+    }
+    .movement-grid li {
+      background: var(--paper-bright);
+      border-top: 4px solid var(--wine);
+      display: flex;
+      flex-direction: column;
+      min-height: 7.2rem;
+      padding: .8rem .65rem;
+      position: relative;
+    }
+    .movement-grid li:not(:last-child)::after {
+      color: var(--wine);
+      content: ">";
+      font-size: .9em;
+      font-weight: 700;
+      position: absolute;
+      right: -.58rem;
+      top: 2.3rem;
+      z-index: 2;
+    }
+    .movement-grid li > span { color: var(--wine); font-size: .35em; font-weight: 900; letter-spacing: .12em; }
+    .movement-grid b { font-size: .48em; letter-spacing: .06em; line-height: 1.1; margin-top: 1rem; }
+    .movement-grid small { color: var(--muted); font-size: .35em; line-height: 1.25; margin-top: .55rem; }
+    .question-slide h2 { max-width: 24em; }
+    .question-ring {
+      height: 14.2rem;
+      margin: 1.5rem auto 0;
+      max-width: 52rem;
+      position: relative;
+      width: 100%;
+    }
+    .question-ring::before {
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      content: "";
+      height: 11rem;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 25rem;
+    }
+    .question-core {
+      align-items: center;
+      background: var(--wine);
+      border-radius: 50%;
       color: #fff7f8;
       display: flex;
       flex-direction: column;
-      min-height: 100%;
-      padding: 2rem 1rem 1.5rem;
+      height: 10.2rem;
+      justify-content: center;
+      left: 50%;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10.2rem;
+      z-index: 1;
+    }
+    .question-core::after { border: 1px solid rgba(255, 247, 248, .55); border-radius: 50%; content: ""; inset: .48rem; position: absolute; }
+    .question-core span { color: var(--rose-deep); font-size: .32em; font-weight: 900; letter-spacing: .13em; position: relative; z-index: 1; }
+    .question-core strong { font-family: Georgia, "Times New Roman", serif; font-size: .8em; line-height: 1.05; margin-top: .6em; position: relative; z-index: 1; }
+    .question-chip {
+      background: var(--paper-bright);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      padding: .7rem .95rem;
+      position: absolute;
+      width: 11rem;
+      z-index: 2;
+    }
+    .question-chip::before { background: var(--gold); content: ""; height: .35rem; left: 0; position: absolute; top: 0; width: .35rem; }
+    .question-chip b { color: var(--wine); font-size: .39em; letter-spacing: .12em; }
+    .question-chip span { color: var(--muted); font-size: .48em; margin-top: .45em; }
+    .chip-control { left: 0; top: 1.1rem; }
+    .chip-trace { right: 0; top: 1.1rem; }
+    .chip-report { bottom: .3rem; left: 50%; transform: translateX(-50%); }
+    .spreadsheet-scene {
+      min-height: 15rem;
       position: relative;
     }
-    .rail-brand { font-size: .68em; font-weight: 900; letter-spacing: .14em; line-height: .9; }
-    .rail-brand span { color: #e8b0b8; }
-    .rail-rule { background: #c94f5d; height: 2px; margin: 1.7rem 0 1.25rem; width: 2rem; }
-    .rail-steps { display: flex; flex-direction: column; gap: .95rem; }
-    .rail-step { color: rgba(255, 247, 248, .48); display: flex; flex-direction: column; font-size: .32em; font-weight: 800; gap: .12rem; letter-spacing: .12em; line-height: 1.05; }
-    .rail-step b { color: rgba(255, 247, 248, .42); font-size: 1.25em; }
-    .rail-step.is-active { color: #fff; }
-    .rail-step.is-active b { color: #f2b7be; }
-    .rail-foot { bottom: 1.4rem; color: rgba(255, 247, 248, .55); font-size: .28em; font-weight: 800; letter-spacing: .12em; line-height: 1.4; position: absolute; }
-    .rail-foot span { color: #f2b7be; }
-    .kicker { color: var(--wine); font-size: .43em; font-weight: 900; letter-spacing: .22em; margin-bottom: 1.5em; text-transform: uppercase; }
-    .light-kicker { color: #f2b7be; }
-    h1, h2, p { margin: 0; }
-    h1, h2 { font-weight: 900; letter-spacing: -.045em; line-height: .96; }
-    h1 { font-size: 3.2em; max-width: 10em; }
-    h1 span, h2 span, h2 em { color: var(--wine); font-style: normal; }
-    h2 { font-size: 1.75em; max-width: 18em; }
-    .lead { color: var(--muted); font-size: .73em; line-height: 1.35; margin-top: 1.3em; max-width: 26em; }
-    .dark-slide, .wine-slide { color: #fff7f8; }
-    .dark-slide h2, .wine-slide h2, .dark-slide .lead, .wine-slide .lead { color: #fff7f8; }
-    .dark-slide h2 em, .wine-slide h2 em { color: #f2b7be; }
-    .dark-slide { background: #24171a; }
-    .wine-slide { background: var(--wine); }
-    .paper-slide { background: var(--paper); }
-    .title-slide { background: radial-gradient(circle at 78% 20%, rgba(217, 168, 77, .22), transparent 24%), var(--rose-soft); }
-    .title-layout { align-items: center; display: grid; gap: 5vw; grid-template-columns: minmax(0, 1fr) minmax(13rem, 20rem); height: 100%; }
-    .title-subtitle { color: var(--muted); font-size: .7em; line-height: 1.35; margin-top: 1.4em; max-width: 25em; }
-    .author-line { border-top: 1px solid var(--line); color: var(--muted); display: flex; flex-wrap: wrap; font-size: .38em; font-weight: 800; gap: 1.4em; letter-spacing: .13em; margin-top: 3.2em; padding-top: 1em; }
-    .author-line strong { color: var(--wine); }
-    .hero-seal { align-items: center; border: 1px solid var(--wine); color: var(--wine); display: flex; flex-direction: column; justify-content: center; min-height: 18rem; padding: 1.5rem; position: relative; text-align: center; }
-    .hero-seal::before, .hero-seal::after { border: 1px solid var(--wine); content: ""; inset: .45rem; pointer-events: none; position: absolute; }
-    .hero-seal::after { inset: .72rem; opacity: .25; }
-    .seal-label, .visual-code { font-size: .36em; font-weight: 900; letter-spacing: .19em; }
-    .seal-track { display: flex; flex-direction: column; gap: .5rem; margin: 1rem 0; }
-    .seal-track i { background: var(--wine); border-radius: 50%; display: block; height: .55rem; position: relative; width: .55rem; }
-    .seal-track i:not(:last-child)::after { background: var(--wine); content: ""; height: .5rem; left: .22rem; opacity: .4; position: absolute; top: .55rem; width: 1px; }
-    .hero-seal strong { font-size: .5em; letter-spacing: .16em; line-height: 1.5; }
-    .hero-seal small { color: var(--muted); font-size: .38em; line-height: 1.35; margin-top: 1rem; }
-    .claim-layout { align-items: center; display: grid; gap: 2.5vw; grid-template-columns: 6rem minmax(0, 1fr); margin-top: 9vh; }
-    .claim-index { color: var(--wine); font-family: "Arial Narrow", Arial, sans-serif; font-size: 4.6em; font-weight: 900; letter-spacing: -.1em; line-height: .8; }
-    .question-strip { display: flex; flex-wrap: wrap; gap: .7em; margin-top: 2em; }
-    .question-strip span, .three-labels span, .promise-row span, .operations-footer span { border-bottom: 2px solid var(--wine); color: var(--wine); font-size: .4em; font-weight: 900; letter-spacing: .14em; padding-bottom: .45em; }
-    .bottom-note { border-top: 1px solid var(--line); bottom: 5vh; color: var(--muted); display: flex; font-size: .46em; gap: 1.2em; left: 5.2vw; line-height: 1.3; padding-top: .8em; position: absolute; right: 6vw; }
-    .bottom-note b { color: var(--wine); flex: 0 0 auto; letter-spacing: .05em; }
-    .visual-heading { align-items: end; display: flex; gap: 2em; justify-content: space-between; }
-    .paper-heading h2 { color: var(--ink); }
-    .visual-code { color: inherit; opacity: .68; white-space: nowrap; }
-    .large-diagram { align-items: center; display: flex; justify-content: center; margin: 1.5vh auto 1vh; min-height: 0; }
-    .large-diagram img { background: #fff; border: 1px solid rgba(255,255,255,.35); max-height: 62vh; max-width: 82vw; object-fit: contain; padding: .4rem; }
-    .wine-slide .large-diagram img { border-color: rgba(255,255,255,.55); }
-    .three-labels, .promise-row, .operations-footer { display: flex; flex-wrap: wrap; gap: 1.4em; }
-    .dark-slide .three-labels span, .wine-slide .promise-row span, .operations-footer span { border-color: #f2b7be; color: #fff7f8; }
-    .promise-row { justify-content: space-between; margin-top: .5em; }
-    .promise-row span { border: 0; font-size: .4em; padding: 0; }
-    .promise-row b { color: #f2b7be; display: block; font-size: 1.15em; letter-spacing: .12em; }
-    .interface-layout { align-items: center; display: grid; gap: 4vw; grid-template-columns: minmax(0, 1.6fr) minmax(12rem, .8fr); margin-top: 4vh; }
-    .interface-shot img { border: 1px solid var(--line); box-shadow: 10px 10px 0 var(--rose); display: block; max-height: 55vh; max-width: 100%; object-fit: contain; }
-    .proof-list { display: flex; flex-direction: column; gap: 1.2rem; }
-    .proof-list div { border-top: 1px solid var(--line); display: grid; gap: .7em; grid-template-columns: 2.3em 1fr; padding-top: .8em; }
-    .proof-list b { color: var(--wine); font-size: .48em; }
-    .proof-list span { color: var(--muted); font-size: .52em; line-height: 1.35; }
-    .architecture-layout { align-items: center; display: grid; gap: 4vw; grid-template-columns: minmax(0, 1fr) minmax(10rem, .7fr); margin-top: 5vh; }
-    .architecture-shot img { background: #fff; border: 1px solid rgba(255,255,255,.5); max-width: 100%; padding: 1rem; }
-    .layer-stack { display: flex; flex-direction: column; gap: .8rem; }
-    .layer-stack span { border-left: 3px solid #f2b7be; color: rgba(255,247,248,.72); display: flex; flex-direction: column; font-size: .5em; gap: .2em; padding: .55em .8em; }
-    .layer-stack b { color: #fff; letter-spacing: .12em; }
-    .dark-caption, .micro-caption { color: var(--muted); font-size: .43em; letter-spacing: .05em; margin-top: 1.3em; }
-    .dark-caption { color: rgba(255,247,248,.65); }
-    .pseudo-layout { align-items: center; display: grid; gap: 3vw; grid-template-columns: minmax(0, 1fr) minmax(11rem, .45fr); margin-top: 2.5vh; }
-    .pseudo-shot { align-items: center; display: flex; justify-content: center; }
-    .pseudo-shot img { border: 1px solid var(--line); max-height: 62vh; max-width: 100%; object-fit: contain; }
-    .pseudo-note { border-left: 3px solid var(--wine); display: flex; flex-direction: column; gap: .35em; padding-left: 1em; }
-    .pseudo-note b { color: var(--wine); font-size: .4em; letter-spacing: .15em; }
-    .pseudo-note span { color: var(--muted); font-size: .5em; line-height: 1.3; margin-bottom: .9em; }
-    .evidence-grid { display: grid; gap: 1.1em; grid-template-columns: repeat(3, 1fr); margin-top: 5vh; }
-    figure { margin: 0; }
-    .evidence-grid figure { border-top: 3px solid var(--wine); padding-top: .7em; }
-    .evidence-grid img { display: block; height: 29vh; max-width: 100%; object-fit: contain; width: 100%; }
-    figcaption { color: var(--muted); font-size: .4em; font-weight: 800; letter-spacing: .06em; margin-top: .8em; }
-    .operations-layout { align-items: center; display: grid; gap: 2vw; grid-template-columns: 1.5fr 1fr; margin-top: 4vh; }
-    .operation-shot { background: #fff; border: 1px solid rgba(255,255,255,.52); padding: .45rem; }
-    .operation-shot img { display: block; height: 34vh; max-width: 100%; object-fit: contain; width: 100%; }
-    .wide-shot img { height: 21vh; }
-    .operations-footer { justify-content: space-between; margin-top: 1em; }
-    .operations-footer span { border: 0; font-size: .4em; padding: 0; }
-    .workbench-layout { display: grid; gap: 1.1em; grid-template-columns: 1.45fr .8fr; margin-top: 4vh; }
-    .workbench-main img { display: block; height: 46vh; max-width: 100%; object-fit: cover; width: 100%; }
-    .workbench-side { display: grid; gap: 1.1em; grid-template-rows: 1fr 1fr; }
-    .workbench-side figure { border-left: 3px solid var(--wine); padding-left: .7em; }
-    .workbench-side img { display: block; height: 20vh; max-width: 100%; object-fit: contain; width: 100%; }
-    .validation-claim { margin-top: 5vh; }
-    .light-lead { color: rgba(255,247,248,.76); }
-    .validation-grid { display: grid; gap: 1.3em; grid-template-columns: repeat(3, 1fr); margin-top: 7vh; }
-    .validation-grid div { border-top: 2px solid #f2b7be; display: flex; flex-direction: column; gap: .45em; padding-top: .8em; }
-    .validation-grid b { color: #f2b7be; font-size: .44em; letter-spacing: .13em; }
-    .validation-grid span { color: rgba(255,247,248,.78); font-size: .53em; line-height: 1.3; }
-    .validation-line { align-items: center; color: #f2b7be; display: flex; font-size: .38em; font-weight: 800; gap: 1em; letter-spacing: .14em; margin-top: 7vh; }
-    .validation-line i { background: #f2b7be; height: 1px; opacity: .6; width: 3rem; }
-    .result-layout { align-items: center; display: grid; gap: 4vw; grid-template-columns: 1fr 13rem; margin-top: 9vh; }
-    .result-stamp { align-items: center; border: 1px solid var(--wine); color: var(--wine); display: flex; flex-direction: column; gap: .8em; justify-content: center; min-height: 10rem; padding: 1rem; text-align: center; transform: rotate(3deg); }
-    .result-stamp strong { font-size: .7em; letter-spacing: .12em; line-height: .95; }
-    .result-stamp span { border-top: 1px solid var(--wine); font-size: .34em; font-weight: 900; letter-spacing: .13em; padding-top: .65em; }
-    .result-grid { display: grid; gap: 1.2em; grid-template-columns: repeat(3, 1fr); margin-top: 6vh; max-width: 30em; }
-    .result-grid div { background: var(--rose); border-top: 4px solid var(--wine); display: flex; flex-direction: column; gap: .35em; padding: .8em; }
-    .result-grid b { color: var(--wine); font-size: .48em; letter-spacing: .14em; }
-    .result-grid span { color: var(--muted); font-size: .5em; }
-    .closing-line { color: var(--wine); font-size: .65em; font-weight: 800; margin-top: 2em; max-width: 27em; }
-    .closing-slide .slide-body { background: linear-gradient(135deg, var(--rose-soft), #fff); }
-    .closing-layout { align-self: center; max-width: 48rem; }
-    .closing-layout h2 { font-size: 2.5em; }
-    .closing-layout h2 span { color: var(--wine); }
-    .closing-copy { color: var(--muted); font-size: .7em; line-height: 1.4; margin-top: 1.5em; max-width: 27em; }
-    .closing-signature { border-top: 1px solid var(--line); display: flex; flex-direction: column; font-size: .4em; gap: .5em; margin-top: 4em; padding-top: 1em; }
-    .closing-signature strong { color: var(--wine); letter-spacing: .14em; }
-    .closing-signature span { color: var(--muted); max-width: 37em; }
-    .reveal .progress { color: var(--wine); }
-    .reveal .slide-number { background: transparent; color: var(--muted); }
-    .reveal .controls { color: var(--wine); }
+    .sheet-card {
+      background: var(--paper-bright);
+      border: 1px solid var(--line);
+      box-shadow: .7rem .7rem 0 var(--rose);
+      left: 4%;
+      padding: .8rem;
+      position: absolute;
+      right: 7%;
+      top: 1.8rem;
+      transform: rotate(-1.4deg);
+    }
+    .sheet-top { align-items: center; border-bottom: 1px solid var(--line); color: var(--wine); display: flex; font-size: .38em; justify-content: space-between; letter-spacing: .1em; padding-bottom: .55em; }
+    .sheet-top span { color: var(--muted); font-size: .9em; font-weight: 400; letter-spacing: 0; }
+    .spreadsheet { border-collapse: collapse; color: var(--muted); font-size: .43em; table-layout: fixed; width: 100%; }
+    .spreadsheet th, .spreadsheet td { border-bottom: 1px solid rgba(143, 29, 44, .12); padding: .62em .55em; text-align: left; }
+    .spreadsheet th { color: var(--wine); font-size: .8em; letter-spacing: .12em; }
+    .spreadsheet td:first-child { color: var(--ink); font-weight: 900; }
+    .spreadsheet tbody tr:nth-child(2) td, .spreadsheet tbody tr:nth-child(3) td { background: rgba(231, 173, 181, .25); }
+    .sheet-tag { background: var(--wine); color: #fff7f8; font-size: .35em; font-weight: 900; letter-spacing: .1em; padding: .55em .7em; position: absolute; }
+    .tag-one { right: 0; top: 3rem; transform: rotate(5deg); }
+    .tag-two { bottom: 1.7rem; right: 8%; transform: rotate(-3deg); }
+    .tag-three { bottom: .2rem; left: 12%; transform: rotate(2deg); }
+    .contrast-grid {
+      align-items: center;
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr 5rem 1.35fr;
+      margin-top: 3.6rem;
+    }
+    .contrast-panel { min-width: 0; }
+    .contrast-panel p { color: rgba(255, 247, 248, .68); font-size: .5em; line-height: 1.35; margin-top: 1rem; max-width: 24em; }
+    .panel-label { color: var(--rose-deep); display: block; }
+    .single-record { border: 1px solid rgba(255, 247, 248, .34); display: flex; flex-direction: column; margin-top: 1rem; padding: 1.15rem; }
+    .single-record b { font-family: Georgia, "Times New Roman", serif; font-size: 1.25em; }
+    .single-record span { color: var(--rose-deep); font-size: .46em; font-weight: 900; letter-spacing: .1em; margin-top: .8em; }
+    .single-record small { color: rgba(255, 247, 248, .62); font-size: .43em; margin-top: .8em; }
+    .contrast-bridge { align-items: center; color: var(--rose-deep); display: flex; flex-direction: column; font-size: .42em; gap: .7em; letter-spacing: .12em; text-align: center; }
+    .contrast-bridge > span { border: 1px solid var(--rose-deep); border-radius: 50%; display: grid; height: 1.8rem; place-items: center; width: 1.8rem; }
+    .contrast-bridge i { background: var(--rose-deep); display: block; height: 2.3rem; opacity: .55; width: 1px; }
+    .record-chain { align-items: center; display: flex; margin-top: 1.15rem; }
+    .record-chain span { border: 1px solid var(--rose-deep); color: #fff7f8; font-size: .41em; font-weight: 900; letter-spacing: .05em; padding: .75em .65em; }
+    .record-chain i { background: var(--rose-deep); display: block; height: 1px; opacity: .7; width: 1.2rem; }
+    .impact-layout { align-items: center; display: grid; gap: 4vw; grid-template-columns: .72fr 1.8fr; margin-top: 2.8rem; }
+    .repeat-column { border-right: 1px solid rgba(255, 247, 248, .28); min-height: 12.5rem; padding-right: 3vw; }
+    .repeat-column > span { color: var(--rose-deep); font-size: .35em; font-weight: 900; letter-spacing: .15em; }
+    .repeat-row { align-items: center; display: flex; margin-top: 2rem; }
+    .repeat-row b { border: 1px solid var(--rose-deep); border-radius: 50%; color: var(--rose-deep); display: grid; font-size: .37em; height: 1.5rem; place-items: center; width: 1.5rem; }
+    .repeat-row i { background: var(--rose-deep); display: block; height: 1px; opacity: .55; width: 1.6rem; }
+    .repeat-column strong { color: #fff7f8; display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.1em; letter-spacing: .03em; line-height: .95; margin-top: 1.3rem; }
+    .repeat-column small { color: rgba(255, 247, 248, .6); display: block; font-size: .42em; line-height: 1.3; margin-top: 1.2rem; }
+    .impact-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+    .impact-card { border-top: 3px solid var(--rose-deep); display: flex; flex-direction: column; min-height: 10rem; padding: .8rem .7rem; }
+    .impact-card > span { color: var(--rose-deep); font-size: .36em; font-weight: 900; letter-spacing: .13em; }
+    .impact-card b { color: #fff7f8; font-family: Georgia, "Times New Roman", serif; font-size: .86em; margin-top: 1.3rem; }
+    .impact-card small { color: rgba(255, 247, 248, .67); font-size: .43em; line-height: 1.35; margin-top: .9rem; }
+    .evidence-layout { align-items: center; display: grid; gap: 5vw; grid-template-columns: minmax(15rem, .82fr) 1fr; margin-top: 2.4rem; }
+    .dossier-card { background: var(--paper-bright); border: 1px solid var(--line); box-shadow: .65rem .65rem 0 var(--rose); padding: 1rem 1.1rem; transform: rotate(-1deg); }
+    .dossier-head { align-items: baseline; border-bottom: 1px solid var(--line); color: var(--wine); display: flex; font-size: .4em; justify-content: space-between; letter-spacing: .14em; padding-bottom: .7em; }
+    .dossier-head b { font-family: Georgia, "Times New Roman", serif; font-size: 2em; letter-spacing: -.08em; }
+    .dossier-status { display: flex; flex-direction: column; margin: 1rem 0 1.2rem; }
+    .dossier-status span { color: var(--muted); font-size: .34em; font-weight: 900; letter-spacing: .13em; }
+    .dossier-status strong { color: var(--wine); font-family: Georgia, "Times New Roman", serif; font-size: .9em; margin-top: .35em; }
+    .dossier-line { align-items: center; border-top: 1px solid rgba(143, 29, 44, .14); display: grid; font-size: .39em; gap: .6em; grid-template-columns: .7rem 1fr auto; padding: .6em 0; }
+    .dossier-line i { background: var(--wine); border-radius: 50%; display: block; height: .5rem; width: .5rem; }
+    .dossier-line span { color: var(--muted); }
+    .dossier-line b { color: var(--ink); letter-spacing: .07em; }
+    .evidence-chips { display: grid; gap: .8rem; grid-template-columns: repeat(2, 1fr); }
+    .evidence-chips div { border-left: 3px solid var(--wine); display: flex; flex-direction: column; padding: .7rem .85rem; }
+    .evidence-chips b { color: var(--wine); font-size: .42em; letter-spacing: .12em; }
+    .evidence-chips span { color: var(--muted); font-size: .5em; line-height: 1.25; margin-top: .45em; }
+    .citation { color: var(--muted); display: block; font-size: .35em; letter-spacing: .03em; margin-top: 1.7rem; }
+    .objective-slide .slide-main { justify-content: center; }
+    .objective-slide h2 { color: #fff7f8; font-size: 1.18em; }
+    .objective-statement { color: #fff7f8; font-family: Georgia, "Times New Roman", serif; font-size: 1.85em; letter-spacing: -.045em; line-height: 1.08; margin-top: 1.2rem; max-width: 21em; }
+    .objective-statement mark { background: transparent; border-bottom: 3px solid var(--rose-deep); color: var(--rose-deep); }
+    .objective-words { display: grid; gap: .8rem; grid-template-columns: repeat(3, 1fr); margin-top: 2.9rem; max-width: 46rem; }
+    .objective-words div { border-top: 1px solid rgba(255, 247, 248, .37); display: flex; flex-direction: column; padding-top: .75rem; }
+    .objective-words b { color: var(--rose-deep); font-size: .45em; letter-spacing: .14em; }
+    .objective-words span { color: rgba(255, 247, 248, .72); font-size: .5em; margin-top: .5em; }
+    .method-path { align-items: stretch; display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); list-style: none; margin: 3.3rem 0 0; padding: 0; }
+    .method-path li { border-top: 4px solid var(--wine); display: flex; flex-direction: column; min-height: 8.2rem; padding: .8rem .65rem; position: relative; }
+    .method-path li:not(:last-child)::after { color: var(--wine); content: ">"; font-size: 1.1em; font-weight: 700; position: absolute; right: -.8rem; top: 2.7rem; }
+    .method-path span { color: var(--wine); font-size: .37em; font-weight: 900; letter-spacing: .12em; }
+    .method-path b { font-family: Georgia, "Times New Roman", serif; font-size: .67em; line-height: 1.05; margin-top: 1.2rem; }
+    .method-path small { color: var(--muted); font-size: .4em; line-height: 1.25; margin-top: .7rem; }
+    .module-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); margin-top: 3.2rem; }
+    .module-card { background: var(--paper-bright); border-top: 4px solid var(--wine); display: flex; flex-direction: column; min-height: 11.5rem; padding: 1.1rem; }
+    .module-glyph { border: 1px solid var(--wine); display: block; height: 2.2rem; margin-bottom: 1.2rem; position: relative; width: 2.2rem; }
+    .glyph-record::before, .glyph-record::after { border-top: 2px solid var(--wine); content: ""; left: .45rem; position: absolute; right: .45rem; }
+    .glyph-record::before { top: .75rem; }
+    .glyph-record::after { top: 1.2rem; }
+    .glyph-history { border-radius: 50%; }
+    .glyph-history::before { border-left: 2px solid var(--wine); border-top: 2px solid var(--wine); border-radius: 50%; content: ""; height: .9rem; left: .55rem; position: absolute; top: .55rem; transform: rotate(-25deg); width: .9rem; }
+    .glyph-report::before { background: var(--wine); bottom: .45rem; content: ""; height: .55rem; left: .48rem; position: absolute; width: .3rem; }
+    .glyph-report::after { background: var(--wine); bottom: .45rem; content: ""; height: 1.15rem; left: 1rem; position: absolute; width: .3rem; }
+    .module-card > b { color: var(--wine); font-size: .46em; letter-spacing: .14em; }
+    .module-card p { color: var(--muted); font-size: .52em; line-height: 1.35; margin-top: .8rem; max-width: 18em; }
+    .flow-legend { color: var(--rose-deep); margin-top: 2.2rem; }
+    .observed-flow { align-items: center; color: rgba(255, 247, 248, .58); display: flex; font-size: .35em; font-weight: 900; gap: .62em; letter-spacing: .05em; margin-top: 1.2rem; white-space: nowrap; }
+    .observed-flow i { background: var(--rose-deep); display: block; height: 1px; opacity: .5; width: 1.4rem; }
+    .structured-flow { align-items: stretch; display: grid; gap: .7rem; grid-template-columns: 1fr 1.5rem 1fr 1.5rem 1.2fr 1.5rem 1fr; margin-top: 2.1rem; }
+    .structured-flow > div { border: 1px solid var(--rose-deep); display: flex; flex-direction: column; justify-content: center; min-height: 7.2rem; padding: .85rem .7rem; }
+    .structured-flow > div > span { color: var(--rose-deep); font-size: .35em; font-weight: 900; }
+    .structured-flow b { color: #fff7f8; font-family: Georgia, "Times New Roman", serif; font-size: .59em; line-height: 1.05; margin-top: .9rem; }
+    .structured-flow small { color: rgba(255, 247, 248, .65); font-size: .38em; line-height: 1.2; margin-top: .55rem; }
+    .structured-flow > i { align-self: center; color: var(--rose-deep); font-size: .8em; font-style: normal; text-align: center; }
+    .entity-map { height: 16rem; margin: 1rem auto 0; max-width: 52rem; position: relative; width: 100%; }
+    .entity-core, .entity-node { position: absolute; text-align: center; }
+    .entity-core { background: var(--wine); color: #fff7f8; height: 8.5rem; left: 50%; padding: 1.7rem .7rem; top: 50%; transform: translate(-50%, -50%); width: 12rem; z-index: 2; }
+    .entity-core::before { border: 1px solid rgba(255, 247, 248, .5); content: ""; inset: .5rem; position: absolute; }
+    .entity-core span, .entity-node small { display: block; font-size: .32em; font-weight: 900; letter-spacing: .12em; position: relative; }
+    .entity-core span { color: var(--rose-deep); }
+    .entity-core b { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.1em; letter-spacing: -.04em; margin-top: .6em; position: relative; }
+    .entity-core small { color: rgba(255, 247, 248, .68); font-size: .36em; margin-top: .65em; position: relative; }
+    .entity-node { background: var(--paper-bright); border: 1px solid var(--line); min-width: 10.5rem; padding: .75rem .7rem; z-index: 2; }
+    .entity-node b { color: var(--wine); display: block; font-size: .42em; letter-spacing: .1em; }
+    .entity-node small { color: var(--muted); font-size: .36em; font-weight: 400; letter-spacing: 0; margin-top: .42em; }
+    .entity-catalogs { left: 50%; top: 0; transform: translateX(-50%); }
+    .entity-documents { left: 0; top: 50%; transform: translateY(-50%); }
+    .entity-fronts { right: 0; top: 50%; transform: translateY(-50%); }
+    .entity-history { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .entity-link { background: var(--wine); height: 1px; opacity: .45; position: absolute; transform-origin: left center; width: 8rem; z-index: 1; }
+    .link-top { left: calc(50% + .2rem); top: 4.1rem; transform: rotate(-90deg); }
+    .link-left { left: 9.8rem; top: 50%; width: 7rem; }
+    .link-right { right: 9.8rem; top: 50%; transform: rotate(180deg); width: 7rem; }
+    .link-bottom { bottom: 4.1rem; left: calc(50% - .2rem); transform: rotate(90deg); }
+    .layer-map { align-items: center; display: grid; gap: .8rem; grid-template-columns: 1fr 2.2rem 1fr 2.2rem 1fr; margin-top: 3.2rem; }
+    .layer-card { border: 1px solid rgba(255, 247, 248, .46); display: flex; flex-direction: column; min-height: 9.3rem; padding: 1rem; }
+    .layer-card span { color: var(--rose-deep); font-size: .35em; font-weight: 900; letter-spacing: .13em; }
+    .layer-card strong { color: #fff7f8; font-family: Georgia, "Times New Roman", serif; font-size: 1.08em; margin-top: 1.2rem; }
+    .layer-card small { color: rgba(255, 247, 248, .66); font-size: .44em; line-height: 1.3; margin-top: .8rem; }
+    .layer-arrow { color: var(--rose-deep); font-size: 1em; text-align: center; }
+    .architecture-note { color: rgba(255, 247, 248, .67); font-size: .48em; line-height: 1.3; margin-top: 2rem; }
+    .transaction-flow { align-items: stretch; display: grid; gap: .65rem; grid-template-columns: 1fr 1.5rem 1fr 1.5rem 1.2fr 1.5rem 1.2fr; margin-top: 3rem; }
+    .transaction-flow > div { background: var(--paper-bright); border-top: 4px solid var(--wine); display: flex; flex-direction: column; min-height: 7.5rem; padding: .85rem .7rem; }
+    .transaction-flow > div > span { color: var(--wine); font-size: .35em; font-weight: 900; }
+    .transaction-flow b { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: .59em; line-height: 1.05; margin-top: 1.05rem; }
+    .transaction-flow small { color: var(--muted); font-size: .38em; line-height: 1.2; margin-top: .55rem; }
+    .transaction-flow > i { align-self: center; color: var(--wine); font-size: .8em; font-style: normal; text-align: center; }
+    .transaction-outcome { align-items: center; display: grid; gap: .8rem; grid-template-columns: 1fr 1fr 1fr; margin-top: 1.8rem; position: relative; }
+    .outcome-label { color: var(--wine); font-size: .34em; font-weight: 900; letter-spacing: .13em; }
+    .outcome { border-left: 3px solid var(--wine); display: flex; flex-direction: column; padding: .55rem .8rem; }
+    .outcome b { color: var(--wine); font-size: .46em; letter-spacing: .12em; }
+    .outcome small { color: var(--muted); font-size: .42em; margin-top: .35em; }
+    .rollback { border-color: var(--sage); }
+    .rollback b { color: var(--sage); }
+    .app-window { background: #fff; border: 1px solid var(--line); box-shadow: .7rem .7rem 0 var(--rose); margin-top: 2rem; min-height: 14.7rem; overflow: hidden; }
+    .app-topbar { align-items: center; background: var(--wine); color: #fff7f8; display: flex; gap: 1.1rem; min-height: 2.35rem; padding: .55rem .8rem; }
+    .app-topbar > b { font-size: .42em; letter-spacing: .12em; white-space: nowrap; }
+    .app-topbar nav { display: flex; flex: 1; flex-wrap: wrap; gap: 1rem; }
+    .app-topbar nav span, .app-topbar small { color: rgba(255, 247, 248, .68); font-size: .34em; letter-spacing: .08em; }
+    .app-topbar nav .active { color: #fff; border-bottom: 2px solid var(--rose-deep); padding-bottom: .35em; }
+    .app-topbar small { white-space: nowrap; }
+    .app-workspace { padding: 1rem 1.1rem; }
+    .app-context { border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: .7em 1.4em; padding-bottom: .75rem; }
+    .app-context span { color: var(--wine); font-size: .34em; font-weight: 900; letter-spacing: .13em; width: 100%; }
+    .app-context b { font-family: Georgia, "Times New Roman", serif; font-size: .72em; }
+    .app-context small { color: var(--muted); font-size: .38em; }
+    .app-panels { display: grid; gap: 1rem; grid-template-columns: .72fr 1.5fr; margin-top: 1rem; }
+    .form-card, .table-card { border: 1px solid var(--line); min-width: 0; padding: .75rem; }
+    .ui-label { color: var(--wine); display: block; font-size: .34em; font-weight: 900; letter-spacing: .13em; margin-bottom: .8rem; }
+    .form-card label { align-items: center; color: var(--muted); display: flex; font-size: .4em; justify-content: space-between; margin-top: .55rem; }
+    .form-card label b { border-bottom: 1px solid var(--line); color: var(--ink); font-weight: 400; min-width: 6em; padding-bottom: .2em; text-align: right; }
+    .form-card button { background: var(--wine); border: 0; color: #fff7f8; font: inherit; font-size: .34em; font-weight: 900; letter-spacing: .1em; margin-top: 1rem; padding: .75em; width: 100%; }
+    .table-row { border-top: 1px solid rgba(143, 29, 44, .13); color: var(--muted); display: grid; font-size: .39em; gap: .6em; grid-template-columns: .45fr 1fr .9fr; padding: .65em 0; }
+    .table-head { border-top: 0; color: var(--wine); font-size: .32em; font-weight: 900; letter-spacing: .1em; }
+    .table-row .status { color: var(--sage); font-weight: 900; }
+    .return-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+    .return-card { border: 1px solid rgba(255, 247, 248, .46); display: flex; flex-direction: column; min-height: 11.4rem; padding: 1rem; }
+    .return-icon { border: 1px solid var(--rose-deep); display: block; height: 2.1rem; margin-bottom: 1.2rem; position: relative; width: 2.1rem; }
+    .icon-query::before { border: 2px solid var(--rose-deep); border-radius: 50%; content: ""; height: .75rem; left: .48rem; position: absolute; top: .45rem; width: .75rem; }
+    .icon-query::after { background: var(--rose-deep); content: ""; height: .8rem; left: 1.25rem; position: absolute; top: 1.2rem; transform: rotate(-45deg); width: 2px; }
+    .icon-history { border-radius: 50%; }
+    .icon-history::before { border-left: 2px solid var(--rose-deep); border-top: 2px solid var(--rose-deep); border-radius: 50%; content: ""; height: .85rem; left: .53rem; position: absolute; top: .53rem; transform: rotate(20deg); width: .85rem; }
+    .icon-export::before { border: 2px solid var(--rose-deep); content: ""; height: .85rem; left: .52rem; position: absolute; top: .7rem; width: .95rem; }
+    .icon-export::after { border-left: 2px solid var(--rose-deep); border-top: 2px solid var(--rose-deep); content: ""; height: .55rem; left: .85rem; position: absolute; top: .32rem; transform: rotate(45deg); width: .55rem; }
+    .return-card > b { color: var(--rose-deep); font-size: .43em; letter-spacing: .12em; }
+    .return-card small { color: rgba(255, 247, 248, .66); font-size: .46em; line-height: 1.25; margin-top: .55rem; }
+    .return-card strong { border-top: 1px solid rgba(255, 247, 248, .28); color: #fff7f8; font-size: .43em; letter-spacing: .05em; margin-top: auto; padding-top: .75rem; }
+    .verification-head { align-items: center; display: flex; justify-content: space-between; margin-top: 2.1rem; }
+    .verification-head span { color: var(--muted); font-size: .39em; font-style: italic; }
+    .verification-head b { border: 1px solid var(--sage); color: var(--sage); font-size: .34em; letter-spacing: .12em; padding: .55em .7em; }
+    .verification-grid { display: grid; gap: .8rem; grid-template-columns: repeat(4, 1fr); margin-top: 1.2rem; }
+    .verification-cell { border-top: 4px solid var(--sage); display: flex; flex-direction: column; min-height: 9.1rem; padding: .8rem .7rem; }
+    .verification-cell > span { color: var(--wine); font-size: .35em; font-weight: 900; letter-spacing: .13em; }
+    .verification-cell b { font-family: Georgia, "Times New Roman", serif; font-size: .68em; margin-top: 1.15rem; }
+    .verification-cell small { color: var(--muted); font-size: .42em; line-height: 1.25; margin-top: .65rem; }
+    .verification-cell strong { color: var(--sage); font-size: .34em; letter-spacing: .12em; margin-top: auto; }
+    .verification-foot { color: var(--muted); font-size: .43em; line-height: 1.25; margin-top: 1.5rem; }
+    .demo-pause { display: flex; flex-direction: column; justify-content: center; min-height: 100%; }
+    .demo-pause h2 { color: #fff7f8; font-size: 2.8em; }
+    .demo-pause .slide-deck { font-family: Georgia, "Times New Roman", serif; font-size: .83em; margin-top: 1.2em; }
+    .demo-route { align-items: center; display: grid; gap: .9rem; grid-template-columns: 1fr 1.5rem 1.25fr 1.5rem 1fr; margin-top: 3.2rem; }
+    .demo-route > div { border: 1px solid rgba(255, 247, 248, .45); display: flex; flex-direction: column; min-height: 7rem; padding: .85rem .8rem; }
+    .demo-route > div > span { color: var(--rose-deep); font-size: .35em; font-weight: 900; }
+    .demo-route b { color: #fff7f8; font-family: Georgia, "Times New Roman", serif; font-size: .55em; line-height: 1.08; margin-top: 1rem; }
+    .demo-route small { color: rgba(255, 247, 248, .65); font-size: .4em; margin-top: .65rem; }
+    .demo-route > i { color: var(--rose-deep); font-size: .8em; font-style: normal; text-align: center; }
+    .demo-prompt { align-self: flex-start; border-bottom: 2px solid var(--rose-deep); color: var(--rose-deep); font-size: .42em; font-weight: 900; letter-spacing: .15em; margin-top: 2.2rem; padding-bottom: .5em; }
+    .closing-grid { align-items: center; display: grid; gap: 6vw; grid-template-columns: 1.2fr .8fr; }
+    .closing-copy h2 { font-size: 2.15em; }
+    .closing-copy .slide-deck { font-size: .78em; margin-top: 1.3em; }
+    .closing-line { border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: .6em; margin-top: 2.5rem; max-width: 24em; padding-top: .85rem; }
+    .closing-line span { color: var(--wine); font-size: .35em; font-weight: 900; letter-spacing: .14em; }
+    .closing-line b { color: var(--muted); font-size: .48em; line-height: 1.3; }
+    .final-dossier { background: var(--paper-bright); border: 1px solid var(--line); box-shadow: .8rem .8rem 0 var(--rose); min-height: 15rem; padding: 1rem; position: relative; transform: rotate(2deg); }
+    .final-dossier-head { align-items: center; border-bottom: 1px solid var(--line); color: var(--wine); display: flex; font-size: .35em; font-weight: 900; justify-content: space-between; letter-spacing: .1em; padding-bottom: .75em; }
+    .final-dossier-head b { font-family: Georgia, "Times New Roman", serif; font-size: 1.9em; }
+    .final-dossier-body { display: flex; flex-direction: column; margin-top: 2rem; }
+    .final-dossier-body span { color: var(--muted); font-size: .35em; font-weight: 900; letter-spacing: .13em; }
+    .final-dossier-body strong { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1em; line-height: 1.08; margin-top: .65rem; }
+    .final-stamp { align-items: center; border: 2px solid var(--wine); border-radius: 50%; color: var(--wine); display: flex; font-size: .48em; font-weight: 900; height: 5.2rem; justify-content: center; letter-spacing: .13em; position: absolute; right: 1.1rem; text-align: center; top: 7.8rem; transform: rotate(-11deg); width: 5.2rem; }
 
     @media (max-width: 700px) {
       .reveal { font-size: 23px; }
-      .slide-shell { grid-template-columns: 1fr; grid-template-rows: 4.2rem 1fr; }
-      .dossier-rail { align-items: center; flex-direction: row; min-height: 0; padding: .7rem 1rem; }
-      .rail-brand { font-size: .5em; line-height: .9; }
-      .rail-rule { height: 1.4rem; margin: 0 .8rem; width: 1px; }
-      .rail-steps { flex: 1; flex-direction: row; justify-content: space-between; }
-      .rail-step { align-items: center; font-size: .26em; text-align: center; }
-      .rail-foot { display: none; }
-      .slide-body { padding: 7vh 7vw 5vh; }
-      h1 { font-size: 2.45em; }
-      h2 { font-size: 1.45em; }
-      .title-layout, .interface-layout, .architecture-layout, .pseudo-layout, .workbench-layout, .result-layout { display: flex; flex-direction: column; gap: 1.2rem; justify-content: center; }
-      .hero-seal { min-height: 9rem; width: 8rem; }
-      .title-subtitle { font-size: .62em; }
-      .author-line { font-size: .31em; margin-top: 1.7em; }
-      .claim-layout { gap: 1rem; grid-template-columns: 3.5rem 1fr; margin-top: 4vh; }
-      .claim-index { font-size: 3.6em; }
-      .question-strip { gap: .45em; margin-top: 1.2em; }
-      .bottom-note { bottom: 3vh; display: block; font-size: .4em; }
-      .bottom-note span { display: block; margin-top: .4em; }
-      .visual-heading { align-items: start; flex-direction: column; gap: .6em; }
-      .large-diagram { margin-top: 2vh; }
-      .large-diagram img { max-height: 53vh; max-width: 86vw; }
-      .interface-shot img { max-height: 41vh; }
-      .proof-list { gap: .55rem; }
-      .proof-list div { padding-top: .45em; }
-      .architecture-shot img { max-height: 18vh; }
-      .pseudo-shot img { max-height: 43vh; }
-      .evidence-grid { gap: .5em; margin-top: 2vh; }
-      .evidence-grid img { height: 21vh; }
-      .operations-layout { gap: .6em; grid-template-columns: 1fr; margin-top: 2vh; }
-      .operation-shot img, .wide-shot img { height: 22vh; }
-      .workbench-main img { height: 27vh; }
-      .workbench-side { display: flex; gap: .6em; }
-      .workbench-side img { height: 14vh; }
-      .validation-grid, .result-grid { gap: .6em; grid-template-columns: 1fr; margin-top: 3vh; }
-      .validation-line { flex-wrap: wrap; margin-top: 3vh; }
-      .result-stamp { min-height: 6rem; width: 7rem; }
-      .closing-layout h2 { font-size: 2em; }
+      .slide-frame { padding: 6vh 7vw 5vh; }
+      h1 { font-size: 2.55em; }
+      h2 { font-size: 1.42em; }
+      .slide-deck { font-size: .63em; line-height: 1.28; margin-top: .8em; }
+      .title-grid { display: flex; flex-direction: column; gap: 1.1rem; justify-content: center; }
+      .title-grid h1 { font-size: 2.5em; }
+      .route-hero { min-height: 10.8rem; padding: .85rem .7rem; width: 100%; }
+      .route-label, .panel-label, .route-stop span { font-size: .29em; }
+      .route-steps { margin-top: 1.35rem; }
+      .route-stop::before { height: .58rem; margin-bottom: .48rem; width: .58rem; }
+      .route-stop b { font-size: .35em; }
+      .route-stop small { font-size: .28em; margin-top: .35em; }
+      .node-map { gap: .75rem; grid-template-columns: 1fr; margin-top: 1.5rem; }
+      .map-side { border-top: 0; border-left: 1px solid var(--line); padding: .45rem 0 .45rem 1rem; text-align: left; }
+      .map-side::after { border-bottom: 0; border-right: 1px solid var(--wine); border-top: 1px solid var(--wine); height: .45rem; left: -.27rem; right: auto; top: .7rem; transform: rotate(45deg); width: .45rem; }
+      .map-destination::after { left: -.27rem; transform: rotate(45deg); }
+      .map-side b { font-size: .57em; margin-top: .25em; }
+      .map-side small { font-size: .32em; margin-top: .35em; }
+      .map-core { min-height: 5.8rem; order: -1; padding: 1rem; }
+      .map-core strong { font-size: 1em; margin-top: .35em; }
+      .map-core small { font-size: .32em; margin-top: .35em; }
+      .movement-caption, .flow-legend { font-size: .28em; margin-top: 1.2rem; }
+      .movement-caption i, .flow-legend i { width: 1.8rem; }
+      .movement-grid { gap: .45rem; grid-template-columns: repeat(2, 1fr); margin-top: .7rem; }
+      .movement-grid li { min-height: 5.25rem; padding: .5rem .5rem; }
+      .movement-grid li:not(:last-child)::after { display: none; }
+      .movement-grid b { font-size: .42em; margin-top: .6rem; }
+      .movement-grid small { font-size: .31em; margin-top: .35rem; }
+      .question-ring { height: 13rem; margin-top: .8rem; }
+      .question-ring::before { height: 7.8rem; width: 14rem; }
+      .question-core { height: 7.4rem; width: 7.4rem; }
+      .question-core span { font-size: .27em; }
+      .question-core strong { font-size: .6em; }
+      .question-chip { padding: .45rem .55rem; width: 8.2rem; }
+      .question-chip b { font-size: .3em; }
+      .question-chip span { font-size: .36em; margin-top: .25em; }
+      .chip-control { left: 0; top: .4rem; }
+      .chip-trace { right: 0; top: .4rem; }
+      .chip-report { bottom: .1rem; }
+      .spreadsheet-scene { min-height: 12rem; }
+      .sheet-card { left: 0; padding: .5rem; right: 3%; top: .9rem; }
+      .sheet-top { font-size: .28em; }
+      .spreadsheet { font-size: .3em; }
+      .spreadsheet th, .spreadsheet td { padding: .4em .3em; }
+      .sheet-tag { font-size: .27em; }
+      .tag-one { right: 0; top: 2.2rem; }
+      .tag-two { bottom: 1rem; right: 0; }
+      .tag-three { bottom: .05rem; left: 8%; }
+      .contrast-grid { gap: .65rem; grid-template-columns: 1fr; margin-top: 1.2rem; }
+      .contrast-panel p { font-size: .4em; margin-top: .6rem; }
+      .single-record { margin-top: .5rem; padding: .65rem; }
+      .single-record b { font-size: .8em; }
+      .single-record span, .single-record small { font-size: .34em; margin-top: .4em; }
+      .contrast-bridge { flex-direction: row; font-size: .3em; gap: .45rem; justify-content: center; }
+      .contrast-bridge i { height: 1px; width: 1.5rem; }
+      .contrast-bridge > span { height: 1.1rem; width: 1.1rem; }
+      .record-chain { margin-top: .55rem; }
+      .record-chain span { font-size: .3em; padding: .5em .35em; }
+      .record-chain i { width: .6rem; }
+      .impact-layout { display: flex; flex-direction: column; gap: .8rem; margin-top: 1.1rem; }
+      .repeat-column { border-bottom: 1px solid rgba(255, 247, 248, .28); border-right: 0; min-height: 5.3rem; padding: 0 0 .8rem; width: 100%; }
+      .repeat-row { margin-top: .65rem; }
+      .repeat-row b { height: 1rem; width: 1rem; }
+      .repeat-row i { width: 1rem; }
+      .repeat-column strong { font-size: .7em; margin-top: .5rem; }
+      .repeat-column small { display: none; }
+      .impact-grid { gap: .45rem; width: 100%; }
+      .impact-card { min-height: 6rem; padding: .5rem .4rem; }
+      .impact-card > span { font-size: .28em; }
+      .impact-card b { font-size: .55em; margin-top: .7rem; }
+      .impact-card small { font-size: .31em; margin-top: .45rem; }
+      .evidence-layout { display: flex; flex-direction: column; gap: .8rem; margin-top: 1rem; }
+      .dossier-card { padding: .65rem .75rem; width: 100%; }
+      .dossier-head { font-size: .3em; }
+      .dossier-status { margin: .55rem 0 .6rem; }
+      .dossier-status span { font-size: .27em; }
+      .dossier-status strong { font-size: .65em; }
+      .dossier-line { font-size: .29em; padding: .35em 0; }
+      .dossier-line i { height: .38rem; width: .38rem; }
+      .evidence-chips { gap: .45rem; width: 100%; }
+      .evidence-chips div { padding: .4rem .5rem; }
+      .evidence-chips b { font-size: .31em; }
+      .evidence-chips span { font-size: .35em; margin-top: .25em; }
+      .citation { font-size: .28em; margin-top: .7rem; }
+      .objective-slide h2 { font-size: 1em; }
+      .objective-statement { font-size: 1.2em; line-height: 1.08; margin-top: .8rem; }
+      .objective-statement mark { border-width: 2px; }
+      .objective-words { gap: .5rem; margin-top: 1.4rem; }
+      .objective-words b { font-size: .3em; }
+      .objective-words span { font-size: .34em; margin-top: .35em; }
+      .method-path { gap: .45rem; grid-template-columns: repeat(2, 1fr); margin-top: 1.3rem; }
+      .method-path li { min-height: 5.8rem; padding: .5rem .45rem; }
+      .method-path li:not(:last-child)::after { display: none; }
+      .method-path span { font-size: .29em; }
+      .method-path b { font-size: .47em; margin-top: .65rem; }
+      .method-path small { font-size: .3em; margin-top: .4rem; }
+      .module-grid { gap: .45rem; margin-top: 1.3rem; }
+      .module-card { min-height: 7.5rem; padding: .55rem .45rem; }
+      .module-glyph { height: 1.35rem; margin-bottom: .6rem; width: 1.35rem; }
+      .glyph-record::before { left: .28rem; top: .45rem; }
+      .glyph-record::after { left: .28rem; top: .73rem; }
+      .glyph-history::before { height: .55rem; left: .37rem; top: .37rem; width: .55rem; }
+      .glyph-report::before { bottom: .28rem; height: .35rem; left: .3rem; width: .2rem; }
+      .glyph-report::after { bottom: .28rem; height: .7rem; left: .62rem; width: .2rem; }
+      .module-card > b { font-size: .31em; }
+      .module-card p { font-size: .34em; margin-top: .45rem; }
+      .observed-flow { flex-wrap: wrap; font-size: .29em; gap: .35em; line-height: 1.3; margin-top: .7rem; white-space: normal; }
+      .observed-flow i { width: .55rem; }
+      .structured-flow { gap: .35rem; grid-template-columns: 1fr; margin-top: .9rem; }
+      .structured-flow > div { min-height: 3.25rem; padding: .45rem .6rem; }
+      .structured-flow > div > span { font-size: .27em; }
+      .structured-flow b { font-size: .43em; margin-top: .35rem; }
+      .structured-flow small { font-size: .3em; margin-top: .25rem; }
+      .structured-flow > i { font-size: .65em; line-height: .5; transform: rotate(90deg); }
+      .entity-map { height: 14.7rem; margin-top: .45rem; }
+      .entity-core { height: 6.5rem; padding: 1.2rem .45rem; width: 8.8rem; }
+      .entity-core span { font-size: .26em; }
+      .entity-core b { font-size: .82em; margin-top: .4em; }
+      .entity-core small { font-size: .29em; margin-top: .4em; }
+      .entity-node { min-width: 6.7rem; padding: .48rem .35rem; }
+      .entity-node b { font-size: .3em; }
+      .entity-node small { font-size: .27em; margin-top: .25em; }
+      .entity-catalogs { top: 0; }
+      .entity-documents { left: 0; }
+      .entity-fronts { right: 0; }
+      .entity-history { bottom: 0; }
+      .entity-link { width: 4.7rem; }
+      .link-top { top: 4rem; }
+      .link-left { left: 5.9rem; width: 3.1rem; }
+      .link-right { right: 5.9rem; width: 3.1rem; }
+      .link-bottom { bottom: 3.8rem; }
+      .layer-map { gap: .35rem; grid-template-columns: 1fr; margin-top: 1.2rem; }
+      .layer-card { min-height: 4.1rem; padding: .55rem .65rem; }
+      .layer-card span { font-size: .29em; }
+      .layer-card strong { font-size: .75em; margin-top: .45rem; }
+      .layer-card small { font-size: .33em; margin-top: .3rem; }
+      .layer-arrow { font-size: .7em; line-height: .5; transform: rotate(90deg); }
+      .architecture-note { font-size: .35em; margin-top: .9rem; }
+      .transaction-flow { gap: .3rem; grid-template-columns: 1fr; margin-top: 1.1rem; }
+      .transaction-flow > div { min-height: 3.4rem; padding: .45rem .6rem; }
+      .transaction-flow > div > span { font-size: .27em; }
+      .transaction-flow b { font-size: .43em; margin-top: .4rem; }
+      .transaction-flow small { font-size: .3em; margin-top: .25rem; }
+      .transaction-flow > i { font-size: .6em; line-height: .45; transform: rotate(90deg); }
+      .transaction-outcome { gap: .45rem; grid-template-columns: 1fr 1fr; margin-top: .85rem; }
+      .outcome-label { font-size: .27em; grid-column: 1 / -1; }
+      .outcome { padding: .35rem .5rem; }
+      .outcome b { font-size: .32em; }
+      .outcome small { font-size: .3em; }
+      .app-window { margin-top: 1rem; min-height: 12.1rem; }
+      .app-topbar { flex-wrap: wrap; gap: .45rem .75rem; min-height: 2.1rem; padding: .4rem .55rem; }
+      .app-topbar > b { font-size: .32em; }
+      .app-topbar nav { gap: .55rem; order: 3; width: 100%; }
+      .app-topbar nav span, .app-topbar small { font-size: .26em; }
+      .app-topbar small { margin-left: auto; }
+      .app-workspace { padding: .55rem .6rem; }
+      .app-context { gap: .35em .7em; padding-bottom: .45rem; }
+      .app-context span { font-size: .27em; }
+      .app-context b { font-size: .52em; }
+      .app-context small { font-size: .29em; }
+      .app-panels { gap: .45rem; grid-template-columns: .8fr 1.2fr; margin-top: .5rem; }
+      .form-card, .table-card { padding: .4rem; }
+      .ui-label { font-size: .27em; margin-bottom: .45rem; }
+      .form-card label { font-size: .29em; margin-top: .3rem; }
+      .form-card label b { min-width: 4em; }
+      .form-card button { font-size: .25em; margin-top: .5rem; padding: .55em .2em; }
+      .table-row { font-size: .27em; gap: .25em; padding: .4em 0; }
+      .table-head { font-size: .23em; }
+      .return-grid { gap: .45rem; margin-top: 1.3rem; }
+      .return-card { min-height: 7.6rem; padding: .55rem .45rem; }
+      .return-icon { height: 1.25rem; margin-bottom: .65rem; width: 1.25rem; }
+      .icon-query::before { height: .45rem; left: .28rem; top: .27rem; width: .45rem; }
+      .icon-query::after { height: .45rem; left: .72rem; top: .68rem; }
+      .icon-history::before { height: .5rem; left: .31rem; top: .31rem; width: .5rem; }
+      .icon-export::before { height: .48rem; left: .31rem; top: .43rem; width: .54rem; }
+      .icon-export::after { height: .3rem; left: .49rem; top: .18rem; width: .3rem; }
+      .return-card > b { font-size: .29em; }
+      .return-card small { font-size: .3em; margin-top: .3rem; }
+      .return-card strong { font-size: .27em; padding-top: .45rem; }
+      .verification-head { margin-top: 1.1rem; }
+      .verification-head span { font-size: .3em; }
+      .verification-head b { font-size: .27em; }
+      .verification-grid { gap: .45rem; margin-top: .65rem; }
+      .verification-cell { min-height: 6.2rem; padding: .5rem .4rem; }
+      .verification-cell > span { font-size: .27em; }
+      .verification-cell b { font-size: .46em; margin-top: .7rem; }
+      .verification-cell small { font-size: .3em; margin-top: .35rem; }
+      .verification-cell strong { font-size: .26em; }
+      .verification-foot { font-size: .32em; margin-top: .8rem; }
+      .demo-pause h2 { font-size: 2em; }
+      .demo-pause .slide-deck { font-size: .63em; margin-top: .8em; }
+      .demo-route { gap: .35rem; grid-template-columns: 1fr; margin-top: 1.4rem; }
+      .demo-route > div { min-height: 3.3rem; padding: .45rem .6rem; }
+      .demo-route > div > span { font-size: .28em; }
+      .demo-route b { font-size: .43em; margin-top: .35rem; }
+      .demo-route small { font-size: .3em; margin-top: .25rem; }
+      .demo-route > i { font-size: .6em; line-height: .45; transform: rotate(90deg); }
+      .demo-prompt { font-size: .33em; margin-top: 1rem; }
+      .closing-grid { display: flex; flex-direction: column; gap: .9rem; justify-content: center; }
+      .closing-copy h2 { font-size: 1.53em; }
+      .closing-copy .slide-deck { font-size: .6em; margin-top: .8em; }
+      .closing-line { gap: .35em; margin-top: 1rem; padding-top: .5rem; }
+      .closing-line span { font-size: .27em; }
+      .closing-line b { font-size: .34em; }
+      .final-dossier { min-height: 8.2rem; padding: .55rem; width: 100%; }
+      .final-dossier-head { font-size: .27em; padding-bottom: .45em; }
+      .final-dossier-head b { font-size: 1.6em; }
+      .final-dossier-body { margin-top: .8rem; }
+      .final-dossier-body span { font-size: .27em; }
+      .final-dossier-body strong { font-size: .62em; margin-top: .3rem; }
+      .final-stamp { font-size: .33em; height: 3.4rem; right: .65rem; top: 3.6rem; width: 3.4rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal .slides section, .reveal .fragment { transition: none !important; }
+      .reveal .slides section, .reveal .fragment, .reveal .progress, * {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
     }
     """
 )
 
 
 def construir_html():
-    imagenes_requeridas = {
-        "02_flujo_as_is_presidencia.png",
-        "03_flujo_to_be_sistema_automatizado.png",
-        "05_pseudocodigo_general_baseaccess.png",
-        "06_arquitectura_prototipo.png",
-        "captura-registro-nuevo-contexto.png",
-        "captura-formulario-general.png",
-        "captura-expedientes-frentes.png",
-        "captura-catalogos-validaciones.png",
-        "captura-ruta-seleccion-multiple.png",
-        "captura-exportacion-filtros-columnas.png",
-        "foto-desarrollo-opencode-laptop.jpg",
-        "foto-github-repositorio.png",
-        "foto-opencode.png",
-    }
-    faltantes = sorted(nombre for nombre in imagenes_requeridas if not (CARPETA_IMAGENES / nombre).is_file())
-    if faltantes:
-        raise FileNotFoundError(f"No se encontraron imágenes de Juliano: {', '.join(faltantes)}")
-
+    """Monta un documento autónomo salvo por los recursos oficiales de Reveal.js."""
     contenido = "\n".join(construir_diapositivas())
     return dedent(
-        """
+        f"""
         <!doctype html>
         <html lang="es">
         <head>
@@ -523,9 +1210,7 @@ def construir_html():
           <link rel="preconnect" href="https://cdn.jsdelivr.net">
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
           <style>
-        """
-    ) + CSS + dedent(
-        f"""
+        {CSS}
           </style>
         </head>
         <body>
@@ -538,19 +1223,21 @@ def construir_html():
           <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
           <script>
             const vistaMovil = window.innerWidth < 700;
+            const movimientoReducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             Reveal.initialize({{
               hash: true,
-              controls: true,
-              progress: true,
-              slideNumber: "c/t",
+              keyboard: true,
+              controls: false,
+              progress: false,
+              slideNumber: false,
               center: false,
               width: vistaMovil ? 390 : 1280,
               height: vistaMovil ? 844 : 720,
-              margin: vistaMovil ? 0.04 : 0.03,
+              margin: vistaMovil ? 0.035 : 0.03,
               minScale: 0.2,
               maxScale: 2.0,
-              transition: "fade",
-              backgroundTransition: "fade",
+              transition: movimientoReducido ? "none" : "fade",
+              backgroundTransition: movimientoReducido ? "none" : "fade",
               plugins: [RevealNotes]
             }});
           </script>
@@ -562,7 +1249,7 @@ def construir_html():
 
 def main():
     SALIDA.write_text(construir_html(), encoding="utf-8")
-    print(f"Presentación generada en: {SALIDA} ({len(construir_diapositivas())} diapositivas)")
+    print(f"Presentación generada en: {SALIDA} ({TOTAL_DIAPOSITIVAS} diapositivas)")
 
 
 if __name__ == "__main__":
