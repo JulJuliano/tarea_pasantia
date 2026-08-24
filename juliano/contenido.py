@@ -480,7 +480,9 @@ POST_CITA_TEXTO = ''
 # ========================================================================
 ACTIVIDADES_DESCRIPCION = ('Durante las nueve (9) semanas de práctica profesional se ejecutaron actividades operativas propias del '
  'Departamento de Presidencia y actividades técnicas vinculadas con el diagnóstico, diseño, implementación y '
- 'validación del sistema automatizado:')
+ 'validación del sistema automatizado. La evidencia del trabajo se organiza en el pseudocódigo general de operación, '
+ 'la memoria fotográfica del proceso de desarrollo, las pruebas funcionales, el manual de usuario y los anexos visuales '
+ 'del prototipo:')
 
 ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Inducción institucional, recorrido por las instalaciones del área administrativa, presentación '
@@ -493,9 +495,9 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Clasificación y registro manual de expedientes físicos en la hoja de cálculo utilizada por la '
                'oficina, con actualización de los movimientos correspondientes a los documentos recibidos durante '
                'el período.',
-  'investigacion': 'Validación de requerimientos con el tutor industrial, construcción del diagrama '
-                   'Entidad-Relación, normalización del esquema propuesto y elaboración del diccionario de '
-                   'datos.'},
+   'investigacion': 'Validación de requerimientos con el tutor industrial, construcción del diagrama '
+                    'Entidad-Relación, normalización del esquema propuesto, elaboración del diccionario de '
+                    'datos y formulación del pseudocódigo general de operación del prototipo.'},
  {'semana': 3,
   'operativa': 'Procesamiento y actualización del estatus de expedientes en el archivo de control de la oficina, '
                'apoyando el seguimiento de los documentos recibidos y despachados durante la semana.',
@@ -505,8 +507,9 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Asistencia a la charla técnica sobre Identificación y Notificación de Peligros y Riesgos en '
                'Instalaciones y Puestos de Trabajo dictada por el departamento de SIAHO, junto con labores '
                'regulares de registro documental.',
-  'investigacion': 'Programación del entorno visual de escritorio, estructuración de los módulos de la interfaz y '
-                   'organización del código fuente del prototipo.'},
+   'investigacion': 'Programación del entorno visual de escritorio, estructuración de los módulos de la interfaz y '
+                    'organización del código fuente del prototipo, con registro fotográfico del proceso de diseño y '
+                    'desarrollo.'},
  {'semana': 5,
   'operativa': 'Revisión ortográfica y de formato de correspondencia presidencial, y apoyo en la canalización de '
                'expedientes hacia su departamento de destino después de la firma presidencial.',
@@ -520,19 +523,22 @@ ACTIVIDADES_LISTA = [{'semana': 1,
  {'semana': 7,
   'operativa': 'Apoyo en la elaboración manual de resúmenes de estatus de expedientes solicitados por la alta '
                'dirección a partir de los registros disponibles en la hoja de cálculo.',
-  'investigacion': 'Ejecución de pruebas funcionales, depuración de errores y verificación de los módulos de '
-                   'registro, trazabilidad, consulta e informes utilizando datos de prueba representativos del '
-                   'flujo departamental.'},
+   'investigacion': 'Ejecución de pruebas funcionales, depuración de errores y verificación de los módulos de '
+                    'registro, trazabilidad, consulta e informes utilizando datos de prueba representativos del '
+                    'flujo departamental; estas actividades se respaldan con evidencias fotográficas y capturas '
+                    'del funcionamiento.'},
  {'semana': 8,
   'operativa': 'Participación en las actividades regulares del Departamento de Presidencia y apoyo en la '
                'organización y seguimiento de los expedientes correspondientes al período.',
-  'investigacion': 'Redacción del informe de pasantías, elaboración del manual de usuario y organización técnica '
-                   'del código fuente y los entregables del prototipo.'},
+   'investigacion': 'Redacción del informe de pasantías, elaboración del manual de usuario y organización técnica '
+                    'del código fuente y los entregables del prototipo; se seleccionaron capturas para documentar '
+                    'los procedimientos descritos en el manual.'},
  {'semana': 9,
   'operativa': 'Presentación del prototipo funcional ante la tutora industrial para su evaluación, recepción de '
                'observaciones y gestión de los recaudos correspondientes al cierre de la pasantía.',
-  'investigacion': 'Consolidación y revisión del informe académico, incorporación de las observaciones recibidas '
-                   'y preparación de los anexos definitivos para la entrega institucional.'}]
+   'investigacion': 'Consolidación y revisión del informe académico, incorporación de las observaciones recibidas '
+                    'y preparación de los anexos definitivos, incluidos el pseudocódigo, la memoria fotográfica y '
+                    'las evidencias visuales del prototipo, para la entrega institucional.'}]
 
 # ========================================================================
 # 8. CAPÍTULO V — CONCLUSIONES Y RECOMENDACIONES
@@ -584,6 +590,22 @@ ANEXOS_LISTA = [
     ('ANEXO E', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO F', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Elaboración propia (2026).']),
     ('ANEXO G', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO H', 'Mapa de módulos de la interfaz', '11_mapa_modulos_interfaz.png', {'width_cm': 8.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO I', 'Proceso de respaldo periódico de SQLite', '12_proceso_respaldo_sqlite.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).'])
+    ('ANEXO H', 'Pseudocódigo general de operación del prototipo BaseAccess', '05_pseudocodigo_general_baseaccess.png', {'width_cm': 15.5, 'height_cm': 17.0}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).']),
+    ('ANEXO I', 'Memoria fotográfica del proceso de diseño, desarrollo y depuración', [
+        {'archivo': 'foto-borrador-diseno-interfaz.jpg', 'titulo': 'Borrador de diseño de la interfaz del prototipo BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'foto-desarrollo-opencode-laptop.jpg', 'titulo': 'Desarrollo y verificación del prototipo desde el portátil', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'foto-desarrollo-telefono.jpg', 'titulo': 'Seguimiento del desarrollo del prototipo desde el teléfono', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'foto-error-antiguo-programa.jpg', 'titulo': 'Error de una versión anterior del programa', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'foto-github-repositorio.png', 'titulo': 'Repositorio y control de versiones del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'foto-opencode.png', 'titulo': 'Uso de OpenCode durante el desarrollo del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}}
+    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).']),
+    ('ANEXO J', 'Evidencias visuales del funcionamiento del prototipo BaseAccess', [
+        {'archivo': 'captura-registro-nuevo-contexto.png', 'titulo': 'Vista general de la interfaz y navegación modular de BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-formulario-general.png', 'titulo': 'Formulario estructurado para el registro de información documental', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-expedientes-frentes.png', 'titulo': 'Adaptación dinámica del formulario para procesos con múltiples frentes', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-catalogos-validaciones.png', 'titulo': 'Administración centralizada de catálogos y reglas de validación', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-ruta-seleccion-multiple.png', 'titulo': 'Cronograma interactivo de procesos con selección múltiple de actividades', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-exportacion-filtros-columnas.png', 'titulo': 'Configuración de filtros y columnas para la exportación de información', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
+        {'archivo': 'captura-papelera-restaurar.png', 'titulo': 'Recuperación y eliminación definitiva de registros mediante la papelera', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}}
+    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).'])
 ]

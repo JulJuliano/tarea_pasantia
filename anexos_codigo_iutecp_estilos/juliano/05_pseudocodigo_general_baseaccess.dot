@@ -1,0 +1,184 @@
+// Juliano - Anexo H: pseudocódigo general de operación de BaseAccess.
+// Flujo académico resumido; no representa cada función de la interfaz.
+digraph BaseAccess {
+  graph [
+    label="PSEUDOCÓDIGO GENERAL DE OPERACIÓN\nBASEACCESS"
+    labelloc=t
+    labeljust=c
+    fontname="Arial"
+    fontsize=15
+    fontcolor="#8F1D2C"
+    bgcolor="#FFFFFF"
+    rankdir=TB
+    ranksep=0.28
+    nodesep=0.18
+    pad=0.12
+    margin=0.04
+    splines=ortho
+    outputorder=edgesfirst
+  ]
+
+  node [
+    shape=box
+    fontname="Arial"
+    fontsize=9.5
+    fontcolor="#24171A"
+    color="#8F1D2C"
+    penwidth=1.1
+    style="rounded,filled"
+    fillcolor="#F7DDE1"
+    margin="0.11,0.08"
+  ]
+
+  edge [
+    fontname="Arial"
+    fontsize=8.5
+    fontcolor="#24171A"
+    color="#8F1D2C"
+    penwidth=1.0
+    arrowsize=0.65
+  ]
+
+  inicio [
+    shape=oval
+    label="INICIO\nBaseAccess"
+    fillcolor="#8F1D2C"
+    color="#8F1D2C"
+    fontcolor="#FFFFFF"
+    penwidth=1.4
+  ]
+
+  recuperar [
+    label="Iniciar la aplicación\nRecuperar la última BD registrada o mostrar\nlas BDs recientes; si no, solicitar un archivo .db/.sqlite"
+  ]
+
+  validar [
+    label="Validar archivo y acceso\nComprobar formato SQLite y leer PRAGMA user_version\nRechazar una versión de esquema futura"
+    fillcolor="#FFFFFF"
+    color="#C94F5D"
+  ]
+
+  compatible [
+    shape=diamond
+    label="¿BD y esquema\ncompatibles?"
+    fillcolor="#C94F5D"
+    color="#8F1D2C"
+  ]
+
+  rechazo [
+    label="Informar el error\nSolicitar otra base de datos"
+    fillcolor="#FFFFFF"
+    color="#C94F5D"
+    style="rounded,filled,dashed"
+  ]
+
+  abrir [
+    label="Abrir SQLite\nClaves foráneas activas · WAL · busy_timeout"
+  ]
+
+  migrar [
+    label="Crear el esquema inicial o aplicar migraciones pendientes\nCada migración actualiza user_version dentro de una transacción"
+    fillcolor="#FFFFFF"
+    color="#C94F5D"
+  ]
+
+  esquema [
+    shape=diamond
+    label="¿Esquema\nlisto?"
+    fillcolor="#C94F5D"
+    color="#8F1D2C"
+  ]
+
+  fallo_esquema [
+    label="Notificar fallo de apertura o migración\nConservar el estado previo y permitir reintento"
+    fillcolor="#FFFFFF"
+    color="#C94F5D"
+    style="rounded,filled,dashed"
+  ]
+
+  cargar [
+    label="Cargar la configuración del prototipo\nMódulos configurados: expedientes, requisiciones, memorándums,\nrecobros, valuaciones, aprobación JD, certificación BDU,\nvacaciones y reposos médicos\nCatálogos, hoja activa y registros de la vista paginada"
+  ]
+
+  cerrar [
+    shape=diamond
+    label="¿Solicita\ncerrar?"
+    fillcolor="#C94F5D"
+    color="#8F1D2C"
+  ]
+
+  ciclo [
+    shape=plain
+    label=<
+      <TABLE BORDER="1" COLOR="#8F1D2C" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7" BGCOLOR="#FFFFFF" WIDTH="510">
+        <TR>
+          <TD BGCOLOR="#8F1D2C" ALIGN="CENTER">
+            <FONT FACE="Arial" COLOR="#FFFFFF" POINT-SIZE="11"><B>CICLO DE OPERACIÓN DEL PROTOTIPO</B></FONT>
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F7DDE1">
+            <FONT FACE="Arial" COLOR="#24171A" POINT-SIZE="9"><B>1. Registrar / editar</B><BR ALIGN="LEFT"/>
+            Capturar el formulario y normalizar fechas, números y datos estructurados.<BR ALIGN="LEFT"/>
+            Validar obligatorios, catálogos, documentos, frentes y duplicados.<BR ALIGN="LEFT"/>
+            Ejecutar INSERT/UPDATE y asociaciones en una transacción: COMMIT si todo es válido; ROLLBACK ante error.</FONT>
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">
+            <FONT FACE="Arial" COLOR="#24171A" POINT-SIZE="9"><B>2. Historial y trazabilidad</B><BR ALIGN="LEFT"/>
+            Después de guardar, generar o actualizar la instantánea del movimiento y refrescar la consulta visible.</FONT>
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F7DDE1">
+            <FONT FACE="Arial" COLOR="#24171A" POINT-SIZE="9"><B>3. Consulta / filtros / historial</B><BR ALIGN="LEFT"/>
+            Elegir módulo y hoja activa; buscar, filtrar por catálogos, ordenar y paginar.<BR ALIGN="LEFT"/>
+            Mostrar el registro y consultar su historial de movimientos.</FONT>
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">
+            <FONT FACE="Arial" COLOR="#24171A" POINT-SIZE="9"><B>4. Exportación</B><BR ALIGN="LEFT"/>
+            Validar columnas, filtros, fechas y selección; consultar la vista del módulo y generar XLSX solo si hay resultados.</FONT>
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F7DDE1">
+            <FONT FACE="Arial" COLOR="#24171A" POINT-SIZE="9"><B>5. Respaldo</B><BR ALIGN="LEFT"/>
+            Crear una copia SQLite online, comprobar el resultado, rotar las copias configuradas y continuar el ciclo.</FONT>
+          </TD>
+        </TR>
+      </TABLE>
+    >
+  ]
+
+  cierre [
+    label="Intentar respaldo forzado de cierre\nCerrar SQLite y limpiar referencias de BD,\ncatálogos y estado de la aplicación"
+    fillcolor="#F7DDE1"
+    color="#8F1D2C"
+  ]
+
+  fin [
+    shape=oval
+    label="FIN"
+    fillcolor="#8F1D2C"
+    color="#8F1D2C"
+    fontcolor="#FFFFFF"
+    penwidth=1.4
+  ]
+
+  inicio -> recuperar -> validar -> compatible
+  compatible -> abrir [label="Sí"]
+  compatible -> rechazo [label="No"]
+  rechazo -> recuperar [label="reintentar", style=dashed, constraint=false]
+  abrir -> migrar -> esquema
+  esquema -> cargar [label="Sí"]
+  esquema -> fallo_esquema [label="No"]
+  fallo_esquema -> recuperar [label="reintentar", style=dashed, constraint=false]
+  cargar -> cerrar
+  cerrar -> ciclo [label="No"]
+  cerrar -> cierre [label="Sí"]
+  ciclo -> cerrar [label="continuar", style=dashed, constraint=false]
+  cierre -> fin
+}
