@@ -100,7 +100,8 @@ Se conservarán los anexos técnicos A–G y se añadirán tres anexos temático
 
 Cada fotografía o captura del anexo I/J ocupa una página propia cuando sea
 necesario para conservar legibilidad. El generador ya escribe automáticamente
-`ANEXO X (CONT.)` para las imágenes adicionales de un mismo anexo.
+una página nueva para cada imagen adicional, conservando el título individual
+de cada fotografía o captura.
 
 ## Resultado Actual
 
@@ -108,7 +109,8 @@ La regeneración posterior a la integración produjo:
 
 - `juliano/reportes/Informe_Pasantia_IUTECP.docx`;
 - `juliano/reportes/Informe_Pasantia_IUTECP.pdf`;
-- 61 páginas físicas en papel carta;
+- 60 páginas físicas en papel carta después de eliminar el salto vacío del
+  Anexo I;
 - anexos correlativos A–J;
 - seis páginas de memoria fotográfica y siete páginas de capturas del sistema;
 - una página legible para el pseudocódigo, con el límite de imagen ajustado a
@@ -255,7 +257,7 @@ Comprobar manualmente:
 - anexos correlativos A–J;
 - lista de anexos y páginas actualizada;
 - una portadilla `ANEXOS` independiente;
-- títulos `ANEXO X` y `ANEXO X (CONT.)` legibles;
+- títulos `ANEXO X` y pies individuales legibles;
 - fuente debajo de cada anexo/fotografía;
 - imágenes sin deformación ni recorte accidental;
 - capturas claras y fotografías completas;
@@ -265,7 +267,7 @@ Comprobar manualmente:
 
 ## Preparación de Diapositivas
 
-Los anexos pueden convertirse en una presentación de 10–12 diapositivas:
+Los anexos se convierten en una presentación de 13 diapositivas:
 
 1. Portada y problema documental.
 2. Contexto del Departamento de Presidencia.
@@ -277,13 +279,84 @@ Los anexos pueden convertirse en una presentación de 10–12 diapositivas:
 8. Múltiples frentes, catálogos y trazabilidad.
 9. Ruta y exportación.
 10. Pruebas, depuración y control de versiones.
-11. Resultado: prototipo y beneficios esperados.
-12. Conclusiones y recomendaciones.
+11. Validación del prototipo.
+12. Resultado: prototipo y beneficios esperados.
+13. Conclusiones y recomendaciones.
 
 Para las diapositivas se reutilizarán las siete capturas claras, el diagrama de
 arquitectura, el flujo TO-BE y una versión resumida del pseudocódigo. Las seis
 fotografías externas deben usarse como evidencia de proceso, no como
 decoración repetida.
+
+## Guion Exacto de la Presentación
+
+La fuente ejecutable del guion es
+`juliano/presentacion/generar_presentacion.py`; el archivo generado es
+`juliano/presentacion/index.html`. La presentación actual tiene 13 diapositivas
+y usa un rail lateral que marca cuatro etapas: `OBSERVAR`, `MODELAR`,
+`IMPLEMENTAR` y `VALIDAR`.
+
+| Nº | Etapa | Título o idea central | Visual principal | Idea oral |
+|---|---|---|---|---|
+| 1 | Observar | Del expediente al dato trazable | Sello visual “La ruta” | Presentar la transformación del flujo manual en un recorrido registrable. |
+| 2 | Observar | Una pregunta sencilla no tenía una respuesta inmediata | Preguntas “¿Recibido?, ¿Firmado?, ¿Despachado?” | Explicar que el problema era reconstruir el recorrido, no solo guardar filas. |
+| 3 | Observar | El documento se mueve; el control se fragmenta | `02_flujo_as_is_presidencia.png` | Señalar transcripción repetitiva, riesgo de omisión y dificultad para resumir. |
+| 4 | Modelar | El mismo proceso, con memoria | `03_flujo_to_be_sistema_automatizado.png` | Mostrar que el prototipo conserva el proceso y añade validación, historial y reportes. |
+| 5 | Implementar | La interfaz convierte el flujo en decisiones visibles | `captura-registro-nuevo-contexto.png` | Explicar módulos, hojas activas, registros y acciones en contexto. |
+| 6 | Implementar | Una aplicación pequeña para un problema concreto | `06_arquitectura_prototipo.png` | Relacionar interfaz WebView2, Wails/Go, lógica y SQLite local. |
+| 7 | Implementar | El sistema decide en un orden que se puede explicar | `05_pseudocodigo_general_baseaccess.png` | Resumir apertura, validación, transacción, historial, consulta, exportación y cierre. |
+| 8 | Implementar | La pantalla cambia cuando cambia el expediente | Tres capturas: formulario, frentes y catálogos | Mostrar reglas de negocio visibles sin enumerar todos los módulos. |
+| 9 | Validar | Registrar es el inicio; seguir y reportar es el resultado | Ruta de procesos + exportación | Explicar selección de actividades, filtros y salida XLSX. |
+| 10 | Validar | El prototipo también tiene una historia de construcción | Portátil, GitHub y OpenCode | Presentar diseño, desarrollo, control de versiones y asistencia técnica como evidencia. |
+| 11 | Validar | La prueba no termina en “abre” | Tres bloques: registro, historial y salida | Conectar las semanas 7–9 con pruebas funcionales, depuración y ajustes. |
+| 12 | Validar | El expediente deja de ser una fila aislada | Sello “Prototipo funcional” | Enunciar el aporte: registrar, seguir y reportar una historia documental. |
+| 13 | Validar | Del control manual a una trazabilidad defendible | Cierre tipográfico y recomendaciones | Cerrar con adopción en el flujo real, capacitación y respaldo de la información. |
+
+### Regla de exposición
+
+Cada diapositiva debe responder una sola pregunta. No leer los textos de las
+capturas ni explicar cada función. La secuencia oral es:
+
+`problema observado → proceso modelado → solución construida → evidencia validada → aporte y siguiente paso`.
+
+### Recursos por diapositiva
+
+- Diapositivas 3–4: diagramas AS-IS y TO-BE de los anexos B y C.
+- Diapositiva 5: captura `captura-registro-nuevo-contexto.png`.
+- Diapositiva 6: diagrama del anexo E.
+- Diapositiva 7: diagrama del anexo H.
+- Diapositiva 8: capturas `captura-formulario-general.png`,
+  `captura-expedientes-frentes.png` y `captura-catalogos-validaciones.png`.
+- Diapositiva 9: capturas `captura-ruta-seleccion-multiple.png` y
+  `captura-exportacion-filtros-columnas.png`.
+- Diapositiva 10: `foto-desarrollo-opencode-laptop.jpg`,
+  `foto-github-repositorio.png` y `foto-opencode.png`.
+- Diapositivas 11–13: no requieren imágenes nuevas.
+
+### Diseño de la presentación
+
+- Paleta: rojo vino `#8F1D2C`, vino profundo `#54131D`, rosa claro
+  `#F7DDE1`, blanco cálido `#FFFDFB`, texto ciruela `#24171A` y dorado
+  auxiliar `#D9A84D`.
+- Tipografía: Arial/Liberation Sans para asegurar disponibilidad local.
+- Firma visual: rail lateral de expediente con etapas reales del proyecto.
+- Fondos: alternancia controlada entre blanco cálido, vino y ciruela oscuro;
+  evitar fondos oscuros cuando una captura pierda legibilidad.
+- Movimiento: transiciones suaves y fragmentos solo para revelar ideas; se
+  respeta `prefers-reduced-motion`.
+- Formato de exposición: 1280×720 en escritorio y 390×844 en móvil.
+
+### Regeneración y presentación
+
+```bash
+cd /home/user/Documentos/tarea_pasantia
+python3 juliano/presentacion/generar_presentacion.py
+python3 -m http.server 8000
+```
+
+Abrir `http://localhost:8000/juliano/presentacion/`. Las notas del expositor
+están dentro de cada diapositiva y se abren con `S`; `F` activa pantalla
+completa y las flechas cambian de diapositiva.
 
 ## Pendientes Posteriores
 

@@ -2428,18 +2428,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
                     imagenes = [numero_imagen]
 
                 for indice_imagen, imagen_cfg in enumerate(imagenes):
-                    if indice_imagen:
-                        # Cada fotografía ocupa una página propia para conservar
-                        # la legibilidad y mantener la memoria como un solo anexo.
-                        doc.add_page_break()
-                        p_cont = doc.add_paragraph()
-                        p_cont.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                        p_cont.paragraph_format.space_after = ESP_DOBLE
-                        run_cont = p_cont.add_run(f"{cod.upper()} (CONT.)")
-                        run_cont.font.name = FUENTE
-                        run_cont.font.size = Pt(TAMANO_TABLA)
-                        run_cont.font.bold = True
-                        _mantener_con_siguiente(p_cont)
+                    salto_pagina = indice_imagen > 0
 
                     if isinstance(imagen_cfg, dict):
                         referencia = imagen_cfg.get('archivo', imagen_cfg.get('referencia'))
@@ -2456,6 +2445,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
                     p_imagen = doc.add_paragraph()
                     p_imagen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    if salto_pagina:
+                        # Aplicar el salto al párrafo de la imagen evita que
+                        # LibreOffice cree una página intermedia vacía.
+                        p_imagen.paragraph_format.page_break_before = True
                     _mantener_con_siguiente(p_imagen)
                     try:
                         tamano_anexo = _calcular_tamano_anexo_proporcional(
@@ -2471,7 +2464,6 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         p_foto.alignment = WD_ALIGN_PARAGRAPH.CENTER
                         p_foto.paragraph_format.space_before = Pt(6)
                         p_foto.paragraph_format.space_after = Pt(12)
-                        _mantener_con_siguiente(p_foto)
                         run_foto = p_foto.add_run(titulo_fotografia)
                         run_foto.font.name = FUENTE
                         run_foto.font.size = Pt(TAMANO_TABLA)
