@@ -166,7 +166,7 @@ INTRODUCCION_TEXTO = ['Las pasantías profesionales permiten vincular los conoci
 RAZON_SOCIAL = 'Lubricantes y Equipos Varyna, C.A.'
 
 RESENA_HISTORICA = ['Lubricantes y Equipos Varyna, C.A. es una empresa venezolana fundada con la visión de responder a las '
- 'crecientes demandas operativas e industriales del país. A lo largo de más de treinta y seis (36) años de '
+ 'crecientes demandas operativas e industriales del país. A lo largo de quince (15) años de '
  'trayectoria ininterrumpida, la organización se ha consolidado en el sector petrolero, industrial y de '
  'construcción, posicionándose como un aliado estratégico de alta confiabilidad en el mercado nacional gracias a '
  'su capacidad de respuesta y solvencia técnica.',
