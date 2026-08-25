@@ -40,6 +40,16 @@ GRAFICOS = [
         'lista': 'Organigrama estructural y niveles jerárquicos de la organización',
         'pagina': '5',
         'fuente': 'Lubricantes y Equipos Varyna, C.A. (2026).'
+    },
+    {
+        'numero': 4,
+        'archivo': 'ishikawa_keidy_procura.png',
+        'tras': 'diagnostico_tecnica',
+        'titulo': 'Gráfico 4. Diagrama de Ishikawa de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura.',
+        'ancho_cm': 12.5,
+        'lista': 'Diagrama de Ishikawa de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura',
+        'pagina': '',
+        'fuente': 'Guzmán K. (2026).'
     }
 ]
 
@@ -60,7 +70,7 @@ CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.
 MOSTRAR_NIVELES_DIAGNOSTICO = True
 ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
 CUADRO_PLANIFICACION_FUENTE = 'Guzmán K. (2026).'
-CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Guzmán K. (2026).'
 
 FORMATO_APROBACION_DESTACADO = True
 ESTRUCTURA_ORGANIZATIVA_TITULO = 'Estructura organizativa de la empresa (Organigrama)'
@@ -283,11 +293,14 @@ SITUACION_PROBLEMATICA = [{'parrafos': ['La identificación de la situación pro
                'administrativa que organice el recorrido de las requisiciones, defina responsables, estandarice '
                'documentos y establezca mecanismos de seguimiento compatibles con el control interno del '
                'departamento.']},
- {'parrafos': ['Para organizar las causas de la problemática se utilizó el diagrama de causa-efecto o diagrama de '
+ {'parrafos': ['El recorrido observado del proceso se sintetiza en el flujograma AS-IS incorporado como Anexo B, '
+               'donde se muestran las etapas de recepción, cotización, aprobación, orden de compra, seguimiento y cierre, '
+               'junto con los principales puntos críticos identificados.',
+               'Para organizar las causas de la problemática se utilizó el diagrama de causa-efecto o diagrama de '
                'Ishikawa, complementado con observación directa del flujo de procura, entrevistas estructuradas '
                'al personal y revisión de expedientes de compras. La técnica permitió agrupar factores asociados '
                'a procedimientos, responsabilidades, documentación y seguimiento, facilitando la identificación '
-               'de los puntos que debían atenderse en la propuesta.']}]
+               'de los puntos que debían atenderse en la propuesta. La representación gráfica de esta técnica se presenta a continuación; para facilitar su lectura, también se conserva una versión ampliada en el Anexo A.']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -543,13 +556,15 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Seguimiento de cotizaciones pendientes de aprobación y actualización de los expedientes de '
                'compras activos del período.',
   'investigacion': 'Diseño del nuevo flujo simplificado del proceso de procura, definiendo etapas, responsables, '
-                   'puntos de control y tiempos de referencia para el seguimiento administrativo.'},
+                   'puntos de control y tiempos de referencia para el seguimiento administrativo; el flujo TO-BE y su '
+                   'distribución por responsables se presentan en los Anexos C y D.'},
  {'semana': 7,
   'operativa': 'Apoyo en el procesamiento de requisiciones y verificación de información necesaria para compras '
                'en trámite.',
   'investigacion': 'Diseño de los formatos estandarizados de solicitud de cotización y orden de compra, '
                    'elaboración de la matriz de autorización por monto y definición de indicadores básicos para '
-                   'el seguimiento del proceso.'},
+                   'el seguimiento del proceso. Como apoyos de organización y asignación de responsabilidades se '
+                   'incorporan el SIPOC y la matriz RACI en los Anexos E y F.'},
  {'semana': 8,
   'operativa': 'Seguimiento de órdenes en proceso y actualización de registros de proveedores y expedientes de '
                'adquisiciones.',
@@ -577,7 +592,10 @@ CONCLUSIONES = ['Se diagnosticó que el proceso de procura presenta un recorrido
  'sencillos que permitan valorar el comportamiento del ciclo de adquisición.',
  'Se formuló una propuesta de simplificación administrativa que integra un flujo de trabajo con responsables '
  'definidos, formatos estandarizados, una matriz de autorización por monto e indicadores de seguimiento, '
- 'orientados a mejorar la trazabilidad y facilitar el control interno del proceso de procura.']
+ 'orientados a mejorar la trazabilidad y facilitar el control interno del proceso de procura.',
+ 'La experiencia de pasantía permitió aplicar conocimientos y competencias de Administración relacionados con '
+ 'planificación, organización, control, análisis de procesos y gestión documental, fortaleciendo la capacidad para '
+ 'relacionar la formación académica con situaciones reales del funcionamiento organizacional.']
 
 RECOMENDACIONES = [
  {'destinatario': 'A la empresa Lubricantes y Equipos Varyna, C.A.',
@@ -590,8 +608,9 @@ RECOMENDACIONES = [
                       'Revisar periódicamente el procedimiento y los formatos con el personal del Departamento Administrativo, '
                       'incorporando ajustes cuando cambien las necesidades operativas de la empresa.']},
  {'destinatario': 'Al Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP).',
-  'recomendaciones': ['Continuar fortaleciendo el acompañamiento académico durante las pasantías y la articulación entre los '
-                      'conocimientos adquiridos en la carrera y las situaciones administrativas observadas en las empresas.']},
+  'recomendaciones': ['Continuar fortaleciendo el acompañamiento académico durante las pasantías, promoviendo la aplicación '
+                      'de conocimientos de planificación, organización, control y análisis de procesos frente a situaciones '
+                      'administrativas reales de las empresas.']},
  {'destinatario': 'A futuros pasantes.',
   'recomendaciones': ['Llevar un registro sistemático de las actividades desde las primeras semanas, observar los procesos '
                       'administrativos, conservar las evidencias pertinentes y relacionar las tareas realizadas con los objetivos '
@@ -611,11 +630,10 @@ REFERENCIAS_LISTA = [ 'Asamblea Nacional Constituyente. (1999). Constitución de
  'Argentina.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Diagrama de Ishikawa de las causas asociadas a las demoras del proceso de procura', '01_ishikawa_demoras_procura.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO B', 'Flujograma AS-IS del proceso actual de procura', '02_flujo_as_is_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO C', 'Flujograma TO-BE del proceso simplificado propuesto', '03_flujo_to_be_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO D', 'Swimlane del proceso propuesto de procura', '04_swimlane_procura.png', {'width_cm': 14.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO E', 'SIPOC del proceso de procura', '05_sipoc_procura.png', {'width_cm': 13.0, 'height_cm': 14.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO F', 'Matriz RACI propuesta del proceso de procura', '06_matriz_raci_propuesta.png', {'width_cm': 14.0, 'height_cm': 5.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO G', 'Diagrama de Ishikawa definitivo de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura', 'ishikawa_keidy_procura.png', {'width_cm': 14.0, 'height_cm': 6.0}, ['Fuente: Elaboración propia (2026).'])
+    ('ANEXO A', 'Versión ampliada del diagrama de Ishikawa definitivo de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura', 'ishikawa_keidy_procura.png', {'width_cm': 14.0, 'height_cm': 6.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO B', 'Flujograma AS-IS del proceso actual de procura', '02_flujo_as_is_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO C', 'Flujograma TO-BE del proceso simplificado propuesto', '03_flujo_to_be_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO D', 'Swimlane del proceso propuesto de procura', '04_swimlane_procura.png', {'width_cm': 14.0, 'height_cm': 13.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO E', 'SIPOC del proceso de procura', '05_sipoc_procura.png', {'width_cm': 13.0, 'height_cm': 14.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO F', 'Matriz RACI propuesta del proceso de procura', '06_matriz_raci_propuesta.png', {'width_cm': 14.0, 'height_cm': 5.0}, ['Fuente: Guzmán K. (2026).'])
 ]

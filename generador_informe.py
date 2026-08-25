@@ -165,6 +165,12 @@ def _repetir_encabezado(fila):
     if tr_pr.find(qn('w:tblHeader')) is None:
         tr_pr.append(OxmlElement('w:tblHeader'))
 
+def _evitar_dividir_fila(fila):
+    """Evita que Word divida una fila de tabla entre dos páginas."""
+    tr_pr = fila._tr.get_or_add_trPr()
+    if tr_pr.find(qn('w:cantSplit')) is None:
+        tr_pr.append(OxmlElement('w:cantSplit'))
+
 def _agregar_fuente(doc, fuente, centrada=False):
     if not str(fuente or '').strip():
         raise ValueError("Todo cuadro, gráfico o anexo debe declarar una fuente.")
@@ -595,17 +601,25 @@ def aplicar_formato_tabla_xml(tabla, lista_anchos_cm):
         for col_idx, ancho in enumerate(lista_anchos_cm):
             set_cell_width(fila.cells[col_idx], ancho)
 
-def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_OSCURO):
-    """Inserta texto formateado en una celda de tabla limpiando párrafos vacíos"""
+def _celda(cell, texto, negrita=False, centrado=False, tamaño=Pt(TAMANO_TABLA),
+           color_texto=COLOR_TEXTO_OSCURO, alineacion=None, espacio_vertical=3):
+    """Inserta texto formateado en una celda de tabla limpiando párrafos vacíos.
+
+    ``alineacion`` permite que tablas densas (como la planificación integral) usen
+    alineación izquierda sin alterar la justificación de las demás tablas.
+    """
     for p in cell.paragraphs:
         p._element.getparent().remove(p._element)
     p = cell.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER if centrado else WD_ALIGN_PARAGRAPH.JUSTIFY
-    p.paragraph_format.space_before = Pt(3)
-    p.paragraph_format.space_after  = Pt(3)
+    if alineacion is not None:
+        p.alignment = alineacion
+    else:
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER if centrado else WD_ALIGN_PARAGRAPH.JUSTIFY
+    p.paragraph_format.space_before = Pt(espacio_vertical)
+    p.paragraph_format.space_after  = Pt(espacio_vertical)
     p.paragraph_format.line_spacing = 1.0
 
-    run = p.add_run(texto)
+    run = p.add_run(str(texto))
     run.font.name  = FUENTE
     run.font.size  = tamaño
     run.font.bold  = negrita
@@ -651,33 +665,49 @@ def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
         _agregar_bookmark(p, bookmark_id)
 
 def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None, fuente=None):
-    """Genera la tabla de planificación de objetivos con 5 columnas"""
+    """Genera la planificación integral procurando mantenerla compacta y legible.
+
+    Para los informes de Administración la tabla contiene textos extensos. Se usa
+    una tipografía ligeramente menor solo en este cuadro, alineación izquierda en
+    el contenido y ``cantSplit`` para evitar que una misma fila se corte entre páginas.
+    """
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
 
     ENCABEZADOS = ['Objetivo', 'Variable', 'Actividades', 'Técnica', 'Instrumento']
-    ANCHOS_CM   = [2.9, 2.9, 2.9, 2.9, 2.99]
+    ANCHOS_CM = [3.05, 2.70, 3.15, 2.70, 3.00]
+    TAM_PLAN = Pt(8.5)
+    TAM_ENC = Pt(9)
 
     tabla = doc.add_table(rows=1 + len(datos), cols=5)
     tabla.style = 'Table Grid'
+    tabla.autofit = False
     aplicar_formato_tabla_xml(tabla, ANCHOS_CM)
     _repetir_encabezado(tabla.rows[0])
+    for fila_word in tabla.rows:
+        _evitar_dividir_fila(fila_word)
 
     for col, enc in enumerate(ENCABEZADOS):
         cell = tabla.cell(0, col)
         set_cell_shading(cell, COLOR_ENCABEZADO)
-        _celda(cell, enc, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+        _celda(
+            cell, enc, negrita=True, centrado=True, tamaño=TAM_ENC,
+            color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1,
+        )
 
     for fila, datos_fila in enumerate(datos, start=1):
-        if len(datos_fila) == 5:
-            contenidos = list(datos_fila)
-        else:
-            contenidos = list(datos_fila) + ['']
+        contenidos = list(datos_fila[:5])
+        if len(contenidos) < 5:
+            contenidos.extend([''] * (5 - len(contenidos)))
         fondo = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         for col, texto in enumerate(contenidos):
             cell = tabla.cell(fila, col)
             set_cell_shading(cell, fondo)
-            _celda(cell, texto, tamaño=Pt(TAMANO_TABLA))
+            _celda(
+                cell, texto, tamaño=TAM_PLAN, alineacion=WD_ALIGN_PARAGRAPH.LEFT,
+                espacio_vertical=1,
+            )
+
     _agregar_fuente(doc, fuente)
 
 def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=None):
@@ -714,6 +744,9 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
 
     tabla = doc.add_table(rows=2 + len(semanas), cols=1 + num_sem)
     tabla.style = 'Table Grid'
+    # Evita que una actividad del Gantt se corte entre páginas.
+    for fila_tabla in tabla.rows:
+        _evitar_dividir_fila(fila_tabla)
 
     anchos_gantt = [COL_ACT_CM] + anchos_semanas
     aplicar_formato_tabla_xml(tabla, anchos_gantt)
@@ -723,7 +756,7 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
     # ── Fila 0: meses (JUNIO, JULIO, AGOSTO) ──
     cell_label = tabla.cell(0, 0)
     set_cell_shading(cell_label, COLOR_ENCABEZADO)
-    _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+    _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
 
     col_start = 1
     for nombre, ncols in meses:
@@ -734,13 +767,13 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
         c2 = tabla.cell(0, col_start + ncols - 1)
         merged = c1.merge(c2)
         set_cell_shading(merged, COLOR_ENCABEZADO)
-        _celda(merged, nombre, negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+        _celda(merged, nombre, negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
         col_start += ncols
 
     # ── Fila 1: semanas (1..n) ──
     cell_act = tabla.cell(1, 0)
     set_cell_shading(cell_act, COLOR_ENCABEZADO)
-    _celda(cell_act, 'Actividad', negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA), color_texto=COLOR_TEXTO_CLARO)
+    _celda(cell_act, 'Actividad', negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
 
     semana_meses = [4, 4, 2]  # weeks per month
     col_actual = 1
@@ -750,7 +783,7 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
                 break
             cell_s = tabla.cell(1, col_actual)
             set_cell_shading(cell_s, COLOR_ENCABEZADO)
-            _celda(cell_s, str(w), negrita=True, centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO)
+            _celda(cell_s, str(w), negrita=True, centrado=True, tamaño=Pt(8), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
             col_actual += 1
 
     # ── Filas de datos ──
@@ -758,13 +791,13 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
         fondo_fila = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         cell_a = tabla.cell(fila, 0)
         set_cell_shading(cell_a, fondo_fila)
-        _celda(cell_a, desc, tamaño=Pt(TAMANO_TABLA))
+        _celda(cell_a, desc, tamaño=Pt(8.2), alineacion=WD_ALIGN_PARAGRAPH.LEFT, espacio_vertical=1)
 
         for s in range(num_sem):
             cell_s = tabla.cell(fila, s + 1)
             activa = activas[s] if s < len(activas) else False
             set_cell_shading(cell_s, COLOR_GANTT_VERDE if activa else fondo_fila)
-            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(TAMANO_TABLA_CHICO), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO)
+            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(8), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO, espacio_vertical=1)
     _agregar_fuente(doc, fuente)
 
 def _insertar_campo_pagina(run, formato_pagina='PAGE'):
@@ -1367,7 +1400,7 @@ def agregar_fila_lista_preliminar_nativa(doc, col1_text, col2_text, col3_text, b
 # Anclas válidas donde pueden insertarse gráficos:
 #   "ubicacion"  -> tras la sección 1.1.7 Ubicación geográfica
 #   "estructura" -> tras la sección 1.1.9 Estructura Organizativa
-ANCLAS_VALIDAS = {"logo_empresa", "ubicacion", "estructura"}
+ANCLAS_VALIDAS = {"logo_empresa", "ubicacion", "estructura", "diagnostico_tecnica"}
 
 def _resolver_ruta_imagen(carpeta_imagenes, cfg):
     """Resuelve una imagen por nombre explícito (`archivo`) o por número, manteniendo compatibilidad."""
@@ -2279,6 +2312,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         agregar_parrafo_normado(doc, parrafo)
                 else:
                     agregar_parrafo_normado(doc, bloque)
+
+        # Técnica utilizada: la tutora solicita que su representación gráfica
+        # aparezca dentro del diagnóstico, no únicamente como anexo.
+        _insertar_graficos_por_ancla(doc, carpeta_imagenes, "diagnostico_tecnica")
 
         interrogante = getattr(c, 'INTERROGANTE_PROBLEMA', '')
         if interrogante:

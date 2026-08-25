@@ -30,6 +30,21 @@ PATRON_CRONOGRAMAS = "Cronograma_*.*"
 NOMBRE_DOCX_SALIDA = "Informe_Pasantia_IUTECP.docx"
 NOMBRE_PDF_SALIDA = "Informe_Pasantia_IUTECP.pdf"
 
+CONFIGURACIONES_COMBINACION = {
+    "juliano": {
+        "patron": "Cronograma_Informatica_Semana{semana}_IUTECP.docx",
+        "semanas": 9,
+    },
+    "keidy": {
+        "patron": "Cronograma_Procura_Semana{semana}_IUTECP.docx",
+        "semanas": 10,
+    },
+    "amaal": {
+        "patron": "Cronograma_Administracion_Semana{semana}_IUTECP.docx",
+        "semanas": 10,
+    },
+}
+
 # Excluir del escaneo de estudiantes: carpetas especiales del repositorio
 CARPETAS_EXCLUIDAS = {"venv", "compartido", "__pycache__", ".git", ".venv", "env"}
 
@@ -74,7 +89,7 @@ ACCIONES = [
     {"id": "borrador3", "nombre": "Compilar Borrador 3 (Cap I + II + III)", "def": False},
     {"id": "borrador4", "nombre": "Compilar Borrador 4 (Cap I + II + III + IV)", "def": False},
     {"id": "cronogramas", "nombre": "Compilar Cronogramas Semanales (.docx y .pdf)", "def": True},
-    {"id": "combinar_documentos", "nombre": "Combinar informe + 10 cronogramas (.docx y .pdf) [Keidy/Amaal]", "def": False}
+    {"id": "combinar_documentos", "nombre": "Combinar informe + cronogramas (.docx y .pdf)", "def": False}
 ]
 
 # Códigos de escape ANSI para colores y formato
@@ -155,8 +170,8 @@ def dibujar_interfaz(indice_cursor, sel_acciones, sel_estudiantes):
             status_lbl += f" {RED}(Sin contenido.py){RESET}"
         if not has_crono and sel_acciones[idx_accion.get("cronogramas", -1)]:
             status_lbl += f" {RED}(Sin cronograma.py){RESET}"
-        if sel_acciones[idx_accion.get("combinar_documentos", -1)] and est["id"] not in ("keidy", "amaal"):
-            status_lbl += f" {GRAY}(Combinación disponible para Keidy y Amaal){RESET}"
+        if sel_acciones[idx_accion.get("combinar_documentos", -1)] and est["id"] not in CONFIGURACIONES_COMBINACION:
+            status_lbl += f" {GRAY}(Combinación no configurada){RESET}"
 
         nombre_color = f"{BOLD}{GREEN if sel_estudiantes[i] else RESET}{est['nombre']}{RESET}"
         print(f"{cursor}{check} {nombre_color}{status_lbl}")
@@ -359,15 +374,14 @@ def _buscar_python_con_uno():
     return None
 
 def combinar_informe_cronogramas(est):
-    """Combina el informe y diez cronogramas de Keidy o Amaal en DOCX y PDF."""
-    configuraciones = {
-        "keidy": "Cronograma_Procura_Semana{semana}_IUTECP.docx",
-        "amaal": "Cronograma_Administracion_Semana{semana}_IUTECP.docx",
-    }
-    patron_cronograma = configuraciones.get(est["id"])
-    if patron_cronograma is None:
-        print(f"{GRAY}» Combinación omitida para {est['nombre']}: solo disponible para Keidy y Amaal.{RESET}")
+    """Combina el informe y los cronogramas configurados del estudiante."""
+    configuracion = CONFIGURACIONES_COMBINACION.get(est["id"])
+    if configuracion is None:
+        print(f"{GRAY}» Combinación omitida para {est['nombre']}: no está configurada.{RESET}")
         return None
+
+    patron_cronograma = configuracion["patron"]
+    total_semanas = configuracion["semanas"]
 
     informe = os.path.join(est["dir"], CARPETA_REPORTES, NOMBRE_DOCX_SALIDA)
     cronogramas = [
@@ -376,7 +390,7 @@ def combinar_informe_cronogramas(est):
             CARPETA_CRONOGRAMAS,
             patron_cronograma.format(semana=semana),
         )
-        for semana in range(1, 11)
+        for semana in range(1, total_semanas + 1)
     ]
     fuentes = [informe, *cronogramas]
     faltantes = [ruta for ruta in fuentes if not os.path.isfile(ruta)]
@@ -631,7 +645,7 @@ def main():
             else:
                 errores_totales += 1
 
-        # 4. Combinar informe y diez cronogramas de Keidy o Amaal si aplica
+        # 4. Combinar informe y cronogramas del estudiante si aplica
         if "combinar_documentos" in acciones_a_ejecutar:
             resultado_combinacion = combinar_informe_cronogramas(est)
             if resultado_combinacion is True:

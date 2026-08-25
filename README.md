@@ -212,6 +212,12 @@ Ejemplos:
 ./selector.py --acciones borrador2
 ```
 
+```bash
+./selector.py --estudiantes juliano --acciones combinar_documentos
+```
+
+La acción `combinar_documentos` une el informe completo con los cronogramas semanales disponibles: nueve para Juliano y diez para Keidy y Amaal.
+
 ### Modos de informe
 
 | Modo | Acción | Capítulos incluidos | Sufijo |
@@ -675,4 +681,3 @@ La prioridad es conservar **coherencia académica y trazabilidad de las decision
 - `contenido.py` representa el informe;
 - `cronograma.py` representa lo planificado/realizado;
 - `generador_informe.py` se limita a convertir esas decisiones académicas en un documento con el formato institucional.
-

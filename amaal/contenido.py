@@ -50,6 +50,16 @@ GRAFICOS = [
         'lista': 'Organigrama del Departamento de Administración.',
         'pagina': '6',
         'fuente': 'Ingeniería de Telecomunicaciones, C.A. (2026).'
+    },
+    {
+        'numero': 5,
+        'archivo': 'ishikawa_amaal_solicitudes.png',
+        'tras': 'diagnostico_tecnica',
+        'titulo': 'Gráfico 5. Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio.',
+        'ancho_cm': 12.5,
+        'lista': 'Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio',
+        'pagina': '',
+        'fuente': 'Alrifaai A. (2026).'
     }
 ]
 
@@ -68,7 +78,7 @@ CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades de la pasantía.
 
 CUADRO_PLANIFICACION_FUENTE = 'Alrifaai A. (2026).'
 
-CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Alrifaai A. (2026).'
 
 FORMATO_APROBACION_DESTACADO = True
 ESTRUCTURA_ORGANIZATIVA_TITULO = 'Estructura organizativa de la empresa (Organigrama)'
@@ -97,7 +107,7 @@ AUTOR_DATOS = ['Autor:',
  'C.I.: 8969750',
  '',
  'Tutor Académico:',
- 'Dra. Álvarez, Carmen',
+ 'Dra. Carmen J. Álvarez',
  'C.I.: 14.452.956']
 
 FECHA_LUGAR = 'El Tigre, agosto de 2026'
@@ -287,10 +297,12 @@ SITUACION_PROBLEMATICA = [{'parrafos': ['La identificación de la situación pro
                'de indicadores básicos de seguimiento. Como consecuencias pueden generarse reprocesos, mayor '
                'tiempo de respuesta y dificultades para ofrecer al suscriptor información precisa sobre el '
                'estado de su solicitud.']},
- {'parrafos': ['Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado '
+ {'parrafos': ['El recorrido actual de afiliaciones e incidencias se representa en el flujograma AS-IS incorporado como '
+               'Anexo C, el cual permite visualizar la transición de la información entre las áreas involucradas.',
+               'Para organizar las causas de la situación se empleó un diagrama de Ishikawa, complementado '
                'con observación directa, revisión de registros y entrevistas estructuradas al personal. La '
                'técnica permitió relacionar factores de procedimiento, comunicación, registro y seguimiento '
-               'con las demoras e inconsistencias identificadas.']}]
+               'con las demoras e inconsistencias identificadas. La representación gráfica de esta técnica se presenta a continuación; para facilitar su lectura, también se conserva una versión ampliada en el Anexo B.']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -493,7 +505,7 @@ POST_CITA_TEXTO = ''
 # ========================================================================
 ACTIVIDADES_DESCRIPCION = ('Durante las diez (10) semanas de pasantías se desarrollaron actividades operativas y de análisis mediante una '
   'rotación inicial por Atención al Cliente y una segunda etapa de apoyo en Administración. Algunas actividades y espacios observados '
-  'se documentan en la memoria fotográfica incorporada como Anexo I:')
+  'se documentan en la memoria fotográfica incorporada como Anexo H:')
 
 ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Inducción institucional y rotación inicial por Atención al Cliente, reconocimiento de los tipos '
@@ -523,8 +535,8 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Apoyo en tareas administrativas de facturación, actualización de registros y verificación del '
                'cierre de solicitudes e incidencias correspondientes al período.',
   'investigacion': 'Organización de los hallazgos del diagnóstico y elaboración del diagrama de Ishikawa para '
-                   'representar las causas relacionadas con procedimiento, comunicación, registro y seguimiento; '
-                   'inicio de la revisión de bases teóricas.'},
+                   'representar las causas relacionadas con procedimiento, comunicación, registro y seguimiento '
+                   '(véase Anexo B); inicio de la revisión de bases teóricas.'},
  {'semana': 6,
   'operativa': 'Procesamiento de pagos y documentos administrativos, apoyo en facturación y elaboración de '
                'reportes básicos requeridos por la supervisión.',
@@ -534,7 +546,8 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Apoyo en seguimiento de casos, actualización de registros administrativos y organización de '
                'documentación vinculada con solicitudes de servicio.',
   'investigacion': 'Diseño del nuevo flujo estandarizado para la gestión de solicitudes, estableciendo etapas, '
-                   'responsables, tiempos de referencia y puntos de control desde la recepción hasta el cierre.'},
+                   'responsables, tiempos de referencia y puntos de control desde la recepción hasta el cierre; '
+                   'la propuesta y su distribución interdepartamental se presentan en los Anexos A y D.'},
  {'semana': 8,
   'operativa': 'Colaboración en facturación, seguimiento de incidencias y preparación de reportes administrativos '
                'del período.',
@@ -544,7 +557,7 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Participación en las actividades regulares de Administración y apoyo en el cierre y seguimiento '
                'de casos correspondientes al período de pasantías.',
   'investigacion': 'Redacción y validación de la propuesta de mejora con el tutor industrial, incorporación de '
-                   'observaciones y preparación del flujograma definitivo del proceso propuesto.'},
+                   'observaciones y preparación del flujograma definitivo del proceso propuesto (véase Anexo A).'},
  {'semana': 10,
   'operativa': 'Presentación de los resultados y de la propuesta ante la supervisión del área, gestión de los '
                'recaudos de cierre y organización final de la documentación de pasantías.',
@@ -562,7 +575,10 @@ CONCLUSIONES = ['Se diagnosticó que la gestión de solicitudes de IDETEL se ini
  'estas condiciones afectan la trazabilidad y pueden prolongar los tiempos de respuesta al suscriptor.',
  'Se formularon mejoras al control administrativo mediante un flujo estandarizado, responsables por etapa, formatos '
  'de registro e indicadores básicos de seguimiento, orientados a facilitar la continuidad de la información y el '
- 'control de las solicitudes desde su recepción hasta el cierre.']
+ 'control de las solicitudes desde su recepción hasta el cierre.',
+ 'La experiencia de pasantía permitió aplicar conocimientos y competencias de Administración vinculados con control, '
+ 'organización de procesos, gestión documental, seguimiento y atención al usuario, fortaleciendo la relación entre '
+ 'la formación académica y las situaciones reales observadas en la empresa.']
 
 RECOMENDACIONES = [
  {'destinatario': 'A la empresa Ingeniería de Telecomunicaciones, C.A.',
@@ -599,16 +615,15 @@ REFERENCIAS_LISTA = ['Asamblea Nacional Constituyente. (1999). Constitución de 
  'España.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO B', 'Diagrama de Ishikawa del control de solicitudes', '01_ishikawa_control_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO C', 'Flujograma AS-IS de afiliaciones e incidencias', '02_flujo_as_is_solicitudes.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO D', 'Swimlane interdepartamental de gestión de solicitudes', '04_swimlane_gestion_solicitudes.png', {'width_cm': 14.0, 'height_cm': 10.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO E', 'Estados de una solicitud de servicio', '05_estados_solicitud.png', {'width_cm': 13.0, 'height_cm': 8.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO F', 'Comunicación interdepartamental', '10_comunicacion_interdepartamental.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO G', 'Comparación AS-IS y TO-BE del control de solicitudes', '11_comparacion_as_is_to_be.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO H', 'Diagrama de Ishikawa del control y trazabilidad de las solicitudes de servicio', 'ishikawa_amaal_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Elaboración propia (2026).']),
+    ('ANEXO A', 'Flujograma del proceso propuesto de gestión de solicitudes de servicios', 4, {'width_cm': 11.0, 'height_cm': 13.5}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO B', 'Versión ampliada del diagrama de Ishikawa definitivo del control y trazabilidad de las solicitudes de servicio', 'ishikawa_amaal_solicitudes.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO C', 'Flujograma AS-IS de afiliaciones e incidencias', '02_flujo_as_is_solicitudes.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO D', 'Swimlane interdepartamental de gestión de solicitudes', '04_swimlane_gestion_solicitudes.png', {'width_cm': 14.0, 'height_cm': 10.0}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO E', 'Estados de una solicitud de servicio', '05_estados_solicitud.png', {'width_cm': 13.0, 'height_cm': 8.0}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO F', 'Comunicación interdepartamental', '10_comunicacion_interdepartamental.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Alrifaai A. (2026).']),
+    ('ANEXO G', 'Comparación AS-IS y TO-BE del control de solicitudes', '11_comparacion_as_is_to_be.png', {'width_cm': 13.0, 'height_cm': 13.0}, ['Fuente: Alrifaai A. (2026).']),
     (
-        'ANEXO I',
+        'ANEXO H',
         'Memoria fotográfica de las actividades realizadas',
         [
             {
