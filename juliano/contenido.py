@@ -46,6 +46,16 @@ GRAFICOS = [
         'lista': 'Organigrama del Departamento de Presidencia',
         'pagina': '8',
         'fuente': 'Empresa Mixta Petrolera Venangocupet, S.A. (2026).'
+    },
+    {
+        'numero': 5,
+        'archivo': '3.png',
+        'tras': 'diagnostico_tecnica',
+        'titulo': 'Gráfico 5. Árbol del problema del control de movimientos documentales.',
+        'ancho_cm': 12.5,
+        'lista': 'Árbol del problema del control de movimientos documentales',
+        'pagina': '',
+        'fuente': 'Cardona J. (2026).'
     }
 ]
 
@@ -62,8 +72,11 @@ CUADRO_PLANIFICACION_TITULO = 'Cuadro 2. Planificación integral de objetivos es
 CUADRO_CRONOGRAMA_TITULO = 'Cuadro 3. Cronograma de actividades del desarrollo del sistema automatizado.'
 
 ETIQUETA_ACTIVIDAD_ANALISIS = 'Actividad de análisis'
-CUADRO_PLANIFICACION_FUENTE = 'Elaboración propia (2026).'
-CUADRO_CRONOGRAMA_FUENTE = 'Elaboración propia (2026).'
+CUADRO_PLANIFICACION_FUENTE = 'Cardona J. (2026).'
+CUADRO_CRONOGRAMA_FUENTE = 'Cardona J. (2026).'
+FORMATO_APROBACION_DESTACADO = True
+ESTRUCTURA_ORGANIZATIVA_TITULO = 'Estructura organizativa de la empresa (Organigrama)'
+CRONOGRAMA_SECCION_TITULO = 'CRONOGRAMA DE ACTIVIDADES (DIAGRAMA DE GANTT)'
 
 # ========================================================================
 # 2. DATOS DE PORTADA
@@ -236,7 +249,9 @@ DESCRIPCION_DEPARTAMENTO = ('El Departamento de Presidencia fue el área donde s
 # ========================================================================
 # 5. CAPÍTULO II — DIAGNÓSTICO SITUACIONAL
 # ========================================================================
-SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
+SITUACION_PROBLEMATICA = [
+ 'La identificación de la situación problemática permite analizar las condiciones que afectan el control y la trazabilidad de los movimientos documentales en el Departamento de Presidencia de la Empresa Mixta Petrolera Venangocupet, S.A. Para comprender la situación de forma progresiva se consideran aspectos generales de la gestión documental, las necesidades propias de las unidades administrativas vinculadas con la alta dirección y, finalmente, las condiciones observadas directamente durante las pasantías.',
+ {'titulo': 'Nivel macro',
   'parrafos': ['En las organizaciones que movilizan documentos entre distintas unidades, el control oportuno '
                'de cada ingreso, revisión, firma y despacho resulta necesario para conservar la continuidad '
                'de los procesos administrativos. Cuando estos movimientos se registran mediante operaciones '
@@ -262,14 +277,13 @@ SITUACION_PROBLEMATICA = [{'titulo': 'Nivel macro',
                'la alta dirección solicita un resumen mensual de documentos firmados o el estado de '
                'expedientes pendientes, el personal debe filtrar y consolidar manualmente los registros '
                'existentes.']},
- {'titulo': 'Técnica empleada para el diagnóstico',
-  'parrafos': ['Como técnica de análisis de la situación se estructuró un árbol del problema a partir de la '
-               'observación directa del flujo documental y de la revisión de los registros utilizados por el '
-               'departamento. El problema central se relaciona con la limitada automatización del control '
-               'documental; entre sus causas se encuentran la transcripción repetitiva, la ausencia de '
-               'validaciones automáticas y la dispersión del seguimiento en hojas de cálculo, mientras que '
+  {'parrafos': ['Como técnica de análisis de la situación se estructuró un árbol del problema a partir de la '
+                'observación directa del flujo documental y de la revisión de los registros utilizados por el '
+                'departamento. El problema central se relaciona con la limitada automatización del control '
+                'documental; entre sus causas se encuentran la transcripción repetitiva, la ausencia de '
+                'validaciones automáticas y la dispersión del seguimiento en hojas de cálculo, mientras que '
                'sus efectos se reflejan en demoras de registro, dificultad para obtener reportes inmediatos '
-               'y menor trazabilidad del recorrido de los expedientes.']}]
+               'y menor trazabilidad del recorrido de los expedientes (véase Gráfico 5).']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -554,16 +568,29 @@ CONCLUSIONES = ['Se diagnosticó que el control manual en hojas de cálculo pued
  'historial de movimientos sin alterar el flujo operativo del departamento.',
  'Se implementó y validó un prototipo funcional que integra los módulos de registro, consulta, historial y '
  'reporte, demostrando la viabilidad técnica de automatizar el control documental y reducir la dependencia de '
- 'operaciones manuales repetitivas.']
+ 'operaciones manuales repetitivas.',
+ 'La experiencia de pasantía permitió aplicar conocimientos y competencias de Informática relacionados con el análisis '
+ 'de sistemas, el diseño de bases de datos, el desarrollo de software, las pruebas funcionales y la documentación '
+ 'técnica, fortaleciendo la relación entre la formación académica y la solución de necesidades reales del Departamento '
+ 'de Presidencia.']
 
-RECOMENDACIONES = ['Incorporar progresivamente al sistema los registros históricos que deban conservarse para consulta, verificando '
- 'previamente la integridad de la información antes de su migración.',
- 'Capacitar al personal del Departamento de Presidencia en el uso de los módulos de registro, consulta, historial '
- 'y generación de reportes, utilizando ejemplos del flujo cotidiano de expedientes.',
- 'Establecer una rutina periódica de respaldo del archivo de base de datos en una ubicación segura y definida por '
- 'la organización, con el fin de preservar la continuidad del historial documental.',
- 'Evaluar en fases posteriores la incorporación de nuevas funciones únicamente cuando respondan a necesidades '
- 'reales del flujo de Presidencia, evitando agregar pasos que compliquen el proceso actual.']
+RECOMENDACIONES = [
+ {'destinatario': 'A la Empresa Mixta Petrolera Venangocupet, S.A.',
+  'recomendaciones': ['Incorporar progresivamente al sistema los registros históricos que deban conservarse para consulta, verificando '
+                      'previamente la integridad de la información antes de su migración.',
+                      'Capacitar al personal del Departamento de Presidencia en el uso de los módulos de registro, consulta, historial '
+                      'y generación de reportes, utilizando ejemplos del flujo cotidiano de expedientes.',
+                      'Establecer una rutina periódica de respaldo del archivo de base de datos en una ubicación segura y definida por '
+                      'la organización, con el fin de preservar la continuidad del historial documental.',
+                      'Evaluar en fases posteriores la incorporación de nuevas funciones únicamente cuando respondan a necesidades '
+                      'reales del flujo de Presidencia, evitando agregar pasos que compliquen el proceso actual.']},
+ {'destinatario': 'Al Instituto Universitario de Tecnología “Elías Calixto Pompa” (IUTECP).',
+  'recomendaciones': ['Continuar fortaleciendo el acompañamiento académico durante las pasantías y la articulación entre la formación '
+                      'académica y el desarrollo de soluciones tecnológicas aplicadas a necesidades reales de las organizaciones.']},
+ {'destinatario': 'A futuros pasantes.',
+  'recomendaciones': ['Documentar desde el inicio los requerimientos, pruebas, cambios del sistema y evidencias del trabajo realizado, '
+                      'relacionando cada actividad con los objetivos establecidos en el informe.']}
+]
 
 # ========================================================================
 # 9. REFERENCIAS Y ANEXOS
@@ -583,23 +610,22 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Árbol del problema del control de movimientos documentales', 3, {'width_cm': 11.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO B', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO C', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO D', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Elaboración propia a partir de expedientes_schema.sql (2026).']),
-    ('ANEXO E', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO F', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO G', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Elaboración propia (2026).']),
-    ('ANEXO H', 'Pseudocódigo general de operación del prototipo BaseAccess', '05_pseudocodigo_general_baseaccess.png', {'width_cm': 15.5, 'height_cm': 17.0}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).']),
-    ('ANEXO I', 'Memoria fotográfica del proceso de diseño, desarrollo y depuración', [
+    ('ANEXO A', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO B', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO C', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Cardona J., a partir de expedientes_schema.sql (2026).']),
+    ('ANEXO D', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO E', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO F', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO G', 'Pseudocódigo general de operación del prototipo BaseAccess', '05_pseudocodigo_general_baseaccess.png', {'width_cm': 15.5, 'height_cm': 17.0}, ['Fuente: Cardona J., a partir del prototipo BaseAccess (2026).']),
+    ('ANEXO H', 'Memoria fotográfica del proceso de diseño, desarrollo y depuración', [
         {'archivo': 'foto-borrador-diseno-interfaz.jpg', 'titulo': 'Borrador de diseño de la interfaz del prototipo BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-desarrollo-opencode-laptop.jpg', 'titulo': 'Desarrollo y verificación del prototipo desde el portátil', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-desarrollo-telefono.jpg', 'titulo': 'Seguimiento del desarrollo del prototipo desde el teléfono', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-error-antiguo-programa.jpg', 'titulo': 'Error de una versión anterior del programa', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-github-repositorio.png', 'titulo': 'Repositorio y control de versiones del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-opencode.png', 'titulo': 'Uso de OpenCode durante el desarrollo del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}}
-    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).']),
-    ('ANEXO J', 'Evidencias visuales del funcionamiento del prototipo BaseAccess', [
+    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Registro fotográfico del autor (2026).']),
+    ('ANEXO I', 'Evidencias visuales del funcionamiento del prototipo BaseAccess', [
         {'archivo': 'captura-registro-nuevo-contexto.png', 'titulo': 'Vista general de la interfaz y navegación modular de BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-formulario-general.png', 'titulo': 'Formulario estructurado para el registro de información documental', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-expedientes-frentes.png', 'titulo': 'Adaptación dinámica del formulario para procesos con múltiples frentes', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
@@ -607,5 +633,5 @@ ANEXOS_LISTA = [
         {'archivo': 'captura-ruta-seleccion-multiple.png', 'titulo': 'Cronograma interactivo de procesos con selección múltiple de actividades', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-exportacion-filtros-columnas.png', 'titulo': 'Configuración de filtros y columnas para la exportación de información', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-papelera-restaurar.png', 'titulo': 'Recuperación y eliminación definitiva de registros mediante la papelera', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}}
-    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Elaboración propia a partir del prototipo BaseAccess (2026).'])
+    ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Cardona J., a partir del prototipo BaseAccess (2026).'])
 ]

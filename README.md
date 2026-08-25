@@ -616,6 +616,7 @@ Para detalles completos consultar `CONTEXTO_GENERAL.md`.
 - Python 3.10+.
 - `python-docx`.
 - LibreOffice para conversión headless a PDF.
+- Utilidades Poppler `pdfinfo` y `pdftoppm` para anexar PDFs como imágenes no editables.
 - Sistema capaz de ejecutar los scripts desde la raíz del repositorio.
 
 Ejemplo de dependencia:

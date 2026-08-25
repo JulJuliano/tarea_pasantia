@@ -373,6 +373,278 @@ def _buscar_python_con_uno():
             return candidato
     return None
 
+def anexar_pdfs_como_imagenes(
+    ruta_docx,
+    rutas_pdf,
+    ruta_salida=None,
+    dpi=150,
+    reemplazar_marcadores=None,
+):
+    """Anexa PDFs como imágenes y puede reemplazar secciones marcadas del DOCX."""
+    import re
+
+    from docx import Document
+    from docx.enum.section import WD_SECTION_START
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+    from docx.shared import Inches, Pt
+
+    ruta_docx = os.path.abspath(ruta_docx)
+    if isinstance(rutas_pdf, (str, os.PathLike)):
+        rutas_pdf = [rutas_pdf]
+    rutas_pdf = [os.path.abspath(ruta) for ruta in rutas_pdf]
+    ruta_salida = os.path.abspath(ruta_salida or ruta_docx)
+
+    if not os.path.isfile(ruta_docx):
+        raise FileNotFoundError(f"No existe el DOCX de origen: {ruta_docx}")
+    if not rutas_pdf:
+        raise ValueError("Debe indicarse al menos un PDF para anexar.")
+    faltantes = [ruta for ruta in rutas_pdf if not os.path.isfile(ruta)]
+    if faltantes:
+        raise FileNotFoundError(f"No existen estos PDFs: {', '.join(faltantes)}")
+    if dpi <= 0:
+        raise ValueError("dpi debe ser mayor que cero.")
+    reemplazar_marcadores = {
+        os.path.abspath(ruta_pdf): marcador
+        for ruta_pdf, marcador in (reemplazar_marcadores or {}).items()
+    }
+
+    pdfinfo = shutil.which("pdfinfo")
+    pdftoppm = shutil.which("pdftoppm")
+    if not pdfinfo or not pdftoppm:
+        raise RuntimeError("Se requieren los comandos pdfinfo y pdftoppm (Poppler).")
+
+    def informacion_pdf(ruta_pdf):
+        resultado = subprocess.run(
+            [pdfinfo, ruta_pdf],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env={**os.environ, "LC_ALL": "C"},
+        )
+        if resultado.returncode != 0:
+            detalle = resultado.stderr.strip() or "sin detalles"
+            raise RuntimeError(f"No se pudo leer {ruta_pdf}: {detalle}")
+
+        paginas_match = re.search(r"^Pages:\s+(\d+)", resultado.stdout, re.MULTILINE)
+        tamano_match = re.search(
+            r"^Page size:\s+([\d.]+)\s+x\s+([\d.]+)\s+pts",
+            resultado.stdout,
+            re.MULTILINE,
+        )
+        if not paginas_match or not tamano_match:
+            raise RuntimeError(f"pdfinfo no devolvió dimensiones válidas para {ruta_pdf}.")
+        paginas = int(paginas_match.group(1))
+        tamano = (float(tamano_match.group(1)), float(tamano_match.group(2)))
+
+        # Permite conservar la proporción si un PDF contiene páginas mixtas.
+        por_pagina = subprocess.run(
+            [pdfinfo, "-f", "1", "-l", str(paginas), ruta_pdf],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env={**os.environ, "LC_ALL": "C"},
+        )
+        tamanos = [
+            (float(ancho), float(alto))
+            for ancho, alto in re.findall(
+                r"^Page\s+\d+\s+size:\s+([\d.]+)\s+x\s+([\d.]+)\s+pts",
+                por_pagina.stdout,
+                re.MULTILINE,
+            )
+        ]
+        if len(tamanos) != paginas:
+            tamanos = [tamano] * paginas
+        return tamanos
+
+    def numero_pagina(ruta_imagen):
+        coincidencia = re.search(r"-(\d+)\.[^.]+$", os.path.basename(ruta_imagen))
+        return int(coincidencia.group(1)) if coincidencia else 0
+
+    documento = Document(ruta_docx)
+    ancho_carta = Inches(8.5)
+    alto_carta = Inches(11)
+
+    def configurar_seccion_carta(seccion):
+        seccion.page_width = ancho_carta
+        seccion.page_height = alto_carta
+        seccion.left_margin = Inches(0)
+        seccion.right_margin = Inches(0)
+        seccion.top_margin = Inches(0)
+        seccion.bottom_margin = Inches(0)
+        seccion.header_distance = Inches(0)
+        seccion.footer_distance = Inches(0)
+        for nombre in (
+            "header",
+            "first_page_header",
+            "even_page_header",
+            "footer",
+            "first_page_footer",
+            "even_page_footer",
+        ):
+            contenedor = getattr(seccion, nombre)
+            contenedor.is_linked_to_previous = False
+            for parrafo in contenedor.paragraphs:
+                parrafo._p.clear_content()
+
+    def agregar_marcador(parrafo, marcador):
+        ids = [
+            int(inicio.get(qn("w:id")))
+            for inicio in documento.element.body.iter(qn("w:bookmarkStart"))
+            if inicio.get(qn("w:id"), "").isdigit()
+        ]
+        identificador = str(max(ids, default=0) + 1)
+        inicio = OxmlElement("w:bookmarkStart")
+        inicio.set(qn("w:id"), identificador)
+        inicio.set(qn("w:name"), marcador)
+        fin = OxmlElement("w:bookmarkEnd")
+        fin.set(qn("w:id"), identificador)
+        ppr = parrafo._p.pPr
+        if ppr is not None:
+            ppr.addnext(inicio)
+        else:
+            parrafo._p.insert(0, inicio)
+        parrafo._p.append(fin)
+
+    def agregar_imagen_carta(imagen, marcador=None):
+        parrafo = documento.add_paragraph()
+        parrafo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        parrafo.paragraph_format.space_before = Pt(0)
+        parrafo.paragraph_format.space_after = Pt(0)
+        parrafo.paragraph_format.line_spacing = 1
+        parrafo.add_run().add_picture(
+            imagen,
+            width=ancho_carta,
+            height=alto_carta,
+        )
+        if marcador:
+            agregar_marcador(parrafo, marcador)
+        return parrafo
+
+    def es_parrafo_con_seccion(elemento):
+        if elemento.tag != qn("w:p"):
+            return False
+        ppr = elemento.find(qn("w:pPr"))
+        return ppr is not None and ppr.find(qn("w:sectPr")) is not None
+
+    def insertar_en_marcador(marcador, imagenes):
+        cuerpo = documento.element.body
+        hijos = list(cuerpo.iterchildren())
+        indice_marcador = next(
+            (
+                indice
+                for indice, hijo in enumerate(hijos)
+                if any(
+                    inicio.get(qn("w:name")) == marcador
+                    for inicio in hijo.iter(qn("w:bookmarkStart"))
+                )
+            ),
+            None,
+        )
+        if indice_marcador is None:
+            raise ValueError(f"No se encontró el marcador {marcador!r} en el DOCX.")
+
+        indice_anterior = max(
+            (
+                indice
+                for indice in range(indice_marcador)
+                if es_parrafo_con_seccion(hijos[indice])
+            ),
+            default=-1,
+        )
+        indice_siguiente = next(
+            (
+                indice
+                for indice in range(indice_marcador + 1, len(hijos))
+                if es_parrafo_con_seccion(hijos[indice])
+            ),
+            len(hijos),
+        )
+        indice_seccion = sum(
+            es_parrafo_con_seccion(hijo) for hijo in hijos[:indice_marcador]
+        )
+        if indice_seccion >= len(documento.sections):
+            raise ValueError(f"No se pudo resolver la sección de {marcador!r}.")
+
+        seccion = documento.sections[indice_seccion]
+        configurar_seccion_carta(seccion)
+        siguiente = hijos[indice_siguiente] if indice_siguiente < len(hijos) else None
+
+        for hijo in hijos[indice_anterior + 1:indice_siguiente]:
+            cuerpo.remove(hijo)
+
+        for indice, imagen in enumerate(imagenes):
+            parrafo = agregar_imagen_carta(
+                imagen,
+                marcador if indice == 0 else None,
+            )
+            if siguiente is not None:
+                siguiente.addprevious(parrafo._p)
+
+    def anexar_al_final(imagen):
+        seccion = documento.add_section(WD_SECTION_START.NEW_PAGE)
+        configurar_seccion_carta(seccion)
+        agregar_imagen_carta(imagen)
+
+    os.makedirs(os.path.dirname(ruta_salida) or ".", exist_ok=True)
+    temporal_docx = None
+    try:
+        with tempfile.TemporaryDirectory(prefix="anexos_pdf_") as temporal:
+            for indice_pdf, ruta_pdf in enumerate(rutas_pdf, start=1):
+                tamanos = informacion_pdf(ruta_pdf)
+                prefijo = os.path.join(temporal, f"pdf_{indice_pdf:02d}")
+                resultado = subprocess.run(
+                    [
+                        pdftoppm,
+                        "-jpeg",
+                        "-jpegopt",
+                        "quality=95",
+                        "-r",
+                        str(int(dpi)),
+                        ruta_pdf,
+                        prefijo,
+                    ],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
+                if resultado.returncode != 0:
+                    detalle = resultado.stderr.strip() or "sin detalles"
+                    raise RuntimeError(f"No se pudo renderizar {ruta_pdf}: {detalle}")
+
+                imagenes = sorted(
+                    glob.glob(f"{prefijo}-*.jpg"),
+                    key=numero_pagina,
+                )
+                if len(imagenes) != len(tamanos):
+                    raise RuntimeError(
+                        f"Se esperaban {len(tamanos)} páginas de {ruta_pdf}, "
+                        f"pero se renderizaron {len(imagenes)}."
+                    )
+
+                marcador = reemplazar_marcadores.get(ruta_pdf)
+                if marcador:
+                    insertar_en_marcador(marcador, imagenes)
+                else:
+                    for imagen in imagenes:
+                        anexar_al_final(imagen)
+
+            descriptor, temporal_docx = tempfile.mkstemp(
+                prefix=".Informe_Pasantia_IUTECP_",
+                suffix=".docx",
+                dir=os.path.dirname(ruta_salida) or ".",
+            )
+            os.close(descriptor)
+            documento.save(temporal_docx)
+            os.replace(temporal_docx, ruta_salida)
+            temporal_docx = None
+    finally:
+        if temporal_docx and os.path.exists(temporal_docx):
+            os.remove(temporal_docx)
+
+    return ruta_salida
+
 def combinar_informe_cronogramas(est):
     """Combina el informe y los cronogramas configurados del estudiante."""
     configuracion = CONFIGURACIONES_COMBINACION.get(est["id"])

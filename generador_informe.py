@@ -664,7 +664,7 @@ def agregar_titulo_cuadro(doc, texto, bookmark_id=None):
     if bookmark_id:
         _agregar_bookmark(p, bookmark_id)
 
-def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None, fuente=None):
+def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None, *, fuente):
     """Genera la planificación integral procurando mantenerla compacta y legible.
 
     Para los informes de Administración la tabla contiene textos extensos. Se usa
@@ -710,10 +710,14 @@ def agregar_tabla_planificacion(doc, datos, titulo_cuadro=None, bookmark_id=None
 
     _agregar_fuente(doc, fuente)
 
-def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=None):
+def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, *, fuente):
     """Genera la tabla Gantt con 2 filas de encabezado (meses y semanas)"""
     if titulo_cuadro:
         agregar_titulo_cuadro(doc, titulo_cuadro, bookmark_id=bookmark_id)
+        titulo_gantt = doc.paragraphs[-1]
+        titulo_gantt.paragraph_format.space_before = Pt(6)
+        titulo_gantt.paragraph_format.space_after = Pt(3)
+        titulo_gantt.paragraph_format.line_spacing = 1.0
 
     num_sem = max(len(s[1]) for s in semanas)
 
@@ -756,7 +760,7 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
     # ── Fila 0: meses (JUNIO, JULIO, AGOSTO) ──
     cell_label = tabla.cell(0, 0)
     set_cell_shading(cell_label, COLOR_ENCABEZADO)
-    _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
+    _celda(cell_label, 'Semana', negrita=True, centrado=True, tamaño=Pt(7.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=0)
 
     col_start = 1
     for nombre, ncols in meses:
@@ -767,13 +771,13 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
         c2 = tabla.cell(0, col_start + ncols - 1)
         merged = c1.merge(c2)
         set_cell_shading(merged, COLOR_ENCABEZADO)
-        _celda(merged, nombre, negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
+        _celda(merged, nombre, negrita=True, centrado=True, tamaño=Pt(7.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=0)
         col_start += ncols
 
     # ── Fila 1: semanas (1..n) ──
     cell_act = tabla.cell(1, 0)
     set_cell_shading(cell_act, COLOR_ENCABEZADO)
-    _celda(cell_act, 'Actividad', negrita=True, centrado=True, tamaño=Pt(8.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
+    _celda(cell_act, 'Actividad', negrita=True, centrado=True, tamaño=Pt(7.5), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=0)
 
     semana_meses = [4, 4, 2]  # weeks per month
     col_actual = 1
@@ -783,7 +787,7 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
                 break
             cell_s = tabla.cell(1, col_actual)
             set_cell_shading(cell_s, COLOR_ENCABEZADO)
-            _celda(cell_s, str(w), negrita=True, centrado=True, tamaño=Pt(8), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=1)
+            _celda(cell_s, str(w), negrita=True, centrado=True, tamaño=Pt(7), color_texto=COLOR_TEXTO_CLARO, espacio_vertical=0)
             col_actual += 1
 
     # ── Filas de datos ──
@@ -791,14 +795,16 @@ def agregar_gantt(doc, semanas, titulo_cuadro=None, bookmark_id=None, fuente=Non
         fondo_fila = COLOR_FILA_PAR if fila % 2 == 0 else COLOR_TEXTO_CLARO
         cell_a = tabla.cell(fila, 0)
         set_cell_shading(cell_a, fondo_fila)
-        _celda(cell_a, desc, tamaño=Pt(8.2), alineacion=WD_ALIGN_PARAGRAPH.LEFT, espacio_vertical=1)
+        _celda(cell_a, desc, tamaño=Pt(7.2), alineacion=WD_ALIGN_PARAGRAPH.LEFT, espacio_vertical=0)
 
         for s in range(num_sem):
             cell_s = tabla.cell(fila, s + 1)
             activa = activas[s] if s < len(activas) else False
             set_cell_shading(cell_s, COLOR_GANTT_VERDE if activa else fondo_fila)
-            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(8), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO, espacio_vertical=1)
-    _agregar_fuente(doc, fuente)
+            _celda(cell_s, '✓' if activa else '', centrado=True, tamaño=Pt(7), color_texto=COLOR_TEXTO_CLARO if activa else COLOR_TEXTO_OSCURO, espacio_vertical=0)
+    fuente_gantt = _agregar_fuente(doc, fuente)
+    fuente_gantt.paragraph_format.space_after = Pt(0)
+    fuente_gantt.paragraph_format.keep_together = True
 
 def _insertar_campo_pagina(run, formato_pagina='PAGE'):
     """Inserta un campo de número de página con el formato especificado en un run."""
@@ -1603,7 +1609,8 @@ def validar_contenido():
         if not str(titulo).startswith(f"Cuadro {numero}."):
             errores.append(f"el título del cuadro {numero} no coincide con su número")
     for atributo in ('POBLACION_TABLA', 'POBLACION_FUENTE', 'CUADRO_PLANIFICACION_FUENTE', 'CUADRO_CRONOGRAMA_FUENTE'):
-        if not getattr(c, atributo, None):
+        valor = getattr(c, atributo, None)
+        if not valor or (isinstance(valor, str) and not valor.strip()):
             errores.append(f"falta {atributo}")
     for fila in getattr(c, 'POBLACION_TABLA', []):
         if len(fila) != 5:
@@ -1639,7 +1646,8 @@ def validar_contenido():
         codigo = anexo[0] if anexo else "sin código"
         referencia = anexo[2] if len(anexo) > 2 else None
         fuente = anexo[4] if len(anexo) > 4 else None
-        if not fuente:
+        fuentes_anexo = fuente if isinstance(fuente, (list, tuple)) else [fuente]
+        if not fuentes_anexo or any(not str(item or '').strip() for item in fuentes_anexo):
             errores.append(f"{codigo} no tiene fuente propia")
         referencias_imagen = referencia if isinstance(referencia, (list, tuple)) else [referencia]
         for imagen in referencias_imagen:

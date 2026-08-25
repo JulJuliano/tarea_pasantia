@@ -293,14 +293,14 @@ SITUACION_PROBLEMATICA = [{'parrafos': ['La identificación de la situación pro
                'administrativa que organice el recorrido de las requisiciones, defina responsables, estandarice '
                'documentos y establezca mecanismos de seguimiento compatibles con el control interno del '
                'departamento.']},
- {'parrafos': ['El recorrido observado del proceso se sintetiza en el flujograma AS-IS incorporado como Anexo B, '
+  {'parrafos': ['El recorrido observado del proceso se sintetiza en el flujograma AS-IS incorporado como Anexo A, '
                'donde se muestran las etapas de recepción, cotización, aprobación, orden de compra, seguimiento y cierre, '
                'junto con los principales puntos críticos identificados.',
                'Para organizar las causas de la problemática se utilizó el diagrama de causa-efecto o diagrama de '
                'Ishikawa, complementado con observación directa del flujo de procura, entrevistas estructuradas '
                'al personal y revisión de expedientes de compras. La técnica permitió agrupar factores asociados '
                'a procedimientos, responsabilidades, documentación y seguimiento, facilitando la identificación '
-               'de los puntos que debían atenderse en la propuesta. La representación gráfica de esta técnica se presenta a continuación; para facilitar su lectura, también se conserva una versión ampliada en el Anexo A.']}]
+                'de los puntos que debían atenderse en la propuesta. La representación gráfica de esta técnica se presenta a continuación.']}]
 
 INTERROGANTE_TITULO = 'Interrogante orientadora'
 
@@ -556,15 +556,15 @@ ACTIVIDADES_LISTA = [{'semana': 1,
   'operativa': 'Seguimiento de cotizaciones pendientes de aprobación y actualización de los expedientes de '
                'compras activos del período.',
   'investigacion': 'Diseño del nuevo flujo simplificado del proceso de procura, definiendo etapas, responsables, '
-                   'puntos de control y tiempos de referencia para el seguimiento administrativo; el flujo TO-BE y su '
-                   'distribución por responsables se presentan en los Anexos C y D.'},
+                    'puntos de control y tiempos de referencia para el seguimiento administrativo; el flujo TO-BE y su '
+                    'distribución por responsables se presentan en los Anexos B y C.'},
  {'semana': 7,
   'operativa': 'Apoyo en el procesamiento de requisiciones y verificación de información necesaria para compras '
                'en trámite.',
   'investigacion': 'Diseño de los formatos estandarizados de solicitud de cotización y orden de compra, '
                    'elaboración de la matriz de autorización por monto y definición de indicadores básicos para '
-                   'el seguimiento del proceso. Como apoyos de organización y asignación de responsabilidades se '
-                   'incorporan el SIPOC y la matriz RACI en los Anexos E y F.'},
+                    'el seguimiento del proceso. Como apoyos de organización y asignación de responsabilidades se '
+                    'incorporan el SIPOC y la matriz RACI en los Anexos D y E.'},
  {'semana': 8,
   'operativa': 'Seguimiento de órdenes en proceso y actualización de registros de proveedores y expedientes de '
                'adquisiciones.',
@@ -630,10 +630,9 @@ REFERENCIAS_LISTA = [ 'Asamblea Nacional Constituyente. (1999). Constitución de
  'Argentina.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Versión ampliada del diagrama de Ishikawa definitivo de las causas asociadas a las demoras y pérdida de trazabilidad del proceso de procura', 'ishikawa_keidy_procura.png', {'width_cm': 14.0, 'height_cm': 6.0}, ['Fuente: Guzmán K. (2026).']),
-    ('ANEXO B', 'Flujograma AS-IS del proceso actual de procura', '02_flujo_as_is_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
-    ('ANEXO C', 'Flujograma TO-BE del proceso simplificado propuesto', '03_flujo_to_be_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
-    ('ANEXO D', 'Swimlane del proceso propuesto de procura', '04_swimlane_procura.png', {'width_cm': 14.0, 'height_cm': 13.0}, ['Fuente: Guzmán K. (2026).']),
-    ('ANEXO E', 'SIPOC del proceso de procura', '05_sipoc_procura.png', {'width_cm': 13.0, 'height_cm': 14.0}, ['Fuente: Guzmán K. (2026).']),
-    ('ANEXO F', 'Matriz RACI propuesta del proceso de procura', '06_matriz_raci_propuesta.png', {'width_cm': 14.0, 'height_cm': 5.0}, ['Fuente: Guzmán K. (2026).'])
+    ('ANEXO A', 'Flujograma AS-IS del proceso actual de procura', '02_flujo_as_is_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO B', 'Flujograma TO-BE del proceso simplificado propuesto', '03_flujo_to_be_procura.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO C', 'Swimlane del proceso propuesto de procura', '04_swimlane_procura.png', {'width_cm': 14.0, 'height_cm': 13.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO D', 'SIPOC del proceso de procura', '05_sipoc_procura.png', {'width_cm': 13.0, 'height_cm': 14.0}, ['Fuente: Guzmán K. (2026).']),
+    ('ANEXO E', 'Matriz RACI propuesta del proceso de procura', '06_matriz_raci_propuesta.png', {'width_cm': 14.0, 'height_cm': 5.0}, ['Fuente: Guzmán K. (2026).'])
 ]

@@ -10,7 +10,7 @@ from docx.oxml.ns import qn
 # ================================================================
 #  DATOS DEL PASANTE (MODIFIQUE ESTOS VALORES CON SUS DATOS)
 # ================================================================
-PASANTE_NOMBRE = "Alrifaaie Amaal"
+PASANTE_NOMBRE = "Alrifaai Alrifaaie, Amaal"
 PASANTE_CI = "31.985.792"
 TUTOR_INDUSTRIAL = "Lic. Lenny Mata"
 TUTOR_INDUSTRIAL_CI = "8969750"
