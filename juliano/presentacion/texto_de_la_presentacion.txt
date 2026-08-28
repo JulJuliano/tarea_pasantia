@@ -1,0 +1,124 @@
+esta es la transcripcion de mis diapositivas, ellas ya tienen sus anexos incluidos
+
+1
+BaseAccess
+Sistema de registro y trazabilidad
+
+2
+¿De qué se trata?
+Es la solución integral para la gestión y registro eficiente de documentos. Diseñado para simplificar la experiencia del usuario, reduce errores eliminando la duplicidad de información y automatiza las tareas repetitivas.
+
+3
+Menú de inicio
+
+(captura del menu de inicio)
+
+4
+* Estética neobrutalism
+
+* Contraste accesible
+
+* Diseño moderno
+
+* Amigable para el usuario
+
+* Respaldos y portabilidad
+
+5
+Todo el control documental en un solo lugar
+Herramientas de registro, búsqueda y gestión accesibles desde un mismo espacio.
+
+(capturas de la sidebar, botonera de modulos y barra de busqueda y filtrado)
+
+6
+Funcionalidades del programa
+Reordenar Modulos
+
+(Video corto donde muestro como se re ordenan los modulos de la botonera inferior)
+(duracion del clip 6.6 segundos)
+
+7
+Zoom en las tablas
+
+(Video donde muestro como hacer acercar y alejar la vista en las tablas del menu de inicio (cuando hago zoom in aparece una barra de scroll horizontal para poder navegar por toda la tabla) (al tocar en el boton que tiene el porcentaje de zoom, este se reestablece a 100% (el valor predefinido)))
+(duracion del clip 12.4 segundos)
+
+8
+Manual de usuario integrado
+Tema claro / oscuro
+
+(video donde muestro el manual integrado que tiene la aplicacion, asi como la opcion para alternar entre tema claro y oscuro)
+(duracion del clip 29.5 segundos)
+
+9
+Filtro y busqueda de registros
+
+(video donde muestro el boton que sirve para ordenar por pendiente, fecha de modificacion o fecha de creacion y la barra de busqueda)
+(duracion del clip 17.9 segundos)
+
+10
+creacion de registros
+
+(video donde creo un registro usando el formulario que es unico por modulo, incluyendo campos con validaciones (alternativas) usadas frecuentemente o campos de texto libre. Tambien mostrando la funcion de como al poner ciertos campos unicos, el programa detecta de forma inteligente que se trata del mismo documento y te da la alerta para que pases al formulario del documento ya existente)
+(duracion del clip 37.9 segundos)
+
+11
+Acceso rápido a los documentos pendientes de firma
+
+(video donde muestro la ventana de los pendientes, puedes ver los documentos pendientes de firma segun el modulo o de todos los modulos, y tiene un boton para pasar directamente al formulario de cada uno)
+(duracion del clip 15.6 segundos)
+
+12
+Fijar Documentos
+
+(video donde muestro la ventana de los fijados, en las tablas del menu de inicio podemos fijar un documento y al darle click pasamos directamente a su formulario)
+(duracion del clip 19.1 segundos)
+
+13
+Deshacer y rehacer acciones recientes
+
+(video donde se muestra la funcion de deshacer rehacer en el menu de inicio (la funcion tambien sirve en los formularios y demas partes del programa))
+(duracion del clip 19.2 segundos)
+
+14
+Recuperar registros eliminados manualmente
+
+(aqui se muestra un video en donde borre un registro, y luego fui a la ventana de "papelera" y recupere dicho documento)
+(duracion del clip 19.6 segundos)
+
+15
+Visualizacion de los movimientos documentales
+
+(en este video se puede ver como cambio un campo de un documento, y tenemos un historial de los movimientos que ha tenido, y como ha estado cada dato en cada fase del proceso)
+(duracion del clip 41.3 segundos)
+
+16
+Duplicar elementos y exportar excel
+
+(video donde muestro la opcion que tenemos para duplicar un registro, para casos donde dos documentos tengan informacion parecida y asi agilizar el trabajo, ademas se muestra la funcion para exportar la base de datos como excel, en donde ademas podemos filtrar segun las validaciones que se mencionaron antes)
+(duracion del clip 60 segundos)
+
+17
+Calculadora
+
+(video en donde muestro la ventana de la calculadora, en donde podemos añadir y quitar numeros libremente, seleccionar si dividen multiplican suman o restan, ademas podemos sumar porcentajes y fijar resultados para que se sumen entre si)
+(duracion del clip 41.3 segundos)
+
+18
+Creación de hojas para los siguientes años
+
+(aqui muestro la ventana en donde se crean nuevas hojas/años, se asigna un nombre a la hoja y se marca la opcion para importar las validaciones, como se puede ver la hoja empieza vacia, y si creo/modifico una validacion ahi, en la otra hoja no se nota esa edicion, lo mismo pasa con los registros (obviamente))
+(duracion del clip 83 segundos)
+
+19
+RUTA PROCESOS
+
+(aqui se muestra la ruta procesos, en donde tenemos hojas, cada hoja puede tener varias juntas, y cada junta tiene varios, procesos-semanas-leyendas, tenemos tambien un gantt en donde vamos marcando en donde estaba cierto proceso un cierto dia, tenemos la funcion de seleccion multiple donde podemos poner varias leyendas a la vez en varias casillas)
+(duracion del clip 125 segundos)
+
+
+tarde 30 segundos en decir estas 34 palabras (esta es la transcripcion de mis diapositivas, ellas ya tienen sus anexos incluidos
+BaseAccess
+Sistema de registro y trazabilidad
+¿De qué se trata?
+Es la solución integral para la gestión y registro eficiente de documentos. Diseñado para simplificar la experiencia del usuario, reduce errores eliminando la duplicidad de información y automatiza las tareas repetitivas.) toma eso como referencia para darme el guion de cada diapositiva, tomando en cuenta que debo durar hablando minimo lo que dura cada clip (para el caso de las diapositivas con video)

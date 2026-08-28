@@ -610,14 +610,30 @@ REFERENCIAS_LISTA = ['Arias, F. (2012). El proyecto de investigación: Introducc
  'maestría y tesis doctorales (5ta ed.). FEDUPEL, Venezuela.']
 
 ANEXOS_LISTA = [
-    ('ANEXO A', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
-    ('ANEXO B', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
-    ('ANEXO C', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Cardona J., a partir de expedientes_schema.sql (2026).']),
-    ('ANEXO D', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Cardona J. (2026).']),
-    ('ANEXO E', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Cardona J. (2026).']),
-    ('ANEXO F', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Cardona J. (2026).']),
-    ('ANEXO G', 'Pseudocódigo general de operación del prototipo BaseAccess', '05_pseudocodigo_general_baseaccess.png', {'width_cm': 15.5, 'height_cm': 17.0}, ['Fuente: Cardona J., a partir del prototipo BaseAccess (2026).']),
-    ('ANEXO H', 'Memoria fotográfica del proceso de diseño, desarrollo y depuración', [
+    ('ANEXO A', 'Definición de términos básicos', None, None,
+     ['Fuente: Síntesis de Cardona J. (2026), con base en Codd (1970), Date (2001), Cruz Mundet (2011), Gómez (2019), Kendall y Kendall (2011), Laudon y Laudon (2016) y Pressman (2010).'], [
+        'Para facilitar la comprensión del presente informe, se definen a continuación los principales términos técnicos relacionados con el sistema automatizado desarrollado:',
+        {'termino': 'Aplicación de escritorio', 'definicion': 'Programa informático diseñado para ejecutarse directamente en un computador. En este proyecto permite registrar, consultar y generar reportes sobre los movimientos documentales del Departamento de Presidencia.'},
+        {'termino': 'Automatización de procesos administrativos', 'definicion': 'Uso de herramientas informáticas para ejecutar o facilitar tareas repetitivas, disminuir la intervención manual y mejorar la rapidez y precisión de los procedimientos organizacionales (Laudon y Laudon, 2016).'},
+        {'termino': 'BaseAccess', 'definicion': 'Nombre asignado al prototipo de aplicación de escritorio desarrollado durante las pasantías para controlar, consultar y reportar los movimientos documentales de la Presidencia de Venangocupet, S.A.'},
+        {'termino': 'Base de datos relacional', 'definicion': 'Estructura que organiza la información en tablas vinculadas mediante claves primarias y foráneas, permitiendo reducir la duplicidad y mantener la integridad de los registros (Codd, 1970; Date, 2001).'},
+        {'termino': 'Catálogo de datos', 'definicion': 'Conjunto de valores previamente registrados que pueden seleccionarse dentro del sistema. En BaseAccess se utilizan catálogos para gerencias, superintendencias, responsables, modalidades, estatus, resultados y empresas.'},
+        {'termino': 'Control documental', 'definicion': 'Conjunto de procedimientos empleados para registrar, verificar y supervisar la recepción, revisión, firma, egreso y despacho de documentos dentro de una organización.'},
+        {'termino': 'Expediente', 'definicion': 'Conjunto organizado de documentos y datos relacionados con un mismo trámite, asunto o proceso administrativo. En el sistema representa la unidad principal sobre la cual se registran los movimientos documentales.'},
+        {'termino': 'Gestión documental', 'definicion': 'Conjunto de normas, técnicas y prácticas aplicadas durante el ciclo de vida de los documentos, desde su recepción o creación hasta su despacho o disposición final (Cruz Mundet, 2011).'},
+        {'termino': 'Historial de movimientos', 'definicion': 'Registro cronológico de las acciones realizadas sobre un expediente, incluyendo fechas, responsables, estatus y departamentos de origen o destino.'},
+        {'termino': 'Interfaz gráfica de usuario', 'definicion': 'Conjunto de pantallas, formularios, botones, menús y controles mediante los cuales una persona interactúa con un sistema informático.'},
+        {'termino': 'Movimiento documental', 'definicion': 'Acción que modifica la situación o ubicación administrativa de un expediente, como su ingreso, revisión, firma, egreso o despacho hacia otro departamento.'},
+        {'termino': 'Prototipo funcional', 'definicion': 'Versión operativa de un sistema que incorpora sus funciones esenciales y permite comprobar si la solución responde a los requerimientos identificados antes de su implementación definitiva (Pressman, 2010).'},
+        {'termino': 'Reporte documental', 'definicion': 'Presentación organizada de la información registrada en el sistema mediante consultas, filtros y resúmenes que permiten conocer el estado y recorrido de los expedientes.'},
+        {'termino': 'Sistema automatizado', 'definicion': 'Conjunto integrado de programas, datos y procedimientos destinado a procesar información y apoyar la ejecución de actividades con menor intervención manual (Kendall y Kendall, 2011; Laudon y Laudon, 2016).'},
+        {'termino': 'SQLite', 'definicion': 'Sistema gestor de bases de datos relacionales, embebido y sin servidor, que almacena en un solo archivo la estructura y los registros utilizados por la aplicación.'},
+        {'termino': 'Trazabilidad documental', 'definicion': 'Capacidad de reconstruir y verificar el recorrido completo de un documento, identificando las acciones, fechas, responsables y estados asociados con cada etapa del proceso (Gómez, 2019).'},
+        {'termino': 'Validación de datos', 'definicion': 'Aplicación de reglas que comprueban que la información ingresada sea completa, coherente y corresponda con los valores permitidos por el sistema.'},
+        {'termino': 'Wails', 'definicion': 'Marco tecnológico utilizado para integrar la lógica del sistema con una interfaz visual y empaquetar BaseAccess como una aplicación de escritorio.'}
+    ]),
+    ('ANEXO B', 'Planes de trabajo o actividades semanales', None, None, ['Fuente: Planes semanales de pasantías firmados y sellados (2026).']),
+    ('ANEXO C', 'Memoria fotográfica del proceso de diseño, desarrollo y depuración', [
         {'archivo': 'foto-borrador-diseno-interfaz.jpg', 'titulo': 'Borrador de diseño de la interfaz del prototipo BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-desarrollo-opencode-laptop.jpg', 'titulo': 'Desarrollo y verificación del prototipo desde el portátil', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-desarrollo-telefono.jpg', 'titulo': 'Seguimiento del desarrollo del prototipo desde el teléfono', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
@@ -625,7 +641,14 @@ ANEXOS_LISTA = [
         {'archivo': 'foto-github-repositorio.png', 'titulo': 'Repositorio y control de versiones del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'foto-opencode.png', 'titulo': 'Uso de OpenCode durante el desarrollo del prototipo', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}}
     ], {'width_cm': 15.5, 'height_cm': 17.5}, ['Fuente: Registro fotográfico del autor (2026).']),
-    ('ANEXO I', 'Evidencias visuales del funcionamiento del prototipo BaseAccess', [
+    ('ANEXO D', 'Flujograma AS-IS del proceso documental actual de Presidencia', '02_flujo_as_is_presidencia.png', {'width_cm': 11.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO E', 'Flujograma TO-BE del proceso con el sistema automatizado', '03_flujo_to_be_sistema_automatizado.png', {'width_cm': 10.0, 'height_cm': 15.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO F', 'Diagrama entidad-relación del módulo de expedientes', '04_modelo_relacional_documental.png', {'width_cm': 14.0, 'height_cm': 13.5}, ['Fuente: Cardona J., a partir de expedientes_schema.sql (2026).']),
+    ('ANEXO G', 'Arquitectura lógica del prototipo', '06_arquitectura_prototipo.png', {'width_cm': 14.0, 'height_cm': 4.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO H', 'Secuencia de registro y despacho de un expediente', '07_secuencia_registro_despacho.png', {'width_cm': 14.0, 'height_cm': 11.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO I', 'Estados del expediente', '08_estados_expediente.png', {'width_cm': 14.0, 'height_cm': 7.0}, ['Fuente: Cardona J. (2026).']),
+    ('ANEXO J', 'Pseudocódigo general de operación del prototipo BaseAccess', '05_pseudocodigo_general_baseaccess.png', {'width_cm': 15.5, 'height_cm': 17.0}, ['Fuente: Cardona J., a partir del prototipo BaseAccess (2026).']),
+    ('ANEXO K', 'Evidencias visuales del funcionamiento del prototipo BaseAccess', [
         {'archivo': 'captura-registro-nuevo-contexto.png', 'titulo': 'Vista general de la interfaz y navegación modular de BaseAccess', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-formulario-general.png', 'titulo': 'Formulario estructurado para el registro de información documental', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},
         {'archivo': 'captura-expedientes-frentes.png', 'titulo': 'Adaptación dinámica del formulario para procesos con múltiples frentes', 'configuracion': {'width_cm': 15.5, 'height_cm': 17.5}},

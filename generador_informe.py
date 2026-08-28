@@ -2488,6 +2488,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
             numero_imagen = anexo[2] if len(anexo) > 2 else None
             alto_imagen = anexo[3] if len(anexo) > 3 else None
             contenido_anexo = anexo[4] if len(anexo) > 4 else None
+            contenido_textual = anexo[5] if len(anexo) > 5 else None
             sec_anexo = doc.add_section(WD_SECTION_START.NEW_PAGE)
             _config_seccion(sec_anexo)
 
@@ -2564,6 +2565,32 @@ def construir_cuerpo_documento(doc, modo="completo"):
                         run_foto.font.name = FUENTE
                         run_foto.font.size = Pt(TAMANO_TABLA)
                         run_foto.font.bold = True
+
+            if contenido_textual:
+                bloques_textuales = (
+                    contenido_textual
+                    if isinstance(contenido_textual, (list, tuple))
+                    else [contenido_textual]
+                )
+                for bloque in bloques_textuales:
+                    if isinstance(bloque, dict):
+                        termino = str(bloque.get('termino', '')).strip()
+                        definicion = str(bloque.get('definicion', '')).strip()
+                        p_texto = doc.add_paragraph()
+                        p_texto.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                        p_texto.paragraph_format.line_spacing = INTERLINEADO
+                        p_texto.paragraph_format.space_before = Pt(0)
+                        p_texto.paragraph_format.space_after = Pt(6)
+                        p_texto.paragraph_format.first_line_indent = Cm(0)
+                        run_termino = p_texto.add_run(f"{termino}: ")
+                        run_termino.font.name = FUENTE
+                        run_termino.font.size = Pt(TAMANO_BASE)
+                        run_termino.font.bold = True
+                        run_definicion = p_texto.add_run(definicion)
+                        run_definicion.font.name = FUENTE
+                        run_definicion.font.size = Pt(TAMANO_BASE)
+                    else:
+                        agregar_parrafo_normado(doc, str(bloque), sangria=False)
 
             if contenido_anexo:
                 bloques = contenido_anexo if isinstance(contenido_anexo, (list, tuple)) else [contenido_anexo]

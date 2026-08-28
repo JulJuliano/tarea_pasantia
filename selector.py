@@ -34,6 +34,7 @@ CONFIGURACIONES_COMBINACION = {
     "juliano": {
         "patron": "Cronograma_Informatica_Semana{semana}_IUTECP.docx",
         "semanas": 9,
+        "cronogramas_integrados": True,
     },
     "keidy": {
         "patron": "Cronograma_Procura_Semana{semana}_IUTECP.docx",
@@ -42,6 +43,16 @@ CONFIGURACIONES_COMBINACION = {
     "amaal": {
         "patron": "Cronograma_Administracion_Semana{semana}_IUTECP.docx",
         "semanas": 10,
+    },
+}
+
+CONFIGURACIONES_PDF_INTEGRADOS = {
+    "juliano": {
+        "pdfs/aprobación.pdf": {"marcador": "bm_aprob_ind"},
+        "pdfs/cronogramas_firmados.pdf": {
+            "marcador": "bm_anexoB",
+            "conservar_portadilla": True,
+        },
     },
 }
 
@@ -277,6 +288,26 @@ def compilar_informe_estudiante(est, modo="completo"):
         if os.path.exists(pdf_src):
             shutil.move(pdf_src, pdf_dest)
             print(f"{GREEN}✔ {modo_label} PDF guardado en: {pdf_dest}{RESET}")
+
+        pdfs_integrados = CONFIGURACIONES_PDF_INTEGRADOS.get(est["id"], {})
+        if modo == "completo" and pdfs_integrados:
+            reemplazos = {
+                os.path.join(est["dir"], ruta_relativa): configuracion["marcador"]
+                for ruta_relativa, configuracion in pdfs_integrados.items()
+            }
+            portadillas = {
+                os.path.join(est["dir"], ruta_relativa)
+                for ruta_relativa, configuracion in pdfs_integrados.items()
+                if configuracion.get("conservar_portadilla")
+            }
+            anexar_pdfs_como_imagenes(
+                docx_dest,
+                list(reemplazos),
+                reemplazar_marcadores=reemplazos,
+                conservar_portadillas=portadillas,
+            )
+            actualizar_campos_y_exportar_pdf(docx_dest, pdf_dest)
+            print(f"{GREEN}✔ PDFs firmados e índices integrados en el informe final.{RESET}")
             
         return True
         
@@ -379,6 +410,7 @@ def anexar_pdfs_como_imagenes(
     ruta_salida=None,
     dpi=150,
     reemplazar_marcadores=None,
+    conservar_portadillas=None,
 ):
     """Anexa PDFs como imágenes y puede reemplazar secciones marcadas del DOCX."""
     import re
@@ -386,9 +418,10 @@ def anexar_pdfs_como_imagenes(
     from docx import Document
     from docx.enum.section import WD_SECTION_START
     from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.image.image import Image as DocxImage
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
-    from docx.shared import Inches, Pt
+    from docx.shared import Emu, Inches, Pt
 
     ruta_docx = os.path.abspath(ruta_docx)
     if isinstance(rutas_pdf, (str, os.PathLike)):
@@ -408,6 +441,9 @@ def anexar_pdfs_como_imagenes(
     reemplazar_marcadores = {
         os.path.abspath(ruta_pdf): marcador
         for ruta_pdf, marcador in (reemplazar_marcadores or {}).items()
+    }
+    conservar_portadillas = {
+        os.path.abspath(ruta_pdf) for ruta_pdf in (conservar_portadillas or set())
     }
 
     pdfinfo = shutil.which("pdfinfo")
@@ -528,7 +564,7 @@ def anexar_pdfs_como_imagenes(
         ppr = elemento.find(qn("w:pPr"))
         return ppr is not None and ppr.find(qn("w:sectPr")) is not None
 
-    def insertar_en_marcador(marcador, imagenes):
+    def insertar_en_marcador(marcador, imagenes, conservar_portadilla=False):
         cuerpo = documento.element.body
         hijos = list(cuerpo.iterchildren())
         indice_marcador = next(
@@ -568,8 +604,41 @@ def anexar_pdfs_como_imagenes(
             raise ValueError(f"No se pudo resolver la sección de {marcador!r}.")
 
         seccion = documento.sections[indice_seccion]
-        configurar_seccion_carta(seccion)
         siguiente = hijos[indice_siguiente] if indice_siguiente < len(hijos) else None
+
+        if conservar_portadilla:
+            seccion.left_margin = Inches(0.5)
+            seccion.right_margin = Inches(0.5)
+            seccion.top_margin = Inches(0.5)
+            seccion.bottom_margin = Inches(0.5)
+            seccion.footer_distance = Inches(0.2)
+            parrafo_marcador = next(
+                parrafo for parrafo in documento.paragraphs
+                if parrafo._p is hijos[indice_marcador]
+            )
+            parrafo_marcador.paragraph_format.space_before = Inches(0.7)
+            ancho_util = seccion.page_width - seccion.left_margin - seccion.right_margin
+            alto_util = seccion.page_height - seccion.top_margin - seccion.bottom_margin
+            for imagen in imagenes:
+                archivo_imagen = DocxImage.from_file(imagen)
+                relacion = archivo_imagen.px_width / archivo_imagen.px_height
+                ancho = min(ancho_util, int(alto_util * relacion))
+                alto = int(ancho / relacion)
+                parrafo = documento.add_paragraph()
+                parrafo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                parrafo.paragraph_format.page_break_before = True
+                parrafo.paragraph_format.space_before = Pt(0)
+                parrafo.paragraph_format.space_after = Pt(0)
+                parrafo.add_run().add_picture(
+                    imagen,
+                    width=Emu(ancho),
+                    height=Emu(alto),
+                )
+                if siguiente is not None:
+                    siguiente.addprevious(parrafo._p)
+            return
+
+        configurar_seccion_carta(seccion)
 
         for hijo in hijos[indice_anterior + 1:indice_siguiente]:
             cuerpo.remove(hijo)
@@ -625,7 +694,11 @@ def anexar_pdfs_como_imagenes(
 
                 marcador = reemplazar_marcadores.get(ruta_pdf)
                 if marcador:
-                    insertar_en_marcador(marcador, imagenes)
+                    insertar_en_marcador(
+                        marcador,
+                        imagenes,
+                        conservar_portadilla=ruta_pdf in conservar_portadillas,
+                    )
                 else:
                     for imagen in imagenes:
                         anexar_al_final(imagen)
@@ -645,6 +718,111 @@ def anexar_pdfs_como_imagenes(
 
     return ruta_salida
 
+def actualizar_campos_y_exportar_pdf(ruta_docx, ruta_pdf):
+    """Actualiza los PAGEREF, guarda el DOCX y exporta su PDF con LibreOffice."""
+    python_uno = _buscar_python_con_uno()
+    soffice = shutil.which("libreoffice") or shutil.which("soffice")
+    if not python_uno or not soffice:
+        raise RuntimeError("Se requiere LibreOffice y un Python con el módulo UNO.")
+
+    with socket.socket() as servidor:
+        servidor.bind(("127.0.0.1", 0))
+        puerto = servidor.getsockname()[1]
+
+    perfil = tempfile.mkdtemp(prefix="selector_campos_")
+    office_proc = subprocess.Popen(
+        [
+            soffice,
+            "--headless",
+            "--nologo",
+            "--nodefault",
+            "--nofirststartwizard",
+            "--norestore",
+            f"-env:UserInstallation=file://{perfil}",
+            f"--accept=socket,host=127.0.0.1,port={puerto};urp;StarOffice.ComponentContext",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    script_uno = r'''
+import os
+import sys
+import time
+import uno
+from com.sun.star.beans import PropertyValue
+
+def propiedad(nombre, valor):
+    prop = PropertyValue()
+    prop.Name = nombre
+    prop.Value = valor
+    return prop
+
+puerto = int(sys.argv[1])
+ruta_docx = os.path.abspath(sys.argv[2])
+ruta_pdf = os.path.abspath(sys.argv[3])
+contexto_local = uno.getComponentContext()
+resolver = contexto_local.ServiceManager.createInstanceWithContext(
+    "com.sun.star.bridge.UnoUrlResolver", contexto_local
+)
+
+contexto = None
+for _ in range(60):
+    try:
+        contexto = resolver.resolve(
+            f"uno:socket,host=127.0.0.1,port={puerto};urp;StarOffice.ComponentContext"
+        )
+        break
+    except Exception:
+        time.sleep(0.25)
+if contexto is None:
+    raise RuntimeError("No se pudo conectar con LibreOffice.")
+
+desktop = contexto.ServiceManager.createInstanceWithContext(
+    "com.sun.star.frame.Desktop", contexto
+)
+documento = desktop.loadComponentFromURL(
+    uno.systemPathToFileUrl(ruta_docx),
+    "_blank",
+    0,
+    (propiedad("Hidden", True), propiedad("UpdateDocMode", 3)),
+)
+if documento is None:
+    raise RuntimeError("No se pudo abrir el informe para actualizar sus campos.")
+
+try:
+    documento.TextFields.refresh()
+    documento.store()
+    documento.storeToURL(
+        uno.systemPathToFileUrl(ruta_pdf),
+        (
+            propiedad("FilterName", "writer_pdf_Export"),
+            propiedad("Overwrite", True),
+        ),
+    )
+finally:
+    documento.close(True)
+'''
+
+    try:
+        resultado = subprocess.run(
+            [python_uno, "-c", script_uno, str(puerto), ruta_docx, ruta_pdf],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=240,
+        )
+        if resultado.returncode != 0:
+            detalle = resultado.stdout.strip() or "sin detalles"
+            raise RuntimeError(f"No se pudieron actualizar los campos: {detalle}")
+    finally:
+        office_proc.terminate()
+        try:
+            office_proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            office_proc.kill()
+        shutil.rmtree(perfil, ignore_errors=True)
+
 def combinar_informe_cronogramas(est):
     """Combina el informe y los cronogramas configurados del estudiante."""
     configuracion = CONFIGURACIONES_COMBINACION.get(est["id"])
@@ -653,7 +831,7 @@ def combinar_informe_cronogramas(est):
         return None
 
     patron_cronograma = configuracion["patron"]
-    total_semanas = configuracion["semanas"]
+    total_semanas = 0 if configuracion.get("cronogramas_integrados") else configuracion["semanas"]
 
     informe = os.path.join(est["dir"], CARPETA_REPORTES, NOMBRE_DOCX_SALIDA)
     cronogramas = [
