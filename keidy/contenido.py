@@ -363,162 +363,139 @@ CRONOGRAMA_DATOS = [('Inducción y reconocimiento del Departamento Administrativ
   [False, True, True, True, True, True, True, True, True, False])]
 
 # ========================================================================
-# 6. CAPÍTULO III — MARCO TEÓRICO Y LEGAL
+# 6. CAPÍTULO III — MARCO TEÓRICO
 # ========================================================================
+CONCEPTOS_DISCIPLINARES_TITULO = 'Conceptos disciplinares'
+BASES_LEGALES_SECCION_TITULO = 'Bases legales'
+
 BASES_TEORICAS_TITULOS = [
     'Procura y Gestión de Compras',
     'Proceso Administrativo',
     'Control Interno en los Procesos de Compras',
     'Simplificación Administrativa de Procesos',
-]
-BASES_LEGALES_TITULOS = [
-    'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
-    'Base Legal: Código de Comercio — Artículo 32',
+    'Gestión de Proveedores',
+    'Trazabilidad Documental en la Procura',
+    'Estandarización de Procedimientos',
+    'Indicadores de Gestión Aplicados a Compras',
 ]
 
-BASES_TEORICAS = [{'titulo': 'Procura y Gestión de Compras',
+BASES_LEGALES_TITULOS = [
+    'Constitución de la República Bolivariana de Venezuela',
+    'Código de Comercio',
+]
+
+BASES_TEORICAS = [
+ {'titulo': 'Procura y Gestión de Compras',
   'categoria': 'teorica',
-  'parrafos': ['La procura se define como el conjunto de actividades orientadas a la adquisición de bienes, '
-               'materiales e insumos necesarios para el funcionamiento continuo de una organización. Monterroso '
-               '(2002) establece que la gestión de abastecimiento eficiente no se limita a la ejecución de '
-               'compras, sino que abarca la planificación de necesidades, la selección de proveedores, la '
-               'negociación de condiciones y el control del cumplimiento de los requerimientos en tiempo, calidad '
-               'y costo.',
-               'Lo anterior cobra especial relevancia en el contexto de Lubricantes y Equipos Varyna, C.A., donde '
-               'la procura constituye una función crítica para sostener las operaciones industriales y de campo. '
-               'Durante el diagnóstico realizado, se pudo constatar que el departamento administrativo no cuenta '
-               'con un canal formalizado de recepción de requisiciones, lo que impide que el proceso de '
-               'abastecimiento se desarrolle de forma planificada y controlada tal como lo exige la teoría. En '
-               'criterio de quien suscribe, esta ausencia de estructura procedimental es la causa raíz de los '
-               'retrasos identificados, por encima incluso de factores humanos o tecnológicos.',
-               'Comprender la procura desde esta perspectiva teórica es el punto de partida indispensable para '
-               'cualquier propuesta de mejora, pues permite identificar con precisión en cuáles fases del ciclo '
-               'se concentran las ineficiencias. Para ello, resulta igualmente necesario examinar el marco '
-               'administrativo general que debe regir la gestión de cualquier proceso organizacional, tal como se '
-               'desarrolla en el apartado siguiente.'],
-  'cita_larga': {'texto': 'La gestión de compras y abastecimiento comprende un conjunto de actividades que '
-                          'permiten identificar las necesidades de materiales e insumos de la organización, '
-                          'seleccionar adecuadamente a los proveedores, negociar las condiciones de adquisición '
-                          'más convenientes y asegurar que los bienes requeridos lleguen en las cantidades '
-                          'correctas, en el momento oportuno y al menor costo posible, contribuyendo directamente '
-                          'a la eficiencia operativa de la empresa.',
+  'parrafos': [
+      'La procura se define como el conjunto de actividades orientadas a la adquisición de bienes, materiales e insumos necesarios para el funcionamiento continuo de una organización. Monterroso (2002) explica que la gestión de abastecimiento no se limita al acto de comprar, sino que comprende la identificación de necesidades, la búsqueda y evaluación de proveedores, la negociación de condiciones y el seguimiento del cumplimiento en tiempo, calidad y costo.',
+      'Dentro de un proceso administrativo, la procura conecta las necesidades internas de la organización con el mercado proveedor. Por ello, una gestión de compras ordenada requiere que cada requisición sea recibida, revisada, cotizada, autorizada, procesada y cerrada mediante una secuencia conocida por quienes participan en ella.',
+      'En Lubricantes y Equipos Varyna, C.A., la procura constituye una función de apoyo relevante para la continuidad de las operaciones industriales y de campo. La ausencia de un canal formalizado de recepción y seguimiento de requisiciones justifica analizar el proceso desde una perspectiva administrativa que permita identificar oportunidades de simplificación sin debilitar los controles necesarios.'
+  ],
+  'cita_larga': {'texto': 'La gestión de compras y abastecimiento comprende un conjunto de actividades que permiten identificar las necesidades de materiales e insumos de la organización, seleccionar adecuadamente a los proveedores, negociar las condiciones de adquisición más convenientes y asegurar que los bienes requeridos lleguen en las cantidades correctas, en el momento oportuno y al menor costo posible, contribuyendo directamente a la eficiencia operativa de la empresa.',
                  'autor': '(Monterroso, 2002, p. 3)'},
   'posicion_autor': '',
   'post_cita': ''},
+
  {'titulo': 'Proceso Administrativo',
   'categoria': 'teorica',
-  'parrafos': ['El proceso administrativo constituye el marco conceptual fundamental que rige el funcionamiento '
-               'de las organizaciones modernas. Chiavenato (2006) lo describe como el conjunto secuencial e '
-               'interrelacionado de funciones de planificación, organización, dirección y control, orientadas al '
-               'logro eficiente de los objetivos organizacionales mediante el uso racional de los recursos '
-               'disponibles.',
-               'Aplicado al contexto de la procura, el proceso administrativo provee la estructura metodológica '
-               'necesaria para formalizar cada etapa del ciclo de compras. La planificación define las '
-               'necesidades y tiempos de adquisición; la organización asigna responsabilidades claras a cada '
-               'actor del proceso; la dirección asegura la ejecución coordinada de las actividades; y el control '
-               'verifica el cumplimiento de los procedimientos y detecta desviaciones que requieren corrección.',
-               'Durante la observación directa realizada en Lubricantes y Equipos Varyna, C.A., se evidenció que '
-               'ninguna de estas cuatro funciones se ejecuta de manera formal dentro del ciclo de compras. Las '
-               'requisiciones se reciben sin planificación previa, las responsabilidades no están escritas ni '
-               'asignadas con claridad, y no existe un mecanismo de control que permita detectar en qué fase se '
-               'detiene cada expediente. Desde la perspectiva de quien elabora este trabajo, la ausencia del '
-               'proceso administrativo como eje rector es lo que convierte un procedimiento que debería ser '
-               'simple en una secuencia compleja y propensa a errores. La propuesta de simplificación '
-               'desarrollada en los capítulos siguientes busca precisamente instaurar estas cuatro funciones de '
-               'forma explícita dentro del nuevo flujo de procura. Para que dicho control sea efectivo, es '
-               'necesario además comprender los mecanismos de control interno aplicables específicamente al área '
-               'de compras, como se expone a continuación.'],
+  'parrafos': [
+      'El proceso administrativo constituye un marco conceptual para coordinar los recursos y las actividades de una organización. Chiavenato (2006) lo desarrolla a partir de las funciones de planificación, organización, dirección y control, las cuales se relacionan entre sí y orientan el cumplimiento de los objetivos institucionales.',
+      'Aplicado a la procura, la planificación permite prever requerimientos y tiempos de adquisición; la organización distribuye responsabilidades; la dirección coordina la ejecución de las actividades; y el control verifica que las requisiciones, cotizaciones, autorizaciones y órdenes de compra avancen conforme a criterios previamente definidos.',
+      'La propuesta de simplificación formulada en este informe se vincula con el proceso administrativo porque procura ordenar el recorrido de las solicitudes de compra, definir responsables y establecer mecanismos de seguimiento. De esta manera, la reducción de pasos innecesarios se combina con una estructura que permite conservar control sobre cada etapa.'
+  ],
   'cita_larga': None,
   'posicion_autor': '',
   'post_cita': ''},
+
  {'titulo': 'Control Interno en los Procesos de Compras',
   'categoria': 'teorica',
-  'parrafos': ['El control interno se define como el proceso diseñado e implementado por la dirección de una '
-               'organización para proporcionar una seguridad razonable sobre la consecución de los objetivos en '
-               'las categorías de eficiencia operativa, confiabilidad de la información financiera y cumplimiento '
-               'de las normas aplicables. Mantilla (2005) señala que un sistema de control interno robusto en el '
-               'área de compras minimiza los riesgos de fraude, duplicidad de pagos y adquisiciones no '
-               'autorizadas.',
-               'En el proceso de procura de Lubricantes y Equipos Varyna, C.A., el fortalecimiento del control '
-               'interno implica la definición de niveles de autorización por monto de compra, la implementación '
-               'de formularios estandarizados de solicitud y la trazabilidad documental de cada expediente desde '
-               'la requisición hasta la orden de compra cerrada. Estas medidas reducen la discrecionalidad en las '
-               'decisiones de adquisición y aumentan la transparencia del proceso.',
-               'A juicio de quien suscribe, el control interno no debe entenderse como una carga burocrática '
-               'adicional, sino como la garantía de que cada paso del proceso de compras tiene un propósito '
-               'definido y un responsable identificable. En Lubricantes y Equipos Varyna, C.A., la inexistencia '
-               'de niveles de autorización formales ha generado que decisiones de adquisición recaigan de manera '
-               'discrecional sobre el personal disponible en el momento, sin criterios objetivos ni registros '
-               'verificables. Incorporar mecanismos de control interno dentro del nuevo procedimiento '
-               'simplificado no agrega complejidad al proceso, sino que le otorga la transparencia y trazabilidad '
-               'que actualmente le faltan. Este enfoque de control se articula directamente con la noción de '
-               'simplificación administrativa que fundamenta la propuesta, concepto que se desarrolla en el '
-               'siguiente apartado.'],
+  'parrafos': [
+      'El control interno comprende políticas, procedimientos y actividades orientadas a proporcionar seguridad razonable sobre la eficiencia de las operaciones, la confiabilidad de la información y el cumplimiento de las disposiciones aplicables. Mantilla (2005) destaca que el control debe formar parte de los procesos y no funcionar como una actividad aislada.',
+      'En el área de compras, el control interno se relaciona con la autorización de las adquisiciones, la existencia de soportes documentales, la separación de responsabilidades, la verificación de condiciones y el seguimiento de las operaciones. Estos elementos reducen la posibilidad de omisiones, duplicidades y decisiones sin respaldo suficiente.',
+      'Para el proceso de procura analizado, la simplificación propuesta no supone eliminar controles, sino organizarlos dentro de un flujo más claro. La definición de responsables, formatos uniformes y criterios de autorización permite que cada solicitud pueda ser revisada y seguida durante su recorrido administrativo.'
+  ],
   'cita_larga': None,
   'posicion_autor': '',
   'post_cita': ''},
+
  {'titulo': 'Simplificación Administrativa de Procesos',
   'categoria': 'teorica',
-  'parrafos': ['La simplificación administrativa consiste en la revisión sistemática y el rediseño de los '
-               'procedimientos organizacionales con el propósito de eliminar pasos innecesarios, reducir la '
-               'burocracia interna y facilitar la ejecución ágil de las operaciones. Según Harrington (1993), un '
-               'proceso simplificado debe ser comprensible para todos los actores involucrados, ejecutable con el '
-               'menor número de pasos posible y orientado a resultados medibles y verificables.',
-               'En el ámbito de la administración de compras, la simplificación procedimental se traduce en la '
-               'reducción de los ciclos de aprobación, la unificación de los formatos de cotización y la '
-               'clarificación de los roles y responsabilidades de cada actor. El resultado esperado es una '
-               'disminución verificable de los tiempos de respuesta en la adquisición de insumos y una mayor '
-               'capacidad de la organización para atender sus necesidades de abastecimiento de forma oportuna y '
-               'transparente.',
-               'Esta definición describe con precisión la situación identificada en Lubricantes y Equipos Varyna, '
-               'C.A.: un proceso que ha crecido en pasos y actores sin que todos esos añadidos respondan a una '
-               'secuencia formalmente definida. Quien elabora este trabajo considera que la simplificación no '
-               'implica eliminar controles, sino reducir redundancias y clarificar responsabilidades. La propuesta '
-               'formulada durante las pasantías parte de este principio y organiza los pasos necesarios para que '
-               'una requisición avance de manera comprensible desde su recepción hasta el cierre de la orden de '
-               'compra, manteniendo responsables, criterios de autorización y mecanismos de seguimiento que '
-               'favorezcan el control administrativo del proceso.'],
+  'parrafos': [
+      'La simplificación administrativa consiste en revisar un procedimiento para identificar actividades redundantes, demoras, duplicidades y pasos que no aportan valor al resultado esperado. Harrington (1993) plantea el mejoramiento de procesos como una revisión sistemática destinada a hacerlos más efectivos, eficientes y adaptables.',
+      'En los procesos de compras, simplificar implica procurar que las requisiciones recorran una secuencia comprensible, con documentos definidos, responsables identificados y controles ubicados en puntos pertinentes. La simplificación no debe confundirse con la eliminación indiscriminada de etapas, ya que un proceso puede ser más ágil y mantener las verificaciones necesarias.',
+      'Esta perspectiva se relaciona directamente con el título del informe, debido a que la propuesta busca ordenar el proceso de procura de Lubricantes y Equipos Varyna, C.A., reducir la dispersión procedimental y facilitar el seguimiento de cada adquisición desde la solicitud hasta su cierre administrativo.'
+  ],
   'cita_larga': None,
   'posicion_autor': '',
   'post_cita': ''},
- {'titulo': 'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
-  'categoria': 'legal',
-  'parrafos': ['Como marco general de la actividad económica privada, la Constitución reconoce la iniciativa '
-               'empresarial dentro de los límites establecidos por el ordenamiento jurídico.'],
-  'cita_larga': {'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su '
-                          'preferencia, sin más limitaciones que las previstas en esta Constitución y las que '
-                          'establezcan las leyes, por razones de desarrollo humano, seguridad, sanidad, '
-                          'protección del ambiente u otras de interés social. El Estado promoverá la iniciativa '
-                          'privada, garantizando la creación y justa distribución de la riqueza, así como la '
-                          'producción de bienes y servicios que satisfagan las necesidades de la población, la '
-                          'libertad de trabajo, empresa, comercio, industria, sin perjuicio de su facultad para '
-                          'dictar medidas para planificar, racionalizar y regular la economía e impulsar el '
-                          'desarrollo integral del país.',
-                 'autor': '(Constitución de la República Bolivariana de Venezuela, 1999, art. 112)'},
-  'post_cita': '',
-  'posicion_autor': 'El aporte de este artículo al informe es de carácter general: reconoce el ejercicio de la '
-                    'actividad empresarial y permite ubicar la propuesta dentro de la necesidad de organizar '
-                    'racionalmente los procesos internos de una empresa privada. No establece un procedimiento '
-                    'específico de procura, por lo que su función es servir como fundamento constitucional amplio '
-                    'y no como regla operativa de compras.'},
- {'titulo': 'Base Legal: Código de Comercio — Artículo 32',
-  'categoria': 'legal',
-  'parrafos': ['El Código de Comercio establece obligaciones vinculadas con el orden y claridad de los registros '
-               'de los comerciantes, aspecto que guarda relación con la necesidad de mantener información '
-               'organizada y verificable en los procesos administrativos.'],
-  'cita_larga': {'texto': 'Todo comerciante debe llevar en idioma castellano su contabilidad, la cual '
-                          'comprenderá, obligatoriamente, el libro Diario, el libro Mayor y el de Inventarios. '
-                          'Podrá llevar, además, todos los libros auxiliares que estimara conveniente para el '
-                          'mayor orden y claridad de sus operaciones.',
-                 'autor': '(Código de Comercio, 1955, art. 32)'},
-  'post_cita': '',
-  'posicion_autor': 'La relación con la propuesta se encuentra en el principio de orden y claridad de las '
-                    'operaciones mercantiles. Los formatos y mecanismos de seguimiento diseñados para la procura '
-                    'no sustituyen los libros contables exigidos por la ley, pero complementan el control '
-                    'administrativo al organizar la documentación que antecede y acompaña las compras de la '
-                    'empresa.'}]
+
+ {'titulo': 'Gestión de Proveedores',
+  'categoria': 'teorica',
+  'parrafos': [
+      'La gestión de proveedores forma parte del proceso de abastecimiento porque permite identificar fuentes de suministro, solicitar cotizaciones, comparar condiciones y mantener información útil para futuras adquisiciones. Monterroso (2002) relaciona la gestión de abastecimiento con la selección de proveedores y con la capacidad de asegurar materiales e insumos en condiciones convenientes para la organización.',
+      'Una gestión ordenada de proveedores requiere conservar información actualizada sobre ofertas, tiempos de respuesta, condiciones comerciales y cumplimiento de los requerimientos. Esto facilita la comparación de alternativas y reduce la dependencia de búsquedas improvisadas cada vez que surge una necesidad de compra.',
+      'En el proceso estudiado, la comunicación con proveedores y el seguimiento de cotizaciones constituyen actividades recurrentes. Por ello, la propuesta de simplificación debe favorecer registros consistentes que permitan conocer qué proveedor fue consultado, qué condiciones ofreció y cuál es el estado de cada cotización.'
+  ],
+  'cita_larga': None,
+  'posicion_autor': '',
+  'post_cita': ''},
+
+ {'titulo': 'Trazabilidad Documental en la Procura',
+  'categoria': 'teorica',
+  'parrafos': [
+      'La trazabilidad documental puede entenderse como la posibilidad de reconstruir el recorrido de una operación mediante registros y evidencias que permitan conocer su origen, estado, responsables y resultado. En un proceso de procura, esta capacidad depende de que requisiciones, cotizaciones, autorizaciones y órdenes de compra mantengan una relación identificable durante todo el ciclo.',
+      'Desde la perspectiva del control interno desarrollada por Mantilla (2005), la documentación y la disponibilidad de información confiable respaldan la supervisión de las operaciones. Cuando los soportes están dispersos o el estatus de una solicitud depende únicamente del conocimiento informal del personal, aumenta la dificultad para verificar oportunamente el proceso.',
+      'La trazabilidad es un elemento central del diagnóstico de este informe, debido a que una de las situaciones observadas fue la dificultad para conocer con rapidez el estado de algunas adquisiciones. La estandarización de registros y la definición de responsables contribuyen a que el recorrido de cada solicitud pueda ser consultado y verificado.'
+  ],
+  'cita_larga': None,
+  'posicion_autor': '',
+  'post_cita': ''},
+
+ {'titulo': 'Estandarización de Procedimientos',
+  'categoria': 'teorica',
+  'parrafos': [
+      'La estandarización de procedimientos consiste en definir una forma común y documentada de ejecutar actividades que se repiten dentro de una organización. Harrington (1993) vincula el mejoramiento de procesos con la necesidad de comprender, documentar y controlar las actividades para reducir variaciones que afecten los resultados.',
+      'En la procura, la utilización de formatos uniformes para requisiciones, solicitudes de cotización y órdenes de compra facilita que los participantes dispongan de la misma información básica. Asimismo, una secuencia documentada permite establecer qué actividad corresponde a cada responsable y qué condición debe cumplirse antes de avanzar a la fase siguiente.',
+      'La propuesta desarrollada para Lubricantes y Equipos Varyna, C.A. incorpora este principio mediante formatos estandarizados, responsables definidos y criterios de autorización. La finalidad es disminuir la dispersión procedimental y facilitar que el personal pueda aplicar el proceso de manera uniforme.'
+  ],
+  'cita_larga': None,
+  'posicion_autor': '',
+  'post_cita': ''},
+
+ {'titulo': 'Indicadores de Gestión Aplicados a Compras',
+  'categoria': 'teorica',
+  'parrafos': [
+      'Los indicadores de gestión permiten observar el comportamiento de un proceso mediante datos que facilitan su seguimiento y evaluación. Dentro del proceso administrativo, Chiavenato (2006) relaciona la función de control con la comparación de los resultados obtenidos frente a criterios que permitan identificar desviaciones y aplicar acciones correctivas.',
+      'En un proceso de compras pueden emplearse indicadores sencillos vinculados con el tiempo del ciclo de adquisición, el número de solicitudes pendientes, la cantidad de requisiciones procesadas y el cumplimiento de los plazos definidos. Su utilidad depende de que los datos sean registrados de manera consistente y puedan compararse a lo largo del tiempo.',
+      'La incorporación de indicadores básicos en la propuesta permite que la simplificación administrativa no se limite a modificar un flujo, sino que pueda ser evaluada después de su aplicación. De esta manera, la empresa podrá identificar si los cambios contribuyen efectivamente a reducir demoras y fortalecer el seguimiento de las adquisiciones.'
+  ],
+  'cita_larga': None,
+  'posicion_autor': '',
+  'post_cita': ''}
+]
+
+BASES_LEGALES = [
+ {
+  'norma': 'Constitución de la República Bolivariana de Venezuela',
+  'articulo': 'Artículo 112',
+  'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su preferencia, sin más limitaciones que las previstas en esta Constitución y las que establezcan las leyes, por razones de desarrollo humano, seguridad, sanidad, protección del ambiente u otras de interés social. El Estado promoverá la iniciativa privada, garantizando la creación y justa distribución de la riqueza, así como la producción de bienes y servicios que satisfagan las necesidades de la población, la libertad de trabajo, empresa, comercio, industria, sin perjuicio de su facultad para dictar medidas para planificar, racionalizar y regular la economía e impulsar el desarrollo integral del país.',
+  'referencia': '(Asamblea Nacional Constituyente, 1999)',
+  'analisis': 'El artículo reconoce la libertad para desarrollar actividades económicas dentro del marco constitucional y legal, al mismo tiempo que atribuye al Estado facultades de regulación y planificación. Desde la perspectiva administrativa, su contenido evidencia que la actividad empresarial debe desarrollarse de manera organizada y compatible con las disposiciones que regulan la operación económica.',
+  'aporte': 'Su aporte al informe es servir como fundamento constitucional general para la actividad de Lubricantes y Equipos Varyna, C.A. La propuesta de simplificación administrativa se desarrolla dentro de una empresa privada que ejerce actividad económica y requiere organizar racionalmente sus procesos internos. El artículo no establece un procedimiento específico de procura, por lo que su relación con el trabajo es de carácter general.'
+ },
+ {
+  'norma': 'Código de Comercio',
+  'articulo': 'Artículo 32',
+  'texto': 'Todo comerciante debe llevar en idioma castellano su contabilidad, la cual comprenderá, obligatoriamente, el libro Diario, el libro Mayor y el de Inventarios. Podrá llevar, además, todos los libros auxiliares que estimara conveniente para el mayor orden y claridad de sus operaciones.',
+  'referencia': '(Congreso de la República de Venezuela, 1955)',
+  'analisis': 'El artículo establece la obligación de mantener registros contables y permite utilizar libros auxiliares que favorezcan el orden y la claridad de las operaciones. Aunque la disposición se refiere específicamente a la contabilidad mercantil, expresa la importancia jurídica de conservar información organizada y verificable dentro de la actividad comercial.',
+  'aporte': 'Su aporte al informe se relaciona con el principio de orden documental que debe acompañar las operaciones de compra. Los formatos, registros y mecanismos de seguimiento propuestos para la procura no sustituyen los libros contables exigidos por la ley, pero complementan el control administrativo de la documentación que antecede y acompaña las adquisiciones de la empresa.'
+ }
+]
 
 POST_CITA_TEXTO = ''
+
 
 # ========================================================================
 # 7. CAPÍTULO IV — ACTIVIDADES REALIZADAS

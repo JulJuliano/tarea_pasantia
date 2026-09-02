@@ -306,8 +306,10 @@ def compilar_informe_estudiante(est, modo="completo"):
                 reemplazar_marcadores=reemplazos,
                 conservar_portadillas=portadillas,
             )
+
+        if modo == "completo":
             actualizar_campos_y_exportar_pdf(docx_dest, pdf_dest)
-            print(f"{GREEN}✔ PDFs firmados e índices integrados en el informe final.{RESET}")
+            print(f"{GREEN}✔ Índices actualizados en el Word y el PDF final.{RESET}")
             
         return True
         

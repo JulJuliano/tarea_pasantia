@@ -1544,6 +1544,7 @@ def _validar_correspondencia_citas(referencias):
     """Valida citas explícitas de los bloques teóricos sin interpretar años narrativos."""
     bloques = [
         getattr(c, 'BASES_TEORICAS', []),
+        getattr(c, 'BASES_LEGALES', []),
         getattr(c, 'BASES_TEORICAS_PARRAFOS', []),
         getattr(c, 'CITA_LARGA_TEXTO', ''),
         getattr(c, 'CITA_LARGA_AUTOR', ''),
@@ -1633,7 +1634,7 @@ def validar_contenido():
         errores.append("las referencias no están en orden alfabético")
     referencias_no_citadas, citas_sin_referencia = _validar_correspondencia_citas(referencias)
     for referencia in referencias_no_citadas:
-        errores.append(f"referencia no citada en las bases teóricas: {referencia}")
+        errores.append(f"referencia no citada en el marco teórico o legal: {referencia}")
     for cita in citas_sin_referencia:
         errores.append(f"cita sin referencia reconocible: {cita}")
 
@@ -1983,7 +1984,20 @@ def construir_cuerpo_documento(doc, modo="completo"):
         # Capítulo III
         if tiene_cap3:
             agregar_fila_indice_general_nativa(doc, "CAPÍTULO III: MARCO TEÓRICO", "", sangria_cm=0, negrita=True, bookmark_id="bm_cap3")
-            agregar_fila_indice_general_nativa(doc, "Bases teóricas referenciales", "", sangria_cm=0.5, bookmark_id="bm_cap3_bases")
+            agregar_fila_indice_general_nativa(
+                doc,
+                getattr(c, 'CONCEPTOS_DISCIPLINARES_TITULO', 'Conceptos disciplinares'),
+                "",
+                sangria_cm=0.5,
+                bookmark_id="bm_cap3_bases",
+            )
+            agregar_fila_indice_general_nativa(
+                doc,
+                getattr(c, 'BASES_LEGALES_SECCION_TITULO', 'Bases legales'),
+                "",
+                sangria_cm=0.5,
+                bookmark_id="bm_cap3_legales",
+            )
     
         # Capítulo IV
         if tiene_cap4:
@@ -2296,8 +2310,9 @@ def construir_cuerpo_documento(doc, modo="completo"):
         iniciar_capitulo(doc, "II", "DIAGNÓSTICO SITUACIONAL", bookmark_id="bm_cap2")
         agregar_titulo_nivel2(doc, "Identificación de la Situación Problemática", bookmark_id="bm_cap2_sit")
         situacion_problematica = getattr(c, 'SITUACION_PROBLEMATICA', [])
+        ultimo_parrafo_situacion = None
         if isinstance(situacion_problematica, str):
-            agregar_parrafo_normado(doc, situacion_problematica)
+            ultimo_parrafo_situacion = agregar_parrafo_normado(doc, situacion_problematica)
         else:
             mostrar_niveles_diagnostico = bool(
                 getattr(c, 'MOSTRAR_NIVELES_DIAGNOSTICO', False)
@@ -2317,18 +2332,30 @@ def construir_cuerpo_documento(doc, modo="completo"):
                     if isinstance(parrafos_bloque, str):
                         parrafos_bloque = [parrafos_bloque]
                     for parrafo in parrafos_bloque:
-                        agregar_parrafo_normado(doc, parrafo)
+                        ultimo_parrafo_situacion = agregar_parrafo_normado(doc, parrafo)
                 else:
-                    agregar_parrafo_normado(doc, bloque)
+                    ultimo_parrafo_situacion = agregar_parrafo_normado(doc, bloque)
 
-        # Técnica utilizada: la tutora solicita que su representación gráfica
-        # aparezca dentro del diagnóstico, no únicamente como anexo.
-        _insertar_graficos_por_ancla(doc, carpeta_imagenes, "diagnostico_tecnica")
-
-        interrogante = getattr(c, 'INTERROGANTE_PROBLEMA', '')
+        # La interrogante se integra en el desarrollo de la situación problemática
+        # y se coloca inmediatamente antes de la técnica diagnóstica.
+        interrogante = str(getattr(c, 'INTERROGANTE_PROBLEMA', '') or '').strip()
         if interrogante:
-            agregar_titulo_nivel2(doc, getattr(c, 'INTERROGANTE_TITULO', 'Interrogante orientadora'))
-            agregar_parrafo_normado(doc, interrogante)
+            texto_interrogante = (
+                f" A partir de la situación descrita, se formula la siguiente interrogante: {interrogante}"
+            )
+            if ultimo_parrafo_situacion is None:
+                ultimo_parrafo_situacion = agregar_parrafo_normado(
+                    doc,
+                    texto_interrogante.strip(),
+                )
+            else:
+                run_interrogante = ultimo_parrafo_situacion.add_run(texto_interrogante)
+                run_interrogante.font.name = FUENTE
+                run_interrogante.font.size = Pt(TAMANO_BASE)
+
+        # Técnica utilizada: su representación gráfica aparece dentro del diagnóstico,
+        # inmediatamente después de la interrogante integrada en el texto.
+        _insertar_graficos_por_ancla(doc, carpeta_imagenes, "diagnostico_tecnica")
 
         agregar_titulo_nivel2(doc, "Objetivo General", bookmark_id="bm_cap2_objg")
         agregar_parrafo_normado(doc, getattr(c, 'OBJETIVO_GENERAL', 'Objetivo general no proporcionado.'))
@@ -2368,35 +2395,74 @@ def construir_cuerpo_documento(doc, modo="completo"):
     # --- CAPÍTULO III: MARCO TEÓRICO ---
     if tiene_cap3:
         iniciar_capitulo(doc, "III", "MARCO TEÓRICO", bookmark_id="bm_cap3")
-        if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list) and c.BASES_TEORICAS and isinstance(c.BASES_TEORICAS[0], dict):
-            primer_sub = True
+
+        # La tutora indica que, inmediatamente después de MARCO TEÓRICO,
+        # debe aparecer el título "Conceptos disciplinares".
+        agregar_titulo_nivel2(
+            doc,
+            getattr(c, 'CONCEPTOS_DISCIPLINARES_TITULO', 'Conceptos disciplinares'),
+            bookmark_id="bm_cap3_bases",
+        )
+
+        if hasattr(c, 'BASES_TEORICAS') and isinstance(c.BASES_TEORICAS, list):
             for sub in c.BASES_TEORICAS:
-                bm = "bm_cap3_bases" if primer_sub else None
-                p_titulo_base = agregar_titulo_nivel2(doc, sub.get('titulo', ''), bookmark_id=bm)
+                if not isinstance(sub, dict):
+                    continue
+                p_titulo_base = agregar_titulo_nivel2(doc, sub.get('titulo', ''))
                 if sub.get('espaciado_titulo_compacto'):
                     p_titulo_base.paragraph_format.space_before = ESP_SENCILLO
                     p_titulo_base.paragraph_format.space_after = ESP_SENCILLO
-                primer_sub = False
                 for p in sub.get('parrafos', []):
                     agregar_parrafo_normado(doc, p)
                 cita = sub.get('cita_larga')
                 if cita and cita.get('texto'):
                     agregar_cita_larga(doc, cita['texto'], cita.get('autor', ''))
-                    post_cita = sub.get('post_cita', getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF))
+                    post_cita = sub.get(
+                        'post_cita',
+                        getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF),
+                    )
                     if post_cita:
                         agregar_parrafo_normado(doc, post_cita, sangria=True)
                 posicion_autor = sub.get('posicion_autor')
                 if posicion_autor:
                     agregar_parrafo_normado(doc, posicion_autor)
         else:
-            agregar_titulo_nivel2(doc, "Bases Teóricas Referenciales", bookmark_id="bm_cap3_bases")
-            bases_teoricas = getattr(c, 'BASES_TEORICAS_PARRAFOS', ['Bases teóricas referenciales.'])
+            bases_teoricas = getattr(
+                c,
+                'BASES_TEORICAS_PARRAFOS',
+                ['Conceptos disciplinares no proporcionados.'],
+            )
             for parrafo in bases_teoricas:
                 agregar_parrafo_normado(doc, parrafo)
-            if hasattr(c, 'CITA_LARGA_TEXTO') and c.CITA_LARGA_TEXTO:
-                agregar_cita_larga(doc, c.CITA_LARGA_TEXTO, getattr(c, 'CITA_LARGA_AUTOR', ''))
-                post_cita = getattr(c, 'POST_CITA_TEXTO', POST_CITA_TEXTO_DEF)
-                agregar_parrafo_normado(doc, post_cita, sangria=True)
+
+        # Bases legales: norma, artículo, texto legal, análisis y aporte se presentan
+        # por separado, según la observación final de la tutora.
+        agregar_titulo_nivel2(
+            doc,
+            getattr(c, 'BASES_LEGALES_SECCION_TITULO', 'Bases legales'),
+            bookmark_id="bm_cap3_legales",
+        )
+        bases_legales = getattr(c, 'BASES_LEGALES', [])
+        for base_legal in bases_legales:
+            if not isinstance(base_legal, dict):
+                continue
+
+            norma = str(base_legal.get('norma', '') or '').strip()
+            articulo = str(base_legal.get('articulo', '') or '').strip()
+            texto_legal = str(base_legal.get('texto', '') or '').strip()
+            analisis = str(base_legal.get('analisis', '') or '').strip()
+            aporte = str(base_legal.get('aporte', '') or '').strip()
+
+            if norma:
+                agregar_titulo_nivel3(doc, norma)
+            if articulo:
+                agregar_titulo_nivel3(doc, articulo)
+            if texto_legal:
+                agregar_cita_larga(doc, texto_legal, '')
+            if analisis:
+                agregar_titulo_nivel4(doc, 'Análisis', analisis)
+            if aporte:
+                agregar_titulo_nivel4(doc, 'Aporte legal al informe', aporte)
 
     # --- CAPÍTULO IV: ACTIVIDADES REALIZADAS ---
     if tiene_cap4:
@@ -2429,7 +2495,7 @@ def construir_cuerpo_documento(doc, modo="completo"):
 
         agregar_titulo_nivel2(doc, "Recomendaciones", bookmark_id="bm_cap5_recom")
         recomendaciones = getattr(c, 'RECOMENDACIONES', [])
-        for i, recomendacion in enumerate(recomendaciones, 1):
+        for recomendacion in recomendaciones:
             if isinstance(recomendacion, dict):
                 destinatario = recomendacion.get('destinatario', '')
                 if destinatario:
@@ -2441,10 +2507,10 @@ def construir_cuerpo_documento(doc, modo="completo"):
                     run_destinatario.font.name = FUENTE
                     run_destinatario.font.size = Pt(TAMANO_BASE)
                     run_destinatario.font.bold = True
-                for numero, texto in enumerate(recomendacion.get('recomendaciones', []), 1):
-                    agregar_item_lista(doc, numero, texto)
+                for texto in recomendacion.get('recomendaciones', []):
+                    agregar_parrafo_normado(doc, texto)
             else:
-                agregar_item_lista(doc, i, recomendacion)
+                agregar_parrafo_normado(doc, recomendacion)
 
     # --- REFERENCIAS BIBLIOGRÁFICAS ---
     iniciar_seccion_preliminar(

@@ -371,6 +371,25 @@ CRONOGRAMA_DATOS = [('Inducción y reconocimiento de Atención al Cliente y del 
 # ========================================================================
 # 6. CAPÍTULO III — MARCO TEÓRICO
 # ========================================================================
+CONCEPTOS_DISCIPLINARES_TITULO = 'Conceptos disciplinares'
+BASES_LEGALES_SECCION_TITULO = 'Bases legales'
+
+BASES_TEORICAS_TITULOS = [
+    'Control Administrativo',
+    'Gestión de Solicitudes de Servicio',
+    'Procesos Administrativos y Estandarización de Procedimientos',
+    'Calidad del Servicio en Empresas de Telecomunicaciones',
+    'Sistemas de Información para el Control Administrativo',
+    'Trazabilidad Administrativa de Solicitudes',
+    'Comunicación Interdepartamental',
+    'Indicadores de Gestión y Tiempos de Respuesta',
+]
+
+BASES_LEGALES_TITULOS = [
+    'Constitución de la República Bolivariana de Venezuela',
+    'Código de Comercio',
+]
+
 BASES_TEORICAS = [{'titulo': 'Control Administrativo',
   'posicion_autor': 'Desde la perspectiva de quien desarrolla este informe, el control administrativo en IDETEL debe '
                     'convertirse en una herramienta de seguimiento continuo y no limitarse a la revisión posterior '
@@ -462,41 +481,42 @@ BASES_TEORICAS = [{'titulo': 'Control Administrativo',
                'decisiones y la evaluación continua del desempeño del proceso.'],
   'cita_larga': None,
   'post_cita': ''},
- {'titulo': 'Base Legal: Constitución de la República Bolivariana de Venezuela — Artículo 112',
-  'espaciado_titulo_compacto': True,
-  'parrafos': ['Como marco general de la actividad económica privada, la Constitución reconoce la iniciativa '
-               'empresarial dentro de los límites establecidos por el ordenamiento jurídico.'],
-  'cita_larga': {'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su '
-                          'preferencia, sin más limitaciones que las previstas en esta Constitución y las que '
-                          'establezcan las leyes, por razones de desarrollo humano, seguridad, sanidad, protección '
-                          'del ambiente u otras de interés social. El Estado promoverá la iniciativa privada, '
-                          'garantizando la creación y justa distribución de la riqueza, así como la producción de '
-                          'bienes y servicios que satisfagan las necesidades de la población, la libertad de '
-                          'trabajo, empresa, comercio, industria, sin perjuicio de su facultad para dictar medidas '
-                          'para planificar, racionalizar y regular la economía e impulsar el desarrollo integral del '
-                          'país.',
-                 'autor': '(Constitución de la República Bolivariana de Venezuela, 1999, art. 112)'},
-  'post_cita': '',
-  'posicion_autor': 'El aporte de este artículo al informe es de carácter general, porque reconoce el ejercicio de '
-                    'la actividad empresarial y permite ubicar la prestación de servicios de IDETEL dentro de una '
-                    'actividad económica sujeta al ordenamiento jurídico. Su relación con el informe se limita a '
-                    'este fundamento general y no establece por sí mismo el procedimiento administrativo de '
-                    'seguimiento de solicitudes.'},
- {'titulo': 'Base Legal: Código de Comercio — Artículo 32',
-  'espaciado_titulo_compacto': True,
-  'parrafos': ['El Código de Comercio establece obligaciones vinculadas con el orden y claridad de los registros de '
-               'los comerciantes, aspecto relacionado con la necesidad de conservar información organizada y '
-               'verificable en los procesos administrativos.'],
-  'cita_larga': {'texto': 'Todo comerciante debe llevar en idioma castellano su contabilidad, la cual comprenderá, '
-                          'obligatoriamente, el libro Diario, el libro Mayor y el de Inventarios. Podrá llevar, '
-                          'además, todos los libros auxiliares que estimara conveniente para el mayor orden y '
-                          'claridad de sus operaciones.',
-                 'autor': '(Código de Comercio, 1955, art. 32)'},
-  'post_cita': '',
-  'posicion_autor': 'La relación con el informe se encuentra en el principio de orden y claridad de las operaciones '
-                    'mercantiles. Los formatos y mecanismos de seguimiento propuestos no sustituyen los libros '
-                    'contables exigidos por la ley, pero complementan el control administrativo al organizar '
-                    'información asociada con solicitudes, pagos, facturación y seguimiento de casos.'}]
+ {'titulo': 'Trazabilidad Administrativa de Solicitudes',
+  'posicion_autor': 'En IDETEL, la trazabilidad administrativa representa una condición necesaria para conocer la continuidad de cada solicitud y sustentar las decisiones relacionadas con su atención.',
+  'parrafos': ['La trazabilidad administrativa es la capacidad de reconstruir el recorrido de una solicitud mediante registros que permitan identificar su origen, las áreas que intervinieron, los cambios de estatus y el resultado alcanzado. Laudon y Laudon (2016) explican que la información organizada y disponible oportunamente permite controlar operaciones rutinarias y respaldar la toma de decisiones.',
+               'En la gestión de servicios, la trazabilidad requiere que cada afiliación o incidencia conserve una identificación uniforme durante su tránsito por Atención al Cliente, Administración y las áreas técnicas. Cuando cada unidad utiliza registros distintos o actualiza la información sin criterios comunes, se pierde continuidad y aumenta el tiempo necesario para determinar el estado real del caso.',
+               'La propuesta formulada en este informe fortalece la trazabilidad mediante formatos comunes, responsables por etapa y estados definidos. Estos elementos permiten verificar el avance de las solicitudes sin depender exclusivamente de consultas informales entre departamentos.'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'Comunicación Interdepartamental',
+  'posicion_autor': 'La comunicación interdepartamental debe funcionar como parte del procedimiento y dejar evidencia suficiente para que la continuidad de una solicitud no dependa de la memoria del personal.',
+  'parrafos': ['La comunicación interdepartamental comprende el intercambio de información entre unidades que participan en un mismo proceso. En una empresa de telecomunicaciones, la atención de una solicitud puede requerir datos administrativos, comerciales y técnicos, por lo que la coordinación entre las áreas condiciona la oportunidad de la respuesta ofrecida al suscriptor.',
+               'Zeithaml, Parasuraman y Berry (1993) relacionan la calidad del servicio con la capacidad organizacional para responder de forma consistente y mantener comunicación con el usuario. Esta capacidad también depende de que las áreas internas reciban información completa, conozcan sus responsabilidades y comuniquen oportunamente el resultado de cada actividad.',
+               'El flujo propuesto para IDETEL define puntos de transferencia y responsables, con la finalidad de reducir mensajes dispersos y evitar que una solicitud permanezca sin seguimiento al pasar de una unidad a otra.'],
+  'cita_larga': None,
+  'post_cita': ''},
+ {'titulo': 'Indicadores de Gestión y Tiempos de Respuesta',
+  'posicion_autor': 'Para este informe, los indicadores constituyen un apoyo práctico para comprobar si las mejoras propuestas reducen demoras y facilitan el cierre oportuno de las solicitudes.',
+  'parrafos': ['Los indicadores de gestión permiten comparar el desempeño real de un proceso con criterios previamente establecidos. Robbins y Coulter (2010) señalan que el control requiere medir las actividades, contrastar los resultados con lo planificado e intervenir cuando se presentan desviaciones significativas.',
+               'En la gestión de solicitudes pueden utilizarse medidas como tiempo promedio de atención, cantidad de casos pendientes, porcentaje de solicitudes cerradas dentro del plazo y número de devoluciones por información incompleta. Estos datos deben construirse a partir de registros uniformes para que sus resultados sean comparables y útiles.',
+               'La definición de tiempos de referencia e indicadores básicos permite que IDETEL evalúe periódicamente el funcionamiento del flujo estandarizado. De esta forma, la propuesta no se limita a documentar actividades, sino que incorpora criterios para detectar retrasos y orientar acciones correctivas.'],
+  'cita_larga': None,
+  'post_cita': ''}]
+
+BASES_LEGALES = [
+ {'norma': 'Constitución de la República Bolivariana de Venezuela',
+  'articulo': 'Artículo 112',
+  'texto': 'Todas las personas pueden dedicarse libremente a la actividad económica de su preferencia, sin más limitaciones que las previstas en esta Constitución y las que establezcan las leyes, por razones de desarrollo humano, seguridad, sanidad, protección del ambiente u otras de interés social. El Estado promoverá la iniciativa privada, garantizando la creación y justa distribución de la riqueza, así como la producción de bienes y servicios que satisfagan las necesidades de la población, la libertad de trabajo, empresa, comercio, industria, sin perjuicio de su facultad para dictar medidas para planificar, racionalizar y regular la economía e impulsar el desarrollo integral del país.',
+  'referencia': '(Asamblea Nacional Constituyente, 1999)',
+  'analisis': 'El artículo reconoce el derecho a desarrollar actividades económicas dentro de los límites establecidos por el ordenamiento jurídico y asigna al Estado funciones de promoción, planificación y regulación. En consecuencia, la actividad empresarial debe combinar la iniciativa privada con una gestión organizada que favorezca la producción de servicios y el cumplimiento de las disposiciones aplicables.',
+  'aporte': 'El aporte al informe es de carácter constitucional general, porque permite ubicar la prestación de servicios de Ingeniería de Telecomunicaciones, C.A. dentro del ejercicio legítimo de una actividad económica. La evaluación del control administrativo contribuye a ordenar la gestión interna de esa actividad y a fortalecer la capacidad de la empresa para atender solicitudes, aunque el artículo no regula específicamente el procedimiento estudiado.'},
+ {'norma': 'Código de Comercio',
+  'articulo': 'Artículo 32',
+  'texto': 'Todo comerciante debe llevar en idioma castellano su contabilidad, la cual comprenderá, obligatoriamente, el libro Diario, el libro Mayor y el de Inventarios. Podrá llevar, además, todos los libros auxiliares que estimara conveniente para el mayor orden y claridad de sus operaciones.',
+  'referencia': '(Congreso de la República de Venezuela, 1955)',
+  'analisis': 'El artículo establece la obligación de conservar registros contables y permite incorporar libros auxiliares para mejorar el orden y la claridad de las operaciones mercantiles. Aunque su alcance directo corresponde a la contabilidad, la disposición demuestra la importancia jurídica de mantener información organizada, comprensible y verificable.',
+  'aporte': 'Su aporte al informe se vincula con el principio de orden documental aplicado a pagos, facturación y solicitudes de servicio. Los formatos y mecanismos de seguimiento propuestos no sustituyen los libros contables exigidos por la norma, pero complementan el control administrativo al organizar la información que acompaña las operaciones y facilita su consulta.'}
+]
 
 POST_CITA_TEXTO = ''
 
