@@ -1,4 +1,4 @@
-name: Deploy presentation to GitHub Pages
+name: Deploy Amaal presentation to GitHub Pages
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
       - name: Prepare presentation site
         run: |
           mkdir -p _site
-          cp juliano/presentacion/index.html _site/index.html
+          cp amaal/presentacion/index.html _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
