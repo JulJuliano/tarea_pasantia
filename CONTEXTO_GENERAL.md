@@ -630,21 +630,36 @@ Aplicarla primero al estudiante al que fue dirigida. Solo extenderla a los otros
 
 ---
 
-# 7. Pendientes globales
+# Correo enviado por el profesor recientemente
 
-- Generar los PDFs definitivos y revisar visualmente:
-  - portada;
-  - contraportada;
-  - índices;
-  - cuadros;
-  - gráficos;
-  - capítulos;
-  - referencias;
-  - anexos.
-- Confirmar que las fechas finales correspondan al mes real de entrega.
-- Confirmar que cada fuente de Referencias esté citada.
-- Confirmar que no existan citas sin su correspondiente referencia.
-- Comprobar objetivo por objetivo las conclusiones.
-- Comprobar conclusión por conclusión las recomendaciones.
-- Insertar los anexos definitivos que aún falten.
-- Después de cualquier cambio de cronograma, revisar de nuevo Capítulo IV y Gantt.
+Buenos días, gusto en saludarlos.
+
+La finalidad de las presentaciones que les hice llegar, es para que ustedes tengan una idea y tengan como comenzar.
+
+La presentación, hacer uso de cualquier herramienta: Power Point, Canva, Prezi, entre otros.
+
+Realmente no es la secuencia de los ejemplos que envíe, la secuencia de la presentación está relacionada con los cinco capítulos del Informe final.
+
+Del capítulo III las bases teóricas más relevantes (3 o 4).
+
+Capítulo IV las actividades semanales las 3 o 4 más importantes.
+
+Capítulo V los más relevante en cada caso.
+
+Igual deben estar preparados:
+
+1. Evaluación del tutor industrial, indispensable.
+
+2. Pago del arancel (75$) y estar solventes. Adjunto envío una información relacionada con el pago en dos partes.
+
+3. Actitud positiva.
+
+En caso de incumplimiento parcial o total de los puntos 1 y 2 no se puede dar la calificación de la presentación.
+
+Como pudieron observar los intervalos de tiempo son de 30 minutos.
+
+20 minutos para hacer la presentación y 10 minutos para las posibles preguntas.
+
+Cualquier información adicional, por favor me escriben por esta vía o WhatsApp en privado.
+
+José Mejías

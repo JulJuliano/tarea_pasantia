@@ -31,7 +31,7 @@ SALIDA = CARPETA / "index.html"
 
 @dataclass(frozen=True)
 class Diapositiva:
-    fase: int
+    capitulo: int
     clase: str
     cuerpo: str
     notas: str
@@ -48,9 +48,9 @@ def imagen_embebida(nombre: str) -> str:
     return f"data:{mime};base64,{datos}"
 
 
-def slide(fase: int, clase: str, cuerpo: str, notas: str) -> Diapositiva:
+def slide(capitulo: int, clase: str, cuerpo: str, notas: str) -> Diapositiva:
     return Diapositiva(
-        fase=fase,
+        capitulo=capitulo,
         clase=clase,
         cuerpo=dedent(cuerpo).strip(),
         notas=dedent(notas).strip(),
@@ -58,9 +58,8 @@ def slide(fase: int, clase: str, cuerpo: str, notas: str) -> Diapositiva:
 
 
 LOGO = imagen_embebida("logo.jpg")
-ISHIKAWA = imagen_embebida("01_ishikawa_control_solicitudes.png")
+ISHIKAWA = imagen_embebida("ishikawa_amaal_solicitudes.png")
 SWIMLANE = imagen_embebida("04_swimlane_gestion_solicitudes.png")
-ESTADOS = imagen_embebida("05_estados_solicitud.png")
 COMPARACION = imagen_embebida("11_comparacion_as_is_to_be.png")
 
 
@@ -71,10 +70,9 @@ DIAPOSITIVAS: list[Diapositiva] = [
         f"""
         <div class="cover-copy">
           <p class="kicker">DEFENSA DE PASANTÍAS PROFESIONALES</p>
-          <h1>Control administrativo de solicitudes de servicio</h1>
-          <p class="lead">Evaluación y mejoras procedimentales para IDETEL</p>
+          <h1 class="official-title">Evaluación del control administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones en la empresa Ingeniería de Telecomunicaciones, C.A.</h1>
           <div class="author-block">
-            <strong>Amaal Alrifaai</strong>
+            <strong>Amaal Alrifaai Alrifaaie</strong>
             <span>Administración · IUTECP · 2026</span>
           </div>
         </div>
@@ -86,84 +84,59 @@ DIAPOSITIVAS: list[Diapositiva] = [
         </div>
         """,
         """
-        Saludar al jurado, presentarse y mencionar el título del informe. Explicar que la
-        exposición mostrará cómo se evaluó el recorrido administrativo de una solicitud de
-        servicio y qué mejoras se formularon para hacerlo trazable.
+        Saludar al jurado, a las tutoras y a las personas presentes. Presentarse como Amaal
+        Alrifaai Alrifaaie, estudiante de Administración del IUTECP, y leer el título oficial
+        del informe. Indicar que las pasantías se realizaron en IDETEL.
         """,
     ),
     slide(
         1,
         "route",
         """
-        <p class="eyebrow">RUTA DE LA EXPOSICIÓN</p>
-        <h2>Seguiremos el recorrido de una solicitud.</h2>
+        <p class="eyebrow">ESTRUCTURA DE LA PRESENTACIÓN</p>
+        <h2>Cinco capítulos, una misma secuencia.</h2>
         <div class="route-track">
-          <div><b>Contexto</b><span>empresa y área</span></div>
-          <div><b>Diagnóstico</b><span>problema y causas</span></div>
-          <div><b>Fundamentos</b><span>criterios de control</span></div>
-          <div><b>Propuesta</b><span>flujo y seguimiento</span></div>
-          <div><b>Cierre</b><span>resultados y recomendaciones</span></div>
+          <div><small>CAPÍTULO I</small><b>Realidad Organizacional</b></div>
+          <div><small>CAPÍTULO II</small><b>Diagnóstico Situacional</b></div>
+          <div><small>CAPÍTULO III</small><b>Marco Teórico</b></div>
+          <div><small>CAPÍTULO IV</small><b>Actividades Realizadas</b></div>
+          <div><small>CAPÍTULO V</small><b>Conclusiones y Recomendaciones</b></div>
         </div>
         """,
         """
-        Presentar la ruta sin leer cada palabra. El hilo conductor es el recorrido de una
-        solicitud: primero se ubica el contexto, luego se explica el diagnóstico, la base
-        conceptual, la propuesta y finalmente los resultados.
+        Explicar que la exposición seguirá la misma secuencia de los cinco capítulos del informe:
+        realidad organizacional, diagnóstico situacional, marco teórico, actividades realizadas
+        y conclusiones y recomendaciones.
         """,
     ),
     slide(
         1,
         "company",
         f"""
-        <p class="eyebrow">CONTEXTO ORGANIZACIONAL</p>
-        <h2>Ingeniería de Telecomunicaciones, C.A.</h2>
+        <p class="eyebrow">CAPÍTULO I · REALIDAD ORGANIZACIONAL</p>
+        <h2>Empresa y área de pasantía.</h2>
         <div class="company-layout">
           <div class="company-logo"><img src="{LOGO}" alt="Logotipo de IDETEL"></div>
           <div class="fact-stack">
-            <div><small>TRAYECTORIA</small><b>Más de cuatro décadas</b></div>
+            <div><small>EMPRESA</small><b>Ingeniería de Telecomunicaciones, C.A.</b></div>
             <div><small>SECTOR</small><b>Telecomunicaciones y automatización</b></div>
             <div><small>SEDE</small><b>El Tigre, Anzoátegui</b></div>
+            <div><small>ÁREA DE PASANTÍA</small><b>Atención al Cliente <i>Sem. 1–3</i> → Administración <i>Sem. 4–10</i></b></div>
           </div>
         </div>
         """,
         """
-        Presentar brevemente a IDETEL como una empresa con trayectoria en telecomunicaciones,
-        radiocomunicación, conectividad y automatización. Ubicar la sede y evitar extenderse en
-        toda la reseña histórica del informe.
-        """,
-    ),
-    slide(
-        1,
-        "rotation",
-        """
-        <p class="eyebrow">ÁREA DE PASANTÍA</p>
-        <h2>Dos espacios, un mismo recorrido.</h2>
-        <div class="handoff two">
-          <article>
-            <span class="week-tag">SEMANAS 1–3</span>
-            <h3>Atención al Cliente</h3>
-            <p>Recepción de solicitudes, registro de pagos y contacto inicial con el suscriptor.</p>
-          </article>
-          <div class="handoff-arrow">→</div>
-          <article>
-            <span class="week-tag">SEMANAS 4–10</span>
-            <h3>Administración</h3>
-            <p>Facturación, documentación, seguimiento de casos y reportes administrativos.</p>
-          </article>
-        </div>
-        <p class="bottom-line">La rotación permitió observar dónde se origina la información y cómo continúa.</p>
-        """,
-        """
-        Explicar la rotación real: tres semanas en Atención al Cliente y siete en Administración.
-        Destacar que esta experiencia permitió ver la continuidad del caso entre áreas y no solo
-        una tarea aislada.
+        Presentar a IDETEL como una empresa ubicada en El Tigre con más de cuatro décadas de
+        experiencia en telecomunicaciones y automatización. Explicar la rotación: Atención al
+        Cliente durante las semanas 1 a 3 y Administración desde la semana 4 hasta la 10.
+        Mencionar recepción, pagos, facturación, documentos, seguimiento y reportes.
         """,
     ),
     slide(
         1,
         "journey",
         """
-        <p class="eyebrow">RECORRIDO OBSERVADO</p>
+        <p class="eyebrow">CAPÍTULO I · REALIDAD ORGANIZACIONAL</p>
         <h2>Una solicitud atraviesa varias áreas.</h2>
         <div class="service-path">
           <div><span>01</span><b>Suscriptor</b><small>presenta el caso</small></div>
@@ -174,121 +147,86 @@ DIAPOSITIVAS: list[Diapositiva] = [
         </div>
         """,
         """
-        Describir el recorrido general de una afiliación o incidencia. Señalar que cada transferencia
-        requiere información completa y actualización de estatus para evitar que el caso pierda continuidad.
+        Explicar que una solicitud comienza en Atención al Cliente, puede pasar por Administración
+        y, según el caso, por el NOC o el personal técnico antes de cerrarse. Destacar que el proceso
+        depende de que la información pase claramente entre áreas y conserve su continuidad.
         """,
     ),
     slide(
         2,
-        "problem",
+        "problem problem-compact",
         """
-        <p class="eyebrow">SITUACIÓN PROBLEMÁTICA</p>
-        <div class="problem-statement">
-          <h2>No existía un procedimiento único de seguimiento.</h2>
+        <p class="eyebrow">CAPÍTULO II · SITUACIÓN PROBLEMÁTICA</p>
+        <h2>No existía un procedimiento único de seguimiento.</h2>
+        <div class="problem-layout">
           <div class="case-card">
-            <small>CASO ADMINISTRATIVO</small>
+            <small>PREGUNTAS DE CONTROL</small>
             <b>¿Quién lo tiene?</b>
             <b>¿En qué estado está?</b>
             <b>¿Cuándo debe cerrar?</b>
           </div>
+          <div class="signal-list">
+            <div><span>01</span><b>Formatos no uniformes</b></div>
+            <div><span>02</span><b>Estatus distribuido</b></div>
+            <div><span>03</span><b>Sin tiempos de referencia</b></div>
+            <div><span>04</span><b>Comunicación fragmentada</b></div>
+          </div>
         </div>
         """,
         """
-        Plantear el problema central: la organización atendía las solicitudes, pero no contaba con
-        un procedimiento único y visible desde la recepción hasta el cierre. Eso dificultaba responder
-        tres preguntas básicas de control: responsable, estado y tiempo.
+        Explicar que la empresa atendía los casos, pero no contaba con un procedimiento único y
+        formalizado desde la entrada hasta el cierre. Describir las cuatro manifestaciones: formatos
+        no uniformes, estatus distribuido, falta de tiempos de referencia y comunicación fragmentada.
+        Aclarar que esto describe una necesidad del proceso, no un incumplimiento del personal.
         """,
     ),
     slide(
         2,
-        "manifestations",
+        "effects effects-question",
         """
-        <p class="eyebrow">MANIFESTACIONES OBSERVADAS</p>
-        <h2>Cuatro señales de pérdida de continuidad.</h2>
-        <div class="alert-grid">
-          <div><span>REGISTRO</span><b>Formatos no uniformes</b></div>
-          <div><span>ESTATUS</span><b>Actualización distribuida</b></div>
-          <div><span>TIEMPO</span><b>Sin referencia por etapa</b></div>
-          <div><span>COMUNICACIÓN</span><b>Transferencia fragmentada</b></div>
-        </div>
-        """,
-        """
-        Explicar las cuatro manifestaciones sin convertirlas en causas aisladas. Todas afectan la
-        continuidad de la información y obligan al personal a reconstruir manualmente el estado del caso.
-        """,
-    ),
-    slide(
-        2,
-        "effects",
-        """
-        <p class="eyebrow">EFECTOS ADMINISTRATIVOS</p>
-        <h2>La información dispersa se convierte en demora.</h2>
+        <p class="eyebrow">CAPÍTULO II · DIAGNÓSTICO SITUACIONAL</p>
+        <h2>Efectos administrativos.</h2>
         <div class="impact-row">
-          <div><strong>01</strong><b>Reprocesos</b><p>consultas y verificaciones repetidas</p></div>
-          <div><strong>02</strong><b>Mayor respuesta</b><p>más tiempo para ubicar el estatus</p></div>
-          <div><strong>03</strong><b>Menor precisión</b><p>información incompleta al suscriptor</p></div>
+          <div><strong>01</strong><b>Reprocesos</b></div>
+          <div><strong>02</strong><b>Mayor tiempo de respuesta</b></div>
+          <div><strong>03</strong><b>Menor precisión</b></div>
         </div>
+        <div class="question-strip"><b>INTERROGANTE</b><p>¿Cómo puede evaluarse el control administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones en IDETEL para identificar sus principales debilidades y formular mejoras procedimentales que fortalezcan la trazabilidad y el seguimiento de los casos?</p></div>
         """,
         """
-        Conectar las manifestaciones con sus efectos: reprocesos, aumento del tiempo de respuesta y
-        dificultad para informar con precisión al suscriptor. Evitar afirmar que todos los casos fallaban;
-        se trata de debilidades que elevan ese riesgo.
+        Relacionar las manifestaciones con los reprocesos, la demora y la dificultad para informar con
+        precisión al suscriptor. Leer la interrogante de forma pausada y explicar que vincula evaluar
+        el control, identificar debilidades y formular mejoras para la trazabilidad y el seguimiento.
         """,
     ),
     slide(
         2,
-        "question",
+        "objectives objectives-combined",
         """
-        <p class="eyebrow">INTERROGANTE ORIENTADORA</p>
-        <div class="question-box">
-          <span>¿</span>
-          <h2>Cómo evaluar el control para identificar debilidades y fortalecer la trazabilidad?</h2>
+        <p class="eyebrow">CAPÍTULO II · OBJETIVOS</p>
+        <div class="objective-summary">
+          <span>OBJETIVO GENERAL</span>
+          <b>EVALUAR</b>
+          <p>el control administrativo para identificar debilidades y formular mejoras procedimentales.</p>
         </div>
-        <p class="question-detail">Gestión de solicitudes de servicios de telecomunicaciones en IDETEL</p>
-        """,
-        """
-        Leer la interrogante de forma pausada. Explicar que la pregunta vincula tres acciones: evaluar
-        el control existente, identificar debilidades y formular mejoras procedimentales.
-        """,
-    ),
-    slide(
-        2,
-        "objective-general",
-        """
-        <p class="eyebrow">OBJETIVO GENERAL</p>
-        <div class="objective-focus">
-          <span>Evaluar</span>
-          <p>el control administrativo aplicado a la gestión de solicitudes de servicios de telecomunicaciones.</p>
-        </div>
-        <div class="purpose-band">Identificar debilidades <i>+</i> formular mejoras procedimentales</div>
-        """,
-        """
-        Presentar el objetivo general y hacer énfasis en el verbo evaluar. El trabajo no consistió en
-        implementar un sistema informático, sino en estudiar el control y formular mejoras viables.
-        """,
-    ),
-    slide(
-        2,
-        "objectives",
-        """
-        <p class="eyebrow">OBJETIVOS ESPECÍFICOS</p>
-        <h2>Tres etapas de una misma evaluación.</h2>
         <div class="objective-list">
-          <article><span>01</span><h3>Diagnosticar</h3><p>el recorrido actual desde la recepción hasta el cierre.</p></article>
-          <article><span>02</span><h3>Identificar</h3><p>deficiencias, causas e incidencia sobre tiempos y trazabilidad.</p></article>
-          <article><span>03</span><h3>Formular</h3><p>flujo, formatos, responsables e indicadores de seguimiento.</p></article>
+          <article><span>01</span><h3>Diagnosticar</h3><p>recorrido actual</p></article>
+          <article><span>02</span><h3>Identificar</h3><p>deficiencias y causas</p></article>
+          <article><span>03</span><h3>Formular</h3><p>mejoras procedimentales</p></article>
         </div>
+        <p class="objective-sequence">Diagnosticar <i>→</i> Identificar <i>→</i> Formular</p>
         """,
         """
-        Mostrar la coherencia entre los objetivos: diagnosticar primero, identificar las causas después
-        y formular la mejora a partir de los hallazgos. Cada conclusión retomará esta secuencia.
+        Enfatizar el verbo evaluar. Luego presentar la secuencia de los tres objetivos específicos:
+        diagnosticar el recorrido actual, identificar las deficiencias y sus causas, y formular mejoras
+        mediante flujo, formatos, responsables e indicadores. Recordar: conocer, identificar y mejorar.
         """,
     ),
     slide(
         2,
         "method",
         """
-        <p class="eyebrow">TÉCNICAS DE DIAGNÓSTICO</p>
+        <p class="eyebrow">CAPÍTULO II · TÉCNICAS DE DIAGNÓSTICO</p>
         <h2>La situación se observó desde cuatro fuentes.</h2>
         <div class="method-grid">
           <div><span>OBS</span><b>Observación directa</b><p>recorrido real de solicitudes</p></div>
@@ -298,162 +236,91 @@ DIAPOSITIVAS: list[Diapositiva] = [
         </div>
         """,
         """
-        Explicar que el diagnóstico combinó observación, revisión documental, entrevistas estructuradas
-        y el diagrama de Ishikawa. La combinación evitó depender de una sola percepción.
+        Mencionar brevemente observación directa, revisión de registros, entrevistas al personal e
+        Ishikawa. Explicar que la combinación permitió comparar el recorrido cotidiano, los soportes
+        disponibles y la experiencia de quienes participan en el proceso.
         """,
     ),
     slide(
         2,
-        "diagram-slide",
+        "diagram-slide ishikawa-slide",
         f"""
-        <p class="eyebrow">DIAGRAMA DE CAUSA–EFECTO</p>
+        <p class="eyebrow">CAPÍTULO II · DIAGRAMA DE CAUSA–EFECTO</p>
         <h2>Las causas se agruparon en cuatro dimensiones.</h2>
-        <figure class="wide-figure">
+        <figure class="wide-figure ishikawa-figure">
           <img src="{ISHIKAWA}" alt="Diagrama de Ishikawa del control de solicitudes">
           <figcaption>Procedimiento · comunicación · registro · seguimiento</figcaption>
         </figure>
+        <p class="finding-line">Hallazgo central: el problema no era recibir el caso, sino mantener visible su continuidad.</p>
         """,
         """
-        Recorrer el Ishikawa de izquierda a derecha. Resumir cada dimensión con una causa principal y
-        cerrar indicando que todas convergen en debilidades de control y trazabilidad.
-        """,
-    ),
-    slide(
-        2,
-        "findings",
-        """
-        <p class="eyebrow">HALLAZGO CENTRAL</p>
-        <div class="finding-layout">
-          <h2>El problema no era recibir el caso.</h2>
-          <div class="finding-arrow">→</div>
-          <h2>Era mantener visible su continuidad.</h2>
-        </div>
-        <p class="bottom-line">La mejora debía unir registro, responsable, estatus y tiempo.</p>
-        """,
-        """
-        Sintetizar el diagnóstico con esta idea: la solicitud sí ingresaba, pero su continuidad podía
-        perder visibilidad al pasar entre áreas. Esta conclusión orientó directamente la propuesta.
+        Explicar que el Ishikawa organizó causas relacionadas en procedimiento, comunicación, registro
+        y seguimiento. Dar un ejemplo breve por dimensión. Cerrar con el hallazgo principal: el problema
+        no era recibir la solicitud, sino mantener visible su continuidad hasta el cierre.
         """,
     ),
     slide(
         3,
         "theory",
         """
-        <p class="eyebrow">CONCEPTOS DISCIPLINARES · I</p>
-        <h2>Controlar significa hacer visible el proceso.</h2>
+        <p class="eyebrow">CAPÍTULO III · MARCO TEÓRICO</p>
+        <h2>Cuatro conceptos disciplinares.</h2>
         <div class="concept-grid">
-          <div><b>Control administrativo</b><p>comparar lo ejecutado con lo esperado</p></div>
-          <div><b>Gestión de solicitudes</b><p>recibir, registrar, procesar y cerrar</p></div>
-          <div><b>Estandarización</b><p>aplicar criterios y formatos comunes</p></div>
-          <div><b>Calidad del servicio</b><p>responder con fiabilidad y oportunidad</p></div>
+          <div><b>Control administrativo</b><p>Verificar el proceso y corregir desviaciones.</p></div>
+          <div><b>Gestión de solicitudes</b><p>Recibir, registrar, procesar, seguir y cerrar.</p></div>
+          <div><b>Trazabilidad administrativa</b><p>Poder reconstruir el recorrido de un caso.</p></div>
+          <div><b>Estandarización de procedimientos</b><p>Aplicar criterios y formatos comunes.</p></div>
         </div>
         """,
         """
-        Relacionar estos cuatro conceptos con el diagnóstico. El control requiere información; la gestión
-        define el ciclo; la estandarización reduce variaciones; y la respuesta administrativa influye en
-        la calidad percibida por el suscriptor.
-        """,
-    ),
-    slide(
-        3,
-        "theory",
-        """
-        <p class="eyebrow">CONCEPTOS DISCIPLINARES · II</p>
-        <h2>La continuidad depende de información compartida.</h2>
-        <div class="concept-grid">
-          <div><b>Sistemas de información</b><p>centralizar datos para decidir</p></div>
-          <div><b>Trazabilidad</b><p>reconstruir el recorrido del caso</p></div>
-          <div><b>Comunicación entre áreas</b><p>transferir información completa</p></div>
-          <div><b>Indicadores de gestión</b><p>medir tiempos, pendientes y cierres</p></div>
-        </div>
-        """,
-        """
-        Explicar el segundo grupo conceptual. La propuesta necesita información disponible, trazabilidad,
-        coordinación entre áreas e indicadores que permitan revisar si el procedimiento funciona.
-        """,
-    ),
-    slide(
-        3,
-        "theory-applied",
-        """
-        <p class="eyebrow">FUNDAMENTO APLICADO</p>
-        <h2>De los conceptos a decisiones concretas.</h2>
-        <div class="translation-grid">
-          <div><span>CONTROL</span><b>Estados verificables</b></div>
-          <div><span>ESTANDARIZACIÓN</span><b>Formatos uniformes</b></div>
-          <div><span>TRAZABILIDAD</span><b>Identificación única</b></div>
-          <div><span>MEDICIÓN</span><b>Indicadores básicos</b></div>
-        </div>
-        """,
-        """
-        No detenerse en definiciones extensas. Mostrar cómo cada concepto se tradujo en una decisión de
-        diseño de la propuesta: estados, formatos, identificación e indicadores.
+        Explicar solamente los cuatro conceptos más relacionados con el problema. Controlar es verificar
+        y corregir; gestionar es completar el ciclo de la solicitud; la trazabilidad permite reconstruir
+        su recorrido; y la estandarización establece criterios comunes. Relacionarlos oralmente con la propuesta.
         """,
     ),
     slide(
         3,
         "legal",
         """
-        <p class="eyebrow">BASES LEGALES</p>
-        <h2>Orden empresarial y claridad documental.</h2>
+        <p class="eyebrow">CAPÍTULO III · MARCO TEÓRICO</p>
+        <h2>Bases legales.</h2>
         <div class="legal-layout">
           <article><span>CONSTITUCIÓN</span><b>Artículo 112</b><p>Fundamento general de la actividad económica privada dentro del ordenamiento jurídico.</p></article>
           <article><span>CÓDIGO DE COMERCIO</span><b>Artículo 32</b><p>Principio de orden y claridad de los registros que acompañan las operaciones mercantiles.</p></article>
         </div>
-        <p class="legal-note">Las mejoras complementan el control administrativo; no sustituyen los registros exigidos por la ley.</p>
+        <p class="legal-note">Estas normas aportan un fundamento general; no regulan directamente el flujo de solicitudes estudiado.</p>
         """,
         """
-        Presentar la base legal con prudencia. El artículo 112 aporta el marco constitucional general y
-        el artículo 32 respalda el principio de orden documental. Ninguno regula específicamente el flujo
-        de solicitudes estudiado.
+        Mencionar el artículo 112 de la Constitución como marco general de la actividad empresarial y el
+        artículo 32 del Código de Comercio como referencia para el orden y la claridad de los registros.
+        Aclarar que ninguno regula directamente el flujo de solicitudes estudiado.
         """,
     ),
     slide(
-        3,
-        "weeks",
-        """
-        <p class="eyebrow">DIEZ SEMANAS DE PASANTÍA</p>
-        <h2>La experiencia avanzó en cuatro momentos.</h2>
-        <div class="timeline">
-          <article><span>1–3</span><b>Reconocer</b><p>atención, pagos y recorrido inicial</p></article>
-          <article><span>4–5</span><b>Diagnosticar</b><p>entrevistas, registros e Ishikawa</p></article>
-          <article><span>6–8</span><b>Diseñar</b><p>análisis, flujo y formatos</p></article>
-          <article><span>9–10</span><b>Validar</b><p>ajustes, cierre e informe</p></article>
-        </div>
-        """,
-        """
-        Resumir las diez semanas por etapas para no leer el cronograma completo. Mencionar que las tareas
-        operativas continuaron mientras se desarrollaban las actividades de análisis.
-        """,
-    ),
-    slide(
-        3,
+        4,
         "activities",
         """
-        <p class="eyebrow">ACTIVIDADES REALIZADAS</p>
-        <h2>Operación y análisis se desarrollaron en paralelo.</h2>
-        <div class="activity-split">
-          <article>
-            <span>APOYO OPERATIVO</span>
-            <ul><li>Registro de pagos</li><li>Facturación y documentación</li><li>Seguimiento de casos</li><li>Reportes administrativos</li></ul>
-          </article>
-          <article>
-            <span>TRABAJO DE ANÁLISIS</span>
-            <ul><li>Levantamiento del proceso</li><li>Entrevistas y revisión documental</li><li>Diseño de mejoras</li><li>Validación con tutor industrial</li></ul>
-          </article>
+        <p class="eyebrow">CAPÍTULO IV · ACTIVIDADES REALIZADAS</p>
+        <h2>Cuatro actividades principales.</h2>
+        <div class="activity-grid">
+          <article><span>SEM. 1–3</span><b>Observar el recorrido</b><p>Atención al Cliente y Administración</p></article>
+          <article><span>SEM. 4</span><b>Revisar y entrevistar</b><p>Registros, personal e identificación de fallas</p></article>
+          <article><span>SEM. 5</span><b>Elaborar el Ishikawa</b><p>Organización de causas relacionadas</p></article>
+          <article><span>SEM. 7–9</span><b>Diseñar y validar</b><p>Flujo, formatos, responsables e indicadores</p></article>
         </div>
         """,
         """
-        Diferenciar las actividades propias del área y las actividades relacionadas con el informe.
-        Destacar que ambas se complementaron: la práctica permitió comprender el proceso y el análisis
-        permitió formular la mejora.
+        Resumir las diez semanas en cuatro actividades: observar el recorrido; revisar registros y
+        entrevistar al personal; elaborar el Ishikawa; y diseñar y validar las mejoras. Mencionar que
+        también se apoyaron pagos, facturación, documentos, casos y reportes administrativos.
         """,
     ),
     slide(
         4,
         "proposal",
         """
-        <p class="eyebrow">PROPUESTA DE MEJORA</p>
+        <p class="eyebrow">CAPÍTULO IV · ACTIVIDADES REALIZADAS</p>
+        <p class="section-label">RESULTADO PRINCIPAL · PROPUESTA DE MEJORA</p>
         <h2>Un procedimiento visible de principio a fin.</h2>
         <div class="proposal-grid">
           <div><span>01</span><b>Flujo estandarizado</b></div>
@@ -465,159 +332,111 @@ DIAPOSITIVAS: list[Diapositiva] = [
         </div>
         """,
         """
-        Presentar la propuesta como un conjunto integrado de seis componentes. Ninguno funciona de forma
-        aislada: el flujo define el recorrido, los responsables lo ejecutan y los registros permiten medirlo.
+        Presentar la propuesta como el principal resultado del Capítulo IV. Explicar sus seis componentes:
+        flujo estandarizado, responsables, formatos, estados, tiempos e indicadores. Aclarar que funcionan
+        de manera integrada y que la propuesta busca simplificar el control, no aumentar la burocracia.
         """,
     ),
     slide(
         4,
-        "diagram-slide swimlane",
+        "diagram-slide swimlane flow-states",
         f"""
-        <p class="eyebrow">FLUJO ESTANDARIZADO</p>
+        <p class="eyebrow">CAPÍTULO IV · FLUJO ESTANDARIZADO</p>
         <h2>Cada transferencia deja un responsable visible.</h2>
         <figure class="wide-figure swimlane-figure">
           <img src="{SWIMLANE}" alt="Swimlane propuesto para la gestión de solicitudes">
-          <figcaption>Cliente → Atención al Cliente → Administración → NOC / Técnicos → cierre</figcaption>
         </figure>
+        <div class="state-flow" aria-label="Estados de una solicitud">
+          <span>Recibida</span><i>→</i><span>Registrada</span><i>→</i><span>Asignada</span><i>→</i><span>En atención</span><i>→</i><span>Resuelta</span><i>→</i><span>Cerrada</span>
+        </div>
+        <p class="resolution-note">Resuelta ≠ Cerrada</p>
         """,
         """
         Explicar el swimlane por áreas. Atención al Cliente recibe, registra y comunica; Administración
-        revisa y actualiza; NOC o Técnicos atienden cuando corresponde; finalmente se confirma el cierre
-        y el cliente recibe la respuesta.
+        revisa y actualiza; NOC o Técnicos atienden cuando corresponde. Recorrer los seis estados y
+        enfatizar que resuelta no equivale a cerrada: el cierre exige registrar y confirmar el resultado.
         """,
     ),
     slide(
         4,
-        "states",
-        f"""
-        <p class="eyebrow">ESTADOS DE LA SOLICITUD</p>
-        <h2>El estatus resume dónde está el caso.</h2>
-        <figure class="state-figure"><img src="{ESTADOS}" alt="Estados propuestos de una solicitud"></figure>
-        <div class="state-benefits">
-          <span>Evita términos distintos entre áreas</span>
-          <span>Facilita consultas y reportes</span>
-          <span>Hace verificable el cierre</span>
+        "formats control-tools",
+        """
+        <p class="eyebrow">CAPÍTULO IV · REGISTRO Y MEDICIÓN</p>
+        <h2>Información común para controlar el proceso.</h2>
+        <div class="tools-layout">
+          <article class="format-card">
+            <span>FORMATO COMÚN</span>
+            <div class="field-cloud"><b>ID</b><b>Tipo</b><b>Fecha</b><b>Responsable</b><b>Estatus</b><b>Observaciones</b></div>
+          </article>
+          <article class="indicator-card">
+            <span>INDICADORES</span>
+            <ul><li>Tiempo promedio</li><li>Casos pendientes</li><li>Cierres en plazo</li><li>Devoluciones</li></ul>
+          </article>
         </div>
+        <p class="bottom-line">Primero organizar el proceso; después medirlo y digitalizarlo.</p>
         """,
         """
-        Recorrer los estados: recibida, registrada, asignada, en atención, resuelta y cerrada. Aclarar
-        que resuelta y cerrada no son idénticas: el cierre requiere confirmar y registrar el resultado.
-        """,
-    ),
-    slide(
-        4,
-        "formats",
-        """
-        <p class="eyebrow">FORMATOS Y RESPONSABILIDADES</p>
-        <h2>La misma información acompaña todo el recorrido.</h2>
-        <div class="form-preview">
-          <div class="form-head"><b>ID DEL CASO</b><b>TIPO</b><b>FECHA</b><b>RESPONSABLE</b></div>
-          <div class="form-body"><span>Datos del suscriptor</span><span>Descripción de la solicitud</span><span>Estatus y observaciones</span></div>
-          <div class="form-foot"><b>Actualiza:</b> responsable de la etapa <i></i><b>Verifica:</b> supervisión</div>
-        </div>
-        <p class="bottom-line">Formato común + responsable definido = continuidad verificable</p>
-        """,
-        """
-        Explicar los datos mínimos del formato y la necesidad de identificar quién actualiza cada etapa.
-        La finalidad no es añadir formularios, sino evitar registros distintos e información incompleta.
-        """,
-    ),
-    slide(
-        4,
-        "indicators",
-        """
-        <p class="eyebrow">INDICADORES BÁSICOS</p>
-        <h2>Medir permite detectar dónde se retrasa el proceso.</h2>
-        <div class="metric-grid">
-          <article><span>TIEMPO</span><b>Promedio de atención</b><p>desde recepción hasta cierre</p></article>
-          <article><span>PENDIENTES</span><b>Casos abiertos</b><p>por estado y responsable</p></article>
-          <article><span>CUMPLIMIENTO</span><b>Cierres en plazo</b><p>porcentaje dentro de referencia</p></article>
-          <article><span>CALIDAD</span><b>Devoluciones</b><p>por información incompleta</p></article>
-        </div>
-        """,
-        """
-        Presentar indicadores sencillos y realizables. Señalar que requieren registros uniformes para
-        ser comparables y que sirven para detectar retrasos, no para sancionar automáticamente al personal.
+        Explicar que cada caso conservaría ID, tipo, fecha, responsable, estatus y observaciones. Presentar
+        los cuatro indicadores sencillos: tiempo promedio, pendientes, cierres en plazo y devoluciones.
+        Su función es detectar retrasos, no sancionar. Primero se organiza y prueba; luego se digitaliza.
         """,
     ),
     slide(
         4,
         "comparison",
         f"""
-        <p class="eyebrow">DEL AS–IS AL TO–BE</p>
+        <p class="eyebrow">CAPÍTULO IV · COMPARACIÓN DEL PROCESO</p>
         <div class="comparison-layout">
           <div>
             <h2>De información dispersa a control verificable.</h2>
-            <ul><li>estandarizar</li><li>ordenar</li><li>definir</li><li>medir</li><li>controlar</li></ul>
+            <div class="comparison-labels"><span><small>ANTES · AS–IS</small><b>Información dispersa</b></span><i>→</i><span><small>PROPUESTA · TO–BE</small><b>Control verificable</b></span></div>
           </div>
           <figure><img src="{COMPARACION}" alt="Comparación del control actual y propuesto"></figure>
         </div>
         """,
         """
-        Usar esta diapositiva para sintetizar el cambio esperado. La propuesta transforma registros no
-        unificados y estatus distribuido en formatos uniformes, responsables, estados verificables e indicadores.
+        Sintetizar el cambio esperado: de registros no unificados, comunicación fragmentada y estatus
+        distribuido a formatos uniformes, flujo común, responsables visibles, estados verificables e
+        indicadores. Recordar que se trata de una propuesta formulada, no de resultados ya implementados.
         """,
     ),
     slide(
         5,
-        "conclusions",
+        "conclusions conclusions-combined",
         """
-        <p class="eyebrow">CONCLUSIONES · DIAGNÓSTICO</p>
-        <h2>El recorrido existía, pero no estaba formalizado como un solo proceso.</h2>
-        <div class="conclusion-band">
-          <span>Sin flujo único</span><i>→</i><span>responsables poco visibles</span><i>→</i><span>cierre difícil de verificar</span>
+        <p class="eyebrow">CAPÍTULO V · CONCLUSIONES</p>
+        <h2>Tres objetivos, tres resultados.</h2>
+        <div class="conclusion-grid">
+          <article><span>1 · DIAGNÓSTICO</span><p>El recorrido existía, pero no estaba formalizado como un solo proceso.</p></article>
+          <article><span>2 · DEFICIENCIAS</span><p>Formatos, estatus, tiempos y comunicación afectaban la trazabilidad.</p></article>
+          <article><span>3 · APORTE</span><p>Flujo + responsables + formatos + indicadores = mayor trazabilidad.</p></article>
         </div>
+        <p class="learning-line"><b>Aprendizaje:</b> control, organización de procesos, gestión documental y atención al usuario.</p>
         """,
         """
-        Presentar la primera conclusión vinculada con el objetivo de diagnosticar. El recorrido se
-        realizaba entre áreas, pero no estaba formalizado de forma integral desde la recepción hasta el cierre.
-        """,
-    ),
-    slide(
-        5,
-        "conclusions",
-        """
-        <p class="eyebrow">CONCLUSIONES · CAUSAS</p>
-        <h2>Cuatro debilidades afectaban la trazabilidad.</h2>
-        <div class="four-words"><span>formatos</span><span>estatus</span><span>tiempos</span><span>comunicación</span></div>
-        <p class="bottom-line">Su efecto conjunto puede prolongar la respuesta al suscriptor.</p>
-        """,
-        """
-        Presentar la segunda conclusión: formatos no uniformes, estatus no centralizado, ausencia de
-        tiempos de referencia y comunicación fragmentada. Destacar el efecto conjunto sobre la trazabilidad.
-        """,
-    ),
-    slide(
-        5,
-        "conclusions",
-        """
-        <p class="eyebrow">CONCLUSIONES · APORTE</p>
-        <h2>La propuesta conecta control, continuidad y servicio.</h2>
-        <div class="result-equation">
-          <span>flujo</span><i>+</i><span>responsables</span><i>+</i><span>formatos</span><i>+</i><span>indicadores</span><b>= trazabilidad</b>
-        </div>
-        """,
-        """
-        Presentar la tercera conclusión vinculada con el objetivo de formular mejoras. Explicar que la
-        trazabilidad surge de la combinación de los componentes y no de un único formato o herramienta.
+        Relacionar cada conclusión con un objetivo: el recorrido existe, pero no como un proceso integral;
+        las cuatro debilidades afectan la trazabilidad; y la propuesta combina flujo, responsables, formatos
+        e indicadores. Mencionar los aprendizajes administrativos obtenidos durante la experiencia.
         """,
     ),
     slide(
         5,
         "recommendations",
         """
-        <p class="eyebrow">RECOMENDACIONES A IDETEL</p>
+        <p class="eyebrow">CAPÍTULO V · RECOMENDACIONES</p>
         <h2>Implementar primero; digitalizar después.</h2>
-        <div class="recommend-grid">
-          <article><span>PRIMERO</span><b>Probar el flujo con un grupo controlado.</b></article>
-          <article><span>LUEGO</span><b>Uniformar formatos y responsables.</b></article>
-          <article><span>REVISAR</span><b>Medir pendientes y tiempos periódicamente.</b></article>
-          <article><span>DESPUÉS</span><b>Evaluar una herramienta digital centralizada.</b></article>
+        <div class="recommend-layout">
+          <article class="idetel-recommendation"><span>A IDETEL</span><b>Probar flujo <i>→</i> uniformar <i>→</i> medir <i>→</i> evaluar digitalización</b></article>
+          <div class="secondary-recommendations">
+            <article><span>AL IUTECP</span><b>Fortalecer el acompañamiento académico.</b></article>
+            <article><span>A FUTUROS PASANTES</span><b>Registrar actividades y conservar evidencias.</b></article>
+          </div>
         </div>
         """,
         """
-        Explicar el orden recomendado. Primero debe formalizarse y probarse el procedimiento; luego se
-        miden sus resultados. Una herramienta digital tiene más sentido cuando el flujo ya está validado.
+        Recomendar a IDETEL una implementación gradual: probar el flujo, uniformar los formatos, definir
+        quién actualiza, medir periódicamente y solo entonces evaluar una herramienta centralizada. Al
+        IUTECP, fortalecer el acompañamiento; a futuros pasantes, registrar actividades y evidencias.
         """,
     ),
     slide(
@@ -630,22 +449,23 @@ DIAPOSITIVAS: list[Diapositiva] = [
           <p>Gracias por su atención.</p>
           <span>Quedo atenta a sus preguntas.</span>
         </div>
-        <div class="closing-status"><i></i><b>CASO PRESENTADO</b><small>Amaal Alrifaai · Administración</small></div>
+        <div class="closing-status"><i></i><b>CASO PRESENTADO</b><small>Amaal Alrifaai Alrifaaie · Administración</small></div>
         """,
         """
-        Cerrar con la idea principal, agradecer al jurado y quedar disponible para preguntas. Mantener
-        la última diapositiva visible durante la ronda de respuestas.
+        Explicar que no basta con recibir o resolver técnicamente un caso: también debe conocerse quién
+        lo atendió, su estado, su tiempo y su cierre. Agradecer al IUTECP, IDETEL, tutores y personal.
+        Dar las gracias por la atención y quedar disponible para preguntas.
         """,
     ),
 ]
 
 
-FASES = (
-    ("01", "Contexto"),
-    ("02", "Diagnóstico"),
-    ("03", "Fundamentos"),
-    ("04", "Propuesta"),
-    ("05", "Cierre"),
+CAPITULOS = (
+    ("I", "Realidad Organizacional"),
+    ("II", "Diagnóstico Situacional"),
+    ("III", "Marco Teórico"),
+    ("IV", "Actividades Realizadas"),
+    ("V", "Conclusiones y Recomendaciones"),
 )
 
 
@@ -736,6 +556,7 @@ h1, h2 {
 h1 { font-size: clamp(3.6rem, 5.8vw, 6.7rem); line-height: .97; max-width: 12ch; }
 h2 { font-size: clamp(3rem, 4.7vw, 5.5rem); line-height: 1; max-width: 16ch; }
 h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
+.official-title { font-size: clamp(2.15rem, 3.05vw, 3.65rem); line-height: 1.03; max-width: 24ch; }
 .eyebrow, .kicker {
   color: var(--purple);
   font-size: clamp(.9rem, 1.15vw, 1.35rem);
@@ -807,7 +628,8 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .route-track::before { background: var(--violet); content: ""; height: 3px; left: 8%; position: absolute; right: 8%; top: 1.05rem; }
 .route-track div { padding-top: 3.2rem; position: relative; }
 .route-track div::before { background: white; border: 4px solid var(--purple); border-radius: 50%; content: ""; height: 1.55rem; left: .2rem; position: absolute; top: .25rem; width: 1.55rem; z-index: 1; }
-.route-track b { display: block; font-size: clamp(1.35rem, 1.8vw, 2.1rem); }
+.route-track small { color: var(--violet); display: block; font-size: clamp(.66rem, .8vw, .9rem); font-weight: 900; letter-spacing: .08em; margin-bottom: .6rem; }
+.route-track b { display: block; font-size: clamp(1.05rem, 1.4vw, 1.6rem); line-height: 1.15; }
 .route-track span { color: var(--muted); display: block; font-size: clamp(.95rem, 1.2vw, 1.4rem); line-height: 1.25; margin-top: .55rem; }
 
 .company-layout { align-items: stretch; display: grid; gap: 4vw; grid-template-columns: .8fr 1.2fr; margin-top: 5vh; }
@@ -818,6 +640,12 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .fact-stack div { background: white; border-left: 5px solid var(--purple); box-shadow: 0 8px 25px rgba(91,42,134,.07); display: grid; gap: .55rem; padding: 1.3rem 1.6rem; }
 .fact-stack small { color: var(--purple); font-size: .9rem; font-weight: 900; letter-spacing: .1em; }
 .fact-stack b { font-size: clamp(1.45rem, 2vw, 2.35rem); }
+.company .company-layout { margin-top: 3vh; }
+.company .company-logo { min-height: 44vh; }
+.company .fact-stack { gap: .7rem; }
+.company .fact-stack div { gap: .3rem; padding: .85rem 1.2rem; }
+.company .fact-stack b { font-size: clamp(1.05rem, 1.45vw, 1.65rem); line-height: 1.18; }
+.company .fact-stack i { color: var(--violet); font-size: .72em; font-style: normal; white-space: nowrap; }
 
 .handoff { align-items: center; display: grid; margin-top: 7vh; }
 .handoff.two { grid-template-columns: 1fr auto 1fr; gap: 2.2rem; }
@@ -841,6 +669,15 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .case-card { background: white; border: 1px solid var(--line); box-shadow: var(--shadow); display: grid; gap: 1.15rem; padding: 2rem; transform: rotate(1.5deg); }
 .case-card small { color: var(--purple); font-weight: 900; letter-spacing: .1em; margin-bottom: .5rem; }
 .case-card b { border-bottom: 1px solid var(--line); font-size: clamp(1.15rem, 1.55vw, 1.8rem); padding-bottom: .85rem; }
+.problem-compact h2 { font-size: clamp(2.65rem, 4.2vw, 4.8rem); max-width: 22ch; }
+.problem-layout { align-items: stretch; display: grid; gap: 2.5vw; grid-template-columns: .8fr 1.2fr; margin-top: 4vh; }
+.problem-layout .case-card { gap: .7rem; padding: 1.35rem; transform: rotate(-1deg); }
+.problem-layout .case-card small { margin-bottom: .15rem; }
+.problem-layout .case-card b { font-size: clamp(1rem, 1.3vw, 1.5rem); padding-bottom: .55rem; }
+.signal-list { display: grid; gap: .65rem; grid-template-columns: repeat(2, 1fr); }
+.signal-list div { align-items: center; background: white; border-left: 5px solid var(--violet); display: grid; gap: .35rem; padding: .85rem 1rem; }
+.signal-list span { color: var(--violet); font-size: .75rem; font-weight: 900; }
+.signal-list b { font-size: clamp(.95rem, 1.25vw, 1.45rem); line-height: 1.15; }
 
 .alert-grid, .concept-grid, .translation-grid, .metric-grid { display: grid; gap: 1.3rem; grid-template-columns: repeat(2, 1fr); margin-top: 4.5vh; }
 .alert-grid div { background: white; border-left: 6px solid var(--violet); min-height: 17vh; padding: 1.5rem; }
@@ -852,6 +689,13 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .impact-row strong { color: var(--violet); display: block; font-size: 1rem; letter-spacing: .1em; margin-bottom: 2rem; }
 .impact-row b { display: block; font-size: clamp(1.65rem, 2.4vw, 2.8rem); }
 .impact-row p { color: var(--muted); font-size: clamp(1rem, 1.25vw, 1.45rem); line-height: 1.3; margin-top: .8rem; }
+.effects-question .impact-row { margin-top: 3vh; }
+.effects-question .impact-row div { min-height: 13vh; padding: 1rem .5rem; }
+.effects-question .impact-row strong { margin-bottom: .7rem; }
+.effects-question .impact-row b { font-size: clamp(1.25rem, 1.85vw, 2.15rem); }
+.question-strip { background: var(--purple); color: white; display: grid; gap: .65rem; margin-top: 3.5vh; padding: 1.15rem 1.4rem; }
+.question-strip > b { color: #e7d3f5; font-size: .75rem; letter-spacing: .12em; }
+.question-strip p { font-size: clamp(.9rem, 1.14vw, 1.3rem); line-height: 1.4; }
 
 .question { background: var(--purple); color: white; }
 .question::before { background: var(--violet); }
@@ -873,6 +717,17 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .objective-list span { color: var(--violet); display: block; font-size: 1rem; font-weight: 900; margin-bottom: 2rem; }
 .objective-list h3 { color: var(--purple); }
 .objective-list p { color: var(--muted); font-size: clamp(.95rem, 1.2vw, 1.4rem); line-height: 1.35; margin-top: .8rem; }
+.objective-summary { align-items: center; display: grid; gap: .7rem 1.5rem; grid-template-columns: auto 1fr; }
+.objective-summary > span { color: var(--purple); font-size: .8rem; font-weight: 900; grid-column: 1 / -1; letter-spacing: .11em; }
+.objective-summary > b { color: var(--purple); font-family: "Trebuchet MS", Tahoma, sans-serif; font-size: clamp(3.2rem, 5vw, 5.8rem); letter-spacing: -.05em; line-height: .85; }
+.objective-summary p { border-left: 2px solid var(--line); font-size: clamp(1.2rem, 1.65vw, 1.9rem); font-weight: 700; line-height: 1.25; max-width: 36ch; padding-left: 1.4rem; }
+.objectives-combined .objective-list { margin-top: 3vh; }
+.objectives-combined .objective-list article { min-height: 19vh; padding: 1rem 1.25rem; }
+.objectives-combined .objective-list span { margin-bottom: .65rem; }
+.objectives-combined .objective-list h3 { font-size: clamp(1.35rem, 1.8vw, 2.1rem); }
+.objectives-combined .objective-list p { margin-top: .35rem; }
+.objective-sequence { color: var(--purple); font-size: clamp(1rem, 1.3vw, 1.5rem); font-weight: 900; margin-top: 2vh; text-align: center; }
+.objective-sequence i { color: var(--violet); font-style: normal; margin: 0 .8rem; }
 
 .method-grid { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); margin-top: 7vh; }
 .method-grid div { background: white; border: 1px solid var(--line); min-height: 29vh; padding: 1.35rem; }
@@ -886,6 +741,11 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .wide-figure figcaption { color: var(--muted); font-size: clamp(.8rem, 1vw, 1.1rem); margin-top: .6rem; }
 .swimlane-figure { margin-top: 2vh; }
 .swimlane-figure img { height: 42vh; }
+.ishikawa-slide h2 { font-size: clamp(2.2rem, 3.35vw, 3.85rem); }
+.ishikawa-figure { margin-top: 1.5vh; padding: .65rem; }
+.ishikawa-figure img { height: 43vh; }
+.ishikawa-figure figcaption { margin-top: .3rem; }
+.finding-line { background: var(--purple); color: white; font-size: clamp(1rem, 1.35vw, 1.55rem); font-weight: 900; margin-top: 1.5vh; padding: .9rem 1.2rem; text-align: center; }
 
 .finding-layout { align-items: center; display: grid; gap: 2vw; grid-template-columns: 1fr auto 1fr; margin-top: 9vh; }
 .finding-layout h2 { font-size: clamp(2.8rem, 4.3vw, 5rem); }
@@ -907,6 +767,12 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .legal-layout p { color: var(--muted); font-size: clamp(.9rem, 1.12vw, 1.3rem); line-height: 1.4; margin-top: .8rem; }
 .legal-note { color: var(--purple); font-size: clamp(1rem, 1.3vw, 1.5rem); font-weight: 800; margin-top: 3vh; text-align: center; }
 
+.activity-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); margin-top: 4vh; }
+.activity-grid article { background: white; border: 1px solid var(--line); border-left: 6px solid var(--purple); min-height: 16vh; padding: 1.2rem 1.4rem; }
+.activity-grid span { color: var(--violet); display: block; font-size: .78rem; font-weight: 900; letter-spacing: .1em; margin-bottom: .65rem; }
+.activity-grid b { display: block; font-size: clamp(1.25rem, 1.75vw, 2rem); line-height: 1.1; }
+.activity-grid p { color: var(--muted); font-size: clamp(.85rem, 1.05vw, 1.2rem); line-height: 1.3; margin-top: .45rem; }
+
 .timeline { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); margin-top: 8vh; position: relative; }
 .timeline::before { background: var(--line); content: ""; height: 4px; left: 7%; position: absolute; right: 7%; top: 2.3rem; }
 .timeline article { padding-top: 5.5rem; position: relative; }
@@ -926,11 +792,19 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .proposal-grid div { background: white; border: 1px solid var(--line); min-height: 17vh; padding: 1.2rem; }
 .proposal-grid span { color: var(--violet); display: block; font-size: .9rem; font-weight: 900; margin-bottom: 1.5rem; }
 .proposal-grid b { display: block; font-size: clamp(1.25rem, 1.65vw, 1.9rem); line-height: 1.1; }
+.section-label { color: var(--violet); font-size: clamp(.78rem, .95vw, 1.05rem); font-weight: 900; letter-spacing: .12em; margin-bottom: .8rem; }
 
 .state-figure { background: white; border: 1px solid var(--line); display: grid; margin: 4vh 0 0; padding: 1.4rem; place-items: center; }
 .state-figure img { height: 22vh; object-fit: contain; width: 100%; }
 .state-benefits { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 3vh; }
 .state-benefits span { background: var(--lavender); color: var(--purple); font-size: clamp(.9rem, 1.15vw, 1.3rem); font-weight: 800; padding: 1rem; text-align: center; }
+.flow-states h2 { font-size: clamp(2.1rem, 3.15vw, 3.65rem); }
+.flow-states .swimlane-figure { margin-top: 1.2vh; padding: .65rem; }
+.flow-states .swimlane-figure img { height: 34vh; }
+.state-flow { align-items: center; display: grid; gap: .45rem; grid-template-columns: repeat(11, auto); justify-content: center; margin-top: 1.7vh; }
+.state-flow span { background: var(--lavender); color: var(--purple); font-size: clamp(.72rem, .9vw, 1.05rem); font-weight: 900; padding: .65rem .8rem; white-space: nowrap; }
+.state-flow i { color: var(--violet); font-size: 1.2rem; font-style: normal; font-weight: 900; }
+.resolution-note { color: var(--purple); font-size: clamp(.9rem, 1.05vw, 1.2rem); font-weight: 900; margin-top: 1vh; text-align: center; }
 
 .form-preview { background: white; border: 1px solid var(--line); box-shadow: var(--shadow); margin-top: 5vh; padding: 1.2rem; }
 .form-head { background: var(--purple); color: white; display: grid; gap: 1px; grid-template-columns: 1.3fr 1fr 1fr 1.3fr; }
@@ -939,6 +813,16 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .form-body span { border: 1px solid var(--line); color: var(--muted); font-size: clamp(.9rem, 1.12vw, 1.3rem); min-height: 14vh; padding: 1rem; }
 .form-foot { align-items: center; background: var(--paper-soft); display: flex; font-size: clamp(.8rem, 1vw, 1.15rem); gap: .65rem; padding: 1rem; }
 .form-foot i { background: var(--line); height: 1px; margin: 0 1rem; width: 3rem; }
+
+.tools-layout { display: grid; gap: 2vw; grid-template-columns: 1fr 1fr; margin-top: 4vh; }
+.tools-layout article { background: white; border: 1px solid var(--line); min-height: 27vh; padding: 1.4rem; }
+.tools-layout article > span { color: var(--purple); display: block; font-size: .82rem; font-weight: 900; letter-spacing: .12em; margin-bottom: 1.2rem; }
+.field-cloud { display: grid; gap: .65rem; grid-template-columns: repeat(2, 1fr); }
+.field-cloud b { background: var(--lavender); color: var(--purple); font-size: clamp(1rem, 1.25vw, 1.45rem); padding: .65rem .8rem; }
+.indicator-card { border-top: 6px solid var(--purple) !important; }
+.indicator-card ul { display: grid; gap: .45rem; list-style: none; margin: 0; padding: 0; }
+.indicator-card li { border-bottom: 1px solid var(--line); font-size: clamp(1rem, 1.25vw, 1.45rem); font-weight: 800; padding: .45rem 0; }
+.control-tools .bottom-line { font-size: clamp(1.15rem, 1.55vw, 1.8rem); margin-top: 3vh; }
 
 .metric-grid article { background: white; border: 1px solid var(--line); min-height: 17vh; padding: 1.25rem; }
 .metric-grid span { color: var(--purple); display: block; font-size: .78rem; font-weight: 900; letter-spacing: .1em; margin-bottom: 1rem; }
@@ -950,6 +834,12 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .comparison-layout img { height: 66vh; object-fit: contain; width: 100%; }
 .comparison-layout ul { display: flex; flex-wrap: wrap; gap: .65rem; list-style: none; margin: 3vh 0 0; padding: 0; }
 .comparison-layout li { background: var(--lavender); color: var(--purple); font-size: clamp(.85rem, 1.05vw, 1.2rem); font-weight: 900; padding: .65rem .85rem; }
+.comparison-labels { display: grid; gap: .8rem; margin-top: 4vh; }
+.comparison-labels span { background: white; border-left: 5px solid var(--violet); display: grid; gap: .35rem; padding: 1rem; }
+.comparison-labels span:last-child { border-left-color: var(--purple); }
+.comparison-labels small { color: var(--violet); font-size: .7rem; font-weight: 900; letter-spacing: .1em; }
+.comparison-labels b { color: var(--ink); font-size: clamp(1.05rem, 1.4vw, 1.6rem); }
+.comparison-labels > i { color: var(--purple); font-size: 1.5rem; font-style: normal; font-weight: 900; margin-left: 1rem; }
 
 .conclusion-band { align-items: center; display: grid; gap: 1rem; grid-template-columns: 1fr auto 1fr auto 1fr; margin-top: 9vh; }
 .conclusion-band span { background: var(--lavender); color: var(--purple); font-size: clamp(1.25rem, 1.8vw, 2.1rem); font-weight: 900; min-height: 14vh; padding: 1.2rem; text-align: center; }
@@ -961,10 +851,24 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
 .result-equation i { color: var(--violet); font-size: 2rem; font-style: normal; font-weight: 900; }
 .result-equation b { color: var(--purple); display: block; font-size: clamp(2.3rem, 3.4vw, 4rem); margin-top: 2vh; width: 100%; }
 
+.conclusion-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); margin-top: 4.5vh; }
+.conclusion-grid article { background: white; border-top: 7px solid var(--purple); min-height: 24vh; padding: 1.35rem; }
+.conclusion-grid span { color: var(--violet); display: block; font-size: .78rem; font-weight: 900; letter-spacing: .09em; margin-bottom: 1.2rem; }
+.conclusion-grid p { font-size: clamp(1rem, 1.3vw, 1.5rem); font-weight: 800; line-height: 1.3; }
+.learning-line { background: var(--lavender); color: var(--purple); font-size: clamp(.95rem, 1.18vw, 1.35rem); margin-top: 3vh; padding: 1rem; text-align: center; }
+
 .recommend-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); margin-top: 4vh; }
 .recommend-grid article { background: white; border-left: 6px solid var(--purple); min-height: 16vh; padding: 1.25rem; }
 .recommend-grid span { color: var(--violet); display: block; font-size: .8rem; font-weight: 900; letter-spacing: .1em; margin-bottom: .8rem; }
 .recommend-grid b { display: block; font-size: clamp(1.15rem, 1.55vw, 1.8rem); line-height: 1.2; }
+.recommend-layout { display: grid; gap: 1.1rem; margin-top: 4vh; }
+.recommend-layout article { background: white; border-left: 6px solid var(--purple); padding: 1.2rem 1.4rem; }
+.recommend-layout span { color: var(--violet); display: block; font-size: .78rem; font-weight: 900; letter-spacing: .11em; margin-bottom: .75rem; }
+.recommend-layout b { display: block; font-size: clamp(1rem, 1.35vw, 1.55rem); line-height: 1.25; }
+.idetel-recommendation { background: var(--lavender) !important; min-height: 15vh; }
+.idetel-recommendation b { color: var(--purple); font-size: clamp(1.35rem, 2vw, 2.3rem); }
+.idetel-recommendation i { color: var(--violet); font-style: normal; margin: 0 .3rem; }
+.secondary-recommendations { display: grid; gap: 1.1rem; grid-template-columns: repeat(2, 1fr); }
 
 .closing { background: linear-gradient(115deg, white 0 66%, var(--lavender) 66%); }
 .closing-copy { margin-top: 9vh; max-width: 67%; }
@@ -996,7 +900,7 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
   .route-track::before, .timeline::before { display: none; }
   .route-track div, .timeline article { padding-top: 1.5rem; }
   .route-track div::before, .timeline span { display: none; }
-  .company-layout, .problem-statement, .objective-focus, .comparison-layout { grid-template-columns: 1fr; }
+  .company-layout, .problem-statement, .problem-layout, .objective-focus, .comparison-layout { grid-template-columns: 1fr; }
   .company-logo { display: none; }
   .handoff p, .service-path small, .objective-list p { font-size: .8rem; }
   .service-path { gap: .4rem; }
@@ -1006,6 +910,15 @@ h3 { font-size: clamp(1.7rem, 2.3vw, 2.8rem); line-height: 1.05; }
   .objective-list article, .impact-row div { min-height: auto; padding: .8rem; }
   .wide-figure img { height: 28vh; }
   .comparison-layout figure { display: none; }
+  .official-title { font-size: clamp(1.7rem, 6vw, 3rem); }
+  .route-track { margin-top: 3vh; }
+  .signal-list, .activity-grid, .tools-layout, .secondary-recommendations { grid-template-columns: 1fr 1fr; }
+  .problem-layout .case-card { display: none; }
+  .state-flow { display: flex; flex-wrap: wrap; }
+  .flow-states .swimlane-figure img { height: 28vh; }
+  .conclusion-grid { gap: .5rem; }
+  .conclusion-grid article { min-height: auto; padding: .7rem; }
+  .conclusion-grid p { font-size: .8rem; }
   .closing-copy { max-width: 88%; }
   .closing-status { display: none; }
 }
@@ -1084,12 +997,12 @@ def construir_html() -> str:
     total = len(DIAPOSITIVAS)
     for numero, diapositiva in enumerate(DIAPOSITIVAS, start=1):
         notas = e(diapositiva.notas).replace("\n", "<br>")
-        fase_numero, fase_nombre = FASES[diapositiva.fase - 1]
+        capitulo_numero, capitulo_nombre = CAPITULOS[diapositiva.capitulo - 1]
         secciones.append(
             dedent(
                 f"""
                 <section class="slide {e(diapositiva.clase)}" data-notes="{notas}" aria-label="Diapositiva {numero} de {total}">
-                  <div class="case-meta"><span>IDETEL · CONTROL DE SOLICITUDES</span><span>FASE {fase_numero} · {e(fase_nombre)}</span></div>
+                  <div class="case-meta"><span>IDETEL · CONTROL DE SOLICITUDES</span><span>CAPÍTULO {capitulo_numero} · {e(capitulo_nombre)}</span></div>
                   {diapositiva.cuerpo}
                   <div class="page-number">{numero:02d} / {total:02d}</div>
                 </section>
@@ -1105,7 +1018,7 @@ def construir_html() -> str:
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="theme-color" content="#fcfbfe">
-          <title>Amaal Alrifaai · Control administrativo de solicitudes</title>
+          <title>Amaal Alrifaai Alrifaaie · Control administrativo de solicitudes</title>
           <style>{CSS}</style>
         </head>
         <body>
