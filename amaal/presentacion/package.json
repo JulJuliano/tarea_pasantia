@@ -1,0 +1,12 @@
+{
+  "name": "presentacion-amaal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Presentacion editable de defensa de pasantias de Amaal Alrifaai Alrifaaie",
+  "scripts": {
+    "build": "node pptxgenjs/main.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}

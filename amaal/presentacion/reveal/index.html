@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Defensa de Pasantías — Amaal Alrifaai Alrifaaie</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/white.css"
+  />
+
+  <style>
+    :root {
+      --paper: #fcfbfe;
+      --paper-soft: #faf8fd;
+      --lavender: #ede3f7;
+      --violet: #9b6bc4;
+      --purple: #5b2a86;
+      --ink: #24182d;
+      --muted: #6d6373;
+      --line: #d9c7e8;
+      --white: #ffffff;
+      --navy: #080452;
+      --shadow: 0 14px 36px rgba(91, 42, 134, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--paper);
+    }
+
+    .reveal {
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      padding: 32px 58px;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3,
+    .reveal p {
+      margin: 0;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: none;
+    }
+
+    .reveal h1 {
+      font-size: 1.58em;
+      line-height: 1.08;
+    }
+
+    .reveal h2 {
+      font-size: 1.48em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    .reveal h3 {
+      color: var(--purple);
+      font-size: 0.72em;
+    }
+
+    .reveal p,
+    .reveal li {
+      font-size: 0.62em;
+      line-height: 1.35;
+    }
+
+    .chapter {
+      color: var(--purple);
+      font-size: 0.48em;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.64em;
+      margin-top: 18px;
+    }
+
+    .author {
+      color: var(--purple);
+      font-size: 0.82em;
+      font-weight: 900;
+      margin-top: 34px;
+    }
+
+    .highlight {
+      color: var(--purple);
+      font-weight: 900;
+    }
+
+    .bottom-line {
+      border-left: 5px solid var(--violet);
+      color: var(--purple);
+      font-size: 0.58em;
+      font-weight: 800;
+      margin-top: 22px;
+      padding-left: 16px;
+    }
+
+    /* PORTADA */
+
+    .cover {
+      align-items: center;
+      display: grid;
+      gap: 55px;
+      grid-template-columns: 1.35fr 0.65fr;
+    }
+
+    .cover-side {
+      align-items: center;
+      background: var(--lavender);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: center;
+      min-height: 420px;
+      padding: 35px;
+    }
+
+    .cover-side img {
+      max-height: 200px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    /* AGENDA */
+
+    .agenda {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: 45px;
+    }
+
+    .agenda article {
+      background: var(--lavender);
+      border-top: 6px solid var(--purple);
+      min-height: 180px;
+      padding: 20px 14px;
+    }
+
+    .agenda span {
+      color: var(--violet);
+      display: block;
+      font-size: 0.42em;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+    }
+
+    .agenda b {
+      display: block;
+      font-size: 0.56em;
+      line-height: 1.25;
+    }
+
+    /* GENERALES */
+
+    .grid-2 {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--purple);
+      box-shadow: 0 8px 20px rgba(91, 42, 134, 0.06);
+      padding: 17px;
+    }
+
+    .card small {
+      color: var(--violet);
+      display: block;
+      font-size: 0.4em;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .card b {
+      display: block;
+      font-size: 0.57em;
+      line-height: 1.2;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.46em;
+      margin-top: 7px;
+    }
+
+    /* CAP I */
+
+    .company-layout {
+      align-items: center;
+      display: grid;
+      gap: 34px;
+      grid-template-columns: 0.75fr 1.25fr;
+    }
+
+    .company-logo {
+      align-items: center;
+      background: var(--navy);
+      display: flex;
+      justify-content: center;
+      min-height: 350px;
+      padding: 32px;
+    }
+
+    .company-logo img {
+      max-height: 180px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .fact-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .fact-stack div {
+      background: var(--white);
+      border-left: 5px solid var(--purple);
+      box-shadow: 0 6px 18px rgba(91, 42, 134, 0.07);
+      padding: 12px 16px;
+    }
+
+    .fact-stack small {
+      color: var(--purple);
+      display: block;
+      font-size: 0.38em;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .fact-stack b {
+      font-size: 0.55em;
+    }
+
+    /* PROBLEMA */
+
+    .problem-box {
+      background: var(--purple);
+      color: var(--white);
+      padding: 20px 24px;
+    }
+
+    .problem-box strong {
+      display: block;
+      font-size: 0.72em;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .signals {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 17px;
+    }
+
+    .signals div {
+      background: var(--lavender);
+      color: var(--purple);
+      font-size: 0.48em;
+      font-weight: 900;
+      min-height: 85px;
+      padding: 16px 10px;
+      text-align: center;
+    }
+
+    .question {
+      border-left: 5px solid var(--violet);
+      color: var(--purple);
+      font-size: 0.5em;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-top: 18px;
+      padding-left: 16px;
+    }
+
+    .objectives {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 19px;
+    }
+
+    .objectives article {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-bottom: 6px solid var(--purple);
+      min-height: 112px;
+      padding: 15px;
+    }
+
+    .objectives span {
+      color: var(--violet);
+      font-size: 0.4em;
+      font-weight: 900;
+    }
+
+    .objectives b {
+      color: var(--purple);
+      display: block;
+      font-size: 0.58em;
+      margin: 6px 0;
+    }
+
+    .objectives p {
+      color: var(--muted);
+      font-size: 0.43em;
+    }
+
+    /* ISHIKAWA */
+
+    .ishikawa-layout {
+      align-items: center;
+      display: grid;
+      gap: 28px;
+      grid-template-columns: 0.68fr 1.32fr;
+    }
+
+    .methods {
+      display: grid;
+      gap: 10px;
+    }
+
+    .methods div {
+      background: var(--lavender);
+      color: var(--purple);
+      font-size: 0.49em;
+      font-weight: 900;
+      padding: 12px 14px;
+    }
+
+    .ishikawa-layout img {
+      background: var(--white);
+      border: 1px solid var(--line);
+      max-height: 380px;
+      max-width: 100%;
+      object-fit: contain;
+      padding: 10px;
+    }
+
+    .finding {
+      background: var(--purple) !important;
+      color: var(--white) !important;
+      font-size: 0.48em !important;
+      line-height: 1.3;
+    }
+
+    /* MARCO TEORICO */
+
+    .concept-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      min-height: 120px;
+      padding: 15px;
+    }
+
+    .concept-card b {
+      color: var(--purple);
+      display: block;
+      font-size: 0.55em;
+    }
+
+    .concept-card p {
+      color: var(--muted);
+      font-size: 0.43em;
+      margin-top: 7px;
+    }
+
+    .legal {
+      margin-top: 18px;
+    }
+
+    .legal article {
+      background: var(--lavender);
+      padding: 12px 15px;
+    }
+
+    .legal b {
+      color: var(--purple);
+      display: block;
+      font-size: 0.47em;
+    }
+
+    .legal p {
+      color: var(--ink);
+      font-size: 0.4em;
+      margin-top: 5px;
+    }
+
+    /* ACTIVIDADES */
+
+    .activity {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--purple);
+      min-height: 138px;
+      padding: 16px;
+    }
+
+    .activity span {
+      color: var(--violet);
+      display: block;
+      font-size: 0.38em;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .activity b {
+      display: block;
+      font-size: 0.57em;
+      margin-top: 8px;
+    }
+
+    .activity p {
+      color: var(--muted);
+      font-size: 0.42em;
+      margin-top: 6px;
+    }
+
+    /* PROPUESTA */
+
+    .proposal-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .proposal-grid div {
+      background: var(--lavender);
+      color: var(--purple);
+      font-size: 0.48em;
+      font-weight: 900;
+      min-height: 76px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .swimlane {
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: block;
+      margin: 17px auto 0;
+      max-height: 260px;
+      max-width: 100%;
+      object-fit: contain;
+      padding: 8px;
+    }
+
+    .states {
+      color: var(--purple);
+      font-size: 0.46em;
+      font-weight: 900;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* CONCLUSIONES */
+
+    .conclusion {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-top: 6px solid var(--purple);
+      min-height: 145px;
+      padding: 15px;
+    }
+
+    .conclusion span {
+      color: var(--violet);
+      display: block;
+      font-size: 0.38em;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+    }
+
+    .conclusion p {
+      font-size: 0.45em;
+      margin-top: 8px;
+    }
+
+    .recommendations {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1.5fr 0.8fr 0.8fr;
+      margin-top: 18px;
+    }
+
+    .recommendations article {
+      background: var(--lavender);
+      padding: 13px;
+    }
+
+    .recommendations b {
+      color: var(--purple);
+      display: block;
+      font-size: 0.43em;
+      margin-bottom: 5px;
+    }
+
+    .recommendations p {
+      color: var(--ink);
+      font-size: 0.38em;
+    }
+
+    /* CIERRE */
+
+    .closing-layout {
+      align-items: center;
+      display: grid;
+      gap: 50px;
+      grid-template-columns: 1.3fr 0.7fr;
+    }
+
+    .closing-side {
+      align-items: center;
+      background: var(--lavender);
+      display: flex;
+      justify-content: center;
+      min-height: 360px;
+    }
+
+    .closing-side img {
+      max-height: 170px;
+      max-width: 80%;
+      object-fit: contain;
+    }
+
+    .thanks {
+      color: var(--purple);
+      font-size: 0.72em;
+      font-weight: 900;
+      margin-top: 34px;
+    }
+
+    .questions {
+      color: var(--muted);
+      font-size: 0.55em;
+      margin-top: 8px;
+    }
+
+    .reveal .slide-number {
+      color: var(--purple);
+      font-size: 14px;
+    }
+
+    .reveal .progress {
+      color: var(--purple);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- LÁMINA 1 -->
+      <section>
+        <div class="cover">
+          <div>
+            <div class="chapter">Defensa de Pasantías Profesionales</div>
+
+            <h1>
+              Evaluación del control administrativo aplicado a la gestión
+              de solicitudes de servicios de telecomunicaciones en la empresa
+              Ingeniería de Telecomunicaciones, C.A.
+            </h1>
+
+            <div class="author">
+              Amaal Alrifaai Alrifaaie
+            </div>
+
+            <div class="subtitle">
+              Administración · Instituto Universitario de Tecnología
+              “Elías Calixto Pompa” · 2026
+            </div>
+          </div>
+
+          <div class="cover-side">
+            <img
+              src="../../imagenes/logo.jpg"
+              alt="Logotipo de Ingeniería de Telecomunicaciones, C.A."
+            />
+          </div>
+        </div>
+
+        <aside class="notes">
+          Buenos días. Mi nombre es Amaal Alrifaai Alrifaaie, estudiante
+          de Administración del IUTECP. Presentaré los resultados de mis
+          pasantías realizadas en Ingeniería de Telecomunicaciones, C.A.,
+          conocida como IDETEL.
+
+          Leer el título oficial y explicar que la exposición seguirá los
+          cinco capítulos del informe.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 2 -->
+      <section>
+        <div class="chapter">Agenda</div>
+        <h2>Estructura de la socialización</h2>
+
+        <div class="agenda">
+          <article>
+            <span>CAPÍTULO I</span>
+            <b>Realidad Organizacional</b>
+          </article>
+
+          <article>
+            <span>CAPÍTULO II</span>
+            <b>Diagnóstico Situacional</b>
+          </article>
+
+          <article>
+            <span>CAPÍTULO III</span>
+            <b>Marco Teórico</b>
+          </article>
+
+          <article>
+            <span>CAPÍTULO IV</span>
+            <b>Actividades Realizadas</b>
+          </article>
+
+          <article>
+            <span>CAPÍTULO V</span>
+            <b>Conclusiones y Recomendaciones</b>
+          </article>
+        </div>
+
+        <aside class="notes">
+          Explicar brevemente la agenda. No leerla palabra por palabra.
+          Indicar que la defensa seguirá la misma secuencia de los cinco
+          capítulos del informe.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 3 -->
+      <section>
+        <div class="chapter">
+          Capítulo I · Realidad Organizacional
+        </div>
+
+        <h2>Empresa y área de pasantía</h2>
+
+        <div class="company-layout">
+          <div class="company-logo">
+            <img
+               src="../../imagenes/logo.jpg"
+              alt="Logotipo de IDETEL"
+            />
+          </div>
+
+          <div class="fact-stack">
+            <div>
+              <small>Empresa</small>
+              <b>Ingeniería de Telecomunicaciones, C.A.</b>
+            </div>
+
+            <div>
+              <small>Sector</small>
+              <b>Telecomunicaciones y automatización</b>
+            </div>
+
+            <div>
+              <small>Sede</small>
+              <b>El Tigre, estado Anzoátegui</b>
+            </div>
+
+            <div>
+              <small>Semanas 1–3</small>
+              <b>Atención al Cliente</b>
+            </div>
+
+            <div>
+              <small>Semanas 4–10</small>
+              <b>Administración</b>
+            </div>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Presentar brevemente a IDETEL.
+
+          Explicar la rotación:
+          semanas 1 a 3 en Atención al Cliente y semanas 4 a 10 en
+          Administración.
+
+          Mencionar recepción de solicitudes, pagos, facturación,
+          documentos, seguimiento y reportes.
+
+          Explicar que la rotación permitió observar cómo una solicitud
+          pasa de un área a otra.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 4 -->
+      <section>
+        <div class="chapter">
+          Capítulo II · Diagnóstico Situacional
+        </div>
+
+        <h2>Situación problemática y objetivos</h2>
+
+        <div class="problem-box">
+          <strong>
+            No existía un procedimiento único y formalizado para seguir
+            las solicitudes desde su recepción hasta el cierre.
+          </strong>
+        </div>
+
+        <div class="signals">
+          <div>Formatos no uniformes</div>
+          <div>Estatus distribuido</div>
+          <div>Sin tiempos de referencia</div>
+          <div>Comunicación fragmentada</div>
+        </div>
+
+        <div class="question">
+          ¿Cómo puede evaluarse el control administrativo aplicado a la
+          gestión de solicitudes de servicios de telecomunicaciones en
+          IDETEL para identificar sus principales debilidades y formular
+          mejoras procedimentales que fortalezcan la trazabilidad y el
+          seguimiento de los casos?
+        </div>
+
+        <div class="objectives">
+          <article>
+            <span>01</span>
+            <b>Diagnosticar</b>
+            <p>El recorrido actual de las solicitudes.</p>
+          </article>
+
+          <article>
+            <span>02</span>
+            <b>Identificar</b>
+            <p>Las deficiencias, sus causas y sus efectos.</p>
+          </article>
+
+          <article>
+            <span>03</span>
+            <b>Formular</b>
+            <p>Mejoras al control administrativo.</p>
+          </article>
+        </div>
+
+        <aside class="notes">
+          Explicar que la empresa atendía las solicitudes, pero no existía
+          un procedimiento único desde la recepción hasta el cierre.
+
+          Mencionar las cuatro manifestaciones:
+          formatos no uniformes,
+          estatus distribuido,
+          falta de tiempos de referencia y
+          comunicación fragmentada.
+
+          Leer la interrogante.
+
+          Explicar los objetivos en orden:
+          diagnosticar, identificar y formular.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 5 -->
+      <section>
+        <div class="chapter">
+          Capítulo II · Técnica de Diagnóstico
+        </div>
+
+        <h2>Diagrama de Ishikawa</h2>
+
+        <div class="ishikawa-layout">
+          <div class="methods">
+            <div>Observación directa</div>
+            <div>Revisión de registros</div>
+            <div>Entrevistas al personal</div>
+            <div>Diagrama de Ishikawa</div>
+
+            <div class="finding">
+              Hallazgo central: el problema no era recibir la solicitud,
+              sino mantener visible su continuidad hasta el cierre.
+            </div>
+          </div>
+
+          <img
+             src="../../imagenes/ishikawa_amaal_solicitudes.png"
+            alt="Diagrama de Ishikawa del control administrativo"
+          />
+        </div>
+
+        <aside class="notes">
+          Explicar que el diagnóstico combinó observación, revisión de
+          registros, entrevistas y el Ishikawa.
+
+          Señalar el gráfico y resumir las cuatro dimensiones:
+          procedimiento,
+          comunicación,
+          registro y
+          seguimiento.
+
+          Cerrar con la idea:
+          el problema no era recibir el caso, sino mantener visible su
+          continuidad.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 6 -->
+      <section>
+        <div class="chapter">
+          Capítulo III · Marco Teórico
+        </div>
+
+        <h2>Conceptos disciplinares y bases legales</h2>
+
+        <div class="grid-4">
+          <article class="concept-card">
+            <b>Control administrativo</b>
+            <p>
+              Verificar el proceso y corregir desviaciones.
+            </p>
+          </article>
+
+          <article class="concept-card">
+            <b>Gestión de solicitudes</b>
+            <p>
+              Recibir, registrar, procesar, seguir y cerrar.
+            </p>
+          </article>
+
+          <article class="concept-card">
+            <b>Trazabilidad administrativa</b>
+            <p>
+              Poder reconstruir el recorrido completo de un caso.
+            </p>
+          </article>
+
+          <article class="concept-card">
+            <b>Estandarización de procedimientos</b>
+            <p>
+              Aplicar criterios, estados y formatos comunes.
+            </p>
+          </article>
+        </div>
+
+        <div class="grid-2 legal">
+          <article>
+            <b>
+              Constitución de la República Bolivariana de Venezuela
+            </b>
+            <p>
+              Artículo 112 · Marco general de la actividad económica.
+            </p>
+          </article>
+
+          <article>
+            <b>Código de Comercio</b>
+            <p>
+              Artículo 32 · Orden y claridad de los registros.
+            </p>
+          </article>
+        </div>
+
+        <aside class="notes">
+          Explicar solamente los cuatro conceptos más importantes.
+
+          Control administrativo:
+          verificar y corregir.
+
+          Gestión de solicitudes:
+          completar el ciclo del caso.
+
+          Trazabilidad:
+          poder reconstruir su recorrido.
+
+          Estandarización:
+          utilizar criterios comunes.
+
+          Mencionar brevemente los artículos 112 y 32 como bases legales.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 7 -->
+      <section>
+        <div class="chapter">
+          Capítulo IV · Actividades Realizadas
+        </div>
+
+        <h2>Cuatro actividades principales</h2>
+
+        <div class="grid-4">
+          <article class="activity">
+            <span>SEMANAS 1–3</span>
+            <b>Observar el recorrido</b>
+            <p>
+              Atención al Cliente y Administración.
+            </p>
+          </article>
+
+          <article class="activity">
+            <span>SEMANA 4</span>
+            <b>Revisar y entrevistar</b>
+            <p>
+              Registros, personal e identificación de fallas.
+            </p>
+          </article>
+
+          <article class="activity">
+            <span>SEMANA 5</span>
+            <b>Elaborar el Ishikawa</b>
+            <p>
+              Organización de las causas relacionadas.
+            </p>
+          </article>
+
+          <article class="activity">
+            <span>SEMANAS 7–9</span>
+            <b>Diseñar y validar</b>
+            <p>
+              Flujo, formatos, responsables e indicadores.
+            </p>
+          </article>
+        </div>
+
+        <div class="bottom-line">
+          Las actividades operativas permitieron conocer el proceso y
+          formular mejoras basadas en situaciones reales.
+        </div>
+
+        <aside class="notes">
+          No explicar las diez semanas una por una.
+
+          Resumirlas en estas cuatro actividades principales.
+
+          Mencionar también que se apoyaron actividades de pagos,
+          facturación, documentación, seguimiento y reportes.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 8 -->
+      <section>
+        <div class="chapter">
+          Capítulo IV · Propuesta de Mejora
+        </div>
+
+        <h2>
+          Un procedimiento visible de principio a fin
+        </h2>
+
+        <div class="proposal-grid">
+          <div>Flujo estandarizado</div>
+          <div>Responsables por etapa</div>
+          <div>Formatos uniformes</div>
+          <div>Estados definidos</div>
+          <div>Tiempos de referencia</div>
+          <div>Indicadores básicos</div>
+        </div>
+
+        <img
+          class="swimlane"
+           src="../../imagenes/04_swimlane_gestion_solicitudes.png"
+          alt="Flujo estandarizado propuesto"
+        />
+
+        <div class="states">
+          Recibida → Registrada → Asignada → En atención →
+          Resuelta → Cerrada
+        </div>
+
+        <div class="bottom-line">
+          Primero organizar el proceso; después medirlo y digitalizarlo.
+          &nbsp; Resuelta ≠ Cerrada.
+        </div>
+
+        <aside class="notes">
+          Explicar los seis componentes de la propuesta de manera breve.
+
+          Señalar el flujo.
+
+          Explicar que cada transferencia debe dejar un responsable y un
+          estado visible.
+
+          Diferenciar resuelta de cerrada.
+
+          Explicar que primero debe organizarse y validarse el procedimiento
+          antes de evaluar una herramienta digital.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 9 -->
+      <section>
+        <div class="chapter">
+          Capítulo V · Conclusiones y Recomendaciones
+        </div>
+
+        <h2>Resultados principales</h2>
+
+        <div class="grid-3">
+          <article class="conclusion">
+            <span>1 · DIAGNÓSTICO</span>
+            <p>
+              El recorrido existía, pero no estaba formalizado como un
+              solo proceso desde la recepción hasta el cierre.
+            </p>
+          </article>
+
+          <article class="conclusion">
+            <span>2 · DEFICIENCIAS</span>
+            <p>
+              Formatos, estatus, tiempos y comunicación afectaban la
+              trazabilidad de las solicitudes.
+            </p>
+          </article>
+
+          <article class="conclusion">
+            <span>3 · APORTE</span>
+            <p>
+              Flujo, responsables, formatos e indicadores permiten
+              fortalecer el control administrativo.
+            </p>
+          </article>
+        </div>
+
+        <div class="recommendations">
+          <article>
+            <b>A IDETEL</b>
+            <p>
+              Probar el flujo → uniformar formatos →
+              medir resultados → evaluar digitalización.
+            </p>
+          </article>
+
+          <article>
+            <b>Al IUTECP</b>
+            <p>
+              Fortalecer el acompañamiento académico.
+            </p>
+          </article>
+
+          <article>
+            <b>A futuros pasantes</b>
+            <p>
+              Registrar actividades y conservar evidencias.
+            </p>
+          </article>
+        </div>
+
+        <aside class="notes">
+          Relacionar cada conclusión con uno de los objetivos específicos.
+
+          Primera:
+          diagnóstico del proceso.
+
+          Segunda:
+          principales debilidades.
+
+          Tercera:
+          propuesta formulada.
+
+          Explicar brevemente las recomendaciones dirigidas a IDETEL,
+          IUTECP y futuros pasantes.
+        </aside>
+      </section>
+
+      <!-- LÁMINA 10 -->
+      <section>
+        <div class="closing-layout">
+          <div>
+            <div class="chapter">Cierre</div>
+
+            <h1>
+              Una solicitud bien atendida también debe estar bien
+              controlada.
+            </h1>
+
+            <div class="thanks">
+              Gracias por su atención.
+            </div>
+
+            <div class="questions">
+              Quedo atenta a sus preguntas.
+            </div>
+          </div>
+
+          <div class="closing-side">
+            <img
+               src="../../imagenes/logo.jpg"
+              alt="Logotipo de IDETEL"
+            />
+          </div>
+        </div>
+
+        <aside class="notes">
+          Explicar que no basta con recibir o resolver técnicamente una
+          solicitud.
+
+          También debe conocerse quién la atendió, cuál es su estado,
+          cuánto tiempo lleva y cómo fue cerrada.
+
+          Agradecer al IUTECP, IDETEL, tutoras y personal de la empresa.
+
+          Mantener esta diapositiva visible durante las preguntas.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      controlsTutorial: false,
+      progress: true,
+      center: true,
+      slideNumber: "c/t",
+      transition: "fade",
+      backgroundTransition: "fade",
+      width: 1280,
+      height: 720,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      plugins: [RevealNotes]
+    });
+  </script>
+</body>
+</html>
