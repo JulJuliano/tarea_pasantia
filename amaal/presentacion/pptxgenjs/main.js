@@ -85,6 +85,21 @@ const IMG = {
     swimlane: path.join(CARPETA_AMAAL, "imagenes", "04_swimlane_gestion_solicitudes.png")
 };
 
+function addContainedImage(slide, imagePath, imageWidth, imageHeight, box) {
+    const imageRatio = imageWidth / imageHeight;
+    const boxRatio = box.w / box.h;
+    const w = imageRatio > boxRatio ? box.w : box.h * imageRatio;
+    const h = imageRatio > boxRatio ? box.w / imageRatio : box.h;
+
+    slide.addImage({
+        path: imagePath,
+        x: box.x + (box.w - w) / 2,
+        y: box.y + (box.h - h) / 2,
+        w,
+        h
+    });
+}
+
 function addChapter(slide, text) {
     slide.addText(text.toUpperCase(), {
         x: 0.72,
@@ -134,30 +149,50 @@ function addCard(slide, x, y, w, h, title, body, options = {}) {
         line: { color: options.accent || C.purple }
     });
 
-    slide.addText(title, {
-        x: x + 0.2,
-        y: y + 0.16,
-        w: w - 0.35,
-        h: 0.32,
-        fontFace: "Aptos",
-        fontSize: options.titleSize || 15,
-        bold: true,
-        color: options.titleColor || C.purple,
-        margin: 0
-    });
-
     if (body) {
-        slide.addText(body, {
+        slide.addText(
+            [
+                {
+                    text: title,
+                    options: {
+                        fontSize: options.titleSize || 15,
+                        bold: true,
+                        color: options.titleColor || C.purple,
+                        breakLine: true,
+                        paraSpaceAfterPt: h <= 0.8 ? 2 : 7
+                    }
+                },
+                {
+                    text: body,
+                    options: {
+                        fontSize: options.bodySize || 11,
+                        color: options.bodyColor || C.muted
+                    }
+                }
+            ],
+            {
+                x: x + 0.2,
+                y: y + 0.1,
+                w: w - 0.35,
+                h: h - 0.2,
+                fontFace: "Aptos",
+                margin: 0,
+                valign: "mid",
+                breakLine: false
+            }
+        );
+    } else {
+        slide.addText(title, {
             x: x + 0.2,
-            y: y + 0.55,
+            y: y + 0.1,
             w: w - 0.35,
-            h: h - 0.68,
+            h: h - 0.2,
             fontFace: "Aptos",
-            fontSize: options.bodySize || 11,
-            color: options.bodyColor || C.muted,
+            fontSize: options.titleSize || 15,
+            bold: true,
+            color: options.titleColor || C.purple,
             margin: 0,
-            valign: "mid",
-            breakLine: false
+            valign: "mid"
         });
     }
 }
@@ -344,7 +379,7 @@ function addSimpleBox(slide, x, y, w, h, text) {
     const slide = pptx.addSlide("MASTER");
 
     addChapter(slide, "Agenda");
-    addTitle(slide, "Estructura de la socialización");
+    addTitle(slide, "Estructura de la socialización", 1.65);
 
     const items = [
         ["CAPÍTULO I", "Realidad Organizacional"],
@@ -363,7 +398,7 @@ function addSimpleBox(slide, x, y, w, h, text) {
 
         slide.addShape(pptx.ShapeType.rect, {
             x,
-            y: 2.75,
+            y: 3.25,
             w,
             h: 2.5,
             fill: { color: C.lavender },
@@ -372,7 +407,7 @@ function addSimpleBox(slide, x, y, w, h, text) {
 
         slide.addShape(pptx.ShapeType.rect, {
             x,
-            y: 2.75,
+            y: 3.25,
             w,
             h: 0.08,
             fill: { color: C.purple },
@@ -381,7 +416,7 @@ function addSimpleBox(slide, x, y, w, h, text) {
 
         slide.addText(item[0], {
             x: x + 0.16,
-            y: 3.12,
+            y: 3.62,
             w: w - 0.32,
             h: 0.3,
             fontSize: 10,
@@ -393,7 +428,7 @@ function addSimpleBox(slide, x, y, w, h, text) {
 
         slide.addText(item[1], {
             x: x + 0.18,
-            y: 3.6,
+            y: 4.1,
             w: w - 0.36,
             h: 1.0,
             fontSize: 16,
@@ -581,12 +616,11 @@ function addSimpleBox(slide, x, y, w, h, text) {
         addSimpleBox(slide, 0.75, 2.1 + i * 0.82, 3.25, 0.62, m);
     });
 
-    slide.addImage({
-        path: IMG.ishikawa,
+    addContainedImage(slide, IMG.ishikawa, 1070, 975, {
         x: 4.35,
         y: 1.9,
         w: 8.15,
-        h: 4.15
+        h: 3.65
     });
 
     slide.addShape(pptx.ShapeType.rect, {
@@ -737,35 +771,31 @@ function addSimpleBox(slide, x, y, w, h, text) {
     ];
 
     proposal.forEach((p, i) => {
-        const col = i % 3;
-        const row = Math.floor(i / 3);
-
         addSimpleBox(
             slide,
-            0.75 + col * 4.08,
-            1.75 + row * 1.05,
-            3.78,
-            0.78,
+            0.75,
+            1.82 + i * 0.72,
+            3.35,
+            0.58,
             p
         );
     });
 
-    slide.addImage({
-        path: IMG.swimlane,
-        x: 1.15,
-        y: 4.0,
-        w: 11.0,
-        h: 1.75
+    addContainedImage(slide, IMG.swimlane, 1324, 773, {
+        x: 4.35,
+        y: 1.82,
+        w: 8.0,
+        h: 4.15
     });
 
     slide.addText(
         "Recibida → Registrada → Asignada → En atención → Resuelta → Cerrada",
         {
-            x: 1.0,
-            y: 5.9,
-            w: 11.35,
+            x: 4.35,
+            y: 6.1,
+            w: 8.0,
             h: 0.3,
-            fontSize: 12,
+            fontSize: 10,
             bold: true,
             color: C.purple,
             align: "center",
@@ -774,8 +804,8 @@ function addSimpleBox(slide, x, y, w, h, text) {
     );
 
     slide.addText("Resuelta ≠ Cerrada", {
-        x: 4.95,
-        y: 6.3,
+        x: 6.65,
+        y: 6.43,
         w: 3.4,
         h: 0.32,
         fontSize: 15,
