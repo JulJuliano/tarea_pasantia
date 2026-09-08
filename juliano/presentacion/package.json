@@ -1,0 +1,14 @@
+{
+  "name": "presentacion-juliano",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Presentacion editable de defensa de Juliano Cardona",
+  "scripts": {
+    "build": "npm run build:pptx && npm run build:pdf",
+    "build:pptx": "node pptxgenjs/main.js",
+    "build:pdf": "node pptxgenjs/exportar-pdf.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}
